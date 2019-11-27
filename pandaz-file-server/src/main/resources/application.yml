@@ -1,0 +1,13 @@
+server:
+  port: 9005
+#  servlet:
+#    context-path: /fileServer
+#当前配置环境
+spring:
+  profiles:
+    active: dev
+  application:
+    name: pandaz-file-server
+  #允许多个bean调用同一个服务
+  main:
+    allow-bean-definition-overriding: true

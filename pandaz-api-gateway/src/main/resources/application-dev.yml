@@ -1,0 +1,10 @@
+#eureka服务
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8888/eurekaServer/eureka/
+
+#自定义属性
+custom:
+  #项目基础包
+  projectPackage: com.pandaz

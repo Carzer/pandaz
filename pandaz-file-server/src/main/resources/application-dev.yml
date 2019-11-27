@@ -1,0 +1,16 @@
+#eureka服务
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8888/eurekaServer/eureka/
+#  instance:
+#    status-page-url-path: ${server.servlet.context-path}/actuator/info
+#    health-check-url-path: ${server.servlet.context-path}/actuator/health
+#    metadata-map:
+#      management:
+#        context-path: ${server.servlet.context-path}/actuator
+
+#自定义属性
+custom:
+  #项目基础包
+  projectPackage: com.pandaz

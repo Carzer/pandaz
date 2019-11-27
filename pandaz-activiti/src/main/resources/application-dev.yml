@@ -1,0 +1,43 @@
+spring:
+  #数据库配置
+  datasource:
+    url: jdbc:mysql://172.16.2.130:3306/activiti?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+    username: pandaz
+    password: K0tXBGwNHBl#
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #hikari连接池
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      pool-name: ActAppHikariPool
+      maximum-pool-size: 20
+      minimum-idle: 10
+      connection-test-query: SELECT 1
+      connection-timeout: 60000
+
+  activiti:
+    # 自动建表
+    database-schema: activiti
+    database-schema-update: true
+    history-level: full
+    db-history-used: true
+    #    最大连接数
+    jdbcMaxActiveConnections: 200
+    #    最大空闲连接数
+    jdbcMaxIdleConnections: 20
+    #    连接检查时间,单位:毫秒
+    jdbcMaxCheckoutTime: 20000
+    #    连接无用后，是否主动连接
+    JdbcPingEnabled: true
+    #    连接无用检查并连接间隔，单位毫秒
+    JdbcPingConnectionNotUsedFor: 3600000
+
+#eureka服务
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8888/eurekaServer/eureka/
+
+#自定义属性
+custom:
+  #项目基础包
+  projectPackage: com.pandaz

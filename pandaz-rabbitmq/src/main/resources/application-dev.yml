@@ -1,0 +1,31 @@
+#eureka服务
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8888/eurekaServer/eureka/
+
+spring:
+  cloud:
+    stream:
+      bindings:
+        input:
+          destination: queue.log.messages #要和output的destination一致, 这样才能将队列和写入消息的exchange关联起来
+          group: logMessageConsumers
+        output:
+          destination: queue.log.messages
+      binders:
+        vm_rabbit:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: 172.16.2.130
+                port: 5672
+                username: pandaz
+                password: pandaz
+                virtual-host: my_vhost
+
+#自定义属性
+custom:
+  #项目基础包
+  projectPackage: com.pandaz

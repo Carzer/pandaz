@@ -1,0 +1,11 @@
+server:
+  port: 9006
+#当前配置环境
+spring:
+  profiles:
+    active: dev
+  application:
+    name: pandaz-activiti
+  #允许多个bean调用同一个服务
+  main:
+    allow-bean-definition-overriding: true

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pandaz.usercenter.mapper.RoleMapper">
+    <resultMap id="BaseResultMap" type="com.pandaz.usercenter.entity.RoleEntity">
+        <result column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="parent_code" jdbcType="VARCHAR" property="parentCode"/>
+        <result column="is_private" jdbcType="TINYINT" property="isPrivate"/>
+        <result column="created_by" jdbcType="VARCHAR" property="createdBy"/>
+        <result column="created_date" jdbcType="TIMESTAMP" property="createdDate"/>
+        <result column="updated_by" jdbcType="VARCHAR" property="updatedBy"/>
+        <result column="updated_date" jdbcType="TIMESTAMP" property="updatedDate"/>
+        <result column="deleted_by" jdbcType="VARCHAR" property="deletedBy"/>
+        <result column="deleted_date" jdbcType="TIMESTAMP" property="deletedDate"/>
+        <result column="deleted_flag" jdbcType="TINYINT" property="deletedFlag"/>
+        <result column="locked" jdbcType="TINYINT" property="locked"/>
+        <result column="version" jdbcType="INTEGER" property="version"/>
+    </resultMap>
+    <resultMap id="BaseDetailMap" type="com.pandaz.usercenter.entity.RoleDetailEntity">
+        <result column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="parent_code" jdbcType="VARCHAR" property="parentCode"/>
+        <result column="is_private" jdbcType="TINYINT" property="isPrivate"/>
+        <result column="created_by" jdbcType="VARCHAR" property="createdBy"/>
+        <result column="created_date" jdbcType="TIMESTAMP" property="createdDate"/>
+        <result column="updated_by" jdbcType="VARCHAR" property="updatedBy"/>
+        <result column="updated_date" jdbcType="TIMESTAMP" property="updatedDate"/>
+        <result column="deleted_by" jdbcType="VARCHAR" property="deletedBy"/>
+        <result column="deleted_date" jdbcType="TIMESTAMP" property="deletedDate"/>
+        <result column="deleted_flag" jdbcType="TINYINT" property="deletedFlag"/>
+        <result column="locked" jdbcType="TINYINT" property="locked"/>
+        <result column="version" jdbcType="INTEGER" property="version"/>
+        <result column="user_code" jdbcType="VARCHAR" property="userCode"/>
+        <result column="group_code" jdbcType="VARCHAR" property="groupCode"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, name, code,
+        parent_code, is_private, created_by,
+        created_date, updated_by, updated_date,
+        deleted_by, deleted_date, deleted_flag,
+        locked, version
+    </sql>
+    <insert id="insert" parameterType="com.pandaz.usercenter.entity.RoleEntity">
+        insert into t_sys_role (id, name, code,
+                                parent_code, is_private, created_by,
+                                created_date, updated_by, updated_date,
+                                deleted_by, deleted_date, deleted_flag,
+                                locked, version)
+        values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
+                #{parentCode,jdbcType=VARCHAR}, #{isPrivate,jdbcType=TINYINT}, #{createdBy,jdbcType=VARCHAR},
+                #{createdDate,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, #{updatedDate,jdbcType=TIMESTAMP},
+                #{deletedBy,jdbcType=VARCHAR}, #{deletedDate,jdbcType=TIMESTAMP}, #{deletedFlag,jdbcType=TINYINT},
+                #{locked,jdbcType=TINYINT}, #{version,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.pandaz.usercenter.entity.RoleEntity">
+        insert into t_sys_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="parentCode != null">
+                parent_code,
+            </if>
+            <if test="isPrivate != null">
+                is_private,
+            </if>
+            <if test="createdBy != null">
+                created_by,
+            </if>
+            <if test="createdDate != null">
+                created_date,
+            </if>
+            <if test="updatedBy != null">
+                updated_by,
+            </if>
+            <if test="updatedDate != null">
+                updated_date,
+            </if>
+            <if test="deletedBy != null">
+                deleted_by,
+            </if>
+            <if test="deletedDate != null">
+                deleted_date,
+            </if>
+            <if test="deletedFlag != null">
+                deleted_flag,
+            </if>
+            <if test="locked != null">
+                locked,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="parentCode != null">
+                #{parentCode,jdbcType=VARCHAR},
+            </if>
+            <if test="isPrivate != null">
+                #{isPrivate,jdbcType=TINYINT},
+            </if>
+            <if test="createdBy != null">
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDate != null">
+                #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedBy != null">
+                #{updatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedDate != null">
+                #{updatedDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deletedBy != null">
+                #{deletedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="deletedDate != null">
+                #{deletedDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deletedFlag != null">
+                #{deletedFlag,jdbcType=TINYINT},
+            </if>
+            <if test="locked != null">
+                #{locked,jdbcType=TINYINT},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <select id="getPublicRoles" parameterType="java.lang.String" resultMap="BaseDetailMap">
+        select role.code         as code,
+               role.name         as name,
+               role.parent_code  as parent_code,
+               role.is_private   as is_private,
+               usr_gp.user_code  as user_code,
+               usr_gp.group_code as group_code
+        from t_sys_user usr
+                 inner join t_sys_user_group usr_gp
+                            on usr.code = usr_gp.user_code and usr_gp.is_private = 0
+                 inner join t_sys_group_role gp_role
+                            on usr_gp.group_code = gp_role.group_code and gp_role.is_private = 0
+                 inner join t_sys_role role
+                            on gp_role.role_code = role.code
+        where usr.code = #{userCode};
+    </select>
+    <select id="getPrivateRoles" parameterType="java.lang.String" resultMap="BaseDetailMap">
+        select role.code         as code,
+               role.name         as name,
+               role.parent_code  as parent_code,
+               role.is_private   as is_private,
+               usr_gp.user_code  as user_code,
+               usr_gp.group_code as group_code
+        from t_sys_user usr
+                 inner join t_sys_user_group usr_gp
+                            on usr.code = usr_gp.user_code and usr_gp.is_private = 1
+                 inner join t_sys_group_role gp_role
+                            on usr_gp.group_code = gp_role.group_code and gp_role.is_private = 1
+                 inner join t_sys_role role
+                            on gp_role.role_code = role.code
+        where usr.code = #{userCode};
+    </select>
+    <select id="getAllRoles" parameterType="java.lang.String" resultMap="BaseDetailMap">
+        select role.code         as code,
+               role.name         as name,
+               role.parent_code  as parent_code,
+               role.is_private   as is_private,
+               usr_gp.user_code  as user_code,
+               usr_gp.group_code as group_code
+        from t_sys_user usr
+                 inner join t_sys_user_group usr_gp
+                            on usr.code = usr_gp.user_code
+                 inner join t_sys_group_role gp_role
+                            on usr_gp.group_code = gp_role.group_code
+                 inner join t_sys_role role
+                            on gp_role.role_code = role.code
+        where usr.code = #{userCode};
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from t_sys_role
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <delete id="deleteByCode" parameterType="java.lang.String">
+        delete
+        from t_sys_role
+        where code = #{code,jdbcType=VARCHAR}
+    </delete>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pandaz.usercenter.entity.RoleEntity">
+        update t_sys_role
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="parentCode != null">
+                parent_code = #{parentCode,jdbcType=VARCHAR},
+            </if>
+            <if test="isPrivate != null">
+                is_private = #{isPrivate,jdbcType=TINYINT},
+            </if>
+            <if test="createdBy != null">
+                created_by = #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDate != null">
+                created_date = #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedBy != null">
+                updated_by = #{updatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedDate != null">
+                updated_date = #{updatedDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deletedBy != null">
+                deleted_by = #{deletedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="deletedDate != null">
+                deleted_date = #{deletedDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deletedFlag != null">
+                deleted_flag = #{deletedFlag,jdbcType=TINYINT},
+            </if>
+            <if test="locked != null">
+                locked = #{locked,jdbcType=TINYINT},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pandaz.usercenter.entity.RoleEntity">
+        update t_sys_role
+        set name         = #{name,jdbcType=VARCHAR},
+            code         = #{code,jdbcType=VARCHAR},
+            parent_code  = #{parentCode,jdbcType=VARCHAR},
+            is_private   = #{isPrivate,jdbcType=TINYINT},
+            created_by   = #{createdBy,jdbcType=VARCHAR},
+            created_date = #{createdDate,jdbcType=TIMESTAMP},
+            updated_by   = #{updatedBy,jdbcType=VARCHAR},
+            updated_date = #{updatedDate,jdbcType=TIMESTAMP},
+            deleted_by   = #{deletedBy,jdbcType=VARCHAR},
+            deleted_date = #{deletedDate,jdbcType=TIMESTAMP},
+            deleted_flag = #{deletedFlag,jdbcType=TINYINT},
+            locked       = #{locked,jdbcType=TINYINT},
+            version      = #{version,jdbcType=INTEGER}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <select id="findByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_sys_role where code=#{code}
+    </select>
+</mapper>

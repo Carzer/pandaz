@@ -1,0 +1,20 @@
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/Carzer/pandaz-repository
+          search-paths: /config/**
+          username: hongqun1987@163.com
+          password: 1987h1020
+
+#eureka服务
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8888/eurekaServer/eureka/
+
+#自定义属性
+custom:
+  #项目基础包
+  projectPackage: com.pandaz

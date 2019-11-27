@@ -1,0 +1,13 @@
+#服务信息
+server:
+  port: 8888
+  servlet:
+    context-path: /eurekaServer
+#当前配置环境
+spring:
+  profiles:
+    active: dev
+  application:
+    name: pandaz-eureka-server
+
+

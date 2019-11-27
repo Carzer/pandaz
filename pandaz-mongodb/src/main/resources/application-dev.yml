@@ -1,0 +1,24 @@
+#eureka服务
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8888/eurekaServer/eureka/
+
+
+#mongodb配置
+mongodb:
+  primary:
+    host: 10.135.12.156:37017
+    name: test
+    user:
+    pwd:
+  secondary:
+    host: 10.135.12.156:37017
+    name: test
+    user:
+    pwd:
+
+#自定义属性
+custom:
+  #项目基础包
+  projectPackage: com.pandaz

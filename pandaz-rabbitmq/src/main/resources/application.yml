@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: pandaz-rabbitmq
+  #允许多个bean调用同一个服务
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    active: dev
+server:
+  port: 9004
