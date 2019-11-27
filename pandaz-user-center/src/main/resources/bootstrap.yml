@@ -11,3 +11,9 @@ spring:
     allow-bean-definition-overriding: true
   profiles:
     active: dev
+  cloud:
+    nacos:
+      config:
+        server-addr: 10.211.55.3:8848
+        prefix: ${spring.application.name}
+        file-extension: yaml

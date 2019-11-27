@@ -1,5 +1,6 @@
 package com.pandaz.task;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -14,10 +15,13 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
+@Slf4j
 public class TaskApp {
 
     public static void main(String[] args) {
         SpringApplication.run(TaskApp.class, args);
+        String repeat = "=".repeat(20);
+        log.warn("{} TaskApp 启动成功 {}",repeat,repeat);
     }
 
 }

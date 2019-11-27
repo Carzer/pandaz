@@ -1,19 +1,16 @@
+server:
+  port: 7777
 spring:
+  application:
+    name: pandaz-api-gateway
+  #允许多个bean调用同一个服务
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    active: dev
   cloud:
-    config:
-      #单点
-      uri: http://localhost:9999/configServer/
-      #高可用(高可用时eureka的相关配置必须配置在这里)
-      #      discovery:
-      #        enabled: true
-      #        service-id: pandaz-config-server
-      #profile
-      profile: test
-      #分支
-      label: master
-
-#configServer 高可用配置时启用
-#eureka:
-#  client:
-#    serviceUrl:
-#      defaultZone: http://localhost:8888/eurekaServer/eureka/
+    nacos:
+      config:
+        server-addr: 10.211.55.3:8848
+        prefix: ${spring.application.name}
+        file-extension: yaml

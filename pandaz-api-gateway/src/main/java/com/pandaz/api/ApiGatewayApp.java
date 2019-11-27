@@ -1,5 +1,6 @@
 package com.pandaz.api;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
@@ -21,10 +22,13 @@ import java.util.List;
  */
 @SpringBootApplication
 @EnableZuulProxy
+@Slf4j
 @SuppressWarnings("unchecked")
 public class ApiGatewayApp {
     public static void main(String[] args) {
         SpringApplication.run(ApiGatewayApp.class, args);
+        String repeat = "=".repeat(20);
+        log.warn("{} ApiGatewayApp 启动成功 {}", repeat, repeat);
     }
 
     /**

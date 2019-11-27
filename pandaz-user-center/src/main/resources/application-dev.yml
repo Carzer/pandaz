@@ -1,4 +1,9 @@
 spring:
+  cloud:
+    #nacos
+    nacos:
+      discovery:
+        server-addr: 10.211.55.3:8848
   #数据库配置
   datasource:
     url: jdbc:mysql://172.16.2.130:3306/pandaz?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
@@ -43,22 +48,6 @@ pagehelper:
   reasonable: true
   supportMethodsArguments: true
   params: count=countSql
-
-#eureka服务
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8888/eurekaServer/eureka/
-
-#feign开启hystrix支持
-feign:
-  client:
-    config:
-      default:
-        connectTimeout: 5000
-        readTimeout: 5000
-  hystrix:
-    enabled: true
 
 #自定义属性
 custom:

@@ -1,9 +1,9 @@
-#eureka服务
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8888/eurekaServer/eureka/
-
+spring:
+  cloud:
+    #nacos
+    nacos:
+      discovery:
+        server-addr: 10.211.55.3:8848
 
 #mongodb配置
 mongodb:

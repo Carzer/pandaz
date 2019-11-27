@@ -1,14 +1,9 @@
-#eureka服务
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8888/eurekaServer/eureka/
-#  instance:
-#    status-page-url-path: ${server.servlet.context-path}/actuator/info
-#    health-check-url-path: ${server.servlet.context-path}/actuator/health
-#    metadata-map:
-#      management:
-#        context-path: ${server.servlet.context-path}/actuator
+spring:
+  cloud:
+    #nacos
+    nacos:
+      discovery:
+        server-addr: 10.211.55.3:8848
 
 #自定义属性
 custom:

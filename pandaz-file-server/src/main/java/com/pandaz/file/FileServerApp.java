@@ -1,5 +1,6 @@
 package com.pandaz.file;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -14,8 +15,11 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
+@Slf4j
 public class FileServerApp {
     public static void main(String[] args) {
         SpringApplication.run(FileServerApp.class, args);
+        String repeat = "=".repeat(20);
+        log.warn("{} FileServerApp 启动成功 {}", repeat, repeat);
     }
 }

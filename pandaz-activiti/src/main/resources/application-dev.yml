@@ -1,4 +1,9 @@
 spring:
+  cloud:
+    #nacos
+    nacos:
+      discovery:
+        server-addr: 10.211.55.3:8848
   #数据库配置
   datasource:
     url: jdbc:mysql://172.16.2.130:3306/activiti?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
@@ -30,12 +35,6 @@ spring:
     JdbcPingEnabled: true
     #    连接无用检查并连接间隔，单位毫秒
     JdbcPingConnectionNotUsedFor: 3600000
-
-#eureka服务
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8888/eurekaServer/eureka/
 
 #自定义属性
 custom:

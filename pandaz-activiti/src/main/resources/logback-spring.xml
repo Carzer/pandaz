@@ -135,14 +135,15 @@
 
     <!--logger-->
     <logger name="org.springframework" level="INFO"/>
+    <logger name="com.alibaba.nacos" level="ERROR"/>
     <springProfile name="dev">
         <logger name="${customProjectPackage}" level="DEBUG"/>
     </springProfile>
     <springProfile name="test">
-        <logger name="${customProjectPackage}" level="DEBUG"/>
+        <logger name="${customProjectPackage}" level="INFO"/>
     </springProfile>
     <springProfile name="prod">
-        <logger name="${customProjectPackage}" level="INFO"/>
+        <logger name="${customProjectPackage}" level="ERROR"/>
     </springProfile>
 
     <root level="INFO">

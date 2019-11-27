@@ -1,4 +1,9 @@
 spring:
+  cloud:
+    #nacos
+    nacos:
+      discovery:
+        server-addr: 10.211.55.3:8848
   #redis配置
   redis:
     timeout: 6000ms
@@ -16,12 +21,6 @@ spring:
     sentinel:
       master: mymaster
       nodes: 172.16.2.130:26380,172.16.2.130:26381,172.16.2.130:26382
-
-#eureka服务
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8888/eurekaServer/eureka/
 
 #自定义属性
 custom:

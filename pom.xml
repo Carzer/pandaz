@@ -39,6 +39,8 @@
         <mybatis-starter.version>2.0.1</mybatis-starter.version>
         <spring.security.version>2.3.6.RELEASE</spring.security.version>
         <spring.security.jwt.version>1.0.11.RELEASE</spring.security.jwt.version>
+        <nacos.dependency.version>0.9.0.RELEASE</nacos.dependency.version>
+        <sentinel.dependency.version>0.9.0.RELEASE</sentinel.dependency.version>
     </properties>
 
     <modules>
@@ -50,10 +52,6 @@
         <module>pandaz-task</module>
         <!--用户中心-->
         <module>pandaz-user-center</module>
-        <!--负载server-->
-        <module>pandaz-eureka-server</module>
-        <!--配置中心-->
-        <module>pandaz-config-server</module>
         <!--Redis服务-->
         <module>pandaz-redis</module>
         <!--MongoDB服务-->
@@ -152,6 +150,23 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- nacos -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-alibaba-nacos-discovery</artifactId>
+            <version>${nacos.dependency.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+            <version>${nacos.dependency.version}</version>
+        </dependency>
+        <!--sentinel-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+            <version>${sentinel.dependency.version}</version>
         </dependency>
 
     </dependencies>

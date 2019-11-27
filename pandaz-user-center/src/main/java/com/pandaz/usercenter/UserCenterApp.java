@@ -37,7 +37,7 @@ public class UserCenterApp {
     public static void main(String[] args) {
         SpringApplication.run(UserCenterApp.class, args);
         String repeat = "=".repeat(20);
-        log.warn("{} UserCenter 启动成功 {}",repeat,repeat);
+        log.warn("{} UserCenter 启动成功 {}", repeat, repeat);
     }
 
     @Bean

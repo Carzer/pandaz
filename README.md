@@ -1,17 +1,16 @@
 # This is PandaZ
 
     作者：Carzer
-    版本：v1.0
-    时间：2019年11月05日
+    版本：v1.1
+    时间：2019年11月27日
 
 ## 简介
 基于Java11、spring boot 2.1.7、spring cloud Greenwich.RELEASE
 
-- 使用Eureka作为服务注册中心(8888端口)
+- 使用Nacos作为服务注册中心、分布式配置中心
 - 使用Feign消费微服务
-- 使用Hystrix作为断路器
+- 使用Sentinel作为断路器
 - 使用Spring zuul作为网关(7777端口)
-- 使用Spring config作为分布式配置中心(9999端口)
 
 ## 微服务列表
 ### 1、用户中心(权限完善中)
