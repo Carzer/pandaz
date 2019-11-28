@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.service.impl;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.page.PageMethod;
 import com.pandaz.commons.util.CustomPasswordEncoder;
@@ -187,6 +188,7 @@ public class UserServiceImpl implements UserService {
      * Date: 2019/10/28 13:53
      */
     @Override
+    @SentinelResource("user-getPage")
     public Page<UserEntity> getPage(UserEntity user) {
         Page<UserEntity> page = PageMethod.startPage(user.getPageNum(), user.getPageSize(), true);
         userMapper.findList(user);

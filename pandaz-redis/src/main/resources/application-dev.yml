@@ -4,6 +4,10 @@ spring:
     nacos:
       discovery:
         server-addr: 10.211.55.3:8848
+    #sentinel
+    sentinel:
+      transport:
+        dashboard: 10.211.55.3:8787
   #redis配置
   redis:
     timeout: 6000ms
