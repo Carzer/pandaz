@@ -1,16 +1,16 @@
-package com.pandaz.usercenter.dto;
+package com.pandaz.commons.dto.usercenter;
 
 import com.pandaz.commons.dto.BaseDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * pandaz:com.pandaz.usercenter.entity
+ * pandaz:com.pandaz.commons.dto.usercenter
  * <p>
  * 系统信息
  *
  * @author Carzer
- * Date: 2019-10-25 15:04
+ * @date 2019-10-25 15:04
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

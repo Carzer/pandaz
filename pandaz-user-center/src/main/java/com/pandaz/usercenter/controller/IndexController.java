@@ -28,7 +28,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 默认controller
  *
  * @author Carzer
- * Date: 2019-07-17 15:20
+ * @date 2019-07-17 15:20
  */
 @RestController
 @RequestMapping("/")
@@ -59,7 +59,7 @@ public class IndexController {
      * @param principal principal
      * @return com.pandaz.commons.util.ExecuteResult<java.security.Principal>
      * @author Carzer
-     * Date: 2019/10/28 13:46
+     * @date 2019/10/28 13:46
      */
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
@@ -75,7 +75,7 @@ public class IndexController {
      * @param value value
      * @return com.pandaz.commons.util.ExecuteResult<java.lang.String>
      * @author Carzer
-     * Date: 2019/10/28 13:46
+     * @date 2019/10/28 13:46
      */
     @GetMapping("/testRedis")
     public ExecuteResult<String> testRedis(String value) {
@@ -96,7 +96,7 @@ public class IndexController {
      *
      * @return com.pandaz.commons.util.ExecuteResult<java.util.List>
      * @author Carzer
-     * Date: 2019/10/28 13:46
+     * @date 2019/10/28 13:46
      */
     @GetMapping("/getAllUrl")
     public List getAllUrl() {
@@ -141,7 +141,7 @@ public class IndexController {
      * @param file file
      * @return java.lang.String
      * @author Carzer
-     * Date: 2019/10/28 13:47
+     * @date 2019/10/28 13:47
      */
     @PostMapping("/upload")
     public String upload(MultipartFile file) {

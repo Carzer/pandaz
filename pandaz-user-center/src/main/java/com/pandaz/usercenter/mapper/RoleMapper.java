@@ -15,7 +15,7 @@ import java.util.List;
  * 角色mapper
  *
  * @author Carzer
- * Date: 2019-10-23 10:52
+ * @date 2019-10-23 10:52
  */
 @Mapper
 @Repository
@@ -27,7 +27,7 @@ public interface RoleMapper extends BaseMapper<RoleEntity> {
      * @param role 角色
      * @return int
      * @author Carzer
-     * Date: 2019/10/23 16:05
+     * @date 2019/10/23 16:05
      */
     int insert(RoleEntity role);
 
@@ -37,7 +37,7 @@ public interface RoleMapper extends BaseMapper<RoleEntity> {
      * @param role 角色
      * @return int
      * @author Carzer
-     * Date: 2019/10/23 16:05
+     * @date 2019/10/23 16:05
      */
     int insertSelective(RoleEntity role);
 
@@ -47,7 +47,7 @@ public interface RoleMapper extends BaseMapper<RoleEntity> {
      * @param userCode 用户编码
      * @return java.util.List<com.pandaz.usercenter.entity.RoleEntity>
      * @author Carzer
-     * Date: 2019/10/25 09:29
+     * @date 2019/10/25 09:29
      */
     List<RoleDetailEntity> getPublicRoles(@Value("userCode") String userCode);
 
@@ -57,7 +57,7 @@ public interface RoleMapper extends BaseMapper<RoleEntity> {
      * @param userCode 用户编码
      * @return java.util.List<com.pandaz.usercenter.entity.RoleEntity>
      * @author Carzer
-     * Date: 2019/10/25 09:29
+     * @date 2019/10/25 09:29
      */
     List<RoleDetailEntity> getPrivateRoles(@Value("userCode") String userCode);
 
@@ -67,7 +67,7 @@ public interface RoleMapper extends BaseMapper<RoleEntity> {
      * @param userCode 用户编码
      * @return java.util.List<com.pandaz.usercenter.entity.RoleEntity>
      * @author Carzer
-     * Date: 2019/10/25 09:29
+     * @date 2019/10/25 09:29
      */
     List<RoleDetailEntity> getAllRoles(@Value("userCode") String userCode);
 
@@ -77,7 +77,7 @@ public interface RoleMapper extends BaseMapper<RoleEntity> {
      * @param id id
      * @return int
      * @author Carzer
-     * Date: 2019/9/9 09:21
+     * @date 2019/9/9 09:21
      */
     int deleteByPrimaryKey(@Value("id") String id);
 
@@ -87,7 +87,7 @@ public interface RoleMapper extends BaseMapper<RoleEntity> {
      * @param code code
      * @return int
      * @author Carzer
-     * Date: 2019/10/25 15:43
+     * @date 2019/10/25 15:43
      */
     int deleteByCode(@Value("code") String code);
 
@@ -97,7 +97,7 @@ public interface RoleMapper extends BaseMapper<RoleEntity> {
      * @param role role
      * @return int
      * @author Carzer
-     * Date: 2019/9/9 10:06
+     * @date 2019/9/9 10:06
      */
     int updateByPrimaryKeySelective(RoleEntity role);
 
@@ -107,7 +107,7 @@ public interface RoleMapper extends BaseMapper<RoleEntity> {
      * @param role role
      * @return int
      * @author Carzer
-     * Date: 2019/9/9 10:06
+     * @date 2019/9/9 10:06
      */
     int updateByPrimaryKey(RoleEntity role);
 

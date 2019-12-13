@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pandaz.usercenter.mapper.GroupMapper">
-    <resultMap id="BaseResultMap" type="com.pandaz.usercenter.entity.GroupEntity">
+<mapper namespace="com.pandaz.usercenter.mapper.OrganizationMapper">
+    <resultMap id="BaseResultMap" type="com.pandaz.usercenter.entity.OrganizationEntity">
         <result column="id" jdbcType="VARCHAR" property="id"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="code" jdbcType="VARCHAR" property="code"/>
         <result column="parent_code" jdbcType="VARCHAR" property="parentCode"/>
-        <result column="is_private" jdbcType="TINYINT" property="isPrivate"/>
+        <result column="icon" jdbcType="VARCHAR" property="icon"/>
+        <result column="sorting" jdbcType="INTEGER" property="sorting"/>
+        <result column="level" jdbcType="INTEGER" property="level"/>
+        <result column="is_leaf_node" jdbcType="TINYINT" property="isLeafNode"/>
         <result column="created_by" jdbcType="VARCHAR" property="createdBy"/>
         <result column="created_date" jdbcType="TIMESTAMP" property="createdDate"/>
         <result column="updated_by" jdbcType="VARCHAR" property="updatedBy"/>
@@ -17,27 +20,22 @@
         <result column="locked" jdbcType="TINYINT" property="locked"/>
         <result column="version" jdbcType="INTEGER" property="version"/>
     </resultMap>
-    <sql id="Base_Column_List">
-        id, name, code,
-        parent_code, is_private, created_by,
-        created_date, updated_by, updated_date,
-        deleted_by, deleted_date, deleted_flag,
-        locked, version
-    </sql>
-    <insert id="insert" parameterType="com.pandaz.usercenter.entity.GroupEntity">
-        insert into t_sys_group (id, name, code,
-        parent_code, is_private, created_by,
+    <insert id="insert" parameterType="com.pandaz.usercenter.entity.OrganizationEntity">
+        insert into t_sys_organization (id, name, code,
+        parent_code, icon, sorting,
+        level, is_leaf_node, created_by,
         created_date, updated_by, updated_date,
         deleted_by, deleted_date, deleted_flag,
         locked, version)
         values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
-        #{parentCode,jdbcType=VARCHAR}, #{isPrivate,jdbcType=TINYINT}, #{createdBy,jdbcType=VARCHAR},
+        #{parentCode,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, #{sorting,jdbcType=INTEGER},
+        #{level,jdbcType=INTEGER}, #{isLeafNode,jdbcType=TINYINT}, #{createdBy,jdbcType=VARCHAR},
         #{createdDate,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, #{updatedDate,jdbcType=TIMESTAMP},
         #{deletedBy,jdbcType=VARCHAR}, #{deletedDate,jdbcType=TIMESTAMP}, #{deletedFlag,jdbcType=TINYINT},
         #{locked,jdbcType=TINYINT}, #{version,jdbcType=INTEGER})
     </insert>
-    <insert id="insertSelective" parameterType="com.pandaz.usercenter.entity.GroupEntity">
-        insert into t_sys_group
+    <insert id="insertSelective" parameterType="com.pandaz.usercenter.entity.OrganizationEntity">
+        insert into t_sys_organization
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
@@ -51,8 +49,17 @@
             <if test="parentCode != null">
                 parent_code,
             </if>
-            <if test="isPrivate != null">
-                is_private,
+            <if test="icon != null">
+                icon,
+            </if>
+            <if test="sorting != null">
+                sorting,
+            </if>
+            <if test="level != null">
+                level,
+            </if>
+            <if test="isLeafNode != null">
+                is_leaf_node,
             </if>
             <if test="createdBy != null">
                 created_by,
@@ -95,8 +102,17 @@
             <if test="parentCode != null">
                 #{parentCode,jdbcType=VARCHAR},
             </if>
-            <if test="isPrivate != null">
-                #{isPrivate,jdbcType=TINYINT},
+            <if test="icon != null">
+                #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="sorting != null">
+                #{sorting,jdbcType=INTEGER},
+            </if>
+            <if test="level != null">
+                #{level,jdbcType=INTEGER},
+            </if>
+            <if test="isLeafNode != null">
+                #{isLeafNode,jdbcType=TINYINT},
             </if>
             <if test="createdBy != null">
                 #{createdBy,jdbcType=VARCHAR},
@@ -127,64 +143,4 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.pandaz.usercenter.entity.GroupEntity">
-        update t_sys_group
-        <set>
-            <if test="name != null">
-                name = #{name,jdbcType=VARCHAR},
-            </if>
-            <if test="code != null">
-                code = #{code,jdbcType=VARCHAR},
-            </if>
-            <if test="parentCode != null">
-                parent_code = #{parentCode,jdbcType=VARCHAR},
-            </if>
-            <if test="isPrivate != null">
-                is_private = #{isPrivate,jdbcType=TINYINT},
-            </if>
-            <if test="createdBy != null">
-                created_by = #{createdBy,jdbcType=VARCHAR},
-            </if>
-            <if test="createdDate != null">
-                created_date = #{createdDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="updatedBy != null">
-                updated_by = #{updatedBy,jdbcType=VARCHAR},
-            </if>
-            <if test="updatedDate != null">
-                updated_date = #{updatedDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="deletedBy != null">
-                deleted_by = #{deletedBy,jdbcType=VARCHAR},
-            </if>
-            <if test="deletedDate != null">
-                deleted_date = #{deletedDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="deletedFlag != null">
-                deleted_flag = #{deletedFlag,jdbcType=TINYINT},
-            </if>
-            <if test="locked != null">
-                locked = #{locked,jdbcType=TINYINT},
-            </if>
-            <if test="version != null">
-                version = #{version,jdbcType=INTEGER},
-            </if>
-        </set>
-        where id = #{id,jdbcType=VARCHAR}
-    </update>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-        delete
-        from t_sys_group
-        where id = #{id,jdbcType=VARCHAR}
-    </delete>
-    <delete id="deleteByCode" parameterType="java.lang.String">
-        delete
-        from t_sys_group
-        where code = #{code,jdbcType=VARCHAR}
-    </delete>
-    <select id="findByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from t_sys_group where code=#{code}
-    </select>
 </mapper>

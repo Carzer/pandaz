@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 消息发送
  *
  * @author Carzer
- * Date: 2019-10-09 13:29
+ * @date 2019-10-09 13:29
  */
 @RestController
 public class SendController {
@@ -29,7 +29,7 @@ public class SendController {
      *
      * @param message message
      * @author Carzer
-     * Date: 2019/10/9 16:39
+     * @date 2019/10/9 16:39
      */
     @GetMapping("/send")
     public void send(@RequestParam String message) {

@@ -53,19 +53,19 @@
     </sql>
     <insert id="insert" parameterType="com.pandaz.usercenter.entity.UserEntity">
         insert into t_sys_user (id, name, code,
-                                login_name, password, gender,
-                                user_type, email, phone,
-                                created_by, created_date, updated_by,
-                                updated_date, deleted_by, deleted_date,
-                                deleted_flag, locked, expire_at,
-                                version)
+        login_name, password, gender,
+        user_type, email, phone,
+        created_by, created_date, updated_by,
+        updated_date, deleted_by, deleted_date,
+        deleted_flag, locked, expire_at,
+        version)
         values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
-                #{loginName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT},
-                #{userType,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
-                #{createdBy,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR},
-                #{updatedDate,jdbcType=TIMESTAMP}, #{deletedBy,jdbcType=VARCHAR}, #{deletedDate,jdbcType=TIMESTAMP},
-                #{deletedFlag,jdbcType=TINYINT}, #{locked,jdbcType=TINYINT}, #{expireAt,jdbcType=TIMESTAMP},
-                #{version,jdbcType=INTEGER})
+        #{loginName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT},
+        #{userType,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+        #{createdBy,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR},
+        #{updatedDate,jdbcType=TIMESTAMP}, #{deletedBy,jdbcType=VARCHAR}, #{deletedDate,jdbcType=TIMESTAMP},
+        #{deletedFlag,jdbcType=TINYINT}, #{locked,jdbcType=TINYINT}, #{expireAt,jdbcType=TIMESTAMP},
+        #{version,jdbcType=INTEGER})
     </insert>
     <insert id="insertSelective" parameterType="com.pandaz.usercenter.entity.UserEntity">
         insert into t_sys_user
@@ -247,23 +247,23 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="com.pandaz.usercenter.entity.UserEntity">
         update t_sys_user
-        set name         = #{name,jdbcType=VARCHAR},
-            code         = #{code,jdbcType=VARCHAR},
-            login_name   = #{loginName,jdbcType=VARCHAR},
-            password     = #{password,jdbcType=VARCHAR},
-            user_type    = #{userType,jdbcType=VARCHAR},
-            email        = #{email,jdbcType=VARCHAR},
-            phone        = #{phone,jdbcType=VARCHAR},
-            created_by   = #{createdBy,jdbcType=VARCHAR},
-            created_date = #{createdDate,jdbcType=TIMESTAMP},
-            updated_by   = #{updatedBy,jdbcType=VARCHAR},
-            updated_date = #{updatedDate,jdbcType=TIMESTAMP},
-            deleted_by   = #{deletedBy,jdbcType=VARCHAR},
-            deleted_date = #{deletedDate,jdbcType=TIMESTAMP},
-            deleted_flag = #{deletedFlag,jdbcType=TINYINT},
-            locked       = #{locked,jdbcType=TINYINT},
-            expire_at    = #{expireAt,jdbcType=TIMESTAMP},
-            version      = #{version,jdbcType=INTEGER}
+        set name = #{name,jdbcType=VARCHAR},
+        code = #{code,jdbcType=VARCHAR},
+        login_name = #{loginName,jdbcType=VARCHAR},
+        password = #{password,jdbcType=VARCHAR},
+        user_type = #{userType,jdbcType=VARCHAR},
+        email = #{email,jdbcType=VARCHAR},
+        phone = #{phone,jdbcType=VARCHAR},
+        created_by = #{createdBy,jdbcType=VARCHAR},
+        created_date = #{createdDate,jdbcType=TIMESTAMP},
+        updated_by = #{updatedBy,jdbcType=VARCHAR},
+        updated_date = #{updatedDate,jdbcType=TIMESTAMP},
+        deleted_by = #{deletedBy,jdbcType=VARCHAR},
+        deleted_date = #{deletedDate,jdbcType=TIMESTAMP},
+        deleted_flag = #{deletedFlag,jdbcType=TINYINT},
+        locked = #{locked,jdbcType=TINYINT},
+        expire_at = #{expireAt,jdbcType=TIMESTAMP},
+        version = #{version,jdbcType=INTEGER}
         where id = #{id,jdbcType=VARCHAR}
     </update>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 默认controller
  *
  * @author Carzer
- * Date: 2019-07-18 15:32
+ * @date 2019-07-18 15:32
  */
 @RestController
 @RequestMapping("/")
@@ -31,7 +31,7 @@ public class IndexController {
      *
      * @return java.lang.String
      * @author Carzer
-     * Date: 2019-07-29 10:49
+     * @date 2019-07-29 10:49
      */
     @GetMapping("/dc")
     public String dc() {

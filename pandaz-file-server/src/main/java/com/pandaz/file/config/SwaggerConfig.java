@@ -17,7 +17,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * Swagger2 配置类
  *
  * @author Carzer
- * Date: 2019-07-22
+ * @date 2019-07-22
  */
 @Configuration
 @EnableSwagger2
@@ -31,7 +31,7 @@ public class SwaggerConfig {
      *
      * @return springfox.documentation.spring.web.plugins.Docket
      * @author Carzer
-     * Date: 2019-07-22 15:52
+     * @date 2019-07-22 15:52
      */
     @Bean
     public Docket createRestApi() {
@@ -49,7 +49,7 @@ public class SwaggerConfig {
      *
      * @return springfox.documentation.service.ApiInfo
      * @author Carzer
-     * Date: 2019-07-22 15:53
+     * @date 2019-07-22 15:53
      */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()

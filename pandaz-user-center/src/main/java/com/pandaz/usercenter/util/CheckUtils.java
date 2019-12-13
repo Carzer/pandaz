@@ -16,7 +16,7 @@ import java.lang.reflect.Method;
  * 编码检查工具
  *
  * @author Carzer
- * Date: 2019-11-25 14:04
+ * @date 2019-11-25 14:04
  */
 @Component
 @Slf4j
@@ -32,7 +32,7 @@ public class CheckUtils<E extends BaseEntity, M> {
      * @param suffix   id后缀
      * @return java.lang.String
      * @author Carzer
-     * Date: 2019/11/25 15:41
+     * @date 2019/11/25 15:41
      */
     public String checkOrSetCode(E entity, M mapper, String errorMsg, String prefix, String suffix) {
         String newCode;

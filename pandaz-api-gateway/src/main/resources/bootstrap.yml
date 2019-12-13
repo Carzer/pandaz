@@ -11,6 +11,6 @@ spring:
   cloud:
     nacos:
       config:
-        server-addr: 10.211.55.3:8848
+        server-addr: 172.16.2.130:8848
         prefix: ${spring.application.name}
         file-extension: yaml

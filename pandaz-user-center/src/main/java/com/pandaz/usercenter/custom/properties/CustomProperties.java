@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * 自定义属性
  *
  * @author Carzer
- * Date: 2019-11-04 16:36
+ * @date 2019-11-04 16:36
  */
 @Getter
 @Setter

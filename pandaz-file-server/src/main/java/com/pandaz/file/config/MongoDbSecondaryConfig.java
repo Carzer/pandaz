@@ -1,4 +1,4 @@
-package com.pandaz.mongodb.config;
+package com.pandaz.file.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.gridfs.GridFsTemplate;
  * mongoDB配置
  *
  * @author Carzer
- * Date: 2019-07-16
+ * @date 2019-07-16
  */
 @Configuration
 @AutoConfigureAfter(MongoDbSecondaryConfig.class)
@@ -31,7 +31,7 @@ public class MongoDbSecondaryConfig {
      *
      * @return org.springframework.data.mongodb.MongoDbFactory
      * @author Carzer
-     * Date: 2019-07-16 15:14
+     * @date 2019-07-16 15:14
      */
     @Bean(name = "mongoDbSecondaryFactory")
     public MongoDbFactory mongoDbSecondaryFactory() {
@@ -44,7 +44,7 @@ public class MongoDbSecondaryConfig {
      * @param mongoDbSecondaryFactory factory
      * @return org.springframework.data.mongodb.core.MongoTemplate
      * @author Carzer
-     * Date: 2019-07-16 15:15
+     * @date 2019-07-16 15:15
      */
     @Bean(name = "mongoSecondaryTemplate")
     public MongoTemplate mongoSecondaryTemplate(@Qualifier("mongoDbSecondaryFactory") MongoDbFactory mongoDbSecondaryFactory) {
@@ -58,7 +58,7 @@ public class MongoDbSecondaryConfig {
      * @param mongoSecondaryTemplate  template
      * @return org.springframework.data.mongodb.gridfs.GridFsTemplate
      * @author Carzer
-     * Date: 2019-07-16 15:15
+     * @date 2019-07-16 15:15
      */
     @Bean(name = "gridFsSecondaryTemplate")
     public GridFsTemplate gridFsSecondaryTemplate(@Qualifier("mongoDbSecondaryFactory") MongoDbFactory mongoDbSecondaryFactory, @Qualifier("mongoSecondaryTemplate") MongoTemplate mongoSecondaryTemplate) {

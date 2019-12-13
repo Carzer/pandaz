@@ -18,7 +18,7 @@ import java.io.PrintWriter;
  * LoginSuccessHandler
  *
  * @author Carzer
- * Date: 2019-08-22 09:09
+ * @date 2019-08-22 09:09
  */
 @Slf4j
 public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {

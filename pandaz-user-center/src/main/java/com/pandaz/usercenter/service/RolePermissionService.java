@@ -8,7 +8,7 @@ import com.pandaz.usercenter.entity.RolePermissionEntity;
  * 角色-权限服务
  *
  * @author Carzer
- * Date: 2019-11-06 10:16
+ * @date 2019-11-06 10:16
  */
 public interface RolePermissionService {
 
@@ -18,7 +18,7 @@ public interface RolePermissionService {
      * @param rolePermission	rolePermission
      * @return int
      * @author Carzer
-     * Date: 2019/11/6 10:19
+     * @date 2019/11/6 10:19
      */
     int insert(RolePermissionEntity rolePermission);
 }

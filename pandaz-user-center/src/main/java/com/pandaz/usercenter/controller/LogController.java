@@ -18,7 +18,7 @@ import java.util.Map;
  * 动态修改日志级别
  *
  * @author Carzer
- * Date: 2019-07-17 15:20
+ * @date 2019-07-17 15:20
  */
 @RestController
 @PreAuthorize("hasRole('ADMIN')")
@@ -35,7 +35,7 @@ public class LogController {
      *            }
      * @return java.lang.String
      * @author Carzer
-     * Date: 2019/10/25 13:55
+     * @date 2019/10/25 13:55
      */
     @PutMapping(value = "/logLevel")
     public ExecuteResult<String> changeLogLevel(@RequestBody Map<String, String> map) {

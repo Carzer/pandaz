@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
  * 权限
  *
  * @author Carzer
- * Date: 2019-11-10
+ * @date 2019-11-10
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -29,6 +29,11 @@ public class PermissionEntity extends BaseEntity<PermissionEntity> {
     private String code;
 
     /**
+     * 系统编码
+     */
+    private String osCode;
+
+    /**
      * 菜单编码
      */
     private String menuCode;
@@ -40,6 +45,7 @@ public class PermissionEntity extends BaseEntity<PermissionEntity> {
 
     /**
      * 请求类型get\post\put\delete
+     * {@link com.pandaz.usercenter.custom.constants.PermissionConstants}
      */
     private Byte requestType;
 
@@ -52,5 +58,11 @@ public class PermissionEntity extends BaseEntity<PermissionEntity> {
      * 位运算结果
      */
     private Integer bitResult;
+
+    /**
+     * 权限级别，只有组织级别不大于权限级别，才可使用该权限
+     * {@link OrganizationEntity#level}
+     */
+    private Integer level;
 
 }

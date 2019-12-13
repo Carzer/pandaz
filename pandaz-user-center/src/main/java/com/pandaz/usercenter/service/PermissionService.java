@@ -8,7 +8,7 @@ import com.pandaz.usercenter.entity.PermissionEntity;
  * 权限相关服务
  *
  * @author Carzer
- * Date: 2019-11-05 16:02
+ * @date 2019-11-05 16:02
  */
 public interface PermissionService {
 
@@ -18,7 +18,7 @@ public interface PermissionService {
      * @param permission permission
      * @return com.pandaz.usercenter.entity.PermissionEntity
      * @author Carzer
-     * Date: 2019/11/5 16:07
+     * @date 2019/11/5 16:07
      */
     PermissionEntity insert(PermissionEntity permission);
 }

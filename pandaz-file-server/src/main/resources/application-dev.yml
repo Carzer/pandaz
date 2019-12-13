@@ -3,7 +3,24 @@ spring:
     #nacos
     nacos:
       discovery:
-        server-addr: 10.211.55.3:8848
+        server-addr: 172.16.2.130:8848
+    #sentinel
+    sentinel:
+      transport:
+        dashboard: 172.16.2.130:8787
+
+#mongodb配置
+mongodb:
+  primary:
+    host: 172.16.2.130:27017
+    name: admin
+    user:
+    pwd:
+  secondary:
+    host: 172.16.2.130:27017
+    name: admin
+    user:
+    pwd:
 
 #自定义属性
 custom:

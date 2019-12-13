@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
  * 系统信息服务
  *
  * @author Carzer
- * Date: 2019-11-01 15:06
+ * @date 2019-11-01 15:06
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -37,7 +37,7 @@ public class OsInfoServiceImpl implements OsInfoService {
      * @param osInfo osInfo
      * @return com.pandaz.usercenter.entity.OsInfoEntity
      * @author Carzer
-     * Date: 2019/11/1 15:10
+     * @date 2019/11/1 15:10
      */
     @Override
     public OsInfoEntity insert(OsInfoEntity osInfo) {

@@ -17,7 +17,7 @@ import java.io.PrintWriter;
  * 权限拒绝handler
  *
  * @author Carzer
- * Date: 2019-10-25 08:52
+ * @date 2019-10-25 08:52
  */
 @Slf4j
 public class AuthDeniedHandler implements AccessDeniedHandler {
@@ -29,7 +29,7 @@ public class AuthDeniedHandler implements AccessDeniedHandler {
      * @param httpServletResponse httpServletResponse
      * @param e                   e
      * @author Carzer
-     * Date: 2019/10/25 13:30
+     * @date 2019/10/25 13:30
      */
     @Override
     public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException {

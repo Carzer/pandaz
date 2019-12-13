@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
  * 权限相关服务
  *
  * @author Carzer
- * Date: 2019-11-05 16:07
+ * @date 2019-11-05 16:07
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -39,7 +39,7 @@ public class PermissionServiceImpl implements PermissionService {
      * @param permission permission
      * @return com.pandaz.usercenter.entity.PermissionEntity
      * @author Carzer
-     * Date: 2019/11/5 16:07
+     * @date 2019/11/5 16:07
      */
     @Override
     public PermissionEntity insert(PermissionEntity permission) {

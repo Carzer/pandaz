@@ -25,7 +25,7 @@ import java.util.List;
  * 组服务
  *
  * @author Carzer
- * Date: 2019-10-25 11:01
+ * @date 2019-10-25 11:01
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -57,7 +57,7 @@ public class GroupServiceImpl implements GroupService {
      * @param group group
      * @return int
      * @author Carzer
-     * Date: 2019/10/25 11:02
+     * @date 2019/10/25 11:02
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -96,7 +96,7 @@ public class GroupServiceImpl implements GroupService {
      * @param groupCode groupCode
      * @return int
      * @author Carzer
-     * Date: 2019/10/25 15:57
+     * @date 2019/10/25 15:57
      */
     @Override
     @Transactional(rollbackFor = Exception.class)

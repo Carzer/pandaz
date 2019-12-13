@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * WebMvc配置类
  *
  * @author Carzer
- * Date: 2019-07-22
+ * @date 2019-07-22
  */
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
@@ -20,7 +20,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
      *
      * @param registry ResourceHandlerRegistry
      * @author Carzer
-     * Date: 2019-07-22 15:55
+     * @date 2019-07-22 15:55
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

@@ -12,7 +12,7 @@ import java.util.List;
  * 菜单信息
  *
  * @author Carzer
- * Date: 2019-11-01 15:04
+ * @date 2019-11-01 15:04
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

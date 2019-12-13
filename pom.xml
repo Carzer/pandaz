@@ -17,7 +17,7 @@
     <developers>
         <developer>
             <name>Carzer</name>
-            <email>Carzer@hotmail.com</email>
+            <email>Carzer1020@163.com</email>
         </developer>
     </developers>
 
@@ -54,8 +54,6 @@
         <module>pandaz-user-center</module>
         <!--Redis服务-->
         <module>pandaz-redis</module>
-        <!--MongoDB服务-->
-        <module>pandaz-mongodb</module>
         <!--Rabbitmq服务-->
         <module>pandaz-rabbitmq</module>
         <!--文件服务-->

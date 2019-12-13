@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * TODO
  *
  * @author Carzer
- * Date: 2019-11-25 14:41
+ * @date 2019-11-25 14:41
  */
 public class PermissionTest extends BasisUnitTest {
     @Autowired

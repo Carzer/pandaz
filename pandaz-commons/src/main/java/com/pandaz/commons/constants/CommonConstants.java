@@ -6,7 +6,7 @@ package com.pandaz.commons.constants;
  * 通用常量
  *
  * @author Carzer
- * Date: 2019-10-25 14:22
+ * @date 2019-10-25 14:22
  */
 public final class CommonConstants {
 

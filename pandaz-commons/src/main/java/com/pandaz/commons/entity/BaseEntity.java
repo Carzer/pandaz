@@ -11,7 +11,7 @@ import java.util.Date;
  * 基础类
  *
  * @author Carzer
- * Date: 2019-08-22 14:05
+ * @date 2019-08-22 14:05
  */
 @Data
 public class BaseEntity<T> implements Serializable {

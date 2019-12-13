@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * 全局exception捕捉
  *
  * @author Carzer
- * Date: 2019-11-05 09:52
+ * @date 2019-11-05 09:52
  */
 @Slf4j
 @ControllerAdvice

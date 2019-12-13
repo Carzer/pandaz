@@ -44,15 +44,15 @@
     </sql>
     <insert id="insert" parameterType="com.pandaz.usercenter.entity.RoleEntity">
         insert into t_sys_role (id, name, code,
-                                parent_code, is_private, created_by,
-                                created_date, updated_by, updated_date,
-                                deleted_by, deleted_date, deleted_flag,
-                                locked, version)
+        parent_code, is_private, created_by,
+        created_date, updated_by, updated_date,
+        deleted_by, deleted_date, deleted_flag,
+        locked, version)
         values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
-                #{parentCode,jdbcType=VARCHAR}, #{isPrivate,jdbcType=TINYINT}, #{createdBy,jdbcType=VARCHAR},
-                #{createdDate,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, #{updatedDate,jdbcType=TIMESTAMP},
-                #{deletedBy,jdbcType=VARCHAR}, #{deletedDate,jdbcType=TIMESTAMP}, #{deletedFlag,jdbcType=TINYINT},
-                #{locked,jdbcType=TINYINT}, #{version,jdbcType=INTEGER})
+        #{parentCode,jdbcType=VARCHAR}, #{isPrivate,jdbcType=TINYINT}, #{createdBy,jdbcType=VARCHAR},
+        #{createdDate,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, #{updatedDate,jdbcType=TIMESTAMP},
+        #{deletedBy,jdbcType=VARCHAR}, #{deletedDate,jdbcType=TIMESTAMP}, #{deletedFlag,jdbcType=TINYINT},
+        #{locked,jdbcType=TINYINT}, #{version,jdbcType=INTEGER})
     </insert>
     <insert id="insertSelective" parameterType="com.pandaz.usercenter.entity.RoleEntity">
         insert into t_sys_role
@@ -146,51 +146,51 @@
         </trim>
     </insert>
     <select id="getPublicRoles" parameterType="java.lang.String" resultMap="BaseDetailMap">
-        select role.code         as code,
-               role.name         as name,
-               role.parent_code  as parent_code,
-               role.is_private   as is_private,
-               usr_gp.user_code  as user_code,
-               usr_gp.group_code as group_code
+        select role.code as code,
+        role.name as name,
+        role.parent_code as parent_code,
+        role.is_private as is_private,
+        usr_gp.user_code as user_code,
+        usr_gp.group_code as group_code
         from t_sys_user usr
-                 inner join t_sys_user_group usr_gp
-                            on usr.code = usr_gp.user_code and usr_gp.is_private = 0
-                 inner join t_sys_group_role gp_role
-                            on usr_gp.group_code = gp_role.group_code and gp_role.is_private = 0
-                 inner join t_sys_role role
-                            on gp_role.role_code = role.code
+        inner join t_sys_user_group usr_gp
+        on usr.code = usr_gp.user_code and usr_gp.is_private = 0
+        inner join t_sys_group_role gp_role
+        on usr_gp.group_code = gp_role.group_code and gp_role.is_private = 0
+        inner join t_sys_role role
+        on gp_role.role_code = role.code
         where usr.code = #{userCode};
     </select>
     <select id="getPrivateRoles" parameterType="java.lang.String" resultMap="BaseDetailMap">
-        select role.code         as code,
-               role.name         as name,
-               role.parent_code  as parent_code,
-               role.is_private   as is_private,
-               usr_gp.user_code  as user_code,
-               usr_gp.group_code as group_code
+        select role.code as code,
+        role.name as name,
+        role.parent_code as parent_code,
+        role.is_private as is_private,
+        usr_gp.user_code as user_code,
+        usr_gp.group_code as group_code
         from t_sys_user usr
-                 inner join t_sys_user_group usr_gp
-                            on usr.code = usr_gp.user_code and usr_gp.is_private = 1
-                 inner join t_sys_group_role gp_role
-                            on usr_gp.group_code = gp_role.group_code and gp_role.is_private = 1
-                 inner join t_sys_role role
-                            on gp_role.role_code = role.code
+        inner join t_sys_user_group usr_gp
+        on usr.code = usr_gp.user_code and usr_gp.is_private = 1
+        inner join t_sys_group_role gp_role
+        on usr_gp.group_code = gp_role.group_code and gp_role.is_private = 1
+        inner join t_sys_role role
+        on gp_role.role_code = role.code
         where usr.code = #{userCode};
     </select>
     <select id="getAllRoles" parameterType="java.lang.String" resultMap="BaseDetailMap">
-        select role.code         as code,
-               role.name         as name,
-               role.parent_code  as parent_code,
-               role.is_private   as is_private,
-               usr_gp.user_code  as user_code,
-               usr_gp.group_code as group_code
+        select role.code as code,
+        role.name as name,
+        role.parent_code as parent_code,
+        role.is_private as is_private,
+        usr_gp.user_code as user_code,
+        usr_gp.group_code as group_code
         from t_sys_user usr
-                 inner join t_sys_user_group usr_gp
-                            on usr.code = usr_gp.user_code
-                 inner join t_sys_group_role gp_role
-                            on usr_gp.group_code = gp_role.group_code
-                 inner join t_sys_role role
-                            on gp_role.role_code = role.code
+        inner join t_sys_user_group usr_gp
+        on usr.code = usr_gp.user_code
+        inner join t_sys_group_role gp_role
+        on usr_gp.group_code = gp_role.group_code
+        inner join t_sys_role role
+        on gp_role.role_code = role.code
         where usr.code = #{userCode};
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
@@ -250,19 +250,19 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="com.pandaz.usercenter.entity.RoleEntity">
         update t_sys_role
-        set name         = #{name,jdbcType=VARCHAR},
-            code         = #{code,jdbcType=VARCHAR},
-            parent_code  = #{parentCode,jdbcType=VARCHAR},
-            is_private   = #{isPrivate,jdbcType=TINYINT},
-            created_by   = #{createdBy,jdbcType=VARCHAR},
-            created_date = #{createdDate,jdbcType=TIMESTAMP},
-            updated_by   = #{updatedBy,jdbcType=VARCHAR},
-            updated_date = #{updatedDate,jdbcType=TIMESTAMP},
-            deleted_by   = #{deletedBy,jdbcType=VARCHAR},
-            deleted_date = #{deletedDate,jdbcType=TIMESTAMP},
-            deleted_flag = #{deletedFlag,jdbcType=TINYINT},
-            locked       = #{locked,jdbcType=TINYINT},
-            version      = #{version,jdbcType=INTEGER}
+        set name = #{name,jdbcType=VARCHAR},
+        code = #{code,jdbcType=VARCHAR},
+        parent_code = #{parentCode,jdbcType=VARCHAR},
+        is_private = #{isPrivate,jdbcType=TINYINT},
+        created_by = #{createdBy,jdbcType=VARCHAR},
+        created_date = #{createdDate,jdbcType=TIMESTAMP},
+        updated_by = #{updatedBy,jdbcType=VARCHAR},
+        updated_date = #{updatedDate,jdbcType=TIMESTAMP},
+        deleted_by = #{deletedBy,jdbcType=VARCHAR},
+        deleted_date = #{deletedDate,jdbcType=TIMESTAMP},
+        deleted_flag = #{deletedFlag,jdbcType=TINYINT},
+        locked = #{locked,jdbcType=TINYINT},
+        version = #{version,jdbcType=INTEGER}
         where id = #{id,jdbcType=VARCHAR}
     </update>
     <select id="findByCode" parameterType="java.lang.String" resultMap="BaseResultMap">

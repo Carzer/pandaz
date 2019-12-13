@@ -9,7 +9,7 @@ import com.pandaz.usercenter.entity.UserEntity;
  * 用户信息相关服务
  *
  * @author Carzer
- * Date: 2019-07-16 14:30
+ * @date 2019-07-16 14:30
  */
 public interface UserService {
 
@@ -19,7 +19,7 @@ public interface UserService {
      * @param username 用户名
      * @return org.springframework.security.core.userdetails.UserDetails
      * @author Carzer
-     * Date: 2019-07-16 14:53
+     * @date 2019-07-16 14:53
      */
     UserEntity loadUserByUsername(String username);
 
@@ -29,7 +29,7 @@ public interface UserService {
      * @param code code
      * @return com.pandaz.usercenter.entity.UserEntity
      * @author Carzer
-     * Date: 2019/10/28 16:40
+     * @date 2019/10/28 16:40
      */
     UserEntity findByCode(String code);
 
@@ -39,7 +39,7 @@ public interface UserService {
      * @param user user
      * @return int
      * @author Carzer
-     * Date: 2019/10/28 17:29
+     * @date 2019/10/28 17:29
      */
     UserEntity updateByCode(UserEntity user);
 
@@ -49,7 +49,7 @@ public interface UserService {
      * @param user 用户
      * @return UserEntity
      * @author Carzer
-     * Date: 2019/10/25 10:24
+     * @date 2019/10/25 10:24
      */
     UserEntity insert(UserEntity user);
 
@@ -59,7 +59,7 @@ public interface UserService {
      * @param userCode userCode
      * @return int
      * @author Carzer
-     * Date: 2019/10/25 15:47
+     * @date 2019/10/25 15:47
      */
     int deleteByCode(String userCode);
 
@@ -69,7 +69,7 @@ public interface UserService {
      * @param user 查询条件
      * @return com.github.pagehelper.Page<com.pandaz.usercenter.entity.UserEntity>
      * @author Carzer
-     * Date: 2019/10/28 13:54
+     * @date 2019/10/28 13:54
      */
     Page<UserEntity> getPage(UserEntity user);
 }

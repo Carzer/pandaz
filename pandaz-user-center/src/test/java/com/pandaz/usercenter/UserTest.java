@@ -16,7 +16,7 @@ import java.util.Date;
  * 用户相关测试类
  *
  * @author Carzer
- * Date: 2019-10-23 15:39
+ * @date 2019-10-23 15:39
  */
 //@Rollback
 public class UserTest extends BasisUnitTest {

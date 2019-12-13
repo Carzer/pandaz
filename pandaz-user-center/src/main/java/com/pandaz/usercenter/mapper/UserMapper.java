@@ -14,7 +14,7 @@ import java.util.List;
  * 用户信息mapper
  *
  * @author Carzer
- * Date: 2019-10-23 10:52
+ * @date 2019-10-23 10:52
  */
 @Mapper
 @Repository
@@ -26,7 +26,7 @@ public interface UserMapper extends BaseMapper<UserEntity> {
      * @param user 用户信息
      * @return int
      * @author Carzer
-     * Date: 2019/10/23 15:19
+     * @date 2019/10/23 15:19
      */
     int insert(UserEntity user);
 
@@ -36,7 +36,7 @@ public interface UserMapper extends BaseMapper<UserEntity> {
      * @param user 用户信息
      * @return int
      * @author Carzer
-     * Date: 2019/10/23 15:19
+     * @date 2019/10/23 15:19
      */
     int insertSelective(UserEntity user);
 
@@ -46,7 +46,7 @@ public interface UserMapper extends BaseMapper<UserEntity> {
      * @param user 用户信息
      * @return int
      * @author Carzer
-     * Date: 2019-08-22 13:21
+     * @date 2019-08-22 13:21
      */
     int updateByPrimaryKeySelective(UserEntity user);
 
@@ -56,7 +56,7 @@ public interface UserMapper extends BaseMapper<UserEntity> {
      * @param user 用户信息
      * @return int
      * @author Carzer
-     * Date: 2019-08-22 13:22
+     * @date 2019-08-22 13:22
      */
     int updateByPrimaryKey(UserEntity user);
 
@@ -66,7 +66,7 @@ public interface UserMapper extends BaseMapper<UserEntity> {
      * @param id 主键
      * @return int
      * @author Carzer
-     * Date: 2019-08-22 13:19
+     * @date 2019-08-22 13:19
      */
     int deleteByPrimaryKey(String id);
 
@@ -76,7 +76,7 @@ public interface UserMapper extends BaseMapper<UserEntity> {
      * @param code code
      * @return int
      * @author Carzer
-     * Date: 2019/10/25 15:44
+     * @date 2019/10/25 15:44
      */
     int deleteByCode(@Value("code") String code);
 
@@ -86,7 +86,7 @@ public interface UserMapper extends BaseMapper<UserEntity> {
      * @param loginName 用户名
      * @return com.pandaz.usercenter.entity.UserEntity
      * @author Carzer
-     * Date: 2019/10/23 15:19
+     * @date 2019/10/23 15:19
      */
     UserEntity findByLoginName(@Value("loginName") String loginName);
 
@@ -96,7 +96,7 @@ public interface UserMapper extends BaseMapper<UserEntity> {
      * @param user 查询条件
      * @return java.util.List<com.pandaz.usercenter.entity.UserEntity>
      * @author Carzer
-     * Date: 2019/10/28 13:56
+     * @date 2019/10/28 13:56
      */
     List<UserEntity> findList(UserEntity user);
 
@@ -106,7 +106,7 @@ public interface UserMapper extends BaseMapper<UserEntity> {
      * @param id id
      * @return com.pandaz.usercenter.entity.UserEntity
      * @author Carzer
-     * Date: 2019/10/28 16:41
+     * @date 2019/10/28 16:41
      */
     UserEntity findById(@Value("id") String id);
 
@@ -117,7 +117,7 @@ public interface UserMapper extends BaseMapper<UserEntity> {
      * @param user user
      * @return int
      * @author Carzer
-     * Date: 2019/10/28 17:29
+     * @date 2019/10/28 17:29
      */
     int updateByCode(UserEntity user);
 }

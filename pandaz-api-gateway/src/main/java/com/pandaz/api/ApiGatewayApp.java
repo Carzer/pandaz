@@ -18,7 +18,7 @@ import java.util.List;
  * api gateway 负责请求转发
  *
  * @author Carzer
- * Date: 2019-07-22 13:29
+ * @date 2019-07-22 13:29
  */
 @SpringBootApplication
 @EnableZuulProxy

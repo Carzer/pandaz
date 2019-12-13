@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.config;
 
+import com.pandaz.commons.dto.usercenter.UserDTO;
 import com.pandaz.commons.util.CustomPasswordEncoder;
 import com.pandaz.commons.util.DozerConvertUtil;
 import com.pandaz.usercenter.custom.constants.SysConstants;
@@ -7,7 +8,6 @@ import com.pandaz.usercenter.custom.handler.AuthDeniedHandler;
 import com.pandaz.usercenter.custom.handler.LoginFailureHandler;
 import com.pandaz.usercenter.custom.handler.LoginSuccessHandler;
 import com.pandaz.usercenter.custom.provider.CustomDaoAuthenticationProvider;
-import com.pandaz.usercenter.dto.UserDTO;
 import com.pandaz.usercenter.custom.SecurityUser;
 import com.pandaz.usercenter.entity.UserEntity;
 import com.pandaz.usercenter.service.UserService;
@@ -38,7 +38,7 @@ import java.util.List;
  * spring security配置类
  *
  * @author Carzer
- * Date: 2019-07-16
+ * @date 2019-07-16
  */
 @Configuration
 @EnableWebSecurity
@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      *
      * @param auth 权限管理器
      * @author Carzer
-     * Date: 2019-07-16 14:45
+     * @date 2019-07-16 14:45
      */
     @Autowired
     @Override
@@ -75,7 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      *
      * @param http http
      * @author Carzer
-     * Date: 2019-07-16 14:45
+     * @date 2019-07-16 14:45
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -105,7 +105,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      *
      * @return org.springframework.security.crypto.password.PasswordEncoder
      * @author Carzer
-     * Date: 2019-07-16 14:46
+     * @date 2019-07-16 14:46
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -117,7 +117,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      *
      * @return com.pandaz.usercenter.util.LoginSuccessHandler
      * @author Carzer
-     * Date: 2019-07-16 14:46
+     * @date 2019-07-16 14:46
      */
     @Bean
     public LoginSuccessHandler loginSuccessHandler() {
@@ -129,7 +129,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      *
      * @return com.pandaz.usercenter.util.LoginFailureHandler
      * @author Carzer
-     * Date: 2019/10/25 08:54
+     * @date 2019/10/25 08:54
      */
     @Bean
     public LoginFailureHandler loginFailureHandler() {
@@ -141,7 +141,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      *
      * @return com.pandaz.usercenter.handler.AuthDeniedHandler
      * @author Carzer
-     * Date: 2019/10/25 13:11
+     * @date 2019/10/25 13:11
      */
     @Bean
     public AuthDeniedHandler authDeniedHandler() {
@@ -154,7 +154,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      *
      * @return org.springframework.security.core.userdetails.UserDetailsService
      * @author Carzer
-     * Date: 2019-07-16 14:47
+     * @date 2019-07-16 14:47
      */
     @Bean
     @Override
@@ -191,7 +191,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      *
      * @return com.pandaz.usercenter.provider.CustomDaoAuthenticationProvider
      * @author Carzer
-     * Date: 2019/10/25 14:03
+     * @date 2019/10/25 14:03
      */
     @Bean
     public CustomDaoAuthenticationProvider customDaoAuthenticationProvider() {

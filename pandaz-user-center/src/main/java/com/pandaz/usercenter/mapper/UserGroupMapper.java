@@ -14,7 +14,7 @@ import java.util.List;
  * 用户-组关系mapper
  *
  * @author Carzer
- * Date: 2019-10-23 10:52
+ * @date 2019-10-23 10:52
  */
 @Mapper
 @Repository
@@ -26,7 +26,7 @@ public interface UserGroupMapper extends BaseMapper<UserGroupEntity> {
      * @param userGroup 用户-组关系
      * @return int
      * @author Carzer
-     * Date: 2019/10/23 17:00
+     * @date 2019/10/23 17:00
      */
     int insert(UserGroupEntity userGroup);
 
@@ -36,7 +36,7 @@ public interface UserGroupMapper extends BaseMapper<UserGroupEntity> {
      * @param userGroup 用户-组关系
      * @return int
      * @author Carzer
-     * Date: 2019/10/23 17:00
+     * @date 2019/10/23 17:00
      */
     int insertSelective(UserGroupEntity userGroup);
 
@@ -46,7 +46,7 @@ public interface UserGroupMapper extends BaseMapper<UserGroupEntity> {
      * @param id 主键
      * @return int
      * @author Carzer
-     * Date: 2019-08-22 13:19
+     * @date 2019-08-22 13:19
      */
     int deleteByPrimaryKey(String id);
 
@@ -56,7 +56,7 @@ public interface UserGroupMapper extends BaseMapper<UserGroupEntity> {
      * @param userCode userCode
      * @return int
      * @author Carzer
-     * Date: 2019/10/25 15:44
+     * @date 2019/10/25 15:44
      */
     int deleteByUserCode(@Value("userCode") String userCode);
 
@@ -66,7 +66,7 @@ public interface UserGroupMapper extends BaseMapper<UserGroupEntity> {
      * @param groupCode groupCode
      * @return int
      * @author Carzer
-     * Date: 2019/10/25 15:44
+     * @date 2019/10/25 15:44
      */
     int deleteByGroupCode(@Value("groupCode") String groupCode);
 
@@ -76,7 +76,7 @@ public interface UserGroupMapper extends BaseMapper<UserGroupEntity> {
      * @param userGroup userGroup
      * @return java.util.List<com.pandaz.usercenter.entity.UserGroupEntity>
      * @author Carzer
-     * Date: 2019/10/25 16:09
+     * @date 2019/10/25 16:09
      */
     List<UserGroupEntity> findByUserCode(UserGroupEntity userGroup);
 }

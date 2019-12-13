@@ -8,7 +8,7 @@ import com.pandaz.usercenter.entity.OsInfoEntity;
  * 系统信息服务
  *
  * @author Carzer
- * Date: 2019-11-01 15:04
+ * @date 2019-11-01 15:04
  */
 public interface OsInfoService {
 
@@ -18,7 +18,7 @@ public interface OsInfoService {
      * @param osInfo osInfo
      * @return com.pandaz.usercenter.entity.OsInfoEntity
      * @author Carzer
-     * Date: 2019/11/1 15:10
+     * @date 2019/11/1 15:10
      */
     OsInfoEntity insert(OsInfoEntity osInfo);
 }

@@ -15,7 +15,7 @@ import java.util.List;
  * 用户-组服务
  *
  * @author Carzer
- * Date: 2019-11-05 17:27
+ * @date 2019-11-05 17:27
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -32,7 +32,7 @@ public class UserGroupServiceImpl implements UserGroupService {
      * @param userGroup userGroup
      * @return java.util.List<com.pandaz.usercenter.entity.UserGroupEntity>
      * @author Carzer
-     * Date: 2019/11/5 17:26
+     * @date 2019/11/5 17:26
      */
     @Override
     public List<UserGroupEntity> findByUserCode(UserGroupEntity userGroup) {
@@ -45,7 +45,7 @@ public class UserGroupServiceImpl implements UserGroupService {
      * @param userCode userCode
      * @return int
      * @author Carzer
-     * Date: 2019/11/5 17:26
+     * @date 2019/11/5 17:26
      */
     @Override
     public int deleteByUserCode(String userCode) {
@@ -57,7 +57,7 @@ public class UserGroupServiceImpl implements UserGroupService {
      *
      * @param userGroup userGroup
      * @author Carzer
-     * Date: 2019/11/5 17:31
+     * @date 2019/11/5 17:31
      */
     @Override
     public int insert(UserGroupEntity userGroup) {

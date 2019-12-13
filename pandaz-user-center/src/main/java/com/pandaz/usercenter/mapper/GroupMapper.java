@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
  * 组mapper
  *
  * @author Carzer
- * Date: 2019-10-23 10:52
+ * @date 2019-10-23 10:52
  */
 @Mapper
 @Repository
@@ -24,7 +24,7 @@ public interface GroupMapper extends BaseMapper<GroupEntity> {
      * @param group 组
      * @return int
      * @author Carzer
-     * Date: 2019/10/23 16:58
+     * @date 2019/10/23 16:58
      */
     int insert(GroupEntity group);
 
@@ -34,7 +34,7 @@ public interface GroupMapper extends BaseMapper<GroupEntity> {
      * @param group 组
      * @return int
      * @author Carzer
-     * Date: 2019/10/23 16:58
+     * @date 2019/10/23 16:58
      */
     int insertSelective(GroupEntity group);
 
@@ -44,7 +44,7 @@ public interface GroupMapper extends BaseMapper<GroupEntity> {
      * @param group group
      * @return int
      * @author Carzer
-     * Date: 2019/10/25 14:52
+     * @date 2019/10/25 14:52
      */
     int updateByPrimaryKeySelective(GroupEntity group);
 
@@ -54,7 +54,7 @@ public interface GroupMapper extends BaseMapper<GroupEntity> {
      * @param id 主键
      * @return int
      * @author Carzer
-     * Date: 2019/10/25 15:26
+     * @date 2019/10/25 15:26
      */
     int deleteByPrimaryKey(@Value("id") String id);
 
@@ -64,7 +64,7 @@ public interface GroupMapper extends BaseMapper<GroupEntity> {
      * @param code 编码
      * @return int
      * @author Carzer
-     * Date: 2019/10/25 15:27
+     * @date 2019/10/25 15:27
      */
     int deleteByCode(@Value("code") String code);
 

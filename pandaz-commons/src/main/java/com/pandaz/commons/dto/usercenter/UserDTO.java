@@ -1,4 +1,4 @@
-package com.pandaz.usercenter.dto;
+package com.pandaz.commons.dto.usercenter;
 
 import com.pandaz.commons.dto.BaseDTO;
 import lombok.Data;
@@ -7,12 +7,12 @@ import lombok.EqualsAndHashCode;
 import java.sql.Timestamp;
 
 /**
- * pandaz:com.pandaz.usercenter.dto
+ * pandaz:com.pandaz.commons.dto.usercenter
  * <p>
  * 用户数据传输类
  *
  * @author Carzer
- * Date: 2019-07-17 13:10
+ * @date 2019-07-17 13:10
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

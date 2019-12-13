@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
  * 菜单mapper
  *
  * @author Carzer
- * Date: 2019-11-01 10:52
+ * @date 2019-11-01 10:52
  */
 @Mapper
 @Repository
@@ -23,7 +23,7 @@ public interface MenuMapper extends BaseMapper<MenuEntity> {
      * @param menu menu
      * @return int
      * @author Carzer
-     * Date: 2019/11/1 15:03
+     * @date 2019/11/1 15:03
      */
     int insert(MenuEntity menu);
 
@@ -33,7 +33,7 @@ public interface MenuMapper extends BaseMapper<MenuEntity> {
      * @param menu menu
      * @return int
      * @author Carzer
-     * Date: 2019/11/1 15:03
+     * @date 2019/11/1 15:03
      */
     int insertSelective(MenuEntity menu);
 

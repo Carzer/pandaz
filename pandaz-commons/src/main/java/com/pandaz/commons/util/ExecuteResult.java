@@ -8,7 +8,7 @@ import java.io.Serializable;
  * 执行结果
  *
  * @author Carzer
- * Date: 2019-09-03 10:21
+ * @date 2019-09-03 10:21
  */
 public final class ExecuteResult<T> implements Serializable {
 

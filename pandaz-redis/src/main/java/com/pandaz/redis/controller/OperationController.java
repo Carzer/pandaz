@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  * redis 操作
  *
  * @author Carzer
- * Date: 2019-10-28 10:25
+ * @date 2019-10-28 10:25
  */
 @RestController
 @RequestMapping("/redis")
@@ -40,7 +40,7 @@ public class OperationController {
      * @param key key
      * @return com.pandaz.commons.util.ExecuteResult<java.lang.Object>
      * @author Carzer
-     * Date: 2019/10/28 10:29
+     * @date 2019/10/28 10:29
      */
     @GetMapping("/getValue")
     public ExecuteResult<Object> getValue(String key) {
@@ -61,7 +61,7 @@ public class OperationController {
      * @param value value
      * @return com.pandaz.commons.util.ExecuteResult<java.lang.String>
      * @author Carzer
-     * Date: 2019/10/28 10:32
+     * @date 2019/10/28 10:32
      */
     @PostMapping("/setValue")
     public ExecuteResult<String> setValue(String value) {

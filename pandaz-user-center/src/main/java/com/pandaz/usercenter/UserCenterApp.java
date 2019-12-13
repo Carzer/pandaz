@@ -12,7 +12,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * 用户中心相关服务
  *
  * @author Carzer
- * Date: 2019-07-16
+ * @date 2019-07-16
  */
 @SpringBootApplication
 @EnableDiscoveryClient

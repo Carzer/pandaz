@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  * 角色-权限服务
  *
  * @author Carzer
- * Date: 2019-11-06 10:19
+ * @date 2019-11-06 10:19
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -30,7 +30,7 @@ public class RolePermissionServiceImpl implements RolePermissionService {
      * @param rolePermission rolePermission
      * @return int
      * @author Carzer
-     * Date: 2019/11/6 10:19
+     * @date 2019/11/6 10:19
      */
     @Override
     public int insert(RolePermissionEntity rolePermission) {

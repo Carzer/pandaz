@@ -30,17 +30,17 @@
     </sql>
     <insert id="insert" parameterType="com.pandaz.usercenter.entity.MenuEntity">
         insert into t_sys_menu (id, name, code, os_code,
-                                parent_code, icon,
-                                sorting, is_leaf_node, created_by,
-                                created_date, updated_by, updated_date,
-                                deleted_by, deleted_date, deleted_flag,
-                                locked, version)
+        parent_code, icon,
+        sorting, is_leaf_node, created_by,
+        created_date, updated_by, updated_date,
+        deleted_by, deleted_date, deleted_flag,
+        locked, version)
         values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
-                #{osCode,jdbcType=VARCHAR}, #{parentCode,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR},
-                #{sorting,jdbcType=INTEGER}, #{isLeafNode,jdbcType=TINYINT}, #{createdBy,jdbcType=VARCHAR},
-                #{createdDate,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, #{updatedDate,jdbcType=TIMESTAMP},
-                #{deletedBy,jdbcType=VARCHAR}, #{deletedDate,jdbcType=TIMESTAMP}, #{deletedFlag,jdbcType=TINYINT},
-                #{locked,jdbcType=TINYINT}, #{version,jdbcType=INTEGER})
+        #{osCode,jdbcType=VARCHAR}, #{parentCode,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR},
+        #{sorting,jdbcType=INTEGER}, #{isLeafNode,jdbcType=TINYINT}, #{createdBy,jdbcType=VARCHAR},
+        #{createdDate,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, #{updatedDate,jdbcType=TIMESTAMP},
+        #{deletedBy,jdbcType=VARCHAR}, #{deletedDate,jdbcType=TIMESTAMP}, #{deletedFlag,jdbcType=TINYINT},
+        #{locked,jdbcType=TINYINT}, #{version,jdbcType=INTEGER})
     </insert>
     <insert id="insertSelective" parameterType="com.pandaz.usercenter.entity.MenuEntity">
         insert into t_sys_menu

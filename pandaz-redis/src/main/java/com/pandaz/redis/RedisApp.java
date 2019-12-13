@@ -11,7 +11,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * Redis相关服务
  *
  * @author Carzer
- * Date: 2019-07-19 10:07
+ * @date 2019-07-19 10:07
  */
 @SpringBootApplication
 @EnableDiscoveryClient

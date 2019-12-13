@@ -3,7 +3,12 @@ spring:
     #nacos
     nacos:
       discovery:
-        server-addr: 10.211.55.3:8848
+        server-addr: 172.16.2.130:8848
+    #sentinel
+    sentinel:
+      transport:
+        dashboard: 172.16.2.130:8787
+
     stream:
       bindings:
         input:

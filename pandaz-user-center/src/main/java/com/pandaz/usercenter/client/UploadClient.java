@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
  * 测试类
  *
  * @author Carzer
- * Date: 2019-07-16
+ * @date 2019-07-16
  */
 @FeignClient(value = "${custom.client.file-server}", fallbackFactory = UploadClientFallBackFactory.class,
         configuration = UploadClient.MultipartSupportConfig.class)
@@ -29,7 +29,7 @@ public interface UploadClient {
      * @param file 上传文件
      * @return java.lang.String
      * @author Carzer
-     * Date: 2019-07-19 13:42
+     * @date 2019-07-19 13:42
      */
     @PostMapping(value = "/uploadFile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     String handleFileUpload(@RequestPart(value = "file") MultipartFile file);
@@ -38,7 +38,7 @@ public interface UploadClient {
      * 编码配置
      *
      * @author Carzer
-     * Date: 2019/10/29 10:23
+     * @date 2019/10/29 10:23
      */
     @Configuration
     class MultipartSupportConfig {

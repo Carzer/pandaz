@@ -1,4 +1,4 @@
-package com.pandaz.mongodb.config;
+package com.pandaz.file.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
  * mongoDB属性
  *
  * @author Carzer
- * Date: 2019-07-16
+ * @date 2019-07-16
  */
 @Component
 @ConfigurationProperties(prefix = "mongodb.primary")

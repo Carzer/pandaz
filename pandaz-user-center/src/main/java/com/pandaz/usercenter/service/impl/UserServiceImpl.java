@@ -34,7 +34,7 @@ import java.util.List;
  * 用户信息相关服务
  *
  * @author Carzer
- * Date: 2019-07-16 14:55
+ * @date 2019-07-16 14:55
  */
 @CacheConfig(cacheNames = {"user-center:user"})
 @Service("userService")
@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
      * @param loginName 用户名
      * @return org.springframework.security.core.userdetails.UserDetails
      * @author Carzer
-     * Date: 2019-07-16 14:53
+     * @date 2019-07-16 14:53
      */
     @Cacheable(key = "'loginName:'+#loginName")
     @Override
@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
      * @param code code
      * @return com.pandaz.usercenter.entity.UserEntity
      * @author Carzer
-     * Date: 2019/11/1 17:01
+     * @date 2019/11/1 17:01
      */
     @Cacheable(key = "#code")
     @Override
@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
      * @param user user
      * @return int
      * @author Carzer
-     * Date: 2019/10/28 17:29
+     * @date 2019/10/28 17:29
      */
     @CacheEvict(key = "#user.code")
     @Override
@@ -110,7 +110,7 @@ public class UserServiceImpl implements UserService {
      * @param user 用户
      * @return int
      * @author Carzer
-     * Date: 2019/10/25 10:24
+     * @date 2019/10/25 10:24
      */
     @Cacheable(key = "#user.code")
     @Override
@@ -156,7 +156,7 @@ public class UserServiceImpl implements UserService {
      * @param userCode userCode
      * @return int
      * @author Carzer
-     * Date: 2019/10/25 15:47
+     * @date 2019/10/25 15:47
      */
     @CacheEvict(key = "#userCode")
     @Override
@@ -185,7 +185,7 @@ public class UserServiceImpl implements UserService {
      * @param user 查询条件
      * @return java.util.List<com.pandaz.usercenter.entity.UserEntity>
      * @author Carzer
-     * Date: 2019/10/28 13:53
+     * @date 2019/10/28 13:53
      */
     @Override
     @SentinelResource("user-getPage")

@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Redis 测试类
  *
  * @author Carzer
- * Date: 2019-10-23 13:03
+ * @date 2019-10-23 13:03
  */
 public class RedisTest extends BasisUnitTest {
     @Autowired

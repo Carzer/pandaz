@@ -10,7 +10,7 @@ import java.util.List;
  * 组-角色服务
  *
  * @author Carzer
- * Date: 2019-11-05 17:33
+ * @date 2019-11-05 17:33
  */
 public interface GroupRoleService {
 
@@ -20,7 +20,7 @@ public interface GroupRoleService {
      * @param groupRole	groupRole
      * @return int
      * @author Carzer
-     * Date: 2019/11/5 17:36
+     * @date 2019/11/5 17:36
      */
     int insert(GroupRoleEntity groupRole);
 
@@ -30,7 +30,7 @@ public interface GroupRoleService {
      * @param groupRole	groupRole
      * @return java.util.List<com.pandaz.usercenter.entity.GroupRoleEntity>
      * @author Carzer
-     * Date: 2019/11/5 17:36
+     * @date 2019/11/5 17:36
      */
     List<GroupRoleEntity> findByGroupCode(GroupRoleEntity groupRole);
 
@@ -40,7 +40,7 @@ public interface GroupRoleService {
      * @param groupCode	groupCode
      * @return int
      * @author Carzer
-     * Date: 2019/11/5 17:37
+     * @date 2019/11/5 17:37
      */
     int deleteByGroupCode(String groupCode);
 }

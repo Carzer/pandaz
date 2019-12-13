@@ -13,12 +13,12 @@
     </resultMap>
     <insert id="insert" parameterType="com.pandaz.usercenter.entity.RolePermissionEntity">
         insert into t_sys_role_permission (id, role_code, os_code,
-                                           menu_code, request_type, permission_value, created_by,
-                                           created_date)
+        menu_code, request_type, permission_value, created_by,
+        created_date)
         values (#{id,jdbcType=VARCHAR}, #{roleCode,jdbcType=VARCHAR}, #{osCode,jdbcType=VARCHAR},
-                #{menuCode,jdbcType=VARCHAR}, #{requestType,jdbcType=TINYINT}, #{permissionValue,jdbcType=INTEGER},
-                #{createdBy,jdbcType=VARCHAR},
-                #{createdDate,jdbcType=TIMESTAMP})
+        #{menuCode,jdbcType=VARCHAR}, #{requestType,jdbcType=TINYINT}, #{permissionValue,jdbcType=INTEGER},
+        #{createdBy,jdbcType=VARCHAR},
+        #{createdDate,jdbcType=TIMESTAMP})
     </insert>
     <insert id="insertSelective" parameterType="com.pandaz.usercenter.entity.RolePermissionEntity">
         insert into t_sys_role_permission

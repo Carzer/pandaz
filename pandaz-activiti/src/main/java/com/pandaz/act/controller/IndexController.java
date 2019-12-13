@@ -26,7 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 默认controller
  *
  * @author Carzer
- * Date: 2019-07-18 15:32
+ * @date 2019-07-18 15:32
  */
 @RestController
 @RequestMapping("/")
@@ -53,7 +53,7 @@ public class IndexController {
      *
      * @return com.pandaz.commons.util.ExecuteResult<java.util.List>
      * @author Carzer
-     * Date: 2019/10/28 13:46
+     * @date 2019/10/28 13:46
      */
     @GetMapping("/getAllUrl")
     public ExecuteResult<List> getAllUrl() {

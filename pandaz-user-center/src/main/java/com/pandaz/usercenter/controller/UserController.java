@@ -1,10 +1,10 @@
 package com.pandaz.usercenter.controller;
 
 import com.github.pagehelper.Page;
+import com.pandaz.commons.dto.usercenter.UserDTO;
+import com.pandaz.commons.dto.usercenter.UserPwdDTO;
 import com.pandaz.commons.util.DozerConvertUtil;
 import com.pandaz.commons.util.ExecuteResult;
-import com.pandaz.usercenter.dto.UserDTO;
-import com.pandaz.usercenter.dto.UserPwdDTO;
 import com.pandaz.usercenter.entity.UserEntity;
 import com.pandaz.usercenter.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ import java.util.Map;
  * 用户相关controller
  *
  * @author Carzer
- * Date: 2019-07-17 15:20
+ * @date 2019-07-17 15:20
  */
 @RestController
 @RequestMapping("/user")
@@ -44,7 +44,7 @@ public class UserController {
      * @param userDTO userDTO
      * @return com.pandaz.commons.util.ExecuteResult<java.util.Map<java.lang.String,java.lang.Object>>
      * @author Carzer
-     * Date: 2019/10/23 17:18
+     * @date 2019/10/23 17:18
      */
     @GetMapping("/getPage")
     public ExecuteResult<Map<String, Object>> getPage(UserDTO userDTO) {
@@ -66,7 +66,7 @@ public class UserController {
      * @param userDTO 查询条件
      * @return com.pandaz.commons.util.ExecuteResult<com.pandaz.usercenter.dto.UserDTO>
      * @author Carzer
-     * Date: 2019/10/28 16:46
+     * @date 2019/10/28 16:46
      */
     @GetMapping
     public ExecuteResult<UserDTO> get(@RequestBody UserDTO userDTO) {
@@ -87,7 +87,7 @@ public class UserController {
      * @param userPwdDTO 用户信息
      * @return com.pandaz.commons.util.ExecuteResult<com.pandaz.usercenter.dto.UserDTO>
      * @author Carzer
-     * Date: 2019/10/28 17:32
+     * @date 2019/10/28 17:32
      */
     @PostMapping
     public ExecuteResult<UserDTO> insert(@RequestBody UserPwdDTO userPwdDTO, Principal principal) {
@@ -123,7 +123,7 @@ public class UserController {
      * @param userDTO userDTO
      * @return com.pandaz.commons.util.ExecuteResult<com.pandaz.usercenter.dto.UserDTO>
      * @author Carzer
-     * Date: 2019/10/29 09:05
+     * @date 2019/10/29 09:05
      */
     @PutMapping
     public ExecuteResult<String> update(@RequestBody UserDTO userDTO) {
@@ -145,7 +145,7 @@ public class UserController {
      * @param userDTO userDTO
      * @return com.pandaz.commons.util.ExecuteResult<com.pandaz.usercenter.dto.UserDTO>
      * @author Carzer
-     * Date: 2019/10/29 10:15
+     * @date 2019/10/29 10:15
      */
     @DeleteMapping
     public ExecuteResult<String> delete(@RequestBody UserDTO userDTO) {

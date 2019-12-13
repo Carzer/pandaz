@@ -15,9 +15,9 @@
     </sql>
     <insert id="insert" parameterType="com.pandaz.usercenter.entity.GroupRoleEntity">
         insert into t_sys_group_role (id, group_code, role_code,
-                                      created_by, created_date, is_private)
+        created_by, created_date, is_private)
         values (#{id,jdbcType=VARCHAR}, #{groupCode,jdbcType=VARCHAR}, #{roleCode,jdbcType=VARCHAR},
-                #{createdBy,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP}, #{isPrivate,jdbcType=TINYINT})
+        #{createdBy,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP}, #{isPrivate,jdbcType=TINYINT})
     </insert>
     <insert id="insertSelective" parameterType="com.pandaz.usercenter.entity.GroupRoleEntity">
         insert into t_sys_group_role

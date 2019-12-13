@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
  * 上传方法
  *
  * @author Carzer
- * Date: 2019-07-18 15:32
+ * @date 2019-07-18 15:32
  */
 @RestController
 public class UploadController {

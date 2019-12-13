@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  * 消息接收
  *
  * @author Carzer
- * Date: 2019-10-09 13:29
+ * @date 2019-10-09 13:29
  */
 @Component
 @EnableBinding(Processor.class)
@@ -32,7 +32,7 @@ public class MqReceiver {
      *
      * @param message message
      * @author Carzer
-     * Date: 2019/10/9 16:38
+     * @date 2019/10/9 16:38
      */
     @StreamListener(value = Sink.INPUT, condition = "'hi'.equals(new String(payload))")
     public void process(String message) {

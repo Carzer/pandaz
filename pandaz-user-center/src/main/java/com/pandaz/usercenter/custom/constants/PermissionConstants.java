@@ -6,7 +6,7 @@ package com.pandaz.usercenter.custom.constants;
  * 权限常量
  *
  * @author Carzer
- * Date: 2019-11-05 15:58
+ * @date 2019-11-05 15:58
  */
 public class PermissionConstants {
 

@@ -1,4 +1,4 @@
-package com.pandaz.mongodb.config;
+package com.pandaz.file.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import org.springframework.data.mongodb.gridfs.GridFsTemplate;
  * mongoDB配置
  *
  * @author Carzer
- * Date: 2019-07-16
+ * @date 2019-07-16
  */
 @Configuration
 @AutoConfigureAfter(MongoDbPrimaryConfig.class)
@@ -33,7 +33,7 @@ public class MongoDbPrimaryConfig {
      *
      * @return org.springframework.data.mongodb.MongoDbFactory
      * @author Carzer
-     * Date: 2019-07-16 15:10
+     * @date 2019-07-16 15:10
      */
     @Primary
     @Bean(name = "mongoDbPrimaryFactory")
@@ -47,7 +47,7 @@ public class MongoDbPrimaryConfig {
      * @param mongoDbPrimaryFactory factory
      * @return org.springframework.data.mongodb.core.MongoTemplate
      * @author Carzer
-     * Date: 2019-07-16 15:11
+     * @date 2019-07-16 15:11
      */
     @Primary
     @Bean(name = "mongoPrimaryTemplate")
@@ -62,7 +62,7 @@ public class MongoDbPrimaryConfig {
      * @param mongoPrimaryTemplate  template
      * @return org.springframework.data.mongodb.gridfs.GridFsTemplate
      * @author Carzer
-     * Date: 2019-07-16 15:11
+     * @date 2019-07-16 15:11
      */
     @Bean(name = "gridFsPrimaryTemplate")
     public GridFsTemplate gridFsPrimaryTemplate(@Qualifier("mongoDbPrimaryFactory") MongoDbFactory mongoDbPrimaryFactory, @Qualifier("mongoPrimaryTemplate") MongoTemplate mongoPrimaryTemplate) {

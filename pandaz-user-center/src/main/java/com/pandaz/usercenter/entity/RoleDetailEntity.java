@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
  * 角色的详细信息
  *
  * @author Carzer
- * Date: 2019-10-25 15:04
+ * @date 2019-10-25 15:04
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

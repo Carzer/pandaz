@@ -11,7 +11,7 @@ import java.util.Date;
  * 基础数据传输类
  *
  * @author Carzer
- * Date: 2019-07-17 13:12
+ * @date 2019-07-17 13:12
  */
 @Data
 public class BaseDTO implements Serializable {

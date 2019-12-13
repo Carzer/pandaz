@@ -14,7 +14,7 @@ import java.util.Collection;
  * 自定义权限认证翻译器
  *
  * @author Carzer
- * Date: 2019-11-04 13:59
+ * @date 2019-11-04 13:59
  */
 @Component
 public class CustomPermissionEvaluator implements PermissionEvaluator {
@@ -28,7 +28,7 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
      * @param permission         permission
      * @return boolean
      * @author Carzer
-     * Date: 2019/11/4 16:07
+     * @date 2019/11/4 16:07
      */
     @Override
     public boolean hasPermission(Authentication authentication,
@@ -49,7 +49,7 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
      * @param permission     permission
      * @return boolean
      * @author Carzer
-     * Date: 2019/11/4 16:08
+     * @date 2019/11/4 16:08
      */
     @Override
     public boolean hasPermission(Authentication authentication,
@@ -64,7 +64,7 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
      * @param permission     permission
      * @return boolean
      * @author Carzer
-     * Date: 2019/11/4 16:08
+     * @date 2019/11/4 16:08
      */
     private boolean hasPermission(Authentication authentication, Object permission) {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();

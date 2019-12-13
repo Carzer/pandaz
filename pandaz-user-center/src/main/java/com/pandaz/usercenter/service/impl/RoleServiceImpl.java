@@ -21,7 +21,7 @@ import java.util.List;
  * 角色服务
  *
  * @author Carzer
- * Date: 2019-10-25 11:21
+ * @date 2019-10-25 11:21
  */
 @CacheConfig(cacheManager = "secondaryCacheManager", cacheNames = {"user-center:role"})
 @Service
@@ -44,7 +44,7 @@ public class RoleServiceImpl implements RoleService {
      * @param role 角色信息
      * @return int
      * @author Carzer
-     * Date: 2019/10/25 11:30
+     * @date 2019/10/25 11:30
      */
     @Override
     public int insert(RoleEntity role) {
@@ -60,7 +60,7 @@ public class RoleServiceImpl implements RoleService {
      * @param isPrivate 是否私有
      * @return java.util.List<com.pandaz.usercenter.entity.RoleEntity>
      * @author Carzer
-     * Date: 2019/10/25 11:22
+     * @date 2019/10/25 11:22
      */
     @Cacheable(key = "#userCode+':'+((1 == #isPrivate)?'private':'public')")
     @Override
@@ -78,7 +78,7 @@ public class RoleServiceImpl implements RoleService {
      * @param userCode userCode用户编码
      * @return java.util.List<com.pandaz.usercenter.entity.RoleEntity>
      * @author Carzer
-     * Date: 2019/10/25 11:22
+     * @date 2019/10/25 11:22
      */
     @Cacheable(key = "#userCode+':all'")
     @Override
@@ -92,7 +92,7 @@ public class RoleServiceImpl implements RoleService {
      * @param roleCode roleCode
      * @return int
      * @author Carzer
-     * Date: 2019/10/25 16:20
+     * @date 2019/10/25 16:20
      */
     @Override
     public int deleteByCode(String roleCode) {

@@ -6,7 +6,7 @@ package com.pandaz.commons.constants;
  * Redis常量
  *
  * @author Carzer
- * Date: 2019-10-25 14:23
+ * @date 2019-10-25 14:23
  */
 public final class RedisConstants {
 

@@ -3,11 +3,11 @@ spring:
     #nacos
     nacos:
       discovery:
-        server-addr: 10.211.55.3:8848
+        server-addr: 172.16.2.130:8848
     #sentinel
     sentinel:
       transport:
-        dashboard: 10.211.55.3:8787
+        dashboard: 172.16.2.130:8787
   #redis配置
   redis:
     timeout: 6000ms

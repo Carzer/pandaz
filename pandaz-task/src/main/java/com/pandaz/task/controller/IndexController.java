@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 默认controller
  *
  * @author Carzer
- * Date: 2019-07-18 15:32
+ * @date 2019-07-18 15:32
  */
 @RestController
 @RequestMapping("/")

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  * 测试类
  *
  * @author Carzer
- * Date: 2019-07-16
+ * @date 2019-07-16
  */
 @FeignClient(value = "pandaz-redis", fallback = DcClientFallBack.class)
 public interface DcClient {
@@ -20,7 +20,7 @@ public interface DcClient {
      *
      * @return java.lang.String
      * @author Carzer
-     * Date: 2019-07-19 13:42
+     * @date 2019-07-19 13:42
      */
     @GetMapping("/dc")
     String consumer();

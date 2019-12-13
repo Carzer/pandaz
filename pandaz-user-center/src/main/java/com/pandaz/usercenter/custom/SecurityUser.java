@@ -1,6 +1,6 @@
 package com.pandaz.usercenter.custom;
 
-import com.pandaz.usercenter.dto.UserDTO;
+import com.pandaz.commons.dto.usercenter.UserDTO;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +16,7 @@ import java.util.Collection;
  * 安全用户类
  *
  * @author Carzer
- * Date: 2019-07-17 10:24
+ * @date 2019-07-17 10:24
  */
 @EqualsAndHashCode(callSuper = false)
 public class SecurityUser extends User {
@@ -37,7 +37,7 @@ public class SecurityUser extends User {
      * @param authorities 权限
      * @param user        私有用户
      * @author Carzer
-     * Date: 2019/10/23 16:53
+     * @date 2019/10/23 16:53
      */
     public SecurityUser(String username, String password, Collection<? extends GrantedAuthority> authorities, UserDTO user) {
         super(username, password, true, true, true, true, authorities);

@@ -1,7 +1,7 @@
 package com.pandaz.usercenter.custom.provider;
 
+import com.pandaz.commons.dto.usercenter.UserDTO;
 import com.pandaz.usercenter.custom.constants.SysConstants;
-import com.pandaz.usercenter.dto.UserDTO;
 import com.pandaz.usercenter.entity.RoleDetailEntity;
 import com.pandaz.usercenter.custom.SecurityUser;
 import com.pandaz.usercenter.service.RoleService;
@@ -27,7 +27,7 @@ import java.util.Set;
  * 自定义授权管理器
  *
  * @author Carzer
- * Date: 2019-10-24 13:59
+ * @date 2019-10-24 13:59
  */
 public class CustomDaoAuthenticationProvider extends DaoAuthenticationProvider {
 
@@ -43,7 +43,7 @@ public class CustomDaoAuthenticationProvider extends DaoAuthenticationProvider {
      * @param userDetailsService 用户信息服务
      * @param passwordEncoder    密码工具
      * @author Carzer
-     * Date: 2019/10/24 14:50
+     * @date 2019/10/24 14:50
      */
     public CustomDaoAuthenticationProvider(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
         this(userDetailsService, passwordEncoder, null);
@@ -52,15 +52,15 @@ public class CustomDaoAuthenticationProvider extends DaoAuthenticationProvider {
     /**
      * 构造方法
      *
-     * @param UserDetailsService         用户信息服务
+     * @param userDetailsService         用户信息服务
      * @param passwordEncoder            密码工具
      * @param userDetailsPasswordService 修改密码服务
      * @author Carzer
-     * Date: 2019/10/24 14:50
+     * @date 2019/10/24 14:50
      */
-    public CustomDaoAuthenticationProvider(UserDetailsService UserDetailsService, PasswordEncoder passwordEncoder, UserDetailsPasswordService userDetailsPasswordService) {
+    public CustomDaoAuthenticationProvider(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder, UserDetailsPasswordService userDetailsPasswordService) {
         super();
-        setUserDetailsService(UserDetailsService);
+        setUserDetailsService(userDetailsService);
         setPasswordEncoder(passwordEncoder);
         setUserDetailsPasswordService(userDetailsPasswordService);
     }
@@ -73,7 +73,7 @@ public class CustomDaoAuthenticationProvider extends DaoAuthenticationProvider {
      * @param user           user
      * @return org.springframework.security.core.Authentication
      * @author Carzer
-     * Date: 2019/10/24 14:51
+     * @date 2019/10/24 14:51
      */
     @Override
     protected Authentication createSuccessAuthentication(Object principal, Authentication authentication, UserDetails user) {
@@ -98,7 +98,7 @@ public class CustomDaoAuthenticationProvider extends DaoAuthenticationProvider {
      * @param userDetails    userDetails
      * @param authentication authentication
      * @author Carzer
-     * Date: 2019/10/24 14:51
+     * @date 2019/10/24 14:51
      */
     @Override
     protected void additionalAuthenticationChecks(UserDetails userDetails,

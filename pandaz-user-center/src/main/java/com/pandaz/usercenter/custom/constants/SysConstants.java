@@ -6,7 +6,7 @@ package com.pandaz.usercenter.custom.constants;
  * 用户中心常量
  *
  * @author Carzer
- * Date: 2019-10-25 14:21
+ * @date 2019-10-25 14:21
  */
 public final class SysConstants {
 

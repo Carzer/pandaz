@@ -3,7 +3,11 @@ spring:
     #nacos
     nacos:
       discovery:
-        server-addr: 10.211.55.3:8848
+        server-addr: 172.16.2.130:8848
+    #sentinel
+    sentinel:
+      transport:
+        dashboard: 172.16.2.130:8787
   #数据库配置
   datasource:
     url: jdbc:mysql://172.16.2.130:3306/activiti?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8

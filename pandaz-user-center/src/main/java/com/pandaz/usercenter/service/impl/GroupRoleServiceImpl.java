@@ -15,7 +15,7 @@ import java.util.List;
  * 组-角色服务
  *
  * @author Carzer
- * Date: 2019-11-05 17:37
+ * @date 2019-11-05 17:37
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -32,7 +32,7 @@ public class GroupRoleServiceImpl implements GroupRoleService {
      * @param groupRole groupRole
      * @return int
      * @author Carzer
-     * Date: 2019/11/5 17:36
+     * @date 2019/11/5 17:36
      */
     @Override
     public int insert(GroupRoleEntity groupRole) {
@@ -45,7 +45,7 @@ public class GroupRoleServiceImpl implements GroupRoleService {
      * @param groupRole groupRole
      * @return java.util.List<com.pandaz.usercenter.entity.GroupRoleEntity>
      * @author Carzer
-     * Date: 2019/11/5 17:36
+     * @date 2019/11/5 17:36
      */
     @Override
     public List<GroupRoleEntity> findByGroupCode(GroupRoleEntity groupRole) {
@@ -58,7 +58,7 @@ public class GroupRoleServiceImpl implements GroupRoleService {
      * @param groupCode groupCode
      * @return int
      * @author Carzer
-     * Date: 2019/11/5 17:37
+     * @date 2019/11/5 17:37
      */
     @Override
     public int deleteByGroupCode(String groupCode) {

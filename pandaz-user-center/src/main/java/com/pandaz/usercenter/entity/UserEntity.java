@@ -12,7 +12,7 @@ import java.sql.Timestamp;
  * 用户信息
  *
  * @author Carzer
- * Date: 2019-10-23 10:52
+ * @date 2019-10-23 10:52
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

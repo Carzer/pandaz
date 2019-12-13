@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
  * 基础mapper
  *
  * @author Carzer
- * Date: 2019-11-25 15:49
+ * @date 2019-11-25 15:49
  */
 public interface BaseMapper<T> {
 
@@ -18,7 +18,7 @@ public interface BaseMapper<T> {
      * @param code	编码
      * @return T
      * @author Carzer
-     * Date: 2019/11/25 15:50
+     * @date 2019/11/25 15:50
      */
     T findByCode(@Value("code") String code);
 }

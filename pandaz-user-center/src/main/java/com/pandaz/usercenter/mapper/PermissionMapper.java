@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
  * 权限mapper
  *
  * @author Carzer
- * Date: 2019-10-23 10:52
+ * @date 2019-10-23 10:52
  */
 @Repository
 @Mapper
@@ -23,7 +23,7 @@ public interface PermissionMapper extends BaseMapper<PermissionEntity> {
      * @param permission permission
      * @return int
      * @author Carzer
-     * Date: 2019/11/20 10:14
+     * @date 2019/11/20 10:14
      */
     int insert(PermissionEntity permission);
 
@@ -33,7 +33,7 @@ public interface PermissionMapper extends BaseMapper<PermissionEntity> {
      * @param permission permission
      * @return int
      * @author Carzer
-     * Date: 2019/11/20 10:14
+     * @date 2019/11/20 10:14
      */
     int insertSelective(PermissionEntity permission);
 

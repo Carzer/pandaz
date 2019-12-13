@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
  * 菜单服务
  *
  * @author Carzer
- * Date: 2019-11-01 15:04
+ * @date 2019-11-01 15:04
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -37,7 +37,7 @@ public class MenuServiceImpl implements MenuService {
      * @param menu menu
      * @return com.pandaz.usercenter.entity.MenuEntity
      * @author Carzer
-     * Date: 2019/11/1 15:08
+     * @date 2019/11/1 15:08
      */
     @Override
     public MenuEntity insert(MenuEntity menu) {

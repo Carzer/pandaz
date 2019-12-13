@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * Redis熔断
  *
  * @author Carzer
- * Date: 2019-10-28 10:23
+ * @date 2019-10-28 10:23
  */
 @Component
 @Slf4j
@@ -24,7 +24,7 @@ public class RedisClientFallBackFactory implements FallbackFactory<RedisClient> 
      * @param cause cause
      * @return com.pandaz.usercenter.client.RedisClient
      * @author Carzer
-     * Date: 2019/10/28 10:24
+     * @date 2019/10/28 10:24
      */
     @Override
     public RedisClient create(Throwable cause) {

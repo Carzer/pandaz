@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
  * 获取ip
  *
  * @author Carzer
- * Date: 2019-08-22 14:25
+ * @date 2019-08-22 14:25
  */
 @Component
 public final class IpUtil {

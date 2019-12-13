@@ -25,15 +25,15 @@
     </sql>
     <insert id="insert" parameterType="com.pandaz.usercenter.entity.OsInfoEntity">
         insert into t_sys_os_info (id, name, code,
-                                   parent_code, created_by, created_date,
-                                   updated_by, updated_date, deleted_by,
-                                   deleted_date, deleted_flag, locked,
-                                   version)
+        parent_code, created_by, created_date,
+        updated_by, updated_date, deleted_by,
+        deleted_date, deleted_flag, locked,
+        version)
         values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
-                #{parentCode,jdbcType=VARCHAR}, #{createdBy,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP},
-                #{updatedBy,jdbcType=VARCHAR}, #{updatedDate,jdbcType=TIMESTAMP}, #{deletedBy,jdbcType=VARCHAR},
-                #{deletedDate,jdbcType=TIMESTAMP}, #{deletedFlag,jdbcType=TINYINT}, #{locked,jdbcType=TINYINT},
-                #{version,jdbcType=INTEGER})
+        #{parentCode,jdbcType=VARCHAR}, #{createdBy,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP},
+        #{updatedBy,jdbcType=VARCHAR}, #{updatedDate,jdbcType=TIMESTAMP}, #{deletedBy,jdbcType=VARCHAR},
+        #{deletedDate,jdbcType=TIMESTAMP}, #{deletedFlag,jdbcType=TINYINT}, #{locked,jdbcType=TINYINT},
+        #{version,jdbcType=INTEGER})
     </insert>
     <insert id="insertSelective" parameterType="com.pandaz.usercenter.entity.OsInfoEntity">
         insert into t_sys_os_info

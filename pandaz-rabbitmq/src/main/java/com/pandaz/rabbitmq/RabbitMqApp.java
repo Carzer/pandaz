@@ -11,7 +11,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * rabbitmq相关服务
  *
  * @author Carzer
- * Date: 2019-07-22 13:29
+ * @date 2019-07-22 13:29
  */
 @SpringBootApplication
 @EnableDiscoveryClient

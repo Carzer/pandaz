@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Dozer转换类
  *
  * @author Carzer
- * Date: 2019-10-28
+ * @date 2019-10-28
  */
 public final class DozerConvertUtil {
 
@@ -40,7 +40,7 @@ public final class DozerConvertUtil {
      * @param clazz  target class
      * @return T
      * @author Carzer
-     * Date: 2019/10/28 14:34
+     * @date 2019/10/28 14:34
      */
     public static <S, T> T convert(S source, Class<T> clazz) {
         return source == null ? null : mapper.map(source, clazz);
@@ -53,7 +53,7 @@ public final class DozerConvertUtil {
      * @param clazz      clazz
      * @return java.util.List<T>
      * @author Carzer
-     * Date: 2019/10/28 14:44
+     * @date 2019/10/28 14:44
      */
     public static <S, T> List<T> convertList(List<S> sourceList, Class<T> clazz) {
         List<T> es = new ArrayList<>();
@@ -70,7 +70,7 @@ public final class DozerConvertUtil {
      * @param clazz clazz
      * @return java.util.Map<java.lang.String, java.lang.Object>
      * @author Carzer
-     * Date: 2019/10/28 16:19
+     * @date 2019/10/28 16:19
      */
     public static <S, T> Map<String, Object> convertToMap(Page<S> page, Class<T> clazz) {
         Assert.notNull(page, "传入的page不能为空！");
@@ -90,7 +90,7 @@ public final class DozerConvertUtil {
      * @param clazz clazz
      * @return com.github.pagehelper.Page<T>
      * @author Carzer
-     * Date: 2019/10/28 14:47
+     * @date 2019/10/28 14:47
      */
     public static <S, T> Page<T> convertPage(Page<S> page, Class<T> clazz) {
         if (page == null) {
@@ -109,7 +109,7 @@ public final class DozerConvertUtil {
      * @return com.github.pagehelper.Page<T>
      * @throws
      * @author Carzer
-     * Date: 2019/10/28 15:34
+     * @date 2019/10/28 15:34
      */
     private static <S, T> Page<T> simpleCopyPage(Page<S> sourcePageObject) {
         Page<T> targetPageObject = new Page<>();

@@ -1,16 +1,16 @@
-package com.pandaz.usercenter.dto;
+package com.pandaz.commons.dto.usercenter;
 
 import lombok.Data;
 
 import java.io.Serializable;
 
 /**
- * pandaz:com.pandaz.usercenter.dto
+ * pandaz:com.pandaz.commons.dto.usercenter
  * <p>
  * 用户更新密码DTO
  *
  * @author Carzer
- * Date: 2019-10-29 15:48
+ * @date 2019-10-29 15:48
  */
 @Data
 public class UserPwdDTO implements Serializable {

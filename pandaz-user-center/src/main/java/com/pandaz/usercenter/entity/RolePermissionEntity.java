@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
  * 角色-权限
  *
  * @author Carzer
- * Date: 2019-11-10
+ * @date 2019-11-10
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

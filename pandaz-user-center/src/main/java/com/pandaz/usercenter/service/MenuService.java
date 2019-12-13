@@ -8,7 +8,7 @@ import com.pandaz.usercenter.entity.MenuEntity;
  * 菜单服务
  *
  * @author Carzer
- * Date: 2019-11-01 15:04
+ * @date 2019-11-01 15:04
  */
 public interface MenuService {
 
@@ -18,7 +18,7 @@ public interface MenuService {
      * @param menu menu
      * @return com.pandaz.usercenter.entity.MenuEntity
      * @author Carzer
-     * Date: 2019/11/1 15:08
+     * @date 2019/11/1 15:08
      */
     MenuEntity insert(MenuEntity menu);
 }

@@ -9,7 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  * 加密类
  *
  * @author Carzer
- * Date: 2019-07-16
+ * @date 2019-07-16
  */
 @Slf4j
 public final class CustomPasswordEncoder extends BCryptPasswordEncoder {
@@ -27,7 +27,7 @@ public final class CustomPasswordEncoder extends BCryptPasswordEncoder {
      * @param rawPassword 原始密码
      * @return java.lang.String
      * @author Carzer
-     * Date: 2019-07-16 14:43
+     * @date 2019-07-16 14:43
      */
     @Override
     public String encode(CharSequence rawPassword) {
@@ -42,7 +42,7 @@ public final class CustomPasswordEncoder extends BCryptPasswordEncoder {
      * @param encodedPassword 加密后的密码
      * @return boolean
      * @author Carzer
-     * Date: 2019-07-16 14:43
+     * @date 2019-07-16 14:43
      */
     @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {

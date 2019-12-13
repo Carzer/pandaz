@@ -1,4 +1,4 @@
-package com.pandaz.mongodb.config;
+package com.pandaz.file.config;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
@@ -12,7 +12,7 @@ import org.springframework.util.StringUtils;
  * mongodb工具
  *
  * @author Carzer
- * Date: 2019-07-16
+ * @date 2019-07-16
  */
 class MongoDbFactoryHelper {
 
@@ -29,7 +29,7 @@ class MongoDbFactoryHelper {
      * @param name 库名
      * @return org.springframework.data.mongodb.MongoDbFactory
      * @author Carzer
-     * Date: 2019-07-16 15:12
+     * @date 2019-07-16 15:12
      */
     static MongoDbFactory getMongoDbFactory(String host, String user, String pwd, String name) {
         // uri格式mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]

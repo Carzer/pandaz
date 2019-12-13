@@ -10,7 +10,7 @@ import java.util.List;
  * 用户-组服务
  *
  * @author Carzer
- * Date: 2019-11-05 17:26
+ * @date 2019-11-05 17:26
  */
 public interface UserGroupService {
 
@@ -20,7 +20,7 @@ public interface UserGroupService {
      * @param userGroup userGroup
      * @return java.util.List<com.pandaz.usercenter.entity.UserGroupEntity>
      * @author Carzer
-     * Date: 2019/11/5 17:26
+     * @date 2019/11/5 17:26
      */
     List<UserGroupEntity> findByUserCode(UserGroupEntity userGroup);
 
@@ -31,7 +31,7 @@ public interface UserGroupService {
      * @param userCode userCode
      * @return int
      * @author Carzer
-     * Date: 2019/11/5 17:26
+     * @date 2019/11/5 17:26
      */
     int deleteByUserCode(String userCode);
 
@@ -41,7 +41,7 @@ public interface UserGroupService {
      * @param userGroup	userGroup
      * @return int
      * @author Carzer
-     * Date: 2019/11/5 17:35
+     * @date 2019/11/5 17:35
      */
     int insert(UserGroupEntity userGroup);
 }

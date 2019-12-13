@@ -20,7 +20,7 @@
         <result column="version" jdbcType="INTEGER" property="version"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, name, code,
+        id, name, code,os_code,
         menu_code, url, request_type,
         priority, bit_result, created_by,
         created_date, updated_by, updated_date,
@@ -28,18 +28,18 @@
         version
     </sql>
     <insert id="insert" parameterType="com.pandaz.usercenter.entity.PermissionEntity">
-        insert into t_sys_permission (id, name, code,
-                                      menu_code, url, request_type,
-                                      priority, bit_result, created_by,
-                                      created_date, updated_by, updated_date,
-                                      deleted_by, deleted_date, deleted_flag,
-                                      version)
-        values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
-                #{menuCode,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{requestType,jdbcType=TINYINT},
-                #{priority,jdbcType=TINYINT}, #{bitResult,jdbcType=INTEGER}, #{createdBy,jdbcType=VARCHAR},
-                #{createdDate,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, #{updatedDate,jdbcType=TIMESTAMP},
-                #{deletedBy,jdbcType=VARCHAR}, #{deletedDate,jdbcType=TIMESTAMP}, #{deletedFlag,jdbcType=TINYINT},
-                #{version,jdbcType=INTEGER})
+        insert into t_sys_permission (id, name, code,os_code,
+        menu_code, url, request_type,
+        priority, bit_result, created_by,
+        created_date, updated_by, updated_date,
+        deleted_by, deleted_date, deleted_flag,
+        version)
+        values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},#{osCode,jdbcType=VARCHAR},
+        #{menuCode,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{requestType,jdbcType=TINYINT},
+        #{priority,jdbcType=TINYINT}, #{bitResult,jdbcType=INTEGER}, #{createdBy,jdbcType=VARCHAR},
+        #{createdDate,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, #{updatedDate,jdbcType=TIMESTAMP},
+        #{deletedBy,jdbcType=VARCHAR}, #{deletedDate,jdbcType=TIMESTAMP}, #{deletedFlag,jdbcType=TINYINT},
+        #{version,jdbcType=INTEGER})
     </insert>
     <insert id="insertSelective" parameterType="com.pandaz.usercenter.entity.PermissionEntity">
         insert into t_sys_permission
@@ -52,6 +52,9 @@
             </if>
             <if test="code != null">
                 code,
+            </if>
+            <if test="osCode != null">
+                os_code,
             </if>
             <if test="menuCode != null">
                 menu_code,
@@ -102,6 +105,9 @@
             </if>
             <if test="code != null">
                 #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="osCode != null">
+                #{osCode,jdbcType=VARCHAR},
             </if>
             <if test="menuCode != null">
                 #{menuCode,jdbcType=VARCHAR},

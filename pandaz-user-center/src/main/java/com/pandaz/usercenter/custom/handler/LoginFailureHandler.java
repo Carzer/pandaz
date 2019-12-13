@@ -18,7 +18,7 @@ import java.io.PrintWriter;
  * 登录失败handler
  *
  * @author Carzer
- * Date: 2019-10-25 08:52
+ * @date 2019-10-25 08:52
  */
 @Slf4j
 public class LoginFailureHandler implements AuthenticationFailureHandler {
@@ -30,7 +30,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
      * @param httpServletResponse httpServletResponse
      * @param e                   e
      * @author Carzer
-     * Date: 2019/10/25 13:28
+     * @date 2019/10/25 13:28
      */
     @Override
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException {

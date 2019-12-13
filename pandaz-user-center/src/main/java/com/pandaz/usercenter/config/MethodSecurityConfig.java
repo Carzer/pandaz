@@ -13,7 +13,7 @@ import org.springframework.security.config.annotation.method.configuration.Globa
  * 注解配置权限相关配置
  *
  * @author Carzer
- * Date: 2019-11-05 11:10
+ * @date 2019-11-05 11:10
  */
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
@@ -28,7 +28,7 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
      *
      * @param customPermissionEvaluator customPermissionEvaluator
      * @author Carzer
-     * Date: 2019/11/5 15:33
+     * @date 2019/11/5 15:33
      */
     @Autowired
     public void setCustomPermissionEvaluator(CustomPermissionEvaluator customPermissionEvaluator) {
@@ -40,7 +40,7 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
      *
      * @return org.springframework.security.access.expression.method.MethodSecurityExpressionHandler
      * @author Carzer
-     * Date: 2019/11/5 15:35
+     * @date 2019/11/5 15:35
      */
     @Override
     protected MethodSecurityExpressionHandler createExpressionHandler() {

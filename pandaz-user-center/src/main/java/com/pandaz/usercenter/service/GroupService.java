@@ -8,7 +8,7 @@ import com.pandaz.usercenter.entity.GroupEntity;
  * 组服务
  *
  * @author Carzer
- * Date: 2019-10-25 10:58
+ * @date 2019-10-25 10:58
  */
 public interface GroupService {
 
@@ -18,7 +18,7 @@ public interface GroupService {
      * @param group group
      * @return int
      * @author Carzer
-     * Date: 2019/10/25 11:01
+     * @date 2019/10/25 11:01
      */
     int insert(GroupEntity group);
 
@@ -28,7 +28,7 @@ public interface GroupService {
      * @param groupCode groupCode
      * @return int
      * @author Carzer
-     * Date: 2019/10/25 15:57
+     * @date 2019/10/25 15:57
      */
     int deleteByCode(String groupCode);
 }
