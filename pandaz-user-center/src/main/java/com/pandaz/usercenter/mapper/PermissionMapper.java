@@ -17,24 +17,4 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface PermissionMapper extends BaseMapper<PermissionEntity> {
 
-    /**
-     * 插入方法
-     *
-     * @param permission permission
-     * @return int
-     * @author Carzer
-     * @date 2019/11/20 10:14
-     */
-    int insert(PermissionEntity permission);
-
-    /**
-     * 插入方法
-     *
-     * @param permission permission
-     * @return int
-     * @author Carzer
-     * @date 2019/11/20 10:14
-     */
-    int insertSelective(PermissionEntity permission);
-
 }

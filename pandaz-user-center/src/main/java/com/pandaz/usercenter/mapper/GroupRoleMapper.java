@@ -21,26 +21,6 @@ import java.util.List;
 public interface GroupRoleMapper extends BaseMapper<GroupRoleEntity> {
 
     /**
-     * 插入关系
-     *
-     * @param groupRole 组-角色关系
-     * @return int
-     * @author Carzer
-     * @date 2019/10/23 16:58
-     */
-    int insert(GroupRoleEntity groupRole);
-
-    /**
-     * 插入关系
-     *
-     * @param groupRole 组-角色关系
-     * @return int
-     * @author Carzer
-     * @date 2019/10/23 16:58
-     */
-    int insertSelective(GroupRoleEntity groupRole);
-
-    /**
      * 根据主键删除
      *
      * @param id 主键

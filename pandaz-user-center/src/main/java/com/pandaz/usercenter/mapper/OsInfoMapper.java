@@ -17,24 +17,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface OsInfoMapper extends BaseMapper<OsInfoEntity> {
 
-    /**
-     * 插入方法
-     *
-     * @param osInfo osInfo
-     * @return int
-     * @author Carzer
-     * @date 2019/11/1 15:03
-     */
-    int insert(OsInfoEntity osInfo);
-
-    /**
-     * 插入方法
-     *
-     * @param osInfo osInfo
-     * @return int
-     * @author Carzer
-     * @date 2019/11/1 15:03
-     */
-    int insertSelective(OsInfoEntity osInfo);
-
 }

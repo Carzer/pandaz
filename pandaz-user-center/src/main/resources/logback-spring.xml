@@ -135,7 +135,6 @@
     </appender>
 
     <!--logger-->
-    <logger name="org.springframework" level="INFO"/>
     <logger name="com.alibaba.nacos" level="ERROR"/>
     <springProfile name="dev">
         <logger name="${customProjectPackage}" level="DEBUG"/>

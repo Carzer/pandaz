@@ -21,26 +21,6 @@ import java.util.List;
 public interface UserGroupMapper extends BaseMapper<UserGroupEntity> {
 
     /**
-     * 插入用户-组关系
-     *
-     * @param userGroup 用户-组关系
-     * @return int
-     * @author Carzer
-     * @date 2019/10/23 17:00
-     */
-    int insert(UserGroupEntity userGroup);
-
-    /**
-     * 插入用户-组关系
-     *
-     * @param userGroup 用户-组关系
-     * @return int
-     * @author Carzer
-     * @date 2019/10/23 17:00
-     */
-    int insertSelective(UserGroupEntity userGroup);
-
-    /**
      * 根据主键删除
      *
      * @param id 主键

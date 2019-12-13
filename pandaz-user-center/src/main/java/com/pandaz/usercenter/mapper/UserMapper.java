@@ -21,26 +21,6 @@ import java.util.List;
 public interface UserMapper extends BaseMapper<UserEntity> {
 
     /**
-     * 插入用户信息
-     *
-     * @param user 用户信息
-     * @return int
-     * @author Carzer
-     * @date 2019/10/23 15:19
-     */
-    int insert(UserEntity user);
-
-    /**
-     * 插入用户信息
-     *
-     * @param user 用户信息
-     * @return int
-     * @author Carzer
-     * @date 2019/10/23 15:19
-     */
-    int insertSelective(UserEntity user);
-
-    /**
      * 根据主键更新
      *
      * @param user 用户信息

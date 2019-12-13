@@ -19,26 +19,6 @@ import org.springframework.stereotype.Repository;
 public interface GroupMapper extends BaseMapper<GroupEntity> {
 
     /**
-     * 插入方法
-     *
-     * @param group 组
-     * @return int
-     * @author Carzer
-     * @date 2019/10/23 16:58
-     */
-    int insert(GroupEntity group);
-
-    /**
-     * 插入方法
-     *
-     * @param group 组
-     * @return int
-     * @author Carzer
-     * @date 2019/10/23 16:58
-     */
-    int insertSelective(GroupEntity group);
-
-    /**
      * 根据主键更新
      *
      * @param group group

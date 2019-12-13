@@ -51,6 +51,5 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
             out.write(s);
             out.flush();
         }
-//        super.onAuthenticationSuccess(request, response, authentication);
     }
 }

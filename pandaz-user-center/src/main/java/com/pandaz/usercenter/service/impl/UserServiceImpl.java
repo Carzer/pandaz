@@ -126,7 +126,6 @@ public class UserServiceImpl implements UserService {
         String createdBy = user.getCreatedBy();
         Date createdDate = user.getCreatedDate();
         user.setId(UuidUtil.getUnsignedUuid());
-
         //建立用户私有组
         String groupCode = SysConstants.GROUP_PREFIX + userCode;
         GroupEntity group = new GroupEntity();

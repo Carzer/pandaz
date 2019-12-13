@@ -10,18 +10,27 @@ spring:
         dashboard: 172.16.2.130:8787
   #数据库配置
   datasource:
-    url: jdbc:mysql://172.16.2.130:3306/pandaz?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
-    username: pandaz
-    password: K0tXBGwNHBl#
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    #hikari连接池
-    type: com.zaxxer.hikari.HikariDataSource
-    hikari:
-      pool-name: UserCenterAppHikariPool
+    db0:
+      jdbc-url: jdbc:mysql://172.16.2.130:3306/pandaz?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+      username: pandaz
+      password: K0tXBGwNHBl#
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      pool-name: UserCenterAppHikariPool-db0
       maximum-pool-size: 20
       minimum-idle: 10
       connection-test-query: SELECT 1
       connection-timeout: 60000
+    db1:
+      jdbc-url: jdbc:mysql://172.16.2.130:3306/activiti?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+      username: pandaz
+      password: K0tXBGwNHBl#
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      pool-name: UserCenterAppHikariPool-db1
+      maximum-pool-size: 20
+      minimum-idle: 10
+      connection-test-query: SELECT 1
+      connection-timeout: 60000
+
   #连接redis-sentinel集群配置
   redis:
     timeout: 6000ms

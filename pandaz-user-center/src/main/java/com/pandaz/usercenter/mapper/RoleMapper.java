@@ -22,26 +22,6 @@ import java.util.List;
 public interface RoleMapper extends BaseMapper<RoleEntity> {
 
     /**
-     * 插入方法
-     *
-     * @param role 角色
-     * @return int
-     * @author Carzer
-     * @date 2019/10/23 16:05
-     */
-    int insert(RoleEntity role);
-
-    /**
-     * 插入方法
-     *
-     * @param role 角色
-     * @return int
-     * @author Carzer
-     * @date 2019/10/23 16:05
-     */
-    int insertSelective(RoleEntity role);
-
-    /**
      * 根据用户编码获取非私有角色信息
      *
      * @param userCode 用户编码

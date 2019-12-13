@@ -3,12 +3,12 @@ package com.pandaz.usercenter.config;
 import com.pandaz.commons.dto.usercenter.UserDTO;
 import com.pandaz.commons.util.CustomPasswordEncoder;
 import com.pandaz.commons.util.DozerConvertUtil;
+import com.pandaz.usercenter.custom.SecurityUser;
 import com.pandaz.usercenter.custom.constants.SysConstants;
 import com.pandaz.usercenter.custom.handler.AuthDeniedHandler;
 import com.pandaz.usercenter.custom.handler.LoginFailureHandler;
 import com.pandaz.usercenter.custom.handler.LoginSuccessHandler;
 import com.pandaz.usercenter.custom.provider.CustomDaoAuthenticationProvider;
-import com.pandaz.usercenter.custom.SecurityUser;
 import com.pandaz.usercenter.entity.UserEntity;
 import com.pandaz.usercenter.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -64,10 +64,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth
                 .authenticationProvider(customDaoAuthenticationProvider())
         ;
-//        auth
-//                .userDetailsService(userDetailsService())
-//                .passwordEncoder(passwordEncoder())
-//        ;
     }
 
     /**
@@ -177,7 +173,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             //用户已过期
             if (expireAt == null || now.after(expireAt)) {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                String accountExpiredMsg = "用户[" + username + "]已于" + simpleDateFormat.format(expireAt.getTime()) + "过期。";
+                String expireTime = expireAt == null ? "" : "于" + simpleDateFormat.format(expireAt.getTime());
+                String accountExpiredMsg = String.format("用户[%s]已%s过期。", username, expireTime);
                 throw new AccountExpiredException(accountExpiredMsg);
             }
             UserDTO userDTO = DozerConvertUtil.convert(user, UserDTO.class);

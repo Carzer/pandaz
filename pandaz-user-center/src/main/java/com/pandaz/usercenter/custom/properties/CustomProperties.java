@@ -27,12 +27,12 @@ public class CustomProperties {
     /**
      * 调用客户端的信息
      */
-    private final Client client = new Client();
+    private Client client;
 
     /**
      * 缓存参数
      */
-    private final Cache cache = new Cache();
+    private Cache cache;
 
     /**
      * 调用客户端
@@ -49,7 +49,7 @@ public class CustomProperties {
      */
     @Getter
     @Setter
-    public static class Cache{
+    public static class Cache {
         /**
          * 主缓存过期时间单位
          */
