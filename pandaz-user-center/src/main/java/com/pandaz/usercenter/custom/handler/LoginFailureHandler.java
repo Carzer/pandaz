@@ -13,12 +13,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * pandaz:com.pandaz.usercenter.custom.handler
- * <p>
  * 登录失败handler
  *
  * @author Carzer
- * @date 2019-10-25 08:52
+ * @since 2019-10-25
  */
 @Slf4j
 public class LoginFailureHandler implements AuthenticationFailureHandler {
@@ -29,8 +27,6 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
      * @param httpServletRequest  httpServletRequest
      * @param httpServletResponse httpServletResponse
      * @param e                   e
-     * @author Carzer
-     * @date 2019/10/25 13:28
      */
     @Override
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException {
@@ -38,7 +34,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
         log.warn(errorMsg);
         httpServletResponse.setContentType("application/json;charset=utf-8");
         ExecuteResult<String> result = new ExecuteResult<>();
-        if(e instanceof BadCredentialsException){
+        if (e instanceof BadCredentialsException) {
             errorMsg = "密码错误。";
         }
         result.setError(errorMsg);

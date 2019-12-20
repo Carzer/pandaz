@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pandaz.usercenter.entity.UserGroupEntity;
 import com.pandaz.usercenter.mapper.UserGroupMapper;
 import com.pandaz.usercenter.service.UserGroupService;
@@ -10,16 +11,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * pandaz:com.pandaz.usercenter.service.impl
- * <p>
  * 用户-组服务
  *
  * @author Carzer
- * @date 2019-11-05 17:27
+ * @since 2019-11-05
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UserGroupServiceImpl implements UserGroupService {
+public class UserGroupServiceImpl extends ServiceImpl<UserGroupMapper, UserGroupEntity> implements UserGroupService {
 
     /**
      * 用户-组mapper
@@ -31,8 +30,6 @@ public class UserGroupServiceImpl implements UserGroupService {
      *
      * @param userGroup userGroup
      * @return java.util.List<com.pandaz.usercenter.entity.UserGroupEntity>
-     * @author Carzer
-     * @date 2019/11/5 17:26
      */
     @Override
     public List<UserGroupEntity> findByUserCode(UserGroupEntity userGroup) {
@@ -44,8 +41,6 @@ public class UserGroupServiceImpl implements UserGroupService {
      *
      * @param userCode userCode
      * @return int
-     * @author Carzer
-     * @date 2019/11/5 17:26
      */
     @Override
     public int deleteByUserCode(String userCode) {
@@ -56,8 +51,6 @@ public class UserGroupServiceImpl implements UserGroupService {
      * 插入方法
      *
      * @param userGroup userGroup
-     * @author Carzer
-     * @date 2019/11/5 17:31
      */
     @Override
     public int insert(UserGroupEntity userGroup) {

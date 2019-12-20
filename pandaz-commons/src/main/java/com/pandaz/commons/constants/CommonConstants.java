@@ -1,12 +1,10 @@
 package com.pandaz.commons.constants;
 
 /**
- * pandaz:com.pandaz.commons.constants
- * <p>
  * 通用常量
  *
  * @author Carzer
- * @date 2019-10-25 14:22
+ * @since 2019-10-25
  */
 public final class CommonConstants {
 

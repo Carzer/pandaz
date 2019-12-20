@@ -5,12 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
- * pandaz:com.pandaz.usercenter.fallback
- * <p>
  * 默认回调方法
  *
  * @author Carzer
- * @date 2019-07-22 09:54
+ * @since 2019-07-22
  */
 @Component
 @Slf4j

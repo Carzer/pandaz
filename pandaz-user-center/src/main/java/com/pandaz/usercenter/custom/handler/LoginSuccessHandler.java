@@ -13,12 +13,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * pandaz:com.pandaz.usercenter.custom.handler
- * <p>
  * LoginSuccessHandler
  *
  * @author Carzer
- * @date 2019-08-22 09:09
+ * @since 2019-08-22
  */
 @Slf4j
 public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
@@ -29,8 +27,6 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
      * @param httpServletRequest  request
      * @param httpServletResponse response
      * @param authentication      authentication
-     * @author Carzer
-     * Date 2019-08-22 09:09
      */
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest,

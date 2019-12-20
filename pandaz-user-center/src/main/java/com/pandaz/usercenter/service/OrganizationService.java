@@ -1,10 +1,13 @@
 package com.pandaz.usercenter.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.pandaz.usercenter.entity.OrganizationEntity;
+
 /**
- * Description: 组织信息服务
+ * 组织信息服务
  *
- * @author carzer
- * @date 2019/12/13
+ * @author Carzer
+ * @since 2019/12/13
  */
-public interface OrganizationService {
+public interface OrganizationService extends IService<OrganizationEntity> {
 }

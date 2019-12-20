@@ -1,5 +1,6 @@
 package com.pandaz.rabbitmq.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.messaging.Processor;
 import org.springframework.integration.support.MessageBuilder;
@@ -8,28 +9,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * pandaz:com.pandaz.rabbitmq.controller
- * <p>
  * 消息发送
  *
  * @author Carzer
- * @date 2019-10-09 13:29
+ * @since 2019-10-09
  */
 @RestController
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SendController {
 
     /**
      * 管道
      */
-    @Autowired
-    private Processor pipe;
+    private final Processor pipe;
 
     /**
      * 发送消息方法
      *
      * @param message message
-     * @author Carzer
-     * @date 2019/10/9 16:39
      */
     @GetMapping("/send")
     public void send(@RequestParam String message) {

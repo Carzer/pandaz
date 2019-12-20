@@ -1,12 +1,10 @@
 package com.pandaz.usercenter.custom.constants;
 
 /**
- * pandaz:com.pandaz.usercenter.util.constants
- * <p>
  * 用户中心常量
  *
  * @author Carzer
- * @date 2019-10-25 14:21
+ * @since 2019-10-25
  */
 public final class SysConstants {
 

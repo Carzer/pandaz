@@ -11,12 +11,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * pandaz:com.pandaz.usercenter.custom.handler
- * <p>
  * 全局exception捕捉
  *
  * @author Carzer
- * @date 2019-11-05 09:52
+ * @since 2019-11-05
  */
 @Slf4j
 @ControllerAdvice

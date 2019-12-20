@@ -6,12 +6,10 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * pandaz:com.pandaz.commons.util
- * <p>
  * 获取ip
  *
  * @author Carzer
- * @date 2019-08-22 14:25
+ * @since 2019-08-22
  */
 @Component
 public final class IpUtil {
@@ -43,8 +41,6 @@ public final class IpUtil {
      * @return java.lang.String
      * <p>
      * getIpAddress 方法的注释
-     * @author Carzer
-     * Date 2019-08-22 09:09
      */
     public static String getIpAddress(HttpServletRequest request) {
         String ip = request.getHeader("x-forwarded-for");

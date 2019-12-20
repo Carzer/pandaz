@@ -30,17 +30,17 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
         <swagger.version>2.9.2</swagger.version>
-        <pagehelper.version>1.2.12</pagehelper.version>
-        <dozer.version>5.5.1</dozer.version>
         <jedis.version>2.9.0</jedis.version>
         <mysql.version>8.0.16</mysql.version>
         <activiti.version>7.1.0.M2</activiti.version>
         <feign-form.version>3.5.0</feign-form.version>
-        <mybatis-starter.version>2.0.1</mybatis-starter.version>
+        <mybatis-plus-starter.version>3.3.0</mybatis-plus-starter.version>
+        <freemarker.version>2.3.29</freemarker.version>
         <spring.security.version>2.3.6.RELEASE</spring.security.version>
         <spring.security.jwt.version>1.0.11.RELEASE</spring.security.jwt.version>
         <nacos.dependency.version>0.9.0.RELEASE</nacos.dependency.version>
         <sentinel.dependency.version>0.9.0.RELEASE</sentinel.dependency.version>
+        <pandaz.commons.version>0.0.1-SNAPSHOT</pandaz.commons.version>
     </properties>
 
     <modules>
@@ -71,6 +71,76 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!--project-->
+            <dependency>
+                <groupId>com.pandaz</groupId>
+                <artifactId>pandaz-commons</artifactId>
+                <version>${pandaz.commons.version}</version>
+            </dependency>
+            <!--mybatis plus-->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis-plus-starter.version}</version>
+            </dependency>
+            <!--freemarker-->
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>${freemarker.version}</version>
+            </dependency>
+            <!-- activiti -->
+            <dependency>
+                <groupId>org.activiti</groupId>
+                <artifactId>activiti-spring-boot-starter</artifactId>
+                <version>${activiti.version}</version>
+            </dependency>
+            <!--mysql-->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <!--oauth2-->
+            <dependency>
+                <groupId>org.springframework.security.oauth</groupId>
+                <artifactId>spring-security-oauth2</artifactId>
+                <version>${spring.security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-jwt</artifactId>
+                <version>${spring.security.jwt.version}</version>
+            </dependency>
+            <!--jedis-->
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>${jedis.version}</version>
+            </dependency>
+            <!--fileupload-->
+            <dependency>
+                <groupId>io.github.openfeign.form</groupId>
+                <artifactId>feign-form</artifactId>
+                <version>${feign-form.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.openfeign.form</groupId>
+                <artifactId>feign-form-spring</artifactId>
+                <version>${feign-form.version}</version>
+            </dependency>
+            <!--nacos-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+                <version>${nacos.dependency.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -96,7 +166,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
         </dependency>
         <!--devtools-->
         <dependency>
@@ -166,7 +235,11 @@
             <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
             <version>${sentinel.dependency.version}</version>
         </dependency>
-
+        <!--监控-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

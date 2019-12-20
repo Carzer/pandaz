@@ -1,23 +1,17 @@
 package com.pandaz.usercenter.mapper;
 
-import com.pandaz.commons.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pandaz.usercenter.entity.UserGroupEntity;
-import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
- * pandaz:com.pandaz.usercenter.mapper
- * <p>
  * 用户-组关系mapper
  *
  * @author Carzer
- * @date 2019-10-23 10:52
+ * @since 2019-10-23
  */
-@Mapper
-@Repository
 public interface UserGroupMapper extends BaseMapper<UserGroupEntity> {
 
     /**
@@ -25,8 +19,6 @@ public interface UserGroupMapper extends BaseMapper<UserGroupEntity> {
      *
      * @param id 主键
      * @return int
-     * @author Carzer
-     * @date 2019-08-22 13:19
      */
     int deleteByPrimaryKey(String id);
 
@@ -35,8 +27,6 @@ public interface UserGroupMapper extends BaseMapper<UserGroupEntity> {
      *
      * @param userCode userCode
      * @return int
-     * @author Carzer
-     * @date 2019/10/25 15:44
      */
     int deleteByUserCode(@Value("userCode") String userCode);
 
@@ -45,8 +35,6 @@ public interface UserGroupMapper extends BaseMapper<UserGroupEntity> {
      *
      * @param groupCode groupCode
      * @return int
-     * @author Carzer
-     * @date 2019/10/25 15:44
      */
     int deleteByGroupCode(@Value("groupCode") String groupCode);
 
@@ -55,8 +43,14 @@ public interface UserGroupMapper extends BaseMapper<UserGroupEntity> {
      *
      * @param userGroup userGroup
      * @return java.util.List<com.pandaz.usercenter.entity.UserGroupEntity>
-     * @author Carzer
-     * @date 2019/10/25 16:09
      */
     List<UserGroupEntity> findByUserCode(UserGroupEntity userGroup);
+
+    /**
+     * 插入方法
+     *
+     * @param userGroup userGroup
+     * @return 插入结果
+     */
+    int insertSelective(UserGroupEntity userGroup);
 }

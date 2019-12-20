@@ -1,7 +1,5 @@
 server:
   port: 9005
-#  servlet:
-#    context-path: /fileServer
 #当前配置环境
 spring:
   application:

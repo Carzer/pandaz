@@ -1,72 +1,91 @@
 package com.pandaz.usercenter.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.pandaz.commons.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 /**
- * pandaz:com.pandaz.usercenter.entity
- * <p>
  * 用户信息
  *
  * @author Carzer
- * @date 2019-10-23 10:52
+ * @since 2019-10-23
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class UserEntity extends BaseEntity<UserEntity> {
+@TableName("t_sys_user")
+public class UserEntity extends BaseEntity {
 
     private static final long serialVersionUID = 2983929245005559740L;
+
     /**
-     * 用户名
+     * 主键
      */
+    @TableId("id")
+    private String id;
+
+    /**
+     * 姓名
+     */
+    @TableField("name")
     private String name;
 
     /**
      * 用户编码
      */
+    @TableField("code")
     private String code;
 
     /**
      * 登录名
      */
+    @TableField("login_name")
     private String loginName;
 
     /**
      * 密码
      */
+    @TableField("password")
     private String password;
 
     /**
-     * 性别
+     * 性别(0:男，1:女)
      */
-    private Byte gender;
+    @TableField("gender")
+    private Integer gender;
 
     /**
      * 用户类型
      */
+    @TableField("user_type")
     private String userType;
 
     /**
      * 邮箱
      */
+    @TableField("email")
     private String email;
 
     /**
-     * 手机号
+     * 电话号码
      */
+    @TableField("phone")
     private String phone;
 
     /**
      * 是否锁定
      */
+    @TableField("locked")
     private Byte locked;
 
     /**
      * 过期时间
      */
-    private Timestamp expireAt;
+    @TableField("expire_at")
+    private LocalDateTime expireAt;
 
 }

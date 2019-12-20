@@ -1,26 +1,24 @@
 package com.pandaz.commons.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.Version;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
- * pandaz:com.pandaz.usercenter.entity
- * <p>
  * 基础类
  *
  * @author Carzer
- * @date 2019-08-22 14:05
+ * @since 2019-08-22
  */
 @Data
-public class BaseEntity<T> implements Serializable {
+public class BaseEntity implements Serializable {
 
     private static final long serialVersionUID = -231856618304146934L;
-    /**
-     * 主键
-     */
-    private String id;
 
     /**
      * 创建人
@@ -29,40 +27,54 @@ public class BaseEntity<T> implements Serializable {
     /**
      * 创建时间
      */
-    private Date createdDate;
+    @TableField(value = "created_date")
+    private LocalDateTime createdDate;
     /**
      * 更新人
      */
     private String updatedBy;
+
     /**
      * 更新时间
      */
-    private Date updatedDate;
+    @TableField(value = "updated_date", fill = FieldFill.UPDATE, update = "NOW()")
+    private LocalDateTime updatedDate;
+
     /**
      * 删除人
      */
     private String deletedBy;
+
     /**
      * 删除时间
      */
-    private Date deletedDate;
+    @TableField(value = "deleted_date")
+    private LocalDateTime deletedDate;
+
     /**
-     * 删除标记
+     * 删除标记(0:未删除，1:已删除)
      */
+    @TableField("deleted_flag")
+    @TableLogic
     private Byte deletedFlag;
+
     /**
      * 版本号
      */
+    @TableField(value = "version", fill = FieldFill.UPDATE, update = "%s+1")
+    @Version
     private Integer version;
 
     /**
      * 起始页码
      */
+    @TableField(exist = false)
     private Integer pageNum = 1;
 
     /**
      * 每页条数
      */
+    @TableField(exist = false)
     private Integer pageSize = 10;
 
     /**

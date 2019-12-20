@@ -8,12 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * pandaz:com.pandaz.usercenter.custom.filter
- * <p>
  * 允许跨域
  *
  * @author Carzer
- * @date 2019-08-22 09:09
+ * @since 2019-08-22
  */
 @WebFilter(filterName = "CorsFilter ")
 @Configuration
@@ -25,8 +23,6 @@ public class CorsFilter implements Filter {
      * @param req   req
      * @param res   res
      * @param chain chain
-     * @author Carzer
-     * @date 2019/10/25 09:11
      */
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {

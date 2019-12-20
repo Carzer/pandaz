@@ -15,18 +15,15 @@ import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * pandaz:com.pandaz.act.controller
- * <p>
  * 默认controller
  *
  * @author Carzer
- * @date 2019-07-18 15:32
+ * @since 2019-07-18
  */
 @RestController
 @RequestMapping("/")
@@ -52,16 +49,14 @@ public class IndexController {
      * 获取所有mapping地址
      *
      * @return com.pandaz.commons.util.ExecuteResult<java.util.List>
-     * @author Carzer
-     * @date 2019/10/28 13:46
      */
     @GetMapping("/getAllUrl")
-    public ExecuteResult<List> getAllUrl() {
-        ExecuteResult<List> result = new ExecuteResult<>();
+    public ExecuteResult<ArrayList> getAllUrl() {
+        ExecuteResult<ArrayList> result = new ExecuteResult<>();
         RequestMappingHandlerMapping mapping = applicationContext.getBean(RequestMappingHandlerMapping.class);
         // 获取url与类和方法的对应信息
         Map<RequestMappingInfo, HandlerMethod> map = mapping.getHandlerMethods();
-        List<Map<String, String>> list = new ArrayList<>();
+        ArrayList<Map<String, String>> list = new ArrayList<>();
         for (Map.Entry<RequestMappingInfo, HandlerMethod> m : map.entrySet()) {
             RequestMappingInfo info = m.getKey();
             HandlerMethod method = m.getValue();

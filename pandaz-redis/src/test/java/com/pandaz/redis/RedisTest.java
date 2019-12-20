@@ -1,20 +1,20 @@
 package com.pandaz.redis;
 
 import com.pandaz.redis.service.RedisHelper;
+import lombok.RequiredArgsConstructor;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * pandaz:com.pandaz.redis
- * <p>
  * Redis 测试类
  *
  * @author Carzer
- * @date 2019-10-23 13:03
+ * @since 2019-10-23
  */
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class RedisTest extends BasisUnitTest {
-    @Autowired
-    private RedisHelper<String, String> redisHelper;
+
+    private final RedisHelper<String, String> redisHelper;
 
     @Test
     public void test() {

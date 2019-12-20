@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.entity.MenuEntity;
 import com.pandaz.usercenter.mapper.MenuMapper;
@@ -10,16 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * pandaz:com.pandaz.usercenter.service.impl
- * <p>
  * 菜单服务
  *
  * @author Carzer
- * @date 2019-11-01 15:04
+ * @since 2019-11-01
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class MenuServiceImpl implements MenuService {
+public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> implements MenuService {
 
     /**
      * 菜单mapper
@@ -36,8 +35,6 @@ public class MenuServiceImpl implements MenuService {
      *
      * @param menu menu
      * @return com.pandaz.usercenter.entity.MenuEntity
-     * @author Carzer
-     * @date 2019/11/1 15:08
      */
     @Override
     public MenuEntity insert(MenuEntity menu) {

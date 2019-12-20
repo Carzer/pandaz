@@ -6,13 +6,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
+import javax.annotation.PostConstruct;
+import java.util.TimeZone;
+
 /**
- * pandaz:com.pandaz.usercenter
- * <p>
  * 用户中心相关服务
  *
  * @author Carzer
- * @date 2019-07-16
+ * @since 2019-07-16
  */
 @SpringBootApplication
 @EnableDiscoveryClient
@@ -20,10 +21,21 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @Slf4j
 public class UserCenterApp {
 
+    /**
+     * 设置默认时区
+     */
+    @PostConstruct
+    void start() {
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
+    }
+
     public static void main(String[] args) {
+        //设置nacos日志及缓存路径
+        System.setProperty("nacos.logging.path", "logs/user-center/nacos");
+        System.setProperty("com.alibaba.nacos.naming.cache.dir", "logs/user-center/nacos/naming");
+        //启动项目
         SpringApplication.run(UserCenterApp.class, args);
         String repeat = "=".repeat(20);
         log.warn("{} UserCenter 启动成功 {}", repeat, repeat);
     }
-
 }

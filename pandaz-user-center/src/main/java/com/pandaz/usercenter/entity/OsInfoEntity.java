@@ -1,40 +1,52 @@
 package com.pandaz.usercenter.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.pandaz.commons.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * pandaz:com.pandaz.usercenter.entity
- * <p>
  * 系统信息
  *
  * @author Carzer
- * @date 2019-10-25 15:04
+ * @since 2019-10-25
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class OsInfoEntity extends BaseEntity<OsInfoEntity> {
+@TableName("t_sys_os_info")
+public class OsInfoEntity extends BaseEntity {
 
     private static final long serialVersionUID = 1210965567272983588L;
 
     /**
+     * 主键
+     */
+    @TableId("id")
+    private String id;
+
+    /**
      * 系统名
      */
+    @TableField("name")
     private String name;
 
     /**
      * 系统编码
      */
+    @TableField("code")
     private String code;
 
     /**
-     * 父编码
+     * 父系统编码
      */
+    @TableField("parent_code")
     private String parentCode;
 
     /**
-     * 是否锁定
+     * 是否锁定(0:未锁定，1:已锁定)
      */
-    private Integer locked;
+    @TableField("locked")
+    private Byte locked;
 }

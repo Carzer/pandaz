@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.custom.constants.SysConstants;
 import com.pandaz.usercenter.entity.RoleDetailEntity;
@@ -16,17 +17,15 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * pandaz:com.pandaz.usercenter.service.impl
- * <p>
  * 角色服务
  *
  * @author Carzer
- * @date 2019-10-25 11:21
+ * @since 2019-10-25
  */
 @CacheConfig(cacheManager = "secondaryCacheManager", cacheNames = {"user-center:role"})
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class RoleServiceImpl implements RoleService {
+public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> implements RoleService {
 
     /**
      * 角色mapper
@@ -43,8 +42,6 @@ public class RoleServiceImpl implements RoleService {
      *
      * @param role 角色信息
      * @return int
-     * @author Carzer
-     * @date 2019/10/25 11:30
      */
     @Override
     public int insert(RoleEntity role) {
@@ -59,8 +56,6 @@ public class RoleServiceImpl implements RoleService {
      * @param userCode  userCode用户编码
      * @param isPrivate 是否私有
      * @return java.util.List<com.pandaz.usercenter.entity.RoleEntity>
-     * @author Carzer
-     * @date 2019/10/25 11:22
      */
     @Cacheable(key = "#userCode+':'+((1 == #isPrivate)?'private':'public')")
     @Override
@@ -77,8 +72,6 @@ public class RoleServiceImpl implements RoleService {
      *
      * @param userCode userCode用户编码
      * @return java.util.List<com.pandaz.usercenter.entity.RoleEntity>
-     * @author Carzer
-     * @date 2019/10/25 11:22
      */
     @Cacheable(key = "#userCode+':all'")
     @Override
@@ -91,8 +84,6 @@ public class RoleServiceImpl implements RoleService {
      *
      * @param roleCode roleCode
      * @return int
-     * @author Carzer
-     * @date 2019/10/25 16:20
      */
     @Override
     public int deleteByCode(String roleCode) {

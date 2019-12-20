@@ -1,24 +1,21 @@
 package com.pandaz.usercenter.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.pandaz.usercenter.entity.MenuEntity;
 
 /**
- * pandaz:com.pandaz.usercenter.service
- * <p>
  * 菜单服务
  *
  * @author Carzer
- * @date 2019-11-01 15:04
+ * @since 2019-11-01
  */
-public interface MenuService {
+public interface MenuService extends IService<MenuEntity> {
 
     /**
      * 插入方法
      *
      * @param menu menu
      * @return com.pandaz.usercenter.entity.MenuEntity
-     * @author Carzer
-     * @date 2019/11/1 15:08
      */
     MenuEntity insert(MenuEntity menu);
 }

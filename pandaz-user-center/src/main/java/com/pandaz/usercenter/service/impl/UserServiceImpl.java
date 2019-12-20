@@ -1,8 +1,10 @@
 package com.pandaz.usercenter.service.impl;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.page.PageMethod;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pandaz.commons.util.CustomPasswordEncoder;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.custom.constants.SysConstants;
@@ -25,21 +27,19 @@ import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * pandaz:com.pandaz.usercenter.service.impl
- * <p>
  * 用户信息相关服务
  *
  * @author Carzer
- * @date 2019-07-16 14:55
+ * @since 2019-07-16
  */
 @CacheConfig(cacheNames = {"user-center:user"})
 @Service("userService")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> implements UserService {
 
     /**
      * 组服务
@@ -66,8 +66,6 @@ public class UserServiceImpl implements UserService {
      *
      * @param loginName 用户名
      * @return org.springframework.security.core.userdetails.UserDetails
-     * @author Carzer
-     * @date 2019-07-16 14:53
      */
     @Cacheable(key = "'loginName:'+#loginName")
     @Override
@@ -80,8 +78,6 @@ public class UserServiceImpl implements UserService {
      *
      * @param code code
      * @return com.pandaz.usercenter.entity.UserEntity
-     * @author Carzer
-     * @date 2019/11/1 17:01
      */
     @Cacheable(key = "#code")
     @Override
@@ -94,8 +90,6 @@ public class UserServiceImpl implements UserService {
      *
      * @param user user
      * @return int
-     * @author Carzer
-     * @date 2019/10/28 17:29
      */
     @CacheEvict(key = "#user.code")
     @Override
@@ -109,8 +103,6 @@ public class UserServiceImpl implements UserService {
      *
      * @param user 用户
      * @return int
-     * @author Carzer
-     * @date 2019/10/25 10:24
      */
     @Cacheable(key = "#user.code")
     @Override
@@ -124,7 +116,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(encodedPassword);
         String userName = user.getName();
         String createdBy = user.getCreatedBy();
-        Date createdDate = user.getCreatedDate();
+        LocalDateTime createdDate = user.getCreatedDate();
         user.setId(UuidUtil.getUnsignedUuid());
         //建立用户私有组
         String groupCode = SysConstants.GROUP_PREFIX + userCode;
@@ -154,8 +146,6 @@ public class UserServiceImpl implements UserService {
      *
      * @param userCode userCode
      * @return int
-     * @author Carzer
-     * @date 2019/10/25 15:47
      */
     @CacheEvict(key = "#userCode")
     @Override
@@ -181,16 +171,15 @@ public class UserServiceImpl implements UserService {
     /**
      * 获取用户信息页
      *
-     * @param user 查询条件
+     * @param userEntity 查询条件
      * @return java.util.List<com.pandaz.usercenter.entity.UserEntity>
-     * @author Carzer
-     * @date 2019/10/28 13:53
      */
     @Override
     @SentinelResource("user-getPage")
-    public Page<UserEntity> getPage(UserEntity user) {
-        Page<UserEntity> page = PageMethod.startPage(user.getPageNum(), user.getPageSize(), true);
-        userMapper.findList(user);
-        return page;
+    public IPage<UserEntity> getPage(UserEntity userEntity) {
+        Page<UserEntity> page = new Page<>(userEntity.getPageNum(), userEntity.getPageSize());
+        QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("code", userEntity.getCode());
+        return page(page, queryWrapper);
     }
 }

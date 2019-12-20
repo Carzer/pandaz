@@ -13,12 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 /**
- * pandaz:com.pandaz.usercenter.controller
- * <p>
  * 动态修改日志级别
  *
  * @author Carzer
- * @date 2019-07-17 15:20
+ * @since 2019-07-17
  */
 @RestController
 @PreAuthorize("hasRole('ADMIN')")
@@ -34,8 +32,6 @@ public class LogController {
      *            "org.springframework":"info"
      *            }
      * @return java.lang.String
-     * @author Carzer
-     * @date 2019/10/25 13:55
      */
     @PutMapping(value = "/logLevel")
     public ExecuteResult<String> changeLogLevel(@RequestBody Map<String, String> map) {

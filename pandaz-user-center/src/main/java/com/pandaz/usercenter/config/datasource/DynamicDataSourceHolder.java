@@ -1,17 +1,20 @@
 package com.pandaz.usercenter.config.datasource;
 
+import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
+
 /**
- * Description: 动态数据源持有者，负责利用ThreadLocal存取数据源名称
+ * 动态数据源持有者，负责利用ThreadLocal存取数据源名称
  *
- * @author carzer
- * @date 2019/12/13
+ * @author Carzer
+ * @since 2019-12-13
+ * @see AbstractRoutingDataSource
  */
 public class DynamicDataSourceHolder {
 
     /**
      * 私有构造方法
      */
-    private DynamicDataSourceHolder(){
+    private DynamicDataSourceHolder() {
 
     }
 

@@ -7,12 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
- * pandaz:com.pandaz.usercenter.fallback
- * <p>
  * Redis熔断
  *
  * @author Carzer
- * @date 2019-10-28 10:23
+ * @since 2019-10-28 10:23
  */
 @Component
 @Slf4j
@@ -23,8 +21,6 @@ public class RedisClientFallBackFactory implements FallbackFactory<RedisClient> 
      *
      * @param cause cause
      * @return com.pandaz.usercenter.client.RedisClient
-     * @author Carzer
-     * @date 2019/10/28 10:24
      */
     @Override
     public RedisClient create(Throwable cause) {

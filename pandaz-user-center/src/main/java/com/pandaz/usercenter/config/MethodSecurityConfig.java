@@ -8,12 +8,10 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 
 /**
- * pandaz:com.pandaz.usercenter.config
- * <p>
  * 注解配置权限相关配置
  *
  * @author Carzer
- * @date 2019-11-05 11:10
+ * @since 2019-11-05
  */
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
@@ -27,8 +25,6 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
      * 设置自定义权限认证翻译器
      *
      * @param customPermissionEvaluator customPermissionEvaluator
-     * @author Carzer
-     * @date 2019/11/5 15:33
      */
     @Autowired
     public void setCustomPermissionEvaluator(CustomPermissionEvaluator customPermissionEvaluator) {
@@ -39,14 +35,11 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
      * 创建默认表达式
      *
      * @return org.springframework.security.access.expression.method.MethodSecurityExpressionHandler
-     * @author Carzer
-     * @date 2019/11/5 15:35
      */
     @Override
     protected MethodSecurityExpressionHandler createExpressionHandler() {
         DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
         expressionHandler.setPermissionEvaluator(customPermissionEvaluator);
         return expressionHandler;
-        //return super.createExpressionHandler();
     }
 }

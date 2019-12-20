@@ -2,6 +2,7 @@ package com.pandaz.redis.controller;
 
 import com.pandaz.commons.util.ExecuteResult;
 import com.pandaz.redis.service.RedisHelper;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,46 +11,45 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
- * pandaz:com.pandaz.redis.controller
- * <p>
  * redis 操作
  *
  * @author Carzer
- * @date 2019-10-28 10:25
+ * @since 2019-10-28
  */
 @RestController
 @RequestMapping("/redis")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class OperationController {
 
     /**
      * slf4j
      */
-    @Autowired
     private static final Logger LOGGER = LoggerFactory.getLogger(OperationController.class);
 
     /**
      * redis操作
      */
-    @Autowired
-    private RedisHelper<String, String> redisHelper;
+    private final RedisHelper<String, String> redisHelper;
 
     /**
      * 获取Redis value
      *
      * @param key key
      * @return com.pandaz.commons.util.ExecuteResult<java.lang.Object>
-     * @author Carzer
-     * @date 2019/10/28 10:29
      */
     @GetMapping("/getValue")
-    public ExecuteResult<Object> getValue(String key) {
-        ExecuteResult<Object> result = new ExecuteResult<>();
+    public ExecuteResult<ConcurrentHashMap<String, Object>> getValue(String key) {
+        ExecuteResult<ConcurrentHashMap<String, Object>> result = new ExecuteResult<>();
         try {
+            ConcurrentHashMap<String, Object> map = new ConcurrentHashMap<>(1);
             Object object = redisHelper.getObject(key);
-            result.setData(object);
+            map.put(key, object);
+            result.setData(map);
         } catch (Exception e) {
-            LOGGER.error("获取Redis value出错了:", e);
+            LOGGER.error("获取Redis value异常:", e);
             result.setError(e.getMessage());
         }
         return result;
@@ -60,8 +60,6 @@ public class OperationController {
      *
      * @param value value
      * @return com.pandaz.commons.util.ExecuteResult<java.lang.String>
-     * @author Carzer
-     * @date 2019/10/28 10:32
      */
     @PostMapping("/setValue")
     public ExecuteResult<String> setValue(String value) {
@@ -70,7 +68,7 @@ public class OperationController {
             redisHelper.setObject("test", value);
             result.setData("test");
         } catch (Exception e) {
-            LOGGER.error("设置Redis value出错了:", e);
+            LOGGER.error("设置Redis value异常:", e);
             result.setError(e.getMessage());
         }
         return result;

@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pandaz.usercenter.entity.GroupRoleEntity;
 import com.pandaz.usercenter.mapper.GroupRoleMapper;
 import com.pandaz.usercenter.service.GroupRoleService;
@@ -10,16 +11,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * pandaz:com.pandaz.usercenter.service.impl
- * <p>
  * 组-角色服务
  *
  * @author Carzer
- * @date 2019-11-05 17:37
+ * @since 2019-11-05
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class GroupRoleServiceImpl implements GroupRoleService {
+public class GroupRoleServiceImpl extends ServiceImpl<GroupRoleMapper, GroupRoleEntity> implements GroupRoleService {
 
     /**
      * 组-角色mapper
@@ -31,8 +30,6 @@ public class GroupRoleServiceImpl implements GroupRoleService {
      *
      * @param groupRole groupRole
      * @return int
-     * @author Carzer
-     * @date 2019/11/5 17:36
      */
     @Override
     public int insert(GroupRoleEntity groupRole) {
@@ -44,8 +41,6 @@ public class GroupRoleServiceImpl implements GroupRoleService {
      *
      * @param groupRole groupRole
      * @return java.util.List<com.pandaz.usercenter.entity.GroupRoleEntity>
-     * @author Carzer
-     * @date 2019/11/5 17:36
      */
     @Override
     public List<GroupRoleEntity> findByGroupCode(GroupRoleEntity groupRole) {
@@ -57,8 +52,6 @@ public class GroupRoleServiceImpl implements GroupRoleService {
      *
      * @param groupCode groupCode
      * @return int
-     * @author Carzer
-     * @date 2019/11/5 17:37
      */
     @Override
     public int deleteByGroupCode(String groupCode) {

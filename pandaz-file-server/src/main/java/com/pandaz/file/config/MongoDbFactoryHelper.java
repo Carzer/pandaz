@@ -7,12 +7,10 @@ import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.util.StringUtils;
 
 /**
- * pandaz:com.pandaz.mongodb.config
- * <p>
  * mongodb工具
  *
  * @author Carzer
- * @date 2019-07-16
+ * @since 2019-07-16
  */
 class MongoDbFactoryHelper {
 
@@ -28,8 +26,6 @@ class MongoDbFactoryHelper {
      * @param pwd  密码
      * @param name 库名
      * @return org.springframework.data.mongodb.MongoDbFactory
-     * @author Carzer
-     * @date 2019-07-16 15:12
      */
     static MongoDbFactory getMongoDbFactory(String host, String user, String pwd, String name) {
         // uri格式mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]

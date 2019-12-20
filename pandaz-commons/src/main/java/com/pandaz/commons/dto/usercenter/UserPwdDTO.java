@@ -2,15 +2,15 @@ package com.pandaz.commons.dto.usercenter;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
- * pandaz:com.pandaz.commons.dto.usercenter
- * <p>
  * 用户更新密码DTO
  *
  * @author Carzer
- * @date 2019-10-29 15:48
+ * @since 2019-10-29
  */
 @Data
 public class UserPwdDTO implements Serializable {
@@ -20,10 +20,12 @@ public class UserPwdDTO implements Serializable {
     /**
      * 密码
      */
+    @NotEmpty
     private String password;
 
     /**
      * 用户信息
      */
+    @NotNull
     private UserDTO userDTO;
 }

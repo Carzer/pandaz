@@ -9,28 +9,20 @@
     <artifactId>pandaz-activiti</artifactId>
 
     <dependencies>
-        <!--project start-->
+        <!--project-->
         <dependency>
             <groupId>com.pandaz</groupId>
             <artifactId>pandaz-commons</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <!--project end-->
         <!--cloud-->
-
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-config</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <!-- activiti -->
         <dependency>
             <groupId>org.activiti</groupId>
             <artifactId>activiti-spring-boot-starter</artifactId>
-            <version>${activiti.version}</version>
         </dependency>
         <!--mysql-->
         <dependency>

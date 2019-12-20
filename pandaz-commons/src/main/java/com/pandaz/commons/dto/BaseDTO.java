@@ -3,15 +3,13 @@ package com.pandaz.commons.dto;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
- * pandaz:com.pandaz.usercenter.dto
- * <p>
  * 基础数据传输类
  *
  * @author Carzer
- * @date 2019-07-17 13:12
+ * @since 2019-07-17
  */
 @Data
 public class BaseDTO implements Serializable {
@@ -19,21 +17,42 @@ public class BaseDTO implements Serializable {
     private static final long serialVersionUID = -4836774517587340612L;
 
     /**
-     * 主键
-     */
-    private String id;
-
-    /**
      * 创建人
      */
     private String createdBy;
+
     /**
      * 创建时间
      */
-    private Date createdDate;
+    private LocalDateTime createdDate;
 
     /**
-     * 版本
+     * 更新人
+     */
+    private String updatedBy;
+
+    /**
+     * 更新时间
+     */
+    private LocalDateTime updatedDate;
+
+    /**
+     * 删除人
+     */
+    private String deletedBy;
+
+    /**
+     * 删除时间
+     */
+    private LocalDateTime deletedDate;
+
+    /**
+     * 删除标记
+     */
+    private Byte deletedFlag;
+
+    /**
+     * 版本号
      */
     private Integer version;
 
@@ -46,4 +65,28 @@ public class BaseDTO implements Serializable {
      * 每页条数
      */
     private Integer pageSize;
+
+    /**
+     * 获取当前页码，默认为1
+     *
+     * @return pageNum
+     */
+    public Integer getPageNum() {
+        if (pageNum == null) {
+            pageNum = 1;
+        }
+        return pageNum;
+    }
+
+    /**
+     * 获取每页大小，默认为10
+     *
+     * @return pageSize
+     */
+    public Integer getPageSize() {
+        if (pageSize == null) {
+            pageSize = 10;
+        }
+        return pageSize;
+    }
 }

@@ -1,5 +1,13 @@
 spring:
   cloud:
+    #gateway
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lowerCaseServiceId: true
+          filters:
+            - StripPrefix=1
     #nacos
     nacos:
       discovery:
@@ -8,7 +16,12 @@ spring:
     sentinel:
       transport:
         dashboard: 172.16.2.130:8787
+      log:
+        dir: logs/api-gateway/sentinel
 #自定义属性
 custom:
   #项目基础包
   projectPackage: com.pandaz
+
+
+

@@ -8,10 +8,12 @@ spring:
     sentinel:
       transport:
         dashboard: 172.16.2.130:8787
+      log:
+        dir: logs/user-center/sentinel
   #数据库配置
   datasource:
     db0:
-      jdbc-url: jdbc:mysql://172.16.2.130:3306/pandaz?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+      jdbc-url: jdbc:mysql://172.16.2.130:3306/pandaz?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&allowMultiQueries=true
       username: pandaz
       password: K0tXBGwNHBl#
       driver-class-name: com.mysql.cj.jdbc.Driver
@@ -21,7 +23,7 @@ spring:
       connection-test-query: SELECT 1
       connection-timeout: 60000
     db1:
-      jdbc-url: jdbc:mysql://172.16.2.130:3306/activiti?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+      jdbc-url: jdbc:mysql://172.16.2.130:3306/activiti?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&allowMultiQueries=true
       username: pandaz
       password: K0tXBGwNHBl#
       driver-class-name: com.mysql.cj.jdbc.Driver
@@ -49,18 +51,21 @@ spring:
       master: mymaster
       nodes: 172.16.2.130:26380,172.16.2.130:26381,172.16.2.130:26382
 
-#mybatis配置
-mybatis:
+#开启feign对sentinel的支持
+#SentinelFeignAutoConfiguration
+feign:
+  sentinel:
+    enabled: true
+
+#mybatis-plus配置
+mybatis-plus:
   mapper-locations: classpath:mybatis/mappers/**/*.xml
   type-aliases-package: com.pandaz.usercenter.entity
   config-location: classpath:mybatis/mybatis-config.xml
-
-#pagehelper分页插件
-pagehelper:
-  helperDialect: mysql
-  reasonable: true
-  supportMethodsArguments: true
-  params: count=countSql
+  global-config:
+    db-config:
+      logic-delete-value: 1
+      logic-not-delete-value: 0
 
 #自定义属性
 custom:
@@ -76,5 +81,3 @@ custom:
     masterEntryTtl: 1
     secondaryEntryTtlUnit: minutes
     secondaryEntryTtl: 10
-
-

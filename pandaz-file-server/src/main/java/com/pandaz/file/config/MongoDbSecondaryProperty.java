@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
  * mongoDB属性
  *
  * @author Carzer
- * @date 2019-07-16
+ * @since 2019-07-16
  */
 @Component
 @ConfigurationProperties(prefix = "mongodb.secondary")

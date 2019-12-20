@@ -32,3 +32,6 @@ build/
 
 ### Project ###
 logs/
+
+### System ###
+.DS_Store

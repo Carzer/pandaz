@@ -10,12 +10,10 @@ import org.springframework.stereotype.Component;
 import java.security.Principal;
 
 /**
- * pandaz:com.pandaz.usercenter.util
- * <p>
  * 用户工具类
  *
  * @author Carzer
- * @date 2019-09-03 14:37
+ * @since 2019-09-03 14:37
  */
 @Component
 @Slf4j
@@ -33,8 +31,6 @@ public final class UserUtil {
      *
      * @param principal principal
      * @return com.pandaz.commons.util.ExecuteResult<com.pandaz.usercenter.dto.UserDTO>
-     * @author Carzer
-     * @date 2019/9/3 14:41
      */
     public static ExecuteResult<UserDTO> getUserFromPrincipal(Principal principal) {
         ExecuteResult<UserDTO> result = new ExecuteResult<>();

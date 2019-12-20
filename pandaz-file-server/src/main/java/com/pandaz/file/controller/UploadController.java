@@ -7,12 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * pandaz:com.pandaz.file.controller
- * <p>
  * 上传方法
  *
  * @author Carzer
- * @date 2019-07-18 15:32
+ * @since 2019-07-18
  */
 @RestController
 public class UploadController {

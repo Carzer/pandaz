@@ -8,6 +8,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -16,7 +17,7 @@ import java.lang.reflect.Method;
  * 编码检查工具
  *
  * @author Carzer
- * @date 2019-11-25 14:04
+ * @since 2019-11-25
  */
 @Component
 @Slf4j
@@ -31,11 +32,9 @@ public class CheckUtils<E extends BaseEntity, M> {
      * @param prefix   id前缀
      * @param suffix   id后缀
      * @return java.lang.String
-     * @author Carzer
-     * @date 2019/11/25 15:41
      */
     public String checkOrSetCode(E entity, M mapper, String errorMsg, String prefix, String suffix) {
-        String newCode;
+        String newCode = "";
         try {
             Field field = entity.getClass().getDeclaredField("code");
             field.setAccessible(true);
@@ -51,8 +50,8 @@ public class CheckUtils<E extends BaseEntity, M> {
                 Object temp = method.invoke(mapper, newCode);
                 Assert.isNull(temp, errorMsg);
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+        } catch (NoSuchFieldException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+            log.error(e.getMessage());
         }
         return newCode;
     }

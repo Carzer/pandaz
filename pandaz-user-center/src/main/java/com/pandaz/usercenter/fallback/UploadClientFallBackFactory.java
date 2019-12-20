@@ -6,12 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
- * pandaz:com.pandaz.usercenter.fallback
- * <p>
  * 回调方法工厂类
  *
  * @author Carzer
- * @date 2019-07-26 10:52
+ * @since 2019-07-26
  */
 @Component
 @Slf4j

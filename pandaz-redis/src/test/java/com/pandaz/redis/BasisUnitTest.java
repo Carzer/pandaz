@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
  * 单元测试基类
  *
  * @author Carzer
- * @date 2019-07-02 18:34
+ * @since 2019-07-02
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = RedisApp.class)
@@ -28,8 +28,6 @@ public class BasisUnitTest {
      * <p>
      * setUp 方法的注释
      *
-     * @author Carzer
-     * @date 2019-07-02 18:34
      */
     @BeforeClass
     public static void setUp() {
@@ -47,8 +45,6 @@ public class BasisUnitTest {
      * <p>
      * tearDown 方法的注释
      *
-     * @author Carzer
-     * @date 2019-07-02 18:34
      */
     @AfterClass
     public static void tearDown() {

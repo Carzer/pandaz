@@ -1,7 +1,5 @@
 server:
   port: 9001
-#  servlet:
-#    context-path: /redis
 #当前配置环境
 spring:
   application:

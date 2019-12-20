@@ -8,7 +8,8 @@ spring:
     sentinel:
       transport:
         dashboard: 172.16.2.130:8787
-
+      log:
+        dir: logs/file-server/sentinel
 #mongodb配置
 mongodb:
   primary:

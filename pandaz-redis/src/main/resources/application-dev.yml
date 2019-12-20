@@ -8,6 +8,8 @@ spring:
     sentinel:
       transport:
         dashboard: 172.16.2.130:8787
+      log:
+        dir: logs/redis/sentinel
   #redis配置
   redis:
     timeout: 6000ms

@@ -4,27 +4,25 @@ import com.pandaz.commons.util.CustomPasswordEncoder;
 import com.pandaz.usercenter.entity.UserEntity;
 import com.pandaz.usercenter.mapper.UserMapper;
 import com.pandaz.usercenter.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.sql.Timestamp;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
- * pandaz:com.pandaz.usercenter
- * <p>
  * 用户相关测试类
  *
  * @author Carzer
- * @date 2019-10-23 15:39
+ * @since 2019-10-23
  */
 //@Rollback
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserTest extends BasisUnitTest {
-    @Autowired
-    private UserMapper userMapper;
 
-    @Autowired
-    private UserService userService;
+    private final UserMapper userMapper;
+
+    private final UserService userService;
 
     @Test
     public void changeUser() {
@@ -42,8 +40,8 @@ public class UserTest extends BasisUnitTest {
         user.setLoginName("test1");
         user.setPhone("15192782889");
         user.setCreatedBy("admin");
-        user.setCreatedDate(new Date());
-        user.setExpireAt(new Timestamp(1603592100));
+        user.setCreatedDate(LocalDateTime.now());
+        user.setExpireAt(LocalDateTime.now().plusMonths(6));
         userService.insert(user);
     }
 

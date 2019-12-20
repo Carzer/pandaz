@@ -1,8 +1,8 @@
 package com.pandaz.usercenter.config;
 
 import com.pandaz.commons.dto.usercenter.UserDTO;
+import com.pandaz.commons.util.BeanCopierUtil;
 import com.pandaz.commons.util.CustomPasswordEncoder;
-import com.pandaz.commons.util.DozerConvertUtil;
 import com.pandaz.usercenter.custom.SecurityUser;
 import com.pandaz.usercenter.custom.constants.SysConstants;
 import com.pandaz.usercenter.custom.handler.AuthDeniedHandler;
@@ -27,18 +27,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * pandaz:com.pandaz.usercenter.config
- * <p>
  * spring security配置类
  *
  * @author Carzer
- * @date 2019-07-16
+ * @since 2019-07-16
  */
 @Configuration
 @EnableWebSecurity
@@ -55,8 +52,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * 获取登录用户的相关信息
      *
      * @param auth 权限管理器
-     * @author Carzer
-     * @date 2019-07-16 14:45
      */
     @Autowired
     @Override
@@ -70,8 +65,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * 配置请求相关
      *
      * @param http http
-     * @author Carzer
-     * @date 2019-07-16 14:45
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -100,8 +93,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * 加密类
      *
      * @return org.springframework.security.crypto.password.PasswordEncoder
-     * @author Carzer
-     * @date 2019-07-16 14:46
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -112,8 +103,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * 登录成功后执行的方法
      *
      * @return com.pandaz.usercenter.util.LoginSuccessHandler
-     * @author Carzer
-     * @date 2019-07-16 14:46
      */
     @Bean
     public LoginSuccessHandler loginSuccessHandler() {
@@ -124,8 +113,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * 登录失败执行的方法
      *
      * @return com.pandaz.usercenter.util.LoginFailureHandler
-     * @author Carzer
-     * @date 2019/10/25 08:54
      */
     @Bean
     public LoginFailureHandler loginFailureHandler() {
@@ -136,8 +123,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * 权限拒绝handler
      *
      * @return com.pandaz.usercenter.handler.AuthDeniedHandler
-     * @author Carzer
-     * @date 2019/10/25 13:11
      */
     @Bean
     public AuthDeniedHandler authDeniedHandler() {
@@ -149,8 +134,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * 返回一个实现UserDetailsService接口的类
      *
      * @return org.springframework.security.core.userdetails.UserDetailsService
-     * @author Carzer
-     * @date 2019-07-16 14:47
      */
     @Bean
     @Override
@@ -168,16 +151,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             if (SysConstants.IS_LOCKED.equals(locked)) {
                 throw new LockedException("用户[" + username + "]已锁定，请联系管理员。");
             }
-            Timestamp expireAt = user.getExpireAt();
-            Timestamp now = new Timestamp(System.currentTimeMillis());
+            LocalDateTime expireAt = user.getExpireAt();
             //用户已过期
-            if (expireAt == null || now.after(expireAt)) {
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                String expireTime = expireAt == null ? "" : "于" + simpleDateFormat.format(expireAt.getTime());
+            if (expireAt == null || LocalDateTime.now().isAfter(expireAt)) {
+                String expireTime = expireAt == null ? "" : "于" + expireAt.toString();
                 String accountExpiredMsg = String.format("用户[%s]已%s过期。", username, expireTime);
                 throw new AccountExpiredException(accountExpiredMsg);
             }
-            UserDTO userDTO = DozerConvertUtil.convert(user, UserDTO.class);
+            UserDTO userDTO = BeanCopierUtil.copy(user, UserDTO.class);
             List<GrantedAuthority> authorities = new ArrayList<>();
             return new SecurityUser(username, user.getPassword(), authorities, userDTO);
         };
@@ -187,8 +168,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * 自定义授权管理器
      *
      * @return com.pandaz.usercenter.provider.CustomDaoAuthenticationProvider
-     * @author Carzer
-     * @date 2019/10/25 14:03
      */
     @Bean
     public CustomDaoAuthenticationProvider customDaoAuthenticationProvider() {

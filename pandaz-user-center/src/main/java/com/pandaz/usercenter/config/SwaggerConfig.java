@@ -12,12 +12,10 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
- * pandaz:com.pandaz.usercenter.config
- * <p>
  * Swagger2 配置类
  *
  * @author Carzer
- * @date 2019-07-22
+ * @since 2019-07-22
  */
 @Configuration
 @EnableSwagger2
@@ -30,8 +28,6 @@ public class SwaggerConfig {
      * 通过使用RequestHandlerSelectors和PathSelectors来提供Predicate，在此我们使用any()方法，将所有API都通过Swagger进行文档管理
      *
      * @return springfox.documentation.spring.web.plugins.Docket
-     * @author Carzer
-     * @date 2019-07-22 15:52
      */
     @Bean
     public Docket createRestApi() {
@@ -48,8 +44,6 @@ public class SwaggerConfig {
      * apiInfo
      *
      * @return springfox.documentation.service.ApiInfo
-     * @author Carzer
-     * @date 2019-07-22 15:53
      */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
@@ -60,7 +54,7 @@ public class SwaggerConfig {
                 //服务条款
                 .termsOfServiceUrl("")
                 //作者个人信息
-                .contact(new Contact("Carzer", "", "Carzer@hotmail.com"))
+                .contact(new Contact("Carzer", "", "Carzer1020@163.com"))
                 //版本
                 .version("1.0")
                 .build();

@@ -9,12 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * pandaz:com.pandaz.usercenter.client
- * <p>
  * Redis调用服务
  *
  * @author Carzer
- * @date 2019-10-28 10:22
+ * @since 2019-10-28
  */
 @FeignClient(name = "${custom.client.redis-server}", fallbackFactory = RedisClientFallBackFactory.class)
 @RequestMapping("/redis")
@@ -25,8 +23,6 @@ public interface RedisClient {
      *
      * @param key key
      * @return com.pandaz.commons.util.ExecuteResult<java.lang.Object>
-     * @author Carzer
-     * @date 2019/10/28 10:46
      */
     @GetMapping("/getValue")
     ExecuteResult<String> getRedisValue(@RequestParam String key);
@@ -36,8 +32,6 @@ public interface RedisClient {
      *
      * @param value value
      * @return com.pandaz.commons.util.ExecuteResult<java.lang.String>
-     * @author Carzer
-     * @date 2019/10/28 10:46
      */
     @PostMapping("/setValue")
     ExecuteResult<String> setRedisValue(@RequestParam String value);

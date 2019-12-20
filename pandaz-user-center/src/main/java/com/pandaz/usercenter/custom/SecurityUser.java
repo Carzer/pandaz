@@ -11,12 +11,10 @@ import org.springframework.security.core.userdetails.User;
 import java.util.Collection;
 
 /**
- * pandaz:com.pandaz.usercenter.custom
- * <p>
  * 安全用户类
  *
  * @author Carzer
- * @date 2019-07-17 10:24
+ * @since 2019-07-17
  */
 @EqualsAndHashCode(callSuper = false)
 public class SecurityUser extends User {
@@ -36,8 +34,6 @@ public class SecurityUser extends User {
      * @param password    密码
      * @param authorities 权限
      * @param user        私有用户
-     * @author Carzer
-     * @date 2019/10/23 16:53
      */
     public SecurityUser(String username, String password, Collection<? extends GrantedAuthority> authorities, UserDTO user) {
         super(username, password, true, true, true, true, authorities);

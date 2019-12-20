@@ -15,7 +15,7 @@ import org.springframework.data.mongodb.gridfs.GridFsTemplate;
  * mongoDB配置
  *
  * @author Carzer
- * @date 2019-07-16
+ * @since 2019-07-16
  */
 @Configuration
 @AutoConfigureAfter(MongoDbPrimaryConfig.class)
@@ -32,8 +32,6 @@ public class MongoDbPrimaryConfig {
      * <p>
      *
      * @return org.springframework.data.mongodb.MongoDbFactory
-     * @author Carzer
-     * @date 2019-07-16 15:10
      */
     @Primary
     @Bean(name = "mongoDbPrimaryFactory")
@@ -46,8 +44,6 @@ public class MongoDbPrimaryConfig {
      *
      * @param mongoDbPrimaryFactory factory
      * @return org.springframework.data.mongodb.core.MongoTemplate
-     * @author Carzer
-     * @date 2019-07-16 15:11
      */
     @Primary
     @Bean(name = "mongoPrimaryTemplate")
@@ -61,8 +57,6 @@ public class MongoDbPrimaryConfig {
      * @param mongoDbPrimaryFactory factory
      * @param mongoPrimaryTemplate  template
      * @return org.springframework.data.mongodb.gridfs.GridFsTemplate
-     * @author Carzer
-     * @date 2019-07-16 15:11
      */
     @Bean(name = "gridFsPrimaryTemplate")
     public GridFsTemplate gridFsPrimaryTemplate(@Qualifier("mongoDbPrimaryFactory") MongoDbFactory mongoDbPrimaryFactory, @Qualifier("mongoPrimaryTemplate") MongoTemplate mongoPrimaryTemplate) {

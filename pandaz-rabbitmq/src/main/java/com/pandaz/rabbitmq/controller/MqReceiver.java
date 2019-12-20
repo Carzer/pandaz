@@ -9,12 +9,10 @@ import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.stereotype.Component;
 
 /**
- * pandaz:com.pandaz.rabbitmq.controller
- * <p>
  * 消息接收
  *
  * @author Carzer
- * @date 2019-10-09 13:29
+ * @since 2019-10-09
  */
 @Component
 @EnableBinding(Processor.class)
@@ -31,8 +29,6 @@ public class MqReceiver {
      * payload为byte[]格式，condition判断时，需要注意格式
      *
      * @param message message
-     * @author Carzer
-     * @date 2019/10/9 16:38
      */
     @StreamListener(value = Sink.INPUT, condition = "'hi'.equals(new String(payload))")
     public void process(String message) {

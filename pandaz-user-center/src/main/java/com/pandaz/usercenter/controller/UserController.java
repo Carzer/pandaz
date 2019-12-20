@@ -1,31 +1,27 @@
 package com.pandaz.usercenter.controller;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.commons.dto.usercenter.UserDTO;
 import com.pandaz.commons.dto.usercenter.UserPwdDTO;
-import com.pandaz.commons.util.DozerConvertUtil;
+import com.pandaz.commons.util.BeanCopierUtil;
 import com.pandaz.commons.util.ExecuteResult;
 import com.pandaz.usercenter.entity.UserEntity;
 import com.pandaz.usercenter.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
-import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * pandaz:com.pandaz.usercenter.controller
- * <p>
  * 用户相关controller
  *
  * @author Carzer
- * @date 2019-07-17 15:20
+ * @since 2019-07-17
  */
 @RestController
 @RequestMapping("/user")
@@ -42,19 +38,16 @@ public class UserController {
      * 获取用户分页信息
      *
      * @param userDTO userDTO
-     * @return com.pandaz.commons.util.ExecuteResult<java.util.Map<java.lang.String,java.lang.Object>>
-     * @author Carzer
-     * @date 2019/10/23 17:18
+     * @return com.pandaz.commons.util.ExecuteResult<java.util.Map < java.lang.String, java.lang.Object>>
      */
     @GetMapping("/getPage")
-    public ExecuteResult<Map<String, Object>> getPage(UserDTO userDTO) {
-        ExecuteResult<Map<String, Object>> result = new ExecuteResult<>();
+    public ExecuteResult<ConcurrentHashMap<String, Object>> getPage(UserDTO userDTO) {
+        ExecuteResult<ConcurrentHashMap<String, Object>> result = new ExecuteResult<>();
         try {
-            UserEntity userEntity = DozerConvertUtil.convert(userDTO, UserEntity.class);
-            Page<UserEntity> page = userService.getPage(userEntity);
-            result.setData(DozerConvertUtil.convertToMap(page, UserDTO.class));
+            IPage<UserEntity> page = userService.getPage(BeanCopierUtil.copy(userDTO, UserEntity.class));
+            result.setData(BeanCopierUtil.convertToMap(page, UserDTO.class));
         } catch (Exception e) {
-            log.error("获取用户信息分页出错了：", e);
+            log.error("获取用户信息分页异常：", e);
             result.setError(e.getMessage());
         }
         return result;
@@ -65,17 +58,15 @@ public class UserController {
      *
      * @param userDTO 查询条件
      * @return com.pandaz.commons.util.ExecuteResult<com.pandaz.usercenter.dto.UserDTO>
-     * @author Carzer
-     * @date 2019/10/28 16:46
      */
     @GetMapping
     public ExecuteResult<UserDTO> get(@RequestBody UserDTO userDTO) {
         ExecuteResult<UserDTO> result = new ExecuteResult<>();
         try {
-            UserDTO dto = DozerConvertUtil.convert(userService.findByCode(userDTO.getCode()), UserDTO.class);
+            UserDTO dto = BeanCopierUtil.copy(userService.findByCode(userDTO.getCode()), UserDTO.class);
             result.setData(dto);
         } catch (Exception e) {
-            log.error("根据编码查找用户信息出错了：", e);
+            log.error("根据编码查找用户信息异常：", e);
             result.setError(e.getMessage());
         }
         return result;
@@ -86,8 +77,6 @@ public class UserController {
      *
      * @param userPwdDTO 用户信息
      * @return com.pandaz.commons.util.ExecuteResult<com.pandaz.usercenter.dto.UserDTO>
-     * @author Carzer
-     * @date 2019/10/28 17:32
      */
     @PostMapping
     public ExecuteResult<UserDTO> insert(@RequestBody UserPwdDTO userPwdDTO, Principal principal) {
@@ -95,23 +84,19 @@ public class UserController {
         try {
             UserDTO userDTO = userPwdDTO.getUserDTO();
             String password = userPwdDTO.getPassword();
-            Date date = new Date();
-            UserEntity user = DozerConvertUtil.convert(userDTO, UserEntity.class);
+            UserEntity user = BeanCopierUtil.copy(userDTO, UserEntity.class);
             user.setPassword(password);
             user.setCreatedBy(principal.getName());
-            user.setCreatedDate(date);
+            user.setCreatedDate(LocalDateTime.now());
             //如果没有选择过期时间，就默认6个月后过期
-            Timestamp expireAt = user.getExpireAt();
+            LocalDateTime expireAt = user.getExpireAt();
             if (expireAt == null) {
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(date);
-                cal.add(Calendar.MONTH, 6);
-                user.setExpireAt(new Timestamp(cal.getTimeInMillis()));
+                user.setExpireAt(LocalDateTime.now().plusMonths(6L));
             }
             userService.insert(user);
-            result.setData(DozerConvertUtil.convert(user, UserDTO.class));
+            result.setData(BeanCopierUtil.copy(user, UserDTO.class));
         } catch (Exception e) {
-            log.error("插入用户信息出错了：", e);
+            log.error("插入用户信息异常：", e);
             result.setError(e.getMessage());
         }
         return result;
@@ -122,18 +107,16 @@ public class UserController {
      *
      * @param userDTO userDTO
      * @return com.pandaz.commons.util.ExecuteResult<com.pandaz.usercenter.dto.UserDTO>
-     * @author Carzer
-     * @date 2019/10/29 09:05
      */
     @PutMapping
-    public ExecuteResult<String> update(@RequestBody UserDTO userDTO) {
+    public ExecuteResult<String> update(@Valid @RequestBody UserDTO userDTO) {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
-            UserEntity userEntity = DozerConvertUtil.convert(userDTO, UserEntity.class);
+            UserEntity userEntity = BeanCopierUtil.copy(userDTO, UserEntity.class);
             userService.updateByCode(userEntity);
             result.setData("更新成功。");
         } catch (Exception e) {
-            log.error("更新用户出错了：", e);
+            log.error("更新用户异常：", e);
             result.setError(e.getMessage());
         }
         return result;
@@ -144,19 +127,16 @@ public class UserController {
      *
      * @param userDTO userDTO
      * @return com.pandaz.commons.util.ExecuteResult<com.pandaz.usercenter.dto.UserDTO>
-     * @author Carzer
-     * @date 2019/10/29 10:15
      */
     @DeleteMapping
-    public ExecuteResult<String> delete(@RequestBody UserDTO userDTO) {
+    public ExecuteResult<String> delete(@Valid @RequestBody UserDTO userDTO) {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
             String userCode = userDTO.getCode();
-            Assert.notNull(userCode,"用户编码不能为空！");
             userService.deleteByCode(userCode);
             result.setData("删除成功。");
         } catch (Exception e) {
-            log.error("删除用户出错了：", e);
+            log.error("删除用户异常：", e);
             result.setError(e.getMessage());
         }
         return result;

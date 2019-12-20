@@ -18,7 +18,7 @@ import java.time.Duration;
  * 加载redis相关配置
  *
  * @author Carzer
- * @date 2019-07-02 11:10
+ * @since 2019-07-02
  */
 @Configuration
 @EnableAutoConfiguration
@@ -32,8 +32,6 @@ public class RedisConfig {
      * @return org.springframework.data.redis.core.RedisTemplate<?, ?>
      * <p>
      * getRedisTemplate 方法的注释
-     * @author Carzer
-     * @date 2019-07-02 11:38
      */
     @Bean
     public RedisTemplate getRedisTemplate(LettuceConnectionFactory redisConnectionFactory) {
@@ -49,8 +47,6 @@ public class RedisConfig {
      * @return org.springframework.cache.CacheManager
      * <p>
      * cacheManager 方法的注释
-     * @author Carzer
-     * @date 2019-07-02 11:18
      */
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {

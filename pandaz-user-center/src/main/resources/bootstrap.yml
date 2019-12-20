@@ -1,7 +1,5 @@
 server:
   port: 9007
-#  servlet:
-#    context-path: /uc
 #当前配置环境
 spring:
   application:

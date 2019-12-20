@@ -7,10 +7,10 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.stereotype.Component;
 
 /**
- * Description: 数据源配置
+ * 数据源配置
  *
- * @author carzer
- * @date 2019/12/13
+ * @author Carzer
+ * @since 2019/12/13
  */
 @Component
 @Data

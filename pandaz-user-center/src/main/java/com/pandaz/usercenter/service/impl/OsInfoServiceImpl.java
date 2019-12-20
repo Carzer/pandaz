@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.entity.OsInfoEntity;
 import com.pandaz.usercenter.mapper.OsInfoMapper;
@@ -10,16 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * pandaz:com.pandaz.usercenter.service.impl
- * <p>
  * 系统信息服务
  *
  * @author Carzer
- * @date 2019-11-01 15:06
+ * @since 2019-11-01
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class OsInfoServiceImpl implements OsInfoService {
+public class OsInfoServiceImpl extends ServiceImpl<OsInfoMapper, OsInfoEntity> implements OsInfoService {
 
     /**
      * 系统信息mapper
@@ -36,8 +35,6 @@ public class OsInfoServiceImpl implements OsInfoService {
      *
      * @param osInfo osInfo
      * @return com.pandaz.usercenter.entity.OsInfoEntity
-     * @author Carzer
-     * @date 2019/11/1 15:10
      */
     @Override
     public OsInfoEntity insert(OsInfoEntity osInfo) {

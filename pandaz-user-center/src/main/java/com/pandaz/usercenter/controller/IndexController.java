@@ -23,12 +23,10 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * pandaz:com.pandaz.usercenter.controller
- * <p>
  * 默认controller
  *
  * @author Carzer
- * @date 2019-07-17 15:20
+ * @since 2019-07-17
  */
 @RestController
 @RequestMapping("/")
@@ -58,14 +56,14 @@ public class IndexController {
      *
      * @param principal principal
      * @return com.pandaz.commons.util.ExecuteResult<java.security.Principal>
-     * @author Carzer
-     * @date 2019/10/28 13:46
      */
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ExecuteResult<Principal> home(Principal principal) {
-        ExecuteResult<Principal> result = new ExecuteResult<>();
-        result.setData(principal);
+    public ExecuteResult<ConcurrentHashMap<String,Principal>> home(Principal principal) {
+        ExecuteResult<ConcurrentHashMap<String,Principal>> result = new ExecuteResult<>();
+        ConcurrentHashMap<String,Principal> map = new ConcurrentHashMap<>(1);
+        map.put("user", principal);
+        result.setData(map);
         return result;
     }
 
@@ -74,10 +72,9 @@ public class IndexController {
      *
      * @param value value
      * @return com.pandaz.commons.util.ExecuteResult<java.lang.String>
-     * @author Carzer
-     * @date 2019/10/28 13:46
      */
     @GetMapping("/testRedis")
+    @PreAuthorize("hasRole('ADMIN')")
     public ExecuteResult<String> testRedis(String value) {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
@@ -85,7 +82,7 @@ public class IndexController {
             String v = redisClient.getRedisValue(key).getData();
             result.setData(v);
         } catch (Exception e) {
-            log.error("测试出错了", e);
+            log.error("测试异常", e);
             result.setError(e.getMessage());
         }
         return result;
@@ -95,11 +92,10 @@ public class IndexController {
      * 获取所有mapping地址
      *
      * @return com.pandaz.commons.util.ExecuteResult<java.util.List>
-     * @author Carzer
-     * @date 2019/10/28 13:46
      */
     @GetMapping("/getAllUrl")
-    public List getAllUrl() {
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<Map<String, String>> getAllUrl() {
         RequestMappingHandlerMapping mapping = applicationContext.getBean(RequestMappingHandlerMapping.class);
         // 获取url与类和方法的对应信息
         Map<RequestMappingInfo, HandlerMethod> map = mapping.getHandlerMethods();
@@ -140,8 +136,6 @@ public class IndexController {
      *
      * @param file file
      * @return java.lang.String
-     * @author Carzer
-     * @date 2019/10/28 13:47
      */
     @PostMapping("/upload")
     public String upload(MultipartFile file) {

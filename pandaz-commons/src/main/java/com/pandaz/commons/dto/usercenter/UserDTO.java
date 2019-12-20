@@ -4,21 +4,25 @@ import com.pandaz.commons.dto.BaseDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.sql.Timestamp;
+import javax.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
 
 /**
- * pandaz:com.pandaz.commons.dto.usercenter
- * <p>
  * 用户数据传输类
  *
  * @author Carzer
- * @date 2019-07-17 13:10
+ * @since 2019-07-17
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class UserDTO extends BaseDTO {
 
     private static final long serialVersionUID = -3569077309970490430L;
+
+    /**
+     * 主键
+     */
+    private String id;
 
     /**
      * 用户名
@@ -28,6 +32,7 @@ public class UserDTO extends BaseDTO {
     /**
      * 用户编码
      */
+    @NotEmpty
     private String code;
 
     /**
@@ -63,6 +68,6 @@ public class UserDTO extends BaseDTO {
     /**
      * 过期时间
      */
-    private Timestamp expireAt;
+    private LocalDateTime expireAt;
 
 }

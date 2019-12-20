@@ -3,20 +3,20 @@ package com.pandaz.usercenter;
 import com.pandaz.usercenter.custom.constants.PermissionConstants;
 import com.pandaz.usercenter.entity.PermissionEntity;
 import com.pandaz.usercenter.service.PermissionService;
+import lombok.RequiredArgsConstructor;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * pandaz:com.pandaz.usercenter
- * <p>
- * TODO
+ * 权限测试
  *
  * @author Carzer
- * @date 2019-11-25 14:41
+ * @since 2019-11-25
  */
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class PermissionTest extends BasisUnitTest {
-    @Autowired
-    private PermissionService permissionService;
+
+    private final PermissionService permissionService;
 
     @Test
     public void test(){

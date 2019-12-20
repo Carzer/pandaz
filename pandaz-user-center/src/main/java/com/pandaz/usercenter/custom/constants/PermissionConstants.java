@@ -1,12 +1,10 @@
 package com.pandaz.usercenter.custom.constants;
 
 /**
- * pandaz:com.pandaz.usercenter.custom.constants
- * <p>
  * 权限常量
  *
  * @author Carzer
- * @date 2019-11-05 15:58
+ * @since 2019-11-05
  */
 public class PermissionConstants {
 

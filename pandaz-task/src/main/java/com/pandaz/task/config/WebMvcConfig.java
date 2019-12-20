@@ -5,12 +5,10 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * pandaz:com.pandaz.task.config
- * <p>
  * WebMvc配置类
  *
  * @author Carzer
- * @date 2019-07-22
+ * @since 2019-07-22
  */
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
@@ -19,8 +17,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
      * 配置静态访问资源
      *
      * @param registry ResourceHandlerRegistry
-     * @author Carzer
-     * @date 2019-07-22 15:55
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.custom.constants.SysConstants;
 import com.pandaz.usercenter.entity.GroupEntity;
@@ -16,20 +17,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * pandaz:com.pandaz.usercenter.service.impl
- * <p>
  * 组服务
  *
  * @author Carzer
- * @date 2019-10-25 11:01
+ * @since 2019-10-25
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class GroupServiceImpl implements GroupService {
+public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupEntity> implements GroupService {
 
     /**
      * 角色mapper
@@ -56,8 +55,6 @@ public class GroupServiceImpl implements GroupService {
      *
      * @param group group
      * @return int
-     * @author Carzer
-     * @date 2019/10/25 11:02
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -67,7 +64,7 @@ public class GroupServiceImpl implements GroupService {
         group.setId(UuidUtil.getUnsignedUuid());
         String groupName = group.getName();
         String createdBy = group.getCreatedBy();
-        Date createDate = group.getCreatedDate();
+        LocalDateTime createDate = group.getCreatedDate();
 
         //创建私有角色
         RoleEntity role = new RoleEntity();
@@ -95,8 +92,6 @@ public class GroupServiceImpl implements GroupService {
      *
      * @param groupCode groupCode
      * @return int
-     * @author Carzer
-     * @date 2019/10/25 15:57
      */
     @Override
     @Transactional(rollbackFor = Exception.class)

@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.gridfs.GridFsTemplate;
  * mongoDB配置
  *
  * @author Carzer
- * @date 2019-07-16
+ * @since 2019-07-16
  */
 @Configuration
 @AutoConfigureAfter(MongoDbSecondaryConfig.class)
@@ -30,8 +30,6 @@ public class MongoDbSecondaryConfig {
      * 注入mongodb的工厂类
      *
      * @return org.springframework.data.mongodb.MongoDbFactory
-     * @author Carzer
-     * @date 2019-07-16 15:14
      */
     @Bean(name = "mongoDbSecondaryFactory")
     public MongoDbFactory mongoDbSecondaryFactory() {
@@ -43,8 +41,6 @@ public class MongoDbSecondaryConfig {
      *
      * @param mongoDbSecondaryFactory factory
      * @return org.springframework.data.mongodb.core.MongoTemplate
-     * @author Carzer
-     * @date 2019-07-16 15:15
      */
     @Bean(name = "mongoSecondaryTemplate")
     public MongoTemplate mongoSecondaryTemplate(@Qualifier("mongoDbSecondaryFactory") MongoDbFactory mongoDbSecondaryFactory) {
@@ -57,8 +53,6 @@ public class MongoDbSecondaryConfig {
      * @param mongoDbSecondaryFactory factory
      * @param mongoSecondaryTemplate  template
      * @return org.springframework.data.mongodb.gridfs.GridFsTemplate
-     * @author Carzer
-     * @date 2019-07-16 15:15
      */
     @Bean(name = "gridFsSecondaryTemplate")
     public GridFsTemplate gridFsSecondaryTemplate(@Qualifier("mongoDbSecondaryFactory") MongoDbFactory mongoDbSecondaryFactory, @Qualifier("mongoSecondaryTemplate") MongoTemplate mongoSecondaryTemplate) {

@@ -12,12 +12,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * pandaz:com.pandaz.usercenter.custom.handler
- * <p>
  * 权限拒绝handler
  *
  * @author Carzer
- * @date 2019-10-25 08:52
+ * @since 2019-10-25
  */
 @Slf4j
 public class AuthDeniedHandler implements AccessDeniedHandler {
@@ -28,8 +26,6 @@ public class AuthDeniedHandler implements AccessDeniedHandler {
      * @param httpServletRequest  httpServletRequest
      * @param httpServletResponse httpServletResponse
      * @param e                   e
-     * @author Carzer
-     * @date 2019/10/25 13:30
      */
     @Override
     public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException {

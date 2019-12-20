@@ -8,6 +8,8 @@ spring:
     sentinel:
       transport:
         dashboard: 172.16.2.130:8787
+      log:
+        dir: logs/activiti/sentinel
   #数据库配置
   datasource:
     url: jdbc:mysql://172.16.2.130:3306/activiti?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8

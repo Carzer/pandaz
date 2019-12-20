@@ -1,18 +1,21 @@
 package com.pandaz.usercenter.mapper;
 
-import com.pandaz.commons.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pandaz.usercenter.entity.OrganizationEntity;
-import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 /**
- * Description: 组织信息mapper
+ * 组织信息mapper
  *
- * @author carzer
- * @date 2019/12/13
+ * @author Carzer
+ * @since 2019-12-13
  */
-@Mapper
-@Repository
 public interface OrganizationMapper extends BaseMapper<OrganizationEntity> {
 
+    /**
+     * 插入方法
+     *
+     * @param organization organization
+     * @return 插入结果
+     */
+    int insertSelective(OrganizationEntity organization);
 }

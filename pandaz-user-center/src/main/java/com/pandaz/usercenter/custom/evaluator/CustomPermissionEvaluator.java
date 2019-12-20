@@ -9,12 +9,10 @@ import java.io.Serializable;
 import java.util.Collection;
 
 /**
- * pandaz:com.pandaz.usercenter.custom.evaluator
- * <p>
  * 自定义权限认证翻译器
  *
  * @author Carzer
- * @date 2019-11-04 13:59
+ * @since 2019-11-04
  */
 @Component
 public class CustomPermissionEvaluator implements PermissionEvaluator {
@@ -27,8 +25,6 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
      * @param targetDomainObject targetDomainObject
      * @param permission         permission
      * @return boolean
-     * @author Carzer
-     * @date 2019/11/4 16:07
      */
     @Override
     public boolean hasPermission(Authentication authentication,
@@ -48,8 +44,6 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
      * @param targetType     targetType
      * @param permission     permission
      * @return boolean
-     * @author Carzer
-     * @date 2019/11/4 16:08
      */
     @Override
     public boolean hasPermission(Authentication authentication,
@@ -63,8 +57,6 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
      * @param authentication authentication
      * @param permission     permission
      * @return boolean
-     * @author Carzer
-     * @date 2019/11/4 16:08
      */
     private boolean hasPermission(Authentication authentication, Object permission) {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();

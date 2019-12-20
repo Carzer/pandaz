@@ -12,10 +12,12 @@ import org.springframework.stereotype.Component;
 import java.lang.reflect.Method;
 
 /**
- * Description: 数据源AOP切面定义
+ * 数据源AOP切面定义
  *
- * @author carzer
- * @date 2019/12/13
+ * @author Carzer
+ * @since 2019-12-13
+ * @see TargetDataSource
+ * @see DynamicDataSourceHolder
  */
 @Component
 @Aspect
@@ -47,9 +49,9 @@ public class DataSourceAspect {
             TargetDataSource targetDataSource = method.getAnnotation(TargetDataSource.class);
             String dataSourceName = targetDataSource.value();
             DynamicDataSourceHolder.putDataSource(dataSourceName);
-            log.debug("Thread: {}, add dataSourceKey:[{}] to thread-local success",threadName,dataSourceName);
+            log.debug("Thread: {}, add dataSourceKey:[{}] to thread-local success", threadName, dataSourceName);
         } catch (Exception e) {
-            log.error(String.format("Thread: %s, add dataSourceKey to thread-local error :",threadName), e);
+            log.error(String.format("Thread: %s, add dataSourceKey to thread-local error :", threadName), e);
         }
     }
 
@@ -61,6 +63,6 @@ public class DataSourceAspect {
         String threadName = Thread.currentThread().getName();
         String dataSourceName = DynamicDataSourceHolder.getDataSource();
         DynamicDataSourceHolder.removeDataSource();
-        log.debug("Thread: {}, remove dataSourceKey:[{}] from thread-local success",threadName ,dataSourceName);
+        log.debug("Thread: {}, remove dataSourceKey:[{}] from thread-local success", threadName, dataSourceName);
     }
 }

@@ -8,6 +8,8 @@ spring:
     sentinel:
       transport:
         dashboard: 172.16.2.130:8787
+      log:
+        dir: logs/task/sentinel
 
 #自定义属性
 custom:

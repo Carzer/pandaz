@@ -4,12 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
- * pandaz:com.pandaz.commons.util
- * <p>
  * 加密类
  *
  * @author Carzer
- * @date 2019-07-16
+ * @since 2019-07-16
  */
 @Slf4j
 public final class CustomPasswordEncoder extends BCryptPasswordEncoder {
@@ -26,8 +24,6 @@ public final class CustomPasswordEncoder extends BCryptPasswordEncoder {
      *
      * @param rawPassword 原始密码
      * @return java.lang.String
-     * @author Carzer
-     * @date 2019-07-16 14:43
      */
     @Override
     public String encode(CharSequence rawPassword) {
@@ -41,8 +37,6 @@ public final class CustomPasswordEncoder extends BCryptPasswordEncoder {
      * @param rawPassword     原始密码
      * @param encodedPassword 加密后的密码
      * @return boolean
-     * @author Carzer
-     * @date 2019-07-16 14:43
      */
     @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {

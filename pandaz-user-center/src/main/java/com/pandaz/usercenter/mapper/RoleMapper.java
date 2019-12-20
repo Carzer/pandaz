@@ -1,24 +1,18 @@
 package com.pandaz.usercenter.mapper;
 
-import com.pandaz.commons.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pandaz.usercenter.entity.RoleDetailEntity;
 import com.pandaz.usercenter.entity.RoleEntity;
-import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
- * pandaz:com.pandaz.usercenter.mapper
- * <p>
  * 角色mapper
  *
  * @author Carzer
- * @date 2019-10-23 10:52
+ * @since 2019-10-23
  */
-@Mapper
-@Repository
 public interface RoleMapper extends BaseMapper<RoleEntity> {
 
     /**
@@ -26,8 +20,6 @@ public interface RoleMapper extends BaseMapper<RoleEntity> {
      *
      * @param userCode 用户编码
      * @return java.util.List<com.pandaz.usercenter.entity.RoleEntity>
-     * @author Carzer
-     * @date 2019/10/25 09:29
      */
     List<RoleDetailEntity> getPublicRoles(@Value("userCode") String userCode);
 
@@ -36,8 +28,6 @@ public interface RoleMapper extends BaseMapper<RoleEntity> {
      *
      * @param userCode 用户编码
      * @return java.util.List<com.pandaz.usercenter.entity.RoleEntity>
-     * @author Carzer
-     * @date 2019/10/25 09:29
      */
     List<RoleDetailEntity> getPrivateRoles(@Value("userCode") String userCode);
 
@@ -46,8 +36,6 @@ public interface RoleMapper extends BaseMapper<RoleEntity> {
      *
      * @param userCode 用户编码
      * @return java.util.List<com.pandaz.usercenter.entity.RoleEntity>
-     * @author Carzer
-     * @date 2019/10/25 09:29
      */
     List<RoleDetailEntity> getAllRoles(@Value("userCode") String userCode);
 
@@ -56,8 +44,6 @@ public interface RoleMapper extends BaseMapper<RoleEntity> {
      *
      * @param id id
      * @return int
-     * @author Carzer
-     * @date 2019/9/9 09:21
      */
     int deleteByPrimaryKey(@Value("id") String id);
 
@@ -66,8 +52,6 @@ public interface RoleMapper extends BaseMapper<RoleEntity> {
      *
      * @param code code
      * @return int
-     * @author Carzer
-     * @date 2019/10/25 15:43
      */
     int deleteByCode(@Value("code") String code);
 
@@ -76,8 +60,6 @@ public interface RoleMapper extends BaseMapper<RoleEntity> {
      *
      * @param role role
      * @return int
-     * @author Carzer
-     * @date 2019/9/9 10:06
      */
     int updateByPrimaryKeySelective(RoleEntity role);
 
@@ -86,9 +68,15 @@ public interface RoleMapper extends BaseMapper<RoleEntity> {
      *
      * @param role role
      * @return int
-     * @author Carzer
-     * @date 2019/9/9 10:06
      */
     int updateByPrimaryKey(RoleEntity role);
+
+    /**
+     * 插入方法
+     *
+     * @param role role
+     * @return 插入结果
+     */
+    int insertSelective(RoleEntity role);
 
 }
