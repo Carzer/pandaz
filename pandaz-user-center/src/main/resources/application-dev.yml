@@ -50,7 +50,6 @@ spring:
     sentinel:
       master: mymaster
       nodes: 172.16.2.130:26380,172.16.2.130:26381,172.16.2.130:26382
-
 #开启feign对sentinel的支持
 #SentinelFeignAutoConfiguration
 feign:
@@ -67,6 +66,8 @@ mybatis-plus:
       logic-delete-value: 1
       logic-not-delete-value: 0
 
+config:
+
 #自定义属性
 custom:
   #项目基础包
@@ -81,3 +82,32 @@ custom:
     masterEntryTtl: 1
     secondaryEntryTtlUnit: minutes
     secondaryEntryTtl: 10
+  oauth2:
+    # 非对称RSA密钥对 2048位 PKCS#1
+    # openssl genrsa -out jwt.pem 2048
+    # openssl rsa -in jwt.pem
+    privateKey: |
+      -----BEGIN RSA PRIVATE KEY-----
+      MIICXQIBAAKBgQCoKS2By4Y37xhNR34GxNVIYAEhuP4ZZ6kNLlReNUrZeEFZYV2M
+      Y7mY9FKwC4njhChzGd8tk+/1bbUU76h62k3qT0n3dO3U0Xkkai45SX/0yIItl4mC
+      PAkkiRBmnuMOQKRQjTuNd/FTDkinQQXo96D2Zd/RbygN5Ql8cf25icaqKwIDAQAB
+      AoGASGBIvNeLMiHPNNuza1hmb9saQZhsjSSnhwvMtit7xrPSdJTKfbUiWam2uRyO
+      QYVNH5UgEG7e1aRdTuCDhDTXWW6EJW719EQg5S4rty5PPP2s8xmQd+7jZzPXNDtr
+      GPBFrF6NeCMLrmr+PV62ufIkpAIAeBsDFDnnsZ4Cy1nvkykCQQCptdZ9R4JHLgc/
+      JPDb/X2vgCLVwe0qfqxxTf0AUvIpTfTtmYz/2I6xC2ZouAm05jQH53ykNKw5Z3Cq
+      AOAKoyJ/AkEA/amoLVagSE1Vrqm4lfcvlNs6HmIu8d9c6vLeDkYDEOEAoxLxhETc
+      qblMKa+Hx9ROX32NqDmk1x2d6aewPZzKVQJBAIE7uTP5almt0VLiXJAJftZQKza/
+      0EyV3dcCXnEKuOF/Pc5ZKagCTta/KaMA0lNxIZoLSzz351ZnUMIEnJc9Fx0CQQDc
+      g/nE+FK8qCY9giQKkunVYUPEGByxfjkbsuihxfFyYfgYzCYTk321OnXgo0zJxmIf
+      l1lnjj0kGQYnkvSei0hFAkB55afGnGjo8lkqMOTXfpA5X4/2d0DQwn93nWKozRSw
+      bdsYU+F2XnToTdJg3f62avdp5BDkAYbXUImuO1GgSB4+
+      -----END RSA PRIVATE KEY-----
+
+    # openssl rsa -in jwt.pem -pubout
+    publicKey: |
+      -----BEGIN PUBLIC KEY-----
+      MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCoKS2By4Y37xhNR34GxNVIYAEh
+      uP4ZZ6kNLlReNUrZeEFZYV2MY7mY9FKwC4njhChzGd8tk+/1bbUU76h62k3qT0n3
+      dO3U0Xkkai45SX/0yIItl4mCPAkkiRBmnuMOQKRQjTuNd/FTDkinQQXo96D2Zd/R
+      bygN5Ql8cf25icaqKwIDAQAB
+      -----END PUBLIC KEY-----

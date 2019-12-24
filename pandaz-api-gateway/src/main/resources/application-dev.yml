@@ -6,8 +6,6 @@ spring:
         locator:
           enabled: true
           lowerCaseServiceId: true
-          filters:
-            - StripPrefix=1
     #nacos
     nacos:
       discovery:

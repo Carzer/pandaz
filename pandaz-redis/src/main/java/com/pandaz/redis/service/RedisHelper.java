@@ -44,7 +44,6 @@ public class RedisHelper<K, V> {
      * 构造方法
      *
      * @author Carzer
-     * @since 2019-07-02
      */
     private RedisHelper() {
     }
@@ -55,8 +54,6 @@ public class RedisHelper<K, V> {
      * @param key   键
      * @param value 值
      * @return 执行结果
-     * @author Carzer
-     * @since 2019-07-02
      */
     public boolean setObject(K key, V value) {
         SessionCallback<V> sessionCallback = new SessionCallback<>() {
@@ -78,8 +75,6 @@ public class RedisHelper<K, V> {
      * @param value 值
      * @param time  过期时间，单位秒
      * @return 执行结果
-     * @author Carzer
-     * @since 2019-07-02
      */
     public boolean setObject(K key, V value, long time) {
         SessionCallback<V> sessionCallback = new SessionCallback<V>() {
@@ -102,8 +97,6 @@ public class RedisHelper<K, V> {
      *
      * @param map map
      * @return 执行结果
-     * @author Carzer
-     * @since 2019-07-02
      */
     public boolean setObjectList(Map<K, V> map) {
         if (CollectionUtils.isEmpty(map)) {
@@ -131,8 +124,6 @@ public class RedisHelper<K, V> {
      *
      * @param key 键
      * @return 对象
-     * @author Carzer
-     * @since 2019-07-02
      */
     public V getObject(K key) {
         SessionCallback<V> sessionCallback = new SessionCallback<>() {
@@ -156,8 +147,6 @@ public class RedisHelper<K, V> {
      *
      * @param pattern 表达式 keys*
      * @return 对象
-     * @author Carzer
-     * @since 2019-07-02
      */
     public List<V> getObjectList(K pattern) {
         Set<K> keys = redisTemplate.keys((K) (RedisConstants.REDIS_PREFIX + pattern));
@@ -182,8 +171,6 @@ public class RedisHelper<K, V> {
      *
      * @param key 键
      * @return 执行结果
-     * @author Carzer
-     * @since 2019-07-02
      */
     public boolean deleteObject(K key) {
         SessionCallback<V> sessionCallback = new SessionCallback<>() {
@@ -203,8 +190,6 @@ public class RedisHelper<K, V> {
      *
      * @param pattern 表达式 keys*
      * @return 执行结果
-     * @author Carzer
-     * @since 2019-07-02
      */
     public boolean deleteObjectList(K pattern) {
         Set<K> keys = redisTemplate.keys((K) (RedisConstants.REDIS_PREFIX + pattern));

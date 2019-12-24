@@ -37,6 +37,7 @@
         <mybatis-plus-starter.version>3.3.0</mybatis-plus-starter.version>
         <freemarker.version>2.3.29</freemarker.version>
         <spring.security.version>2.3.6.RELEASE</spring.security.version>
+        <spring.security.autoconfig.version>2.1.7.RELEASE</spring.security.autoconfig.version>
         <spring.security.jwt.version>1.0.11.RELEASE</spring.security.jwt.version>
         <nacos.dependency.version>0.9.0.RELEASE</nacos.dependency.version>
         <sentinel.dependency.version>0.9.0.RELEASE</sentinel.dependency.version>
@@ -112,6 +113,11 @@
                 <groupId>org.springframework.security.oauth</groupId>
                 <artifactId>spring-security-oauth2</artifactId>
                 <version>${spring.security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security.oauth.boot</groupId>
+                <artifactId>spring-security-oauth2-autoconfigure</artifactId>
+                <version>${spring.security.autoconfig.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.security</groupId>
@@ -212,11 +218,6 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${swagger.version}</version>
-        </dependency>
-        <!--web-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <!-- nacos -->
         <dependency>

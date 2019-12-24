@@ -10,7 +10,7 @@
 - 使用[Nacos](https://github.com/alibaba/nacos/releases)作为服务注册中心、分布式配置中心
 - 使用[Feign](https://spring.io/projects/spring-cloud-openfeign)消费微服务
 - 使用[Sentinel](https://github.com/alibaba/Sentinel/releases)进行流量控制、熔断降级
-- 使用[Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway)作为网关(7777端口)
+- 使用[Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway)作为网关
 
 ## 二、 容器、数据库、中间件搭建参考
 
@@ -54,24 +54,25 @@
 - [ ] **功能实现**
     - [x] 完成会话管理
     - [x] 完成多数据源动态切换功能（手动或注解）
-    - [ ] 基于Oauth2的单点功能
-    - [ ] 权限控制
+    - [x] 基于Oauth2的单点功能
+    - [ ] 功能权限
     - [ ] 前台UI开发
+    - [ ] 数据权限
     
 - [ ] **框架集成**
-    - [x] SpringSecurity
-    - [x] SpringSession
-    - [x] SpringDataRedis (使用Lettuce连接Sentinel集群)
-    - [ ] SpringSecurityOauth2 
-    - [ ] SpringSecurityJWT
-    - [ ] ViewUI组件库（即iView4.0）
+    - [x] Spring Security
+    - [x] Spring Session
+    - [x] Spring Data Redis
+    - [x] Spring Security Oauth2 
+    - [x] Spring Security JWT
+    - [ ] ViewUI组件库
     
 ### 2. [Redis服务](http://localhost:9001)
 
 - [x] **功能实现**
     - [x] Redis基础服务
 - [x] **框架集成**
-    - [x] SpringDataRedis（使用Lettuce连接Sentinel集群）
+    - [x] Spring Data Redis（使用Lettuce连接Sentinel集群）
     
 ### 3. [文件存储服务](http://localhost:9005)
 
@@ -81,7 +82,7 @@
     - [ ] 文件ftp服务集成
     - [ ] MongoDB、ftp统一服务
 - [x] **框架集成**
-    - [x] SpringDataMongo
+    - [x] Spring Data Mongo
     
 ### 4. [定时任务](http://localhost:9003)
 
@@ -97,7 +98,7 @@
     - [ ] 统一消息管理
     - [ ] 实现简单的分布式事务
 - [x] **框架集成**
-    - [x] SpringCloudStream
+    - [x] Spring Cloud Stream
     
 ### 6. [审批流服务](http://localhost:9006)
 
@@ -105,7 +106,16 @@
     - [ ] 提供统一的流程服务
 - [x] **框架集成**
     - [x] Activiti7
+    
+### 7. [API网关](http://localhost:7777)
 
+- [ ] **功能实现**
+    - [x] 网关基础功能
+    - [ ] 整合oauth2
+- [ ] **框架集成**
+    - [x] Spring Cloud Gateway
+    - [ ] Spring Security Oauth2
+    
 ## 四、 之前版本中遇到的问题
 
 > https://app.yinxiang.com/fx/20e1570e-7d37-48ac-b79b-aac23b1bf952

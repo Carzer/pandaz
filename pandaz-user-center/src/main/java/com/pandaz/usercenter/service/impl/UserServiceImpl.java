@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -179,7 +180,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     public IPage<UserEntity> getPage(UserEntity userEntity) {
         Page<UserEntity> page = new Page<>(userEntity.getPageNum(), userEntity.getPageSize());
         QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.like("code", userEntity.getCode());
+        String name = userEntity.getName();
+        String code = userEntity.getCode();
+        if (StringUtils.hasText(name)) {
+            queryWrapper.like("name", name);
+        }
+        if (StringUtils.hasText(code)) {
+            queryWrapper.like("code", code);
+        }
         return page(page, queryWrapper);
     }
 }

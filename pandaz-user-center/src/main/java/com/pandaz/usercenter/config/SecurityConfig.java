@@ -16,8 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AccountExpiredException;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.LockedException;
+import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -40,6 +43,7 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @EnableRedisHttpSession(maxInactiveIntervalInSeconds = 1200)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -70,10 +74,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/token/**", "/sessionService/**", "/message/**").permitAll()
+                .antMatchers("/oauth/**").permitAll()
                 .anyRequest()
                 .authenticated().and()
-//                .authenticated().and()
                 .formLogin().permitAll()
                 //登录成功后可使用loginSuccessHandler()存储用户信息，可选。
                 .successHandler(loginSuccessHandler())
@@ -172,5 +175,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public CustomDaoAuthenticationProvider customDaoAuthenticationProvider() {
         return new CustomDaoAuthenticationProvider(userDetailsService(), passwordEncoder());
+    }
+
+    @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 }
