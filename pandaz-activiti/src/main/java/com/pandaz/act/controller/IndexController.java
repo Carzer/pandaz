@@ -51,15 +51,13 @@ public class IndexController {
      * @return com.pandaz.commons.util.ExecuteResult<java.util.List>
      */
     @GetMapping("/getAllUrl")
-    public ExecuteResult<ArrayList> getAllUrl() {
-        ExecuteResult<ArrayList> result = new ExecuteResult<>();
+    public ExecuteResult<ArrayList<Map<String, String>>> getAllUrl() {
+        ExecuteResult<ArrayList<Map<String, String>>> result = new ExecuteResult<>();
         RequestMappingHandlerMapping mapping = applicationContext.getBean(RequestMappingHandlerMapping.class);
         // 获取url与类和方法的对应信息
         Map<RequestMappingInfo, HandlerMethod> map = mapping.getHandlerMethods();
         ArrayList<Map<String, String>> list = new ArrayList<>();
-        for (Map.Entry<RequestMappingInfo, HandlerMethod> m : map.entrySet()) {
-            RequestMappingInfo info = m.getKey();
-            HandlerMethod method = m.getValue();
+        map.forEach((info, method) -> {
             Set<String> patterns = info.getPatternsCondition().getPatterns();
             Set<RequestMethod> methods = info.getMethodsCondition().getMethods();
             Map<String, String> singleMapping = new ConcurrentHashMap<>(patterns.size() + methods.size() + 2);
@@ -67,15 +65,12 @@ public class IndexController {
             singleMapping.put("className", method.getMethod().getDeclaringClass().getName());
             // 方法名
             singleMapping.put("method", method.getMethod().getName());
-            for (String url : patterns) {
-                singleMapping.put("url", url);
-            }
-            for (RequestMethod requestMethod : methods) {
-                singleMapping.put("type", requestMethod.toString());
-            }
-
+            //url
+            patterns.forEach(url -> singleMapping.put("url", url));
+            //请求方式
+            methods.forEach(requestMethod -> singleMapping.put("type", requestMethod.toString()));
             list.add(singleMapping);
-        }
+        });
         result.setData(list);
         return result;
     }

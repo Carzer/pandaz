@@ -1,4 +1,4 @@
-package com.pandaz.usercenter.fallback;
+package com.pandaz.usercenter.client.fallback;
 
 import com.pandaz.usercenter.client.DcClient;
 import lombok.extern.slf4j.Slf4j;

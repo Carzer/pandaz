@@ -1,6 +1,6 @@
 package com.pandaz.usercenter.client;
 
-import com.pandaz.usercenter.fallback.DcClientFallBack;
+import com.pandaz.usercenter.client.fallback.DcClientFallBack;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 

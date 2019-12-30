@@ -1,6 +1,6 @@
 package com.pandaz.usercenter.client;
 
-import com.pandaz.usercenter.fallback.UploadClientFallBackFactory;
+import com.pandaz.usercenter.client.fallback.UploadClientFallBackFactory;
 import feign.codec.Encoder;
 import feign.form.spring.SpringFormEncoder;
 import org.springframework.cloud.openfeign.FeignClient;

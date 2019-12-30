@@ -1,4 +1,4 @@
-package com.pandaz.usercenter.fallback;
+package com.pandaz.usercenter.client.fallback;
 
 import com.pandaz.usercenter.client.UploadClient;
 import feign.hystrix.FallbackFactory;

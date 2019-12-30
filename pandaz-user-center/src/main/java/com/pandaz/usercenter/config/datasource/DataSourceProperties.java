@@ -15,19 +15,19 @@ import org.springframework.stereotype.Component;
 @Component
 @Data
 @ConfigurationProperties(prefix = "spring.datasource")
-public class DBProperties {
+public class DataSourceProperties {
 
     /**
-     * db0
+     * ds0
      */
     @NestedConfigurationProperty
-    private HikariDataSource db0;
+    private HikariDataSource ds0;
 
     /**
-     * db1
+     * ds1
      */
     @NestedConfigurationProperty
-    private HikariDataSource db1;
+    private HikariDataSource ds1;
 
 
 }

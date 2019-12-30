@@ -6,6 +6,13 @@ spring:
         locator:
           enabled: true
           lowerCaseServiceId: true
+      routes:
+        - id: pandaz-user-center
+          uri: lb://pandaz-user-center
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=1
     #nacos
     nacos:
       discovery:

@@ -12,20 +12,9 @@
 - 使用[Sentinel](https://github.com/alibaba/Sentinel/releases)进行流量控制、熔断降级
 - 使用[Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway)作为网关
 
-## 二、 容器、数据库、中间件搭建参考
+## 二、 容器、数据库、中间件虚拟环境
 
-1. Docker：https://www.cnblogs.com/yufeng218/p/8370670.html
-
-2. MySQL：https://www.cnblogs.com/bigbrotherer/p/7241845.html
-
-3. Redis：https://blog.csdn.net/qq_27047215/article/details/91411559
-
-4. RabbitMQ：
-   基本上是按照 https://www.cnblogs.com/yufeng218/p/9452621.html 中的步骤来的。  
-   唯一的问题是 https://hub.docker.com/ 网站非常容易超时，所以需要改一下镜像源，修改方法如下  
-   https://www.cnblogs.com/ming369/p/10711771.html
-
-5. 另外，提供已搭建好的CentOS7虚拟机(VMware)
+- 提供已搭建好的CentOS7虚拟机(VMware)
 
     百度云盘：
     提取码：
@@ -55,6 +44,8 @@
     - [x] 完成会话管理
     - [x] 完成多数据源动态切换功能（手动或注解）
     - [x] 基于Oauth2的单点功能
+    - [x] feign调用服务时，传递token、sessionId
+    - [ ] 微服务统一权限控制
     - [ ] 功能权限
     - [ ] 前台UI开发
     - [ ] 数据权限
@@ -112,6 +103,7 @@
 - [ ] **功能实现**
     - [x] 网关基础功能
     - [ ] 整合oauth2
+    - [ ] 动态路由
 - [ ] **框架集成**
     - [x] Spring Cloud Gateway
     - [ ] Spring Security Oauth2

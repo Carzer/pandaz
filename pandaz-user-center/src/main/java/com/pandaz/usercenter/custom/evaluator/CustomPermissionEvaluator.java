@@ -60,11 +60,6 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
      */
     private boolean hasPermission(Authentication authentication, Object permission) {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        for (GrantedAuthority authority : authorities) {
-            if (authority.getAuthority().equals(permission)) {
-                return true;
-            }
-        }
-        return false;
+        return authorities.parallelStream().anyMatch(authority -> authority.getAuthority().equals(permission));
     }
 }

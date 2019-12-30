@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.concurrent.ConcurrentHashMap;
-
 /**
  * redis 操作
  *
@@ -41,13 +39,15 @@ public class OperationController {
      * @return com.pandaz.commons.util.ExecuteResult<java.lang.Object>
      */
     @GetMapping("/getValue")
-    public ExecuteResult<ConcurrentHashMap<String, Object>> getValue(String key) {
-        ExecuteResult<ConcurrentHashMap<String, Object>> result = new ExecuteResult<>();
+    public ExecuteResult<String> getValue(String key) {
+        ExecuteResult<String> result = new ExecuteResult<>();
         try {
-            ConcurrentHashMap<String, Object> map = new ConcurrentHashMap<>(1);
             Object object = redisHelper.getObject(key);
-            map.put(key, object);
-            result.setData(map);
+            if (object != null) {
+                result.setData(object.toString());
+            } else {
+                result.setError("nothing from redis");
+            }
         } catch (Exception e) {
             LOGGER.error("获取Redis value异常:", e);
             result.setError(e.getMessage());

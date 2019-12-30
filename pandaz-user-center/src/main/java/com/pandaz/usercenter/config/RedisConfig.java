@@ -43,8 +43,8 @@ public class RedisConfig {
      * getRedisTemplate 方法的注释
      */
     @Bean
-    public RedisTemplate getRedisTemplate(LettuceConnectionFactory redisConnectionFactory) {
-        RedisTemplate redisTemplate = new RedisTemplate();
+    public RedisTemplate<?,?> getRedisTemplate(LettuceConnectionFactory redisConnectionFactory) {
+        RedisTemplate<?,?> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());

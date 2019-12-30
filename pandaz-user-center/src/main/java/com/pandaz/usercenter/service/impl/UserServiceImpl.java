@@ -158,10 +158,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         userGroup.setUserCode(userCode);
         List<UserGroupEntity> groupList = userGroupService.findByUserCode(userGroup);
         if (!CollectionUtils.isEmpty(groupList)) {
-            for (UserGroupEntity group : groupList) {
-                String groupCode = group.getGroupCode();
-                groupService.deleteByCode(groupCode);
-            }
+            groupList.forEach(group -> groupService.deleteByCode(group.getGroupCode()));
         }
         //删除所有用户相关的组关联信息
         userGroupService.deleteByUserCode(userCode);

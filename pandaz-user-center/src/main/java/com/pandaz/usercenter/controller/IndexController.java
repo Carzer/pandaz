@@ -17,7 +17,6 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -59,9 +58,9 @@ public class IndexController {
      */
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ExecuteResult<ConcurrentHashMap<String,Principal>> home(Principal principal) {
-        ExecuteResult<ConcurrentHashMap<String,Principal>> result = new ExecuteResult<>();
-        ConcurrentHashMap<String,Principal> map = new ConcurrentHashMap<>(1);
+    public ExecuteResult<ConcurrentHashMap<String, Principal>> home(Principal principal) {
+        ExecuteResult<ConcurrentHashMap<String, Principal>> result = new ExecuteResult<>();
+        ConcurrentHashMap<String, Principal> map = new ConcurrentHashMap<>(1);
         map.put("user", principal);
         result.setData(map);
         return result;
@@ -79,8 +78,12 @@ public class IndexController {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
             String key = redisClient.setRedisValue(value).getData();
-            String v = redisClient.getRedisValue(key).getData();
-            result.setData(v);
+            ExecuteResult<String> executeResult = redisClient.getRedisValue(key);
+            if (executeResult.isSuccess()) {
+                result.setData(executeResult.getData());
+            } else {
+                result.setError(executeResult.getError());
+            }
         } catch (Exception e) {
             log.error("测试异常", e);
             result.setError(e.getMessage());
@@ -95,41 +98,30 @@ public class IndexController {
      */
     @GetMapping("/getAllUrl")
     @PreAuthorize("hasRole('ADMIN')")
-    public List<Map<String, String>> getAllUrl() {
+    public ExecuteResult<ArrayList<Map<String, String>>> getAllUrl() {
+        ExecuteResult<ArrayList<Map<String, String>>> result = new ExecuteResult<>();
         RequestMappingHandlerMapping mapping = applicationContext.getBean(RequestMappingHandlerMapping.class);
         // 获取url与类和方法的对应信息
         Map<RequestMappingInfo, HandlerMethod> map = mapping.getHandlerMethods();
-        List<Map<String, String>> list = new ArrayList<>();
-        for (Map.Entry<RequestMappingInfo, HandlerMethod> m : map.entrySet()) {
-
-            RequestMappingInfo info = m.getKey();
-            HandlerMethod method = m.getValue();
-
-            String className = method.getMethod().getDeclaringClass().getName();
-            if (!className.startsWith(customProperties.getProjectPackage())) {
-                continue;
-            }
+        ArrayList<Map<String, String>> list = new ArrayList<>();
+        map.forEach((info, method) -> {
             Set<String> patterns = info.getPatternsCondition().getPatterns();
             Set<RequestMethod> methods = info.getMethodsCondition().getMethods();
-            //map初始大小
-            int initialCapacity = patterns.size() + methods.size() + 2;
-            //结果map
-            Map<String, String> singleMap = new ConcurrentHashMap<>(initialCapacity);
-            //类名
-            singleMap.put("className", className);
+            Map<String, String> singleMapping = new ConcurrentHashMap<>(patterns.size() + methods.size() + 2);
+            // 类名
+            singleMapping.put("className", method.getMethod().getDeclaringClass().getName());
             // 方法名
-            singleMap.put("method", method.getMethod().getName());
-            //URL
-            for (String url : patterns) {
-                singleMap.put("url", url);
-            }
-            for (RequestMethod requestMethod : methods) {
-                singleMap.put("type", requestMethod.toString());
-            }
-            list.add(singleMap);
-        }
-        return list;
+            singleMapping.put("method", method.getMethod().getName());
+            //url
+            patterns.forEach(url -> singleMapping.put("url", url));
+            //请求方式
+            methods.forEach(requestMethod -> singleMapping.put("type", requestMethod.toString()));
+            list.add(singleMapping);
+        });
+        result.setData(list);
+        return result;
     }
+
 
     /**
      * 上传方法

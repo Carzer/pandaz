@@ -1,8 +1,8 @@
 package com.pandaz.usercenter.util;
 
+import com.pandaz.commons.custom.SecurityUser;
 import com.pandaz.commons.dto.usercenter.UserDTO;
 import com.pandaz.commons.util.ExecuteResult;
-import com.pandaz.usercenter.custom.SecurityUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;

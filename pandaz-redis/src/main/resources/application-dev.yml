@@ -27,6 +27,13 @@ spring:
     sentinel:
       master: mymaster
       nodes: 172.16.2.130:26380,172.16.2.130:26381,172.16.2.130:26382
+security:
+  oauth2:
+    resource:
+      jwt:
+        # jwt公钥获取地址
+        # Note: 需要先启动授权服务器
+        key-uri: "http://localhost:9007/oauth/token_key"
 
 #自定义属性
 custom:

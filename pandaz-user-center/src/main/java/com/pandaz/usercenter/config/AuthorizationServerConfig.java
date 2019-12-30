@@ -85,10 +85,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(AuthorizationServerSecurityConfigurer securityConfigurer) {
         securityConfigurer
                 .allowFormAuthenticationForClients()
-                // permitAll()
 //                .tokenKeyAccess("isAnonymous() || hasRole('ROLE_TRUSTED_CLIENT')")
                 .tokenKeyAccess("permitAll()")
-                // isAuthenticated()
 //                .checkTokenAccess("hasRole('TRUSTED_CLIENT')");
                 .checkTokenAccess("isAuthenticated()")
         ;
@@ -103,7 +101,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints
                 .authenticationManager(authenticationManager)
-                //jwt存储方式
+                //jwt存储方式,就是不存储
                 .tokenStore(jwtTokenStore())
                 .accessTokenConverter(jwtTokenEnhancer())
         ;

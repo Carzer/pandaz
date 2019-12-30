@@ -34,6 +34,7 @@ public class DynamicDataSourceHolder {
 
     /**
      * 获取数据源
+     * {@link DynamicDataSource#determineCurrentLookupKey}
      *
      * @return 数据源逻辑名称
      */

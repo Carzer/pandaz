@@ -1,9 +1,9 @@
 package com.pandaz.usercenter.config;
 
+import com.pandaz.commons.custom.SecurityUser;
 import com.pandaz.commons.dto.usercenter.UserDTO;
 import com.pandaz.commons.util.BeanCopierUtil;
 import com.pandaz.commons.util.CustomPasswordEncoder;
-import com.pandaz.usercenter.custom.SecurityUser;
 import com.pandaz.usercenter.custom.constants.SysConstants;
 import com.pandaz.usercenter.custom.handler.AuthDeniedHandler;
 import com.pandaz.usercenter.custom.handler.LoginFailureHandler;

@@ -102,10 +102,7 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupEntity> impl
         //查询私有角色，并清理
         List<GroupRoleEntity> roleList = groupRoleService.findByGroupCode(groupRole);
         if (!CollectionUtils.isEmpty(roleList)) {
-            for (GroupRoleEntity role : roleList) {
-                String roleCode = role.getRoleCode();
-                roleService.deleteByCode(roleCode);
-            }
+            roleList.forEach(role -> roleService.deleteByCode(role.getRoleCode()));
         }
         //清理所有关系
         groupRoleService.deleteByGroupCode(groupCode);

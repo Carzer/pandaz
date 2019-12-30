@@ -1,4 +1,4 @@
-package com.pandaz.usercenter.fallback;
+package com.pandaz.usercenter.client.fallback;
 
 import com.pandaz.commons.util.ExecuteResult;
 import com.pandaz.usercenter.client.RedisClient;
@@ -29,14 +29,14 @@ public class RedisClientFallBackFactory implements FallbackFactory<RedisClient> 
             @Override
             public ExecuteResult<String> getRedisValue(String key) {
                 ExecuteResult<String> result = new ExecuteResult<>();
-                result.setData("fallback");
+                result.setData("fallback from client");
                 return result;
             }
 
             @Override
             public ExecuteResult<String> setRedisValue(String value) {
                 ExecuteResult<String> result = new ExecuteResult<>();
-                result.setData("nothing");
+                result.setData("nothing from client");
                 return result;
             }
         };

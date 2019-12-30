@@ -28,18 +28,18 @@ public class DataSourceConfig {
     /**
      * 数据源配置
      */
-    private final DBProperties properties;
+    private final DataSourceProperties properties;
 
     @Bean(name = "dataSource")
     public DataSource dataSource() {
         //按照目标数据源名称和目标数据源对象的映射存放在Map中
         Map<Object, Object> targetDataSources = new HashMap<>(2);
-        targetDataSources.put("db0", properties.getDb0());
-        targetDataSources.put("db1", properties.getDb1());
+        targetDataSources.put("ds0", properties.getDs0());
+        targetDataSources.put("ds1", properties.getDs1());
         //采用AbstractRoutingDataSource的对象包装多数据源
         DynamicDataSource dataSource = new DynamicDataSource();
         dataSource.setTargetDataSources(targetDataSources);
-        dataSource.setDefaultTargetDataSource(properties.getDb0());
+        dataSource.setDefaultTargetDataSource(properties.getDs0());
         return dataSource;
     }
 

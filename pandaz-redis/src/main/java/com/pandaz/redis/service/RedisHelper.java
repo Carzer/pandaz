@@ -103,9 +103,7 @@ public class RedisHelper<K, V> {
             return false;
         } else {
             Map<K, V> setMap = new ConcurrentHashMap<>(map.size());
-            for (Map.Entry<K, V> kvEntry : map.entrySet()) {
-                setMap.put((K) (RedisConstants.REDIS_PREFIX + kvEntry.getKey()), kvEntry.getValue());
-            }
+            map.forEach((key, value) -> setMap.put((K) (RedisConstants.REDIS_PREFIX + key), value));
             SessionCallback<V> sessionCallback = new SessionCallback<>() {
                 @Override
                 public List<V> execute(RedisOperations redisOperations) {
