@@ -16,8 +16,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableDiscoveryClient
 public class ApiGatewayApp {
 
-    //todo https://blog.csdn.net/justlpf/article/details/80350943
-
     public static void main(String[] args) {
         //设置nacos日志及缓存路径
         System.setProperty("nacos.logging.path", "logs/api-gateway/nacos");

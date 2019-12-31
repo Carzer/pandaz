@@ -1,4 +1,4 @@
-package com.pandaz.usercenter.custom.evaluator;
+package com.pandaz.usercenter.custom;
 
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;

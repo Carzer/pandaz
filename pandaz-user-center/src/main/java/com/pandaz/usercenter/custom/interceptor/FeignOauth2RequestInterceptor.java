@@ -17,7 +17,7 @@ import org.springframework.web.context.request.RequestContextHolder;
  * feign调用时，自动携带token或sessionID
  *
  * @author Carzer
- * @since 2019-10-25
+ * @since 2019-12-26
  */
 @Slf4j
 @Component

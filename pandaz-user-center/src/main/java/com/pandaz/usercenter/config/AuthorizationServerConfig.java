@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.config;
 
+import com.pandaz.usercenter.custom.CustomTokenEnhancer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,13 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 import javax.sql.DataSource;
+import java.util.Arrays;
 
 /**
  * 授权相关配置
@@ -99,11 +103,15 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
+        //增加转换链路，以增加自定义属性
+        TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
+        enhancerChain.setTokenEnhancers(Arrays.asList(customTokenEnhancer(), jwtTokenEnhancer()));
         endpoints
                 .authenticationManager(authenticationManager)
-                //jwt存储方式,就是不存储
+                //jwt存储方式,其实就是不存储
                 .tokenStore(jwtTokenStore())
                 .accessTokenConverter(jwtTokenEnhancer())
+                .tokenEnhancer(enhancerChain)
         ;
     }
 
@@ -126,5 +134,15 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Bean
     public ClientDetailsService clientDetailsService() {
         return new JdbcClientDetailsService(dataSource);
+    }
+
+    /**
+     * TokenEnhancer
+     *
+     * @return TokenEnhancer
+     */
+    @Bean
+    public TokenEnhancer customTokenEnhancer() {
+        return new CustomTokenEnhancer();
     }
 }

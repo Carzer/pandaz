@@ -4,11 +4,11 @@ import com.pandaz.commons.custom.SecurityUser;
 import com.pandaz.commons.dto.usercenter.UserDTO;
 import com.pandaz.commons.util.BeanCopierUtil;
 import com.pandaz.commons.util.CustomPasswordEncoder;
+import com.pandaz.usercenter.custom.CustomDaoAuthenticationProvider;
 import com.pandaz.usercenter.custom.constants.SysConstants;
 import com.pandaz.usercenter.custom.handler.AuthDeniedHandler;
 import com.pandaz.usercenter.custom.handler.LoginFailureHandler;
 import com.pandaz.usercenter.custom.handler.LoginSuccessHandler;
-import com.pandaz.usercenter.custom.provider.CustomDaoAuthenticationProvider;
 import com.pandaz.usercenter.entity.UserEntity;
 import com.pandaz.usercenter.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -43,7 +42,6 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @EnableRedisHttpSession(maxInactiveIntervalInSeconds = 1200)
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -177,6 +175,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new CustomDaoAuthenticationProvider(userDetailsService(), passwordEncoder());
     }
 
+    /**
+     * 授权管理bean
+     *
+     * @return AuthenticationManager
+     * @throws Exception e
+     */
     @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {

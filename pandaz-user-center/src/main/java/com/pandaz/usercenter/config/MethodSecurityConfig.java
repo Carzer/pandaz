@@ -1,6 +1,6 @@
 package com.pandaz.usercenter.config;
 
-import com.pandaz.usercenter.custom.evaluator.CustomPermissionEvaluator;
+import com.pandaz.usercenter.custom.CustomPermissionEvaluator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;

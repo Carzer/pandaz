@@ -13,6 +13,12 @@ spring:
             - Path=/auth/**
           filters:
             - StripPrefix=1
+        - id: pandaz-redis
+          uri: lb://pandaz-redis
+          predicates:
+            - Path=/redis/**
+          filters:
+            - StripPrefix=1
     #nacos
     nacos:
       discovery:
@@ -23,6 +29,13 @@ spring:
         dashboard: 172.16.2.130:8787
       log:
         dir: logs/api-gateway/sentinel
+security:
+  oauth2:
+    resource:
+      jwt:
+        # jwt公钥获取地址
+        # Note: 需要先启动授权服务器
+        key-uri: "http://localhost:9007/oauth/token_key"
 #自定义属性
 custom:
   #项目基础包

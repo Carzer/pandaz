@@ -1,7 +1,7 @@
-package com.pandaz.usercenter.custom.provider;
+package com.pandaz.usercenter.custom;
 
-import com.pandaz.commons.dto.usercenter.UserDTO;
 import com.pandaz.commons.custom.SecurityUser;
+import com.pandaz.commons.dto.usercenter.UserDTO;
 import com.pandaz.usercenter.custom.constants.SysConstants;
 import com.pandaz.usercenter.entity.RoleDetailEntity;
 import com.pandaz.usercenter.service.RoleService;

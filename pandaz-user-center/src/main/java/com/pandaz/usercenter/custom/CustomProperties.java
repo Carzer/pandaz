@@ -1,4 +1,4 @@
-package com.pandaz.usercenter.custom.properties;
+package com.pandaz.usercenter.custom;
 
 import lombok.Getter;
 import lombok.Setter;

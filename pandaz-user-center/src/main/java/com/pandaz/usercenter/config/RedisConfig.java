@@ -1,6 +1,6 @@
 package com.pandaz.usercenter.config;
 
-import com.pandaz.usercenter.custom.properties.CustomProperties;
+import com.pandaz.usercenter.custom.CustomProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
@@ -29,7 +29,6 @@ import java.time.temporal.ChronoUnit;
 @Configuration
 @EnableCaching
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-@SuppressWarnings("unchecked")
 public class RedisConfig {
 
     private final CustomProperties customProperties;
@@ -43,8 +42,8 @@ public class RedisConfig {
      * getRedisTemplate 方法的注释
      */
     @Bean
-    public RedisTemplate<?,?> getRedisTemplate(LettuceConnectionFactory redisConnectionFactory) {
-        RedisTemplate<?,?> redisTemplate = new RedisTemplate<>();
+    public RedisTemplate<?, ?> getRedisTemplate(LettuceConnectionFactory redisConnectionFactory) {
+        RedisTemplate<?, ?> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());

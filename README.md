@@ -1,4 +1,4 @@
-# This is PandaZ
+# PandaZ
 
     常用的微服务集合
     
@@ -12,29 +12,44 @@
 - 使用[Sentinel](https://github.com/alibaba/Sentinel/releases)进行流量控制、熔断降级
 - 使用[Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway)作为网关
 
+
+
 ## 二、 容器、数据库、中间件虚拟环境
 
 - 提供已搭建好的CentOS7虚拟机(VMware)
-
-    百度云盘：
-    提取码：
+    ```
+    百度云盘： 提取码：
+    系统用户统一密码：pandaz123
+    启动Nacos、Sentinel的脚本为：/usr/local/src/startup.sh，可自行修改为开机启动
+    ```    
+- 虚拟机ip设定：
+    ```
+    进入
+    /etc/sysconfig/network-scripts
+    执行
+    vi ifcfg-ens33
+    设置BOOTPROTO为static
+    添加
+    IPADDR=172.16.2.130
+    PREFIX=24
+    GATEWAY=172.16.2.2
+    DNS1=172.16.2.2
+    NETMASK=255.255.255.0
+    重启
+    service network restart
+    ```
+- 搭建参考
+    1. Docker：https://www.cnblogs.com/yufeng218/p/8370670.html
     
-   虚拟机ip设定：
-    ```
-        进入
-        /etc/sysconfig/network-scripts
-        执行
-        vi ifcfg-ens33
-        设置BOOTPROTO为static
-        添加
-        IPADDR=172.16.2.130
-        PREFIX=24
-        GATEWAY=172.16.2.2
-        DNS1=172.16.2.2
-        NETMASK=255.255.255.0
-        重启
-        service network restart
-    ```
+    2. MySQL：https://www.cnblogs.com/bigbrotherer/p/7241845.html
+    
+    3. Redis：https://blog.csdn.net/qq_27047215/article/details/91411559
+    
+    4. RabbitMQ：基本上是按照https://www.cnblogs.com/yufeng218/p/9452621.html
+       中的步骤来的，唯一的问题是https://hub.docker.com/网站非常容易超时，所以需要改一下镜像源，
+       修改方法如下 https://www.cnblogs.com/ming369/p/10711771.html
+
+
 
 ## 三、 微服务列表
 
@@ -49,7 +64,6 @@
     - [ ] 功能权限
     - [ ] 前台UI开发
     - [ ] 数据权限
-    
 - [ ] **框架集成**
     - [x] Spring Security
     - [x] Spring Session
@@ -60,8 +74,9 @@
     
 ### 2. [Redis服务](http://localhost:9001)
 
-- [x] **功能实现**
+- [ ] **功能实现**
     - [x] Redis基础服务
+    - [ ] 多数据源
 - [x] **框架集成**
     - [x] Spring Data Redis（使用Lettuce连接Sentinel集群）
     
@@ -80,7 +95,7 @@
 - [ ] **功能实现**
     - [ ] 定时任务统一调度
 - [ ] **框架集成**
-    - [x] Quartz
+    - [ ] Quartz
     - [ ] LTS
     
 ### 5. [rabbitmq](http://localhost:9004)
@@ -94,20 +109,28 @@
 ### 6. [审批流服务](http://localhost:9006)
 
 - [ ] **功能实现**
+    - [ ] 设计页面集成
     - [ ] 提供统一的流程服务
 - [x] **框架集成**
     - [x] Activiti7
     
 ### 7. [API网关](http://localhost:7777)
+主要的测试服务：[用户中心](http://localhost:9007)、[Redis服务](http://localhost:9001)
 
 - [ ] **功能实现**
     - [x] 网关基础功能
-    - [ ] 整合oauth2
+    - [x] 整合oauth2
     - [ ] 动态路由
-- [ ] **框架集成**
+- [x] **框架集成**
     - [x] Spring Cloud Gateway
-    - [ ] Spring Security Oauth2
+    - [x] Spring Security Oauth2
     
-## 四、 之前版本中遇到的问题
+### 8. 未来
+
+数据分析相关，或者机器学习相关？
+
+    
+    
+## 四、 之前版本中遇到的问题（Eureka、Hystrix、Zuul）
 
 > https://app.yinxiang.com/fx/20e1570e-7d37-48ac-b79b-aac23b1bf952

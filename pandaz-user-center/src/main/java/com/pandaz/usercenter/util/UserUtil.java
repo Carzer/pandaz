@@ -39,8 +39,8 @@ public final class UserUtil {
                 result.setError("用户未登陆！");
                 return result;
             }
-            UserDTO sysUser = ((SecurityUser) ((UsernamePasswordAuthenticationToken) principal).getPrincipal()).getUser();
-            result.setData(sysUser);
+            UserDTO user = ((SecurityUser) ((UsernamePasswordAuthenticationToken) principal).getPrincipal()).getUser();
+            result.setData(user);
         } catch (Exception e) {
             log.error("获取用户失败:", e);
             result.setError(e.getMessage());
