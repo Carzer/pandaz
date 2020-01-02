@@ -60,10 +60,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Bean
     public RequestMatcher requestMatcher() {
         return request -> {
+            // bearer_token
             String auth = request.getHeader(CommonConstants.AUTHORIZATION);
             boolean haveOauth2Token = StringUtils.hasText(auth) &&
                     (auth.startsWith(CommonConstants.BEARER_TYPE)
                             || auth.startsWith(CommonConstants.BEARER_TYPE.toLowerCase()));
+            // access_token
             String accessToken = request.getParameter(CommonConstants.ACCESS_TOKEN);
             boolean haveAccessToken = StringUtils.hasText(accessToken);
             return haveOauth2Token || haveAccessToken;

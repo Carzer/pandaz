@@ -1,7 +1,7 @@
-# PandaZ
+# ![pandaz](logo.png)<sup><sup>PandaZ</sup></sup>
 
     常用的微服务集合
-    
+
 ----------------------------------------------------
 ## 一、 简介
 
@@ -21,7 +21,7 @@
     百度云盘： 提取码：
     系统用户统一密码：pandaz123
     启动Nacos、Sentinel的脚本为：/usr/local/src/startup.sh，可自行修改为开机启动
-    ```    
+    ```
 - 虚拟机ip设定：
     ```
     进入
@@ -45,8 +45,8 @@
     
     3. Redis：https://blog.csdn.net/qq_27047215/article/details/91411559
     
-    4. RabbitMQ：基本上是按照https://www.cnblogs.com/yufeng218/p/9452621.html
-       中的步骤来的，唯一的问题是https://hub.docker.com/网站非常容易超时，所以需要改一下镜像源，
+    4. RabbitMQ：基本上是按照 https://www.cnblogs.com/yufeng218/p/9452621.html
+       中的步骤来的，唯一的问题是 https://hub.docker.com/ 网站非常容易超时，所以需要改一下镜像源，
        修改方法如下 https://www.cnblogs.com/ming369/p/10711771.html
 
 
@@ -129,8 +129,10 @@
 
 数据分析相关，或者机器学习相关？
 
-    
-    
+要不来个表情包？
+
+
+​    
 ## 四、 之前版本中遇到的问题（Eureka、Hystrix、Zuul）
 
 > https://app.yinxiang.com/fx/20e1570e-7d37-48ac-b79b-aac23b1bf952

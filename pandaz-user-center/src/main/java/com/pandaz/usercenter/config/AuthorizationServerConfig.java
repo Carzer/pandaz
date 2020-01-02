@@ -1,6 +1,7 @@
 package com.pandaz.usercenter.config;
 
 import com.pandaz.usercenter.custom.CustomTokenEnhancer;
+import com.pandaz.usercenter.service.OauthClientService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,19 +9,19 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
-import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
-import javax.sql.DataSource;
 import java.util.Arrays;
 
 /**
@@ -48,14 +49,25 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private String publicKey;
 
     /**
-     * 客户端数据源
-     */
-    private final DataSource dataSource;
-
-    /**
      * 授权管理器
      */
     private final AuthenticationManager authenticationManager;
+
+    /**
+     * 用户信息服务
+     */
+    private final UserDetailsService userDetailsService;
+
+    /**
+     * 客户端服务
+     */
+    private final OauthClientService oauthClientService;
+
+
+    /**
+     * 密码加密
+     */
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * jwt token管理方式  资源服务器需要和授权服务器一致
@@ -89,6 +101,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(AuthorizationServerSecurityConfigurer securityConfigurer) {
         securityConfigurer
                 .allowFormAuthenticationForClients()
+                .passwordEncoder(passwordEncoder)
 //                .tokenKeyAccess("isAnonymous() || hasRole('ROLE_TRUSTED_CLIENT')")
                 .tokenKeyAccess("permitAll()")
 //                .checkTokenAccess("hasRole('TRUSTED_CLIENT')");
@@ -106,8 +119,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         //增加转换链路，以增加自定义属性
         TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
         enhancerChain.setTokenEnhancers(Arrays.asList(customTokenEnhancer(), jwtTokenEnhancer()));
+
         endpoints
                 .authenticationManager(authenticationManager)
+                .userDetailsService(userDetailsService)
                 //jwt存储方式,其实就是不存储
                 .tokenStore(jwtTokenStore())
                 .accessTokenConverter(jwtTokenEnhancer())
@@ -133,7 +148,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Bean
     public ClientDetailsService clientDetailsService() {
-        return new JdbcClientDetailsService(dataSource);
+        return oauthClientService::loadClientByClientId;
     }
 
     /**

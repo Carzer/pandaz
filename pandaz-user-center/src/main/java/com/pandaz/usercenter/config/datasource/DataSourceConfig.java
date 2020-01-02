@@ -44,8 +44,9 @@ public class DataSourceConfig {
     }
 
     @Bean
-    public PlatformTransactionManager txManager() {
-        return new DataSourceTransactionManager(dataSource());
+    @Autowired
+    public PlatformTransactionManager txManager(DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
     }
 
 }

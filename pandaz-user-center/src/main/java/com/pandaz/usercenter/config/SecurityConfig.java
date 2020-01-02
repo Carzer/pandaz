@@ -27,6 +27,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 import java.time.LocalDateTime;
@@ -72,21 +73,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                // 匹配/oauth
                 .antMatchers("/oauth/**").permitAll()
                 .anyRequest()
                 .authenticated().and()
                 .formLogin().permitAll()
-                //登录成功后可使用loginSuccessHandler()存储用户信息，可选。
+                // 登录成功后执行的方法
                 .successHandler(loginSuccessHandler())
+                // 登录失败执行的方法
                 .failureHandler(loginFailureHandler())
                 .and()
-                .logout().permitAll()//退出页面
+                // 允许登出
+                .logout().permitAll()
                 .and()
+                // 关闭禁止跨域
                 .csrf().disable()
+                // 访问拒绝时执行的方法
                 .exceptionHandling().accessDeniedHandler(authDeniedHandler())
-        //.httpBasic().disable()
-//                .sessionManagement().maximumSessions(1)
-//                .maxSessionsPreventsLogin(true)
+                // 当前用户只准登陆一次，后续的禁止登陆
+                .and().sessionManagement().maximumSessions(1)
+                .maxSessionsPreventsLogin(true)
         ;
     }
 
@@ -146,22 +152,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 String notFoundMsg = "账号[" + loginName + "]不存在。";
                 throw new UsernameNotFoundException(notFoundMsg);
             }
-            String username = user.getName();
             Byte locked = user.getLocked();
             //用户已锁定
             if (SysConstants.IS_LOCKED.equals(locked)) {
-                throw new LockedException("用户[" + username + "]已锁定，请联系管理员。");
+                throw new LockedException("用户[" + loginName + "]已锁定，请联系管理员。");
             }
             LocalDateTime expireAt = user.getExpireAt();
             //用户已过期
             if (expireAt == null || LocalDateTime.now().isAfter(expireAt)) {
                 String expireTime = expireAt == null ? "" : "于" + expireAt.toString();
-                String accountExpiredMsg = String.format("用户[%s]已%s过期。", username, expireTime);
+                String accountExpiredMsg = String.format("用户[%s]已%s过期。", loginName, expireTime);
                 throw new AccountExpiredException(accountExpiredMsg);
             }
             UserDTO userDTO = BeanCopierUtil.copy(user, UserDTO.class);
             List<GrantedAuthority> authorities = new ArrayList<>();
-            return new SecurityUser(username, user.getPassword(), authorities, userDTO);
+            return new SecurityUser(loginName, user.getPassword(), authorities, userDTO);
         };
     }
 
@@ -176,10 +181,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * 授权管理bean
+     * AuthenticationManager
+     * <p>
+     * 如果不声明，会导致授权服务器无AuthenticationManager，而password方式无法获取token
+     * {@link AuthorizationServerConfig#configure(AuthorizationServerEndpointsConfigurer endpoints)}
      *
      * @return AuthenticationManager
      * @throws Exception e
+     * @see AuthorizationServerEndpointsConfigurer#getDefaultTokenGranters
      */
     @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
     @Override
