@@ -17,15 +17,16 @@
 ## 二、 容器、数据库、中间件虚拟环境
 
 - 提供已搭建好的CentOS7虚拟机(VMware)
-    ```
-    百度云盘： 提取码：
-    系统用户统一密码：pandaz123
-    启动Nacos、Sentinel的脚本为：/usr/local/src/startup.sh，可自行修改为开机启动
-    ```
+    
+    百度云盘： https://pan.baidu.com/s/1GYXQ5E6rIOvDcXINu8Wrlg  提取码： myef <br/>
+    系统用户统一密码：pandaz123<br/>
+    启动Nacos、Sentinel的命令为：`./usr/local/src/startup.sh`，可自行修改为开机启动、或置于docker中
+    
+    
 - 虚拟机ip设定：
     ```
     进入
-    /etc/sysconfig/network-scripts
+    cd /etc/sysconfig/network-scripts
     执行
     vi ifcfg-ens33
     设置BOOTPROTO为static
@@ -45,11 +46,10 @@
     
     3. Redis：https://blog.csdn.net/qq_27047215/article/details/91411559
     
-    4. RabbitMQ：基本上是按照 https://www.cnblogs.com/yufeng218/p/9452621.html
-       中的步骤来的，唯一的问题是 https://hub.docker.com/ 网站非常容易超时，所以需要改一下镜像源，
-       修改方法如下 https://www.cnblogs.com/ming369/p/10711771.html
+    4. RabbitMQ：https://www.cnblogs.com/yufeng218/p/9452621.html
 
-
+     由于 https://hub.docker.com/ 非常容易超时，所以需要改一下docker镜像源： https://www.cnblogs.com/ming369/p/10711771.html<br/>
+     个人镜像加速器地址：https://xvaz3vtq.mirror.aliyuncs.com
 
 ## 三、 微服务列表
 
@@ -135,4 +135,4 @@
 ​    
 ## 四、 之前版本中遇到的问题（Eureka、Hystrix、Zuul）
 
-> https://app.yinxiang.com/fx/20e1570e-7d37-48ac-b79b-aac23b1bf952
+> 印象笔记： https://app.yinxiang.com/fx/20e1570e-7d37-48ac-b79b-aac23b1bf952

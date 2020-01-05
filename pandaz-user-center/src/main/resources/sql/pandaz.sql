@@ -11,37 +11,11 @@
  Target Server Version : 50727
  File Encoding         : utf-8
 
- Date: 12/31/2019 14:13:29 PM
+ Date: 01/03/2020 10:07:18 AM
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
-
--- ----------------------------
---  Table structure for `oauth_client_details`
--- ----------------------------
-DROP TABLE IF EXISTS `oauth_client_details`;
-CREATE TABLE `oauth_client_details` (
-  `client_id` varchar(256) NOT NULL,
-  `resource_ids` varchar(256) DEFAULT NULL,
-  `client_secret` varchar(256) DEFAULT NULL,
-  `scope` varchar(256) DEFAULT NULL,
-  `authorized_grant_types` varchar(256) DEFAULT NULL,
-  `web_server_redirect_uri` varchar(256) DEFAULT NULL,
-  `authorities` varchar(256) DEFAULT NULL,
-  `access_token_validity` int(11) DEFAULT NULL,
-  `refresh_token_validity` int(11) DEFAULT NULL,
-  `additional_information` varchar(4096) DEFAULT NULL,
-  `autoapprove` varchar(256) DEFAULT NULL,
-  PRIMARY KEY (`client_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- ----------------------------
---  Records of `oauth_client_details`
--- ----------------------------
-BEGIN;
-INSERT INTO `oauth_client_details` VALUES ('test', 'pandaz-user-center,pandaz-redis', '$2a$10$ok1NsN6t9dL1qNYKY16HVuSYP3NrzV6wL4AUYrQha7zCngV7/W.QW', 'xx', 'password,refresh_token', null, null, null, null, null, null);
-COMMIT;
 
 -- ----------------------------
 --  Table structure for `t_sys_dict_info`
@@ -172,6 +146,43 @@ CREATE TABLE `t_sys_menu` (
   UNIQUE KEY `t_sys_menu_code_key` (`code`),
   KEY `t_sys_menu_os_code_index` (`os_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='菜单信息';
+
+-- ----------------------------
+--  Table structure for `t_sys_oauth_client`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_sys_oauth_client`;
+CREATE TABLE `t_sys_oauth_client` (
+  `id` varchar(32) NOT NULL COMMENT '主键',
+  `client_id` varchar(256) NOT NULL COMMENT '客户端ID',
+  `resource_ids` varchar(256) DEFAULT NULL COMMENT '可访问资源ID',
+  `client_secret` varchar(256) DEFAULT NULL COMMENT '客户端密钥',
+  `scope` varchar(256) DEFAULT NULL COMMENT '使用范围',
+  `authorized_grant_types` varchar(256) DEFAULT NULL COMMENT 'token获取方式',
+  `web_server_redirect_uri` varchar(256) DEFAULT NULL COMMENT '授权码模式跳转uri',
+  `authorities` varchar(256) DEFAULT NULL COMMENT '权限',
+  `access_token_validity` int(11) DEFAULT NULL COMMENT 'token有效期',
+  `refresh_token_validity` int(11) DEFAULT NULL COMMENT 'refresh_token有效期',
+  `additional_information` varchar(4096) DEFAULT NULL COMMENT '附加信息',
+  `auto_approve` varchar(256) DEFAULT NULL COMMENT '授权码模式自动跳过页面授权步骤',
+  `created_by` varchar(50) NOT NULL DEFAULT 'system' COMMENT '创建人',
+  `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_by` varchar(50) DEFAULT NULL COMMENT '修改人',
+  `updated_date` datetime DEFAULT NULL COMMENT '修改时间',
+  `deleted_by` varchar(50) DEFAULT NULL COMMENT '删除人',
+  `deleted_date` datetime DEFAULT NULL COMMENT '删除时间',
+  `deleted_flag` tinyint(4) NOT NULL DEFAULT '0' COMMENT '删除标记(0:未删除，1:已删除)',
+  `locked` tinyint(4) NOT NULL DEFAULT '0' COMMENT '锁定标记(0:未锁定，1:已锁定)',
+  `version` int(8) NOT NULL DEFAULT '1' COMMENT '版本号',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `t_os_info_code_key` (`client_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='oauth2客户端信息';
+
+-- ----------------------------
+--  Records of `t_sys_oauth_client`
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_sys_oauth_client` VALUES ('1', 'test', 'pandaz-user-center,pandaz-redis', '$2a$10$ok1NsN6t9dL1qNYKY16HVuSYP3NrzV6wL4AUYrQha7zCngV7/W.QW', 'read,write', 'password,refresh_token', null, null, null, null, null, null, 'system', '2020-01-02 13:17:50', null, null, null, null, '0', '0', '1');
+COMMIT;
 
 -- ----------------------------
 --  Table structure for `t_sys_organization`
