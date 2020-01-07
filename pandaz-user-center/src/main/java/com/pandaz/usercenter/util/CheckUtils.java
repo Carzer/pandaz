@@ -41,8 +41,8 @@ public class CheckUtils<E extends BaseEntity, M> {
             Object code = field.get(entity);
             if (code == null) {
                 newCode = UuidUtil.getUuid();
-                newCode = StringUtils.hasText(prefix) ? prefix + newCode : newCode;
-                newCode = StringUtils.hasText(suffix) ? newCode + suffix : newCode;
+                newCode = StringUtils.hasText(prefix) ? String.format("%s%s", prefix, newCode) : newCode;
+                newCode = StringUtils.hasText(suffix) ? String.format("%s%s", newCode, suffix) : newCode;
                 field.set(entity, newCode);
             } else {
                 newCode = code.toString();
