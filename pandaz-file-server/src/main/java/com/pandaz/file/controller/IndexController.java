@@ -32,7 +32,7 @@ public class IndexController {
      */
     @GetMapping("/dc")
     public String dc() {
-        String services = "Services: " + discoveryClient.getServices();
+        String services = String.format("Services: %s", discoveryClient.getServices());
         log.info(services);
         return services;
     }

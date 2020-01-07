@@ -1,24 +1,17 @@
 package com.pandaz.usercenter.custom;
 
 import com.pandaz.commons.custom.SecurityUser;
-import com.pandaz.commons.dto.usercenter.UserDTO;
-import com.pandaz.usercenter.custom.constants.SysConstants;
-import com.pandaz.usercenter.entity.RoleDetailEntity;
 import com.pandaz.usercenter.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsPasswordService;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.util.CollectionUtils;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -79,18 +72,9 @@ public class CustomDaoAuthenticationProvider extends DaoAuthenticationProvider {
     @Override
     protected Authentication createSuccessAuthentication(Object principal, Authentication authentication, UserDetails user) {
         SecurityUser securityUser = (SecurityUser) user;
-        UserDTO userDTO = securityUser.getUser();
-        String userCode = userDTO.getCode();
-        /* 查询角色 */
-        List<RoleDetailEntity> roleList = roleService.findByUserCode(userCode, SysConstants.IS_PUBLIC);
-        //设置角色信息
-        Set<GrantedAuthority> authorities = new HashSet<>();
-        if (!CollectionUtils.isEmpty(roleList)) {
-            roleList.forEach(role ->
-                    authorities.add(new SimpleGrantedAuthority(role.getCode())));
-        }
-        authorities.addAll(user.getAuthorities());
-        return super.createSuccessAuthentication(principal, authentication, new SecurityUser(user.getUsername(), user.getPassword(), authorities, userDTO));
+        //登陆成功后设置角色信息
+        Set<GrantedAuthority> authorities = roleService.findBySecurityUser(securityUser);
+        return super.createSuccessAuthentication(principal, authentication, new SecurityUser(user.getUsername(), user.getPassword(), authorities, securityUser.getUser()));
     }
 
     /**

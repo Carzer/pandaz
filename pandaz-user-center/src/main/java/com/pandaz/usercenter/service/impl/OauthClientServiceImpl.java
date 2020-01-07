@@ -9,13 +9,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.security.oauth2.common.exceptions.InvalidClientException;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.NoSuchClientException;
 import org.springframework.security.oauth2.provider.client.BaseClientDetails;
+import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;
 
 import java.io.IOException;
 import java.util.Map;
@@ -30,13 +29,13 @@ import java.util.Map;
  */
 @Service
 @Slf4j
-@CacheConfig(cacheManager = "secondaryCacheManager",cacheNames = {"user-center:oauth_client"})
+@CacheConfig(cacheManager = "secondaryCacheManager", cacheNames = {"user-center:oauth_client"})
 @SuppressWarnings("unchecked")
 public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, OauthClientEntity> implements OauthClientService {
 
     /**
      * 根据客户端ID查询客户端
-     *
+     * <p>
      * {@link TokenEndpoint#postAccessToken}
      *
      * @param id 客户端ID
@@ -44,12 +43,12 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Oauth
      */
     @Cacheable(key = "#id")
     @Override
-    public ClientDetails loadClientByClientId(String id) throws InvalidClientException {
+    public ClientDetails loadClientByClientId(String id) {
         QueryWrapper<OauthClientEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("client_id", id);
         OauthClientEntity oauthClientEntity = this.baseMapper.selectOne(queryWrapper);
         if (oauthClientEntity == null) {
-            throw new NoSuchClientException("No client with requested id: " + id);
+            throw new NoSuchClientException(String.format("No client with requested id: %s", id));
         }
         return convertClient(oauthClientEntity);
     }

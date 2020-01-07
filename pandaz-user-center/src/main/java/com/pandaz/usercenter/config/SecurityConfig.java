@@ -90,9 +90,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 // 访问拒绝时执行的方法
                 .exceptionHandling().accessDeniedHandler(authDeniedHandler())
-                // 当前用户只准登陆一次，后续的禁止登陆
-                .and().sessionManagement().maximumSessions(1)
-                .maxSessionsPreventsLogin(true)
+        // 当前用户只准登陆一次，后续的禁止登陆
+//                .and().sessionManagement().maximumSessions(1)
+//                .maxSessionsPreventsLogin(true)
         ;
     }
 
@@ -149,18 +149,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             UserEntity user = userService.loadUserByUsername(loginName);
             //用户不存在
             if (user == null) {
-                String notFoundMsg = "账号[" + loginName + "]不存在。";
+                String notFoundMsg = String.format("账号[%s]不存在。", loginName);
                 throw new UsernameNotFoundException(notFoundMsg);
             }
             Byte locked = user.getLocked();
             //用户已锁定
             if (SysConstants.IS_LOCKED.equals(locked)) {
-                throw new LockedException("用户[" + loginName + "]已锁定，请联系管理员。");
+                throw new LockedException(String.format("用户[%s]已锁定，请联系管理员。", loginName));
             }
             LocalDateTime expireAt = user.getExpireAt();
             //用户已过期
             if (expireAt == null || LocalDateTime.now().isAfter(expireAt)) {
-                String expireTime = expireAt == null ? "" : "于" + expireAt.toString();
+                String expireTime = expireAt == null ? "" : String.format("于%s", expireAt.toString());
                 String accountExpiredMsg = String.format("用户[%s]已%s过期。", loginName, expireTime);
                 throw new AccountExpiredException(accountExpiredMsg);
             }
@@ -185,10 +185,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * <p>
      * 如果不声明，会导致授权服务器无AuthenticationManager，而password方式无法获取token
      * {@link AuthorizationServerConfig#configure(AuthorizationServerEndpointsConfigurer endpoints)}
+     * {@link AuthorizationServerEndpointsConfigurer} #getDefaultTokenGranters
      *
      * @return AuthenticationManager
      * @throws Exception e
-     * @see AuthorizationServerEndpointsConfigurer#getDefaultTokenGranters
      */
     @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
     @Override

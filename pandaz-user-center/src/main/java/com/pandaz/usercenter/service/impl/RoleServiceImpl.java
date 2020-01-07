@@ -1,6 +1,7 @@
 package com.pandaz.usercenter.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.pandaz.commons.custom.SecurityUser;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.custom.constants.SysConstants;
 import com.pandaz.usercenter.entity.RoleDetailEntity;
@@ -12,9 +13,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 角色服务
@@ -55,7 +62,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
      *
      * @param userCode  userCode用户编码
      * @param isPrivate 是否私有
-     * @return java.util.List<com.pandaz.usercenter.entity.RoleEntity>
+     * @return 角色信息列表
      */
     @Cacheable(key = "#userCode+':'+((1 == #isPrivate)?'private':'public')")
     @Override
@@ -77,6 +84,18 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
     @Override
     public List<RoleDetailEntity> findByUserCode(String userCode) {
         return roleMapper.getAllRoles(userCode);
+    }
+
+    @Override
+    public Set<GrantedAuthority> findBySecurityUser(SecurityUser securityUser) {
+        List<RoleDetailEntity> roleDetailEntities = findByUserCode(securityUser.getUser().getCode());
+        if (CollectionUtils.isEmpty(roleDetailEntities)) {
+            return new HashSet<>();
+        } else {
+            return roleDetailEntities.stream().map(
+                    role -> new SimpleGrantedAuthority(role.getCode())
+            ).collect(Collectors.toSet());
+        }
     }
 
     /**

@@ -26,7 +26,7 @@ public class CodeGenerator {
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         String projectPath = "/Users/carzer/Documents/Code/Java/pandaz/pandaz-user-center";
-        gc.setOutputDir(projectPath + "/src/main/java");
+        gc.setOutputDir(String.format("%s/src/main/java", projectPath));
         gc.setAuthor("Carzer");
         gc.setOpen(false);
         // gc.setSwagger2(true); 实体属性 Swagger2 注解
@@ -62,7 +62,7 @@ public class CodeGenerator {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
-                return projectPath + "/src/main/resources/mybatis/mappers/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
+                return String.format("%s/src/main/resources/mybatis/mappers/%sMapper%s", projectPath, tableInfo.getEntityName(), StringPool.DOT_XML);
             }
         });
         cfg.setFileOutConfigList(focList);

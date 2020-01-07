@@ -34,7 +34,7 @@ public interface UserService extends IService<UserEntity> {
      * @param user user
      * @return int
      */
-    UserEntity updateByCode(UserEntity user);
+    int updateByCode(UserEntity user);
 
     /**
      * 插入用户信息

@@ -34,7 +34,7 @@ public class BasisUnitTest {
         System.out.println("\n###########################################");
         startMills = System.currentTimeMillis();
         String dateStr = DATE_FORMAT.format(startMills);
-        System.out.println("test start at : " + dateStr);
+        System.out.printf("test start at : %s%n", dateStr);
         System.out.println(startMills);
         System.out.println("###########################################");
     }
@@ -51,10 +51,10 @@ public class BasisUnitTest {
         System.out.println("\n###########################################");
         long endMills = System.currentTimeMillis();
         String dateStr = DATE_FORMAT.format(endMills);
-        System.out.println("test end at : " + dateStr);
+        System.out.printf("test end at : %s%n", dateStr);
         System.out.println(endMills);
         System.out.println("###########################################");
-        System.out.println("本次测试耗时 ：" + (endMills - startMills) + "毫秒");
+        System.out.printf("本次测试耗时 ：%d毫秒%n", endMills - startMills);
         System.out.println("###########################################");
     }
 }

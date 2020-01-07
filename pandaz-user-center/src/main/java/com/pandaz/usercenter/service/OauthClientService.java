@@ -2,7 +2,6 @@ package com.pandaz.usercenter.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.pandaz.usercenter.entity.OauthClientEntity;
-import org.springframework.security.oauth2.common.exceptions.InvalidClientException;
 import org.springframework.security.oauth2.provider.ClientDetails;
 
 /**
@@ -21,5 +20,5 @@ public interface OauthClientService extends IService<OauthClientEntity> {
      * @param id 客户端ID
      * @return 客户端
      */
-    ClientDetails loadClientByClientId(String id) throws InvalidClientException;
+    ClientDetails loadClientByClientId(String id);
 }

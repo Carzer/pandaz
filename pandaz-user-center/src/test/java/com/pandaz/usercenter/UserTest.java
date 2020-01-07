@@ -26,7 +26,7 @@ public class UserTest extends BasisUnitTest {
 
     @Test
     public void changeUser() {
-        UserEntity sysUser = userMapper.findByLoginName("admin");
+        UserEntity sysUser = userService.loadUserByUsername("admin");
         sysUser.setPassword(new CustomPasswordEncoder().encode("admin"));
         userMapper.updateByPrimaryKeySelective(sysUser);
     }

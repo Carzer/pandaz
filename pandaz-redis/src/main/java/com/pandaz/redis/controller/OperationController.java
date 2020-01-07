@@ -30,7 +30,7 @@ public class OperationController {
     /**
      * redis操作
      */
-    private final RedisHelper<String, String> redisHelper;
+    private final RedisHelper redisHelper;
 
     /**
      * 获取Redis value

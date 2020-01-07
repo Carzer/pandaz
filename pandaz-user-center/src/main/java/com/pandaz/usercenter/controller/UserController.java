@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * 用户相关controller
@@ -41,8 +41,8 @@ public class UserController {
      * @return com.pandaz.commons.util.ExecuteResult<java.util.Map < java.lang.String, java.lang.Object>>
      */
     @GetMapping("/getPage")
-    public ExecuteResult<ConcurrentHashMap<String, Object>> getPage(UserDTO userDTO) {
-        ExecuteResult<ConcurrentHashMap<String, Object>> result = new ExecuteResult<>();
+    public ExecuteResult<ConcurrentMap<String, Object>> getPage(UserDTO userDTO) {
+        ExecuteResult<ConcurrentMap<String, Object>> result = new ExecuteResult<>();
         try {
             IPage<UserEntity> page = userService.getPage(BeanCopierUtil.copy(userDTO, UserEntity.class));
             result.setData(BeanCopierUtil.convertToMap(page, UserDTO.class));
@@ -89,8 +89,7 @@ public class UserController {
             user.setCreatedBy(principal.getName());
             user.setCreatedDate(LocalDateTime.now());
             //如果没有选择过期时间，就默认6个月后过期
-            LocalDateTime expireAt = user.getExpireAt();
-            if (expireAt == null) {
+            if (user.getExpireAt() == null) {
                 user.setExpireAt(LocalDateTime.now().plusMonths(6L));
             }
             userService.insert(user);

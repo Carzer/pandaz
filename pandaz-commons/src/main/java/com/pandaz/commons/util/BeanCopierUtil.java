@@ -7,6 +7,7 @@ import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
 /**
@@ -97,9 +98,9 @@ public class BeanCopierUtil {
      * @param <T>   目标类型
      * @return 转换结果
      */
-    public static <S, T> ConcurrentHashMap<String, Object> convertToMap(IPage<S> page, Class<T> clazz) {
+    public static <S, T> ConcurrentMap<String, Object> convertToMap(IPage<S> page, Class<T> clazz) {
         Assert.notNull(page, "传入的page不能为空！");
-        ConcurrentHashMap<String, Object> map = new ConcurrentHashMap<>(5);
+        ConcurrentMap<String, Object> map = new ConcurrentHashMap<>(5);
         map.put("pageNum", page.getCurrent());
         map.put("pageSize", page.getSize());
         map.put("total", page.getTotal());
@@ -116,7 +117,7 @@ public class BeanCopierUtil {
      * @return 目标类
      */
     private static String generateKey(Class<?> source, Class<?> target) {
-        return source.toString() + "|" + target.toString();
+        return String.format("%s|%s", source.toString(), target.toString());
     }
 
 }

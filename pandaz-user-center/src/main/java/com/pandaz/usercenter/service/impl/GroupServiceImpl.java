@@ -68,10 +68,10 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupEntity> impl
 
         //创建私有角色
         RoleEntity role = new RoleEntity();
-        String roleCode = SysConstants.ROLE_PREFIX + groupCode;
+        String roleCode = String.format("%s%s", SysConstants.ROLE_PREFIX, groupCode);
         role.setCode(roleCode);
         role.setIsPrivate(SysConstants.IS_PRIVATE);
-        role.setName(groupName + SysConstants.PRIVATE_ROLE);
+        role.setName(String.format("%s%s", groupName, SysConstants.PRIVATE_ROLE));
         role.setCreatedBy(createdBy);
         role.setCreatedDate(createDate);
         //关联组及私有角色

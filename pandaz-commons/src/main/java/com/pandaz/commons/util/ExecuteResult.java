@@ -3,8 +3,6 @@ package com.pandaz.commons.util;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serializable;
-
 /**
  * 执行结果
  *
@@ -13,9 +11,7 @@ import java.io.Serializable;
  */
 @Setter
 @Getter
-public final class ExecuteResult<T extends Serializable> implements Serializable {
-
-    private static final long serialVersionUID = -4081885107988007568L;
+public final class ExecuteResult<T> {
 
     /**
      * 是否成功

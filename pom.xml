@@ -12,7 +12,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>PandaZ</name>
-    <description>This is PandaZ</description>
+    <description>A simple collection of microservices</description>
 
     <developers>
         <developer>

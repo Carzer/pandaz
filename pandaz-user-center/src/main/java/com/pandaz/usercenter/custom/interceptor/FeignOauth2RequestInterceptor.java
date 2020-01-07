@@ -44,7 +44,7 @@ public class FeignOauth2RequestInterceptor implements RequestInterceptor {
                     // details中的sessionID非Spring security统一管理的，需使用RequestContextHolder
                     String sessionId = RequestContextHolder.currentRequestAttributes().getSessionId();
                     if (StringUtils.hasText(sessionId)) {
-                        requestTemplate.header("Cookie", "SESSION=" + Base64Utils.encodeToString(sessionId.getBytes()));
+                        requestTemplate.header("Cookie", String.format("SESSION=%s", Base64Utils.encodeToString(sessionId.getBytes())));
                     }
                     // 其他的，后续遇到了再补充
                 } else {

@@ -43,7 +43,7 @@ public class UserDTO extends BaseDTO {
     /**
      * 性别
      */
-    private Byte gender;
+    private Integer gender;
 
     /**
      * 用户类型

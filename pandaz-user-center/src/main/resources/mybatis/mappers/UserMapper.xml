@@ -51,22 +51,6 @@
             phone = #{phone,jdbcType=VARCHAR}
         </if>
     </sql>
-    <insert id="insert" parameterType="com.pandaz.usercenter.entity.UserEntity">
-        insert into t_sys_user (id, name, code,
-        login_name, password, gender,
-        user_type, email, phone,
-        created_by, created_date, updated_by,
-        updated_date, deleted_by, deleted_date,
-        deleted_flag, locked, expire_at,
-        version)
-        values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
-        #{loginName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT},
-        #{userType,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
-        #{createdBy,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR},
-        #{updatedDate,jdbcType=TIMESTAMP}, #{deletedBy,jdbcType=VARCHAR}, #{deletedDate,jdbcType=TIMESTAMP},
-        #{deletedFlag,jdbcType=TINYINT}, #{locked,jdbcType=TINYINT}, #{expireAt,jdbcType=TIMESTAMP},
-        #{version,jdbcType=INTEGER})
-    </insert>
     <insert id="insertSelective" parameterType="com.pandaz.usercenter.entity.UserEntity">
         insert into t_sys_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -245,43 +229,11 @@
         </set>
         where id = #{id,jdbcType=VARCHAR}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.pandaz.usercenter.entity.UserEntity">
-        update t_sys_user
-        set name = #{name,jdbcType=VARCHAR},
-        code = #{code,jdbcType=VARCHAR},
-        login_name = #{loginName,jdbcType=VARCHAR},
-        password = #{password,jdbcType=VARCHAR},
-        user_type = #{userType,jdbcType=VARCHAR},
-        email = #{email,jdbcType=VARCHAR},
-        phone = #{phone,jdbcType=VARCHAR},
-        created_by = #{createdBy,jdbcType=VARCHAR},
-        created_date = #{createdDate,jdbcType=TIMESTAMP},
-        updated_by = #{updatedBy,jdbcType=VARCHAR},
-        updated_date = #{updatedDate,jdbcType=TIMESTAMP},
-        deleted_by = #{deletedBy,jdbcType=VARCHAR},
-        deleted_date = #{deletedDate,jdbcType=TIMESTAMP},
-        deleted_flag = #{deletedFlag,jdbcType=TINYINT},
-        locked = #{locked,jdbcType=TINYINT},
-        expire_at = #{expireAt,jdbcType=TIMESTAMP},
-        version = #{version,jdbcType=INTEGER}
-        where id = #{id,jdbcType=VARCHAR}
-    </update>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-        delete
-        from t_sys_user
-        where id = #{id,jdbcType=VARCHAR}
-    </delete>
     <delete id="deleteByCode" parameterType="java.lang.String">
         delete
         from t_sys_user
         where code = #{code,jdbcType=VARCHAR}
     </delete>
-    <select id="findByLoginName" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from t_sys_user
-        where login_name = #{loginName,jdbcType=VARCHAR}
-    </select>
     <select id="findList" parameterType="com.pandaz.usercenter.entity.UserEntity" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -290,70 +242,10 @@
             <include refid="whereSql"/>
         </where>
     </select>
-    <select id="findById" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from t_sys_user
-        where id = #{id,jdbcType=VARCHAR}
-    </select>
     <select id="findByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from t_sys_user
         where code = #{id,jdbcType=VARCHAR}
     </select>
-    <update id="updateByCode" parameterType="com.pandaz.usercenter.entity.UserEntity">
-        update t_sys_user
-        <set>
-            <if test="name != null">
-                name = #{name,jdbcType=VARCHAR},
-            </if>
-            <if test="loginName != null">
-                login_name = #{loginName,jdbcType=VARCHAR},
-            </if>
-            <if test="password != null">
-                password = #{password,jdbcType=VARCHAR},
-            </if>
-            <if test="userType != null">
-                user_type = #{userType,jdbcType=VARCHAR},
-            </if>
-            <if test="email != null">
-                email = #{email,jdbcType=VARCHAR},
-            </if>
-            <if test="phone != null">
-                phone = #{phone,jdbcType=VARCHAR},
-            </if>
-            <if test="createdBy != null">
-                created_by = #{createdBy,jdbcType=VARCHAR},
-            </if>
-            <if test="createdDate != null">
-                created_date = #{createdDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="updatedBy != null">
-                updated_by = #{updatedBy,jdbcType=VARCHAR},
-            </if>
-            <if test="updatedDate != null">
-                updated_date = #{updatedDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="deletedBy != null">
-                delete_by = #{deletedBy,jdbcType=VARCHAR},
-            </if>
-            <if test="deletedDate != null">
-                delete_date = #{deletedDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="deletedFlag != null">
-                deleted_flag = #{deletedFlag,jdbcType=TINYINT},
-            </if>
-            <if test="locked != null">
-                locked = #{locked,jdbcType=TINYINT},
-            </if>
-            <if test="expireAt != null">
-                expire_at = #{expireAt,jdbcType=TIMESTAMP},
-            </if>
-            <if test="version != null">
-                version = #{version,jdbcType=INTEGER},
-            </if>
-        </set>
-        where code = #{code,jdbcType=VARCHAR}
-    </update>
 </mapper>

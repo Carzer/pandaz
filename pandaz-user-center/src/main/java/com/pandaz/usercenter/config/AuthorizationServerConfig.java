@@ -1,7 +1,10 @@
 package com.pandaz.usercenter.config;
 
+import com.pandaz.commons.custom.SecurityUser;
+import com.pandaz.usercenter.custom.CustomDaoAuthenticationProvider;
 import com.pandaz.usercenter.custom.CustomTokenEnhancer;
 import com.pandaz.usercenter.service.OauthClientService;
+import com.pandaz.usercenter.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -17,12 +21,14 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 import java.util.Arrays;
+import java.util.Set;
 
 /**
  * 授权相关配置
@@ -54,20 +60,24 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private final AuthenticationManager authenticationManager;
 
     /**
-     * 用户信息服务
-     */
-    private final UserDetailsService userDetailsService;
-
-    /**
      * 客户端服务
      */
     private final OauthClientService oauthClientService;
-
 
     /**
      * 密码加密
      */
     private final PasswordEncoder passwordEncoder;
+
+    /**
+     * 角色服务
+     */
+    private final RoleService roleService;
+
+    /**
+     * 用户详情信息
+     */
+    private final UserDetailsService userDetailsService;
 
     /**
      * jwt token管理方式  资源服务器需要和授权服务器一致
@@ -102,9 +112,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         securityConfigurer
                 .allowFormAuthenticationForClients()
                 .passwordEncoder(passwordEncoder)
-//                .tokenKeyAccess("isAnonymous() || hasRole('ROLE_TRUSTED_CLIENT')")
                 .tokenKeyAccess("permitAll()")
-//                .checkTokenAccess("hasRole('TRUSTED_CLIENT')");
                 .checkTokenAccess("isAuthenticated()")
         ;
     }
@@ -119,10 +127,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         //增加转换链路，以增加自定义属性
         TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
         enhancerChain.setTokenEnhancers(Arrays.asList(customTokenEnhancer(), jwtTokenEnhancer()));
-
         endpoints
                 .authenticationManager(authenticationManager)
-                .userDetailsService(userDetailsService)
+                .userDetailsService(refreshTokenUserDetailsService())
                 //jwt存储方式,其实就是不存储
                 .tokenStore(jwtTokenStore())
                 .accessTokenConverter(jwtTokenEnhancer())
@@ -159,5 +166,25 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Bean
     public TokenEnhancer customTokenEnhancer() {
         return new CustomTokenEnhancer();
+    }
+
+    /**
+     * 返回一个实现UserDetailsService接口的类,供refresh token使用
+     * <p>
+     * form登陆以及token申请都是先验证,后查权限{@link CustomDaoAuthenticationProvider createSuccessAuthentication}
+     * <p>
+     * 由于refresh_token的特殊性，所以需要在查询用户的同时查询权限
+     * {@link AuthorizationServerEndpointsConfigurer addUserDetailsService(DefaultTokenServices, UserDetailsService)}
+     * {@link DefaultTokenServices refreshAccessToken}
+     *
+     * @return refreshTokenUserDetailsService
+     */
+    @Bean(name = "refreshTokenUserDetailsService")
+    public UserDetailsService refreshTokenUserDetailsService() {
+        return loginName -> {
+            SecurityUser securityUser = (SecurityUser) userDetailsService.loadUserByUsername(loginName);
+            Set<GrantedAuthority> authorities = roleService.findBySecurityUser(securityUser);
+            return new SecurityUser(loginName, securityUser.getPassword(), authorities, securityUser.getUser());
+        };
     }
 }

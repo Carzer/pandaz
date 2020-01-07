@@ -20,21 +20,20 @@ import java.util.concurrent.TimeUnit;
 /**
  * redis操作类 所有需要存入redis的对象都必须序列化
  *
- * @param <K> 目前仅支持String类型
  * @author Carzer
  * @since 2019-07-02
  */
 @Component
 @SuppressWarnings("unchecked")
-public class RedisHelper<K, V> {
+public class RedisHelper {
 
     /**
      * redis服务
      */
-    private RedisTemplate<K, V> redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Autowired
-    public void setRedisTemplate(RedisTemplate redisTemplate) {
+    public void setRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
         this.redisTemplate.setKeySerializer(new StringRedisSerializer());
         this.redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
@@ -55,12 +54,12 @@ public class RedisHelper<K, V> {
      * @param value 值
      * @return 执行结果
      */
-    public boolean setObject(K key, V value) {
-        SessionCallback<V> sessionCallback = new SessionCallback<>() {
+    public boolean setObject(String key, Object value) {
+        SessionCallback<Object> sessionCallback = new SessionCallback<>() {
             @Override
-            public List<V> execute(RedisOperations redisOperations) {
+            public List<Object> execute(RedisOperations redisOperations) {
                 redisOperations.multi();
-                redisOperations.opsForValue().set(RedisConstants.REDIS_PREFIX + key, value);
+                redisOperations.opsForValue().set(String.format("%s%s", RedisConstants.REDIS_PREFIX, key), value);
                 return redisOperations.exec();
             }
         };
@@ -76,19 +75,16 @@ public class RedisHelper<K, V> {
      * @param time  过期时间，单位秒
      * @return 执行结果
      */
-    public boolean setObject(K key, V value, long time) {
-        SessionCallback<V> sessionCallback = new SessionCallback<V>() {
+    public boolean setObject(String key, Object value, long time) {
+        SessionCallback<Object> sessionCallback = new SessionCallback<>() {
             @Override
-            public List<V> execute(RedisOperations redisOperations) {
+            public List<Object> execute(RedisOperations redisOperations) {
                 redisOperations.multi();
-                redisOperations.opsForValue().set(RedisConstants.REDIS_PREFIX + key, value, time, TimeUnit.SECONDS);
-
+                redisOperations.opsForValue().set(String.format("%s%s", RedisConstants.REDIS_PREFIX, key), value, time, TimeUnit.SECONDS);
                 return redisOperations.exec();
             }
         };
-
         redisTemplate.execute(sessionCallback);
-
         return true;
     }
 
@@ -98,15 +94,15 @@ public class RedisHelper<K, V> {
      * @param map map
      * @return 执行结果
      */
-    public boolean setObjectList(Map<K, V> map) {
+    public boolean setObjectList(Map<String, Object> map) {
         if (CollectionUtils.isEmpty(map)) {
             return false;
         } else {
-            Map<K, V> setMap = new ConcurrentHashMap<>(map.size());
-            map.forEach((key, value) -> setMap.put((K) (RedisConstants.REDIS_PREFIX + key), value));
-            SessionCallback<V> sessionCallback = new SessionCallback<>() {
+            Map<String, Object> setMap = new ConcurrentHashMap<>(map.size());
+            map.forEach((key, value) -> setMap.put(String.format("%s%s", RedisConstants.REDIS_PREFIX, key), value));
+            SessionCallback<Object> sessionCallback = new SessionCallback<>() {
                 @Override
-                public List<V> execute(RedisOperations redisOperations) {
+                public List<Object> execute(RedisOperations redisOperations) {
                     redisOperations.multi();
                     redisOperations.opsForValue().multiSet(setMap);
                     return redisOperations.exec();
@@ -123,13 +119,13 @@ public class RedisHelper<K, V> {
      * @param key 键
      * @return 对象
      */
-    public V getObject(K key) {
-        SessionCallback<V> sessionCallback = new SessionCallback<>() {
+    public Object getObject(String key) {
+        SessionCallback<Object> sessionCallback = new SessionCallback<>() {
             @Override
-            public V execute(RedisOperations redisOperations) {
+            public Object execute(RedisOperations redisOperations) {
                 redisOperations.multi();
-                redisOperations.opsForValue().get(RedisConstants.REDIS_PREFIX + key);
-                List<V> v = redisOperations.exec();
+                redisOperations.opsForValue().get(String.format("%s%s", RedisConstants.REDIS_PREFIX, key));
+                List<Object> v = redisOperations.exec();
                 if (CollectionUtils.isEmpty(v)) {
                     return null;
                 } else {
@@ -146,17 +142,20 @@ public class RedisHelper<K, V> {
      * @param pattern 表达式 keys*
      * @return 对象
      */
-    public List<V> getObjectList(K pattern) {
-        Set<K> keys = redisTemplate.keys((K) (RedisConstants.REDIS_PREFIX + pattern));
-        SessionCallback<List<V>> sessionCallback = new SessionCallback<>() {
+    public List<Object> getObjectList(String pattern) {
+        Set<String> keys = redisTemplate.keys(String.format("%s%s", RedisConstants.REDIS_PREFIX, pattern));
+        if (CollectionUtils.isEmpty(keys)) {
+            return null;
+        }
+        SessionCallback<List<Object>> sessionCallback = new SessionCallback<>() {
             @Override
-            public List<V> execute(RedisOperations redisOperations) {
+            public List<Object> execute(RedisOperations redisOperations) {
                 redisOperations.multi();
                 redisOperations.opsForValue().multiGet(keys);
-                List<V> v = redisOperations.exec();
-                List<V> list = new ArrayList<>();
+                List<Object> v = redisOperations.exec();
+                List<Object> list = new ArrayList<>();
                 if (!CollectionUtils.isEmpty(v)) {
-                    list.addAll((List<V>) v.get(0));
+                    list.addAll((List<Object>) v.get(0));
                 }
                 return list;
             }
@@ -170,12 +169,12 @@ public class RedisHelper<K, V> {
      * @param key 键
      * @return 执行结果
      */
-    public boolean deleteObject(K key) {
-        SessionCallback<V> sessionCallback = new SessionCallback<>() {
+    public boolean deleteObject(String key) {
+        SessionCallback<Object> sessionCallback = new SessionCallback<>() {
             @Override
-            public List<V> execute(RedisOperations operations) {
+            public List<Object> execute(RedisOperations operations) {
                 operations.multi();
-                operations.delete(RedisConstants.REDIS_PREFIX + key);
+                operations.delete(String.format("%s%s", RedisConstants.REDIS_PREFIX, key));
                 return operations.exec();
             }
         };
@@ -189,11 +188,14 @@ public class RedisHelper<K, V> {
      * @param pattern 表达式 keys*
      * @return 执行结果
      */
-    public boolean deleteObjectList(K pattern) {
-        Set<K> keys = redisTemplate.keys((K) (RedisConstants.REDIS_PREFIX + pattern));
-        SessionCallback<V> sessionCallback = new SessionCallback<>() {
+    public boolean deleteObjectList(String pattern) {
+        Set<String> keys = redisTemplate.keys(String.format("%s%s", RedisConstants.REDIS_PREFIX, pattern));
+        if (CollectionUtils.isEmpty(keys)) {
+            return false;
+        }
+        SessionCallback<Object> sessionCallback = new SessionCallback<>() {
             @Override
-            public List<V> execute(RedisOperations operations) {
+            public List<Object> execute(RedisOperations operations) {
                 operations.multi();
                 operations.delete(keys);
                 return operations.exec();

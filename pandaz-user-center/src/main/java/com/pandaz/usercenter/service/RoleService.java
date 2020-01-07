@@ -1,10 +1,13 @@
 package com.pandaz.usercenter.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.pandaz.commons.custom.SecurityUser;
 import com.pandaz.usercenter.entity.RoleDetailEntity;
 import com.pandaz.usercenter.entity.RoleEntity;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 角色服务
@@ -38,6 +41,14 @@ public interface RoleService extends IService<RoleEntity> {
      * @return java.util.List<com.pandaz.usercenter.entity.RoleEntity>
      */
     List<RoleDetailEntity> findByUserCode(String userCode);
+
+    /**
+     * 根据安全用户类查询
+     *
+     * @param securityUser 安全用户类
+     * @return 角色列表
+     */
+    Set<GrantedAuthority> findBySecurityUser(SecurityUser securityUser);
 
     /**
      * 根据角色编码删除信息

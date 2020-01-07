@@ -2,6 +2,7 @@ package com.pandaz.usercenter.service.impl;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -71,7 +72,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     @Cacheable(key = "'loginName:'+#loginName")
     @Override
     public UserEntity loadUserByUsername(String loginName) {
-        return userMapper.findByLoginName(loginName);
+        QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("login_name", loginName);
+        return userMapper.selectOne(queryWrapper);
     }
 
     /**
@@ -83,7 +86,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     @Cacheable(key = "#code")
     @Override
     public UserEntity findByCode(String code) {
-        return userMapper.findByCode(code);
+        QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("code", code);
+        return userMapper.selectOne(queryWrapper);
     }
 
     /**
@@ -92,11 +97,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
      * @param user user
      * @return int
      */
-    @CacheEvict(key = "#user.code")
     @Override
-    public UserEntity updateByCode(UserEntity user) {
-        userMapper.updateByCode(user);
-        return userMapper.findByCode(user.getCode());
+    public int updateByCode(UserEntity user) {
+        UpdateWrapper<UserEntity> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("code", user.getCode());
+        return userMapper.update(user, updateWrapper);
     }
 
     /**
@@ -120,9 +125,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         LocalDateTime createdDate = user.getCreatedDate();
         user.setId(UuidUtil.getUnsignedUuid());
         //建立用户私有组
-        String groupCode = SysConstants.GROUP_PREFIX + userCode;
+        String groupCode = String.format("%s%s", SysConstants.GROUP_PREFIX, userCode);
         GroupEntity group = new GroupEntity();
-        group.setName(userName + SysConstants.PRIVATE_GROUP);
+        group.setName(String.format("%s%s", userName, SysConstants.PRIVATE_GROUP));
         group.setCode(groupCode);
         group.setIsPrivate(SysConstants.IS_PRIVATE);
         group.setCreatedBy(createdBy);

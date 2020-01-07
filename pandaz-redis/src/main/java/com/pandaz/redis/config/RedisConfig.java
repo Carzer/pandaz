@@ -36,8 +36,8 @@ public class RedisConfig {
      * getRedisTemplate 方法的注释
      */
     @Bean
-    public RedisTemplate<?,?> getRedisTemplate(LettuceConnectionFactory redisConnectionFactory) {
-        RedisTemplate<?,?> redisTemplate = new RedisTemplate<>();
+    public RedisTemplate<String, Object> getRedisTemplate(LettuceConnectionFactory redisConnectionFactory) {
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         return redisTemplate;
     }

@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class RedisTest extends BasisUnitTest {
 
-    private final RedisHelper<String, String> redisHelper;
+    private final RedisHelper redisHelper;
 
     @Test
     public void test() {

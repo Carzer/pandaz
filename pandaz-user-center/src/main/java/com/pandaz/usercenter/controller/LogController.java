@@ -38,13 +38,11 @@ public class LogController {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
             LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
-            map.forEach((loggerName, logLevel) -> {
-                loggerContext.getLogger(loggerName).setLevel(Level.valueOf(logLevel));
-            });
+            map.forEach((loggerName, logLevel) -> loggerContext.getLogger(loggerName).setLevel(Level.valueOf(logLevel)));
             result.setData("修改成功！");
         } catch (Exception e) {
             log.error("动态修改日志级别出错", e);
-            result.setError("修改失败：" + e.getMessage());
+            result.setError(String.format("修改失败：%s", e.getMessage()));
         }
         return result;
     }
