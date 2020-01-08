@@ -56,9 +56,4 @@ public class RoleEntity extends BaseEntity {
     @TableField("locked")
     private Byte locked;
 
-    /**
-     * 级别
-     */
-    @TableField("level")
-    private Integer level;
 }

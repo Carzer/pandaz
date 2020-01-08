@@ -1,15 +1,17 @@
 package com.pandaz.usercenter.util;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pandaz.commons.entity.BaseEntity;
 import com.pandaz.commons.util.UuidUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * pandaz:com.pandaz.usercenter.util
@@ -21,7 +23,14 @@ import java.lang.reflect.Method;
  */
 @Component
 @Slf4j
-public class CheckUtils<E extends BaseEntity, M> {
+public class CheckUtils<E extends BaseEntity, M extends BaseMapper<E>> {
+
+    /**
+     * 私有构造方法
+     */
+    private CheckUtils() {
+
+    }
 
     /**
      * 检查编码是否存在，如果编码为空，则自动生成新编码
@@ -34,25 +43,35 @@ public class CheckUtils<E extends BaseEntity, M> {
      * @return java.lang.String
      */
     public String checkOrSetCode(E entity, M mapper, String errorMsg, String prefix, String suffix) {
-        String newCode = "";
+        //指定查询列
+        String declaredCode = "code";
+        //最终code
+        String lastCode = "";
         try {
-            Field field = entity.getClass().getDeclaredField("code");
+            //通过反射获取code
+            Field field = entity.getClass().getDeclaredField(declaredCode);
             field.setAccessible(true);
-            Object code = field.get(entity);
-            if (code == null) {
-                newCode = UuidUtil.getUuid();
-                newCode = StringUtils.hasText(prefix) ? String.format("%s%s", prefix, newCode) : newCode;
-                newCode = StringUtils.hasText(suffix) ? String.format("%s%s", newCode, suffix) : newCode;
-                field.set(entity, newCode);
-            } else {
-                newCode = code.toString();
-                Method method = mapper.getClass().getDeclaredMethod("findByCode", String.class);
-                Object temp = method.invoke(mapper, newCode);
-                Assert.isNull(temp, errorMsg);
+            String code = field.get(entity).toString();
+            //如果设置了code，则查询是否已存在，若已存在则返回错误
+            if (StringUtils.hasText(code)) {
+                QueryWrapper<E> queryWrapper = new QueryWrapper<>();
+                queryWrapper.eq(declaredCode, code);
+                List<E> list = mapper.selectList(queryWrapper);
+                if (!CollectionUtils.isEmpty(list)) {
+                    throw new IllegalArgumentException(errorMsg);
+                }
+                lastCode = code;
             }
-        } catch (NoSuchFieldException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+            //如果未设置code，则根据前缀、后缀生成code
+            else {
+                lastCode = UuidUtil.getUuid();
+                lastCode = StringUtils.hasText(prefix) ? String.format("%s%s", prefix, lastCode) : lastCode;
+                lastCode = StringUtils.hasText(suffix) ? String.format("%s%s", lastCode, suffix) : lastCode;
+                field.set(entity, lastCode);
+            }
+        } catch (NoSuchFieldException | IllegalAccessException e) {
             log.error(e.getMessage());
         }
-        return newCode;
+        return lastCode;
     }
 }

@@ -97,6 +97,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
      * @param user user
      * @return int
      */
+    @CacheEvict(key = "#user.code")
     @Override
     public int updateByCode(UserEntity user) {
         UpdateWrapper<UserEntity> updateWrapper = new UpdateWrapper<>();
@@ -110,7 +111,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
      * @param user 用户
      * @return int
      */
-    @Cacheable(key = "#user.code")
     @Override
     @Transactional(rollbackFor = Exception.class)
     public UserEntity insert(@NotNull UserEntity user) {
