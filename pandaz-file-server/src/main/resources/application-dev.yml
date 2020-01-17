@@ -15,13 +15,13 @@ mongodb:
   primary:
     host: 172.16.2.130:27017
     name: admin
-    user:
-    pwd:
+    user: admin
+    pwd: 123456
   secondary:
     host: 172.16.2.130:27017
     name: admin
-    user:
-    pwd:
+    user: admin
+    pwd: 123456
 
 #自定义属性
 custom:

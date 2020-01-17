@@ -20,7 +20,7 @@
     
     百度云盘： https://pan.baidu.com/s/1GYXQ5E6rIOvDcXINu8Wrlg  提取码： myef <br/>
     系统用户统一密码：pandaz123<br/>
-    启动Nacos、Sentinel的命令为：`./usr/local/src/startup.sh`，可自行修改为开机启动、或置于docker中
+    启动Nacos、Sentinel的命令路径：`/usr/local/src/startup.sh`，可自行修改为开机启动、或置于docker中
     
     
 - 虚拟机ip设定：
