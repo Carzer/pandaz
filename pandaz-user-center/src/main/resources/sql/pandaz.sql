@@ -37,8 +37,7 @@ CREATE TABLE `t_sys_dict_info` (
   `version` int(8) NOT NULL DEFAULT '1' COMMENT '版本号',
   PRIMARY KEY (`id`),
   UNIQUE KEY `t_os_info_code_key` (`code`),
-  KEY `t_sys_dict_info_type_code_fk` (`type_code`),
-  CONSTRAINT `t_sys_dict_info_type_code_fk` FOREIGN KEY (`type_code`) REFERENCES `t_sys_dict_type` (`code`) ON DELETE CASCADE
+  KEY `t_sys_dict_info_type_code_fk` (`type_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='字典信息表';
 
 -- ----------------------------

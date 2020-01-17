@@ -60,7 +60,7 @@ public class UserController {
      * @return com.pandaz.commons.util.ExecuteResult<com.pandaz.usercenter.dto.UserDTO>
      */
     @GetMapping
-    public ExecuteResult<UserDTO> get(@RequestBody UserDTO userDTO) {
+    public ExecuteResult<UserDTO> get(UserDTO userDTO) {
         ExecuteResult<UserDTO> result = new ExecuteResult<>();
         try {
             UserDTO dto = BeanCopierUtil.copy(userService.findByCode(userDTO.getCode()), UserDTO.class);

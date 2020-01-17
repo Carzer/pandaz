@@ -6,7 +6,6 @@ import com.pandaz.commons.entity.BaseEntity;
 import com.pandaz.commons.util.UuidUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
