@@ -36,27 +36,32 @@ public final class SysConstants {
     public static final String PRIVATE_ROLE = "_PRIVATE_ROLE";
 
     /**
-     * 密码不可为空提示
+     * 默认密码为12345678
      */
-    public static final String PD_NOT_NULL_WARN = "密码不可为空!";
+    public static final String DEFAULT_ENCODED_PASS = "$2a$10$89UJRZ6A.ubPmT9MrN6iEePGKdmW2N2b8tIe3Ng1MAVaTfRB2gTKC";
 
     /**
      * 私有标记
      */
-    public static final Byte IS_PRIVATE = 1;
+    public static final Byte PRIVATE = 1;
 
     /**
      * 私有标记
      */
-    public static final Byte IS_PUBLIC = 0;
+    public static final Byte PUBLIC = 0;
 
     /**
      * 已锁定
      */
-    public static final Byte IS_LOCKED = 1;
+    public static final Byte LOCKED = 1;
 
     /**
      * 图片验证码存于session中的key
      */
     public static final String SESSION_KEY_IMAGE_CODE = "SESSION_KEY_IMAGE_CODE";
+
+    /**
+     * 默认系统编码os_code
+     */
+    public static final String DEFAULT_SYS_CODE = "portal";
 }

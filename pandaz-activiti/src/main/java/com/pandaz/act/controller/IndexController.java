@@ -65,9 +65,9 @@ public class IndexController {
             singleMapping.put("className", method.getMethod().getDeclaringClass().getName());
             // 方法名
             singleMapping.put("method", method.getMethod().getName());
-            //url
+            // url
             patterns.forEach(url -> singleMapping.put("url", url));
-            //请求方式
+            // 请求方式
             methods.forEach(requestMethod -> singleMapping.put("type", requestMethod.toString()));
             list.add(singleMapping);
         });

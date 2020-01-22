@@ -47,15 +47,15 @@ public class SwaggerConfig {
      */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                //标题
+                // 标题
                 .title("Spring Boot中使用Swagger2构建RESTful APIs")
-                //简介
+                // 简介
                 .description("")
-                //服务条款
+                // 服务条款
                 .termsOfServiceUrl("")
-                //作者个人信息
+                // 作者个人信息
                 .contact(new Contact("Carzer", "", "Carzer1020@163.com"))
-                //版本
+                // 版本
                 .version("1.0")
                 .build();
     }

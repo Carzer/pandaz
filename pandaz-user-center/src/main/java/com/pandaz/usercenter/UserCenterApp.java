@@ -30,10 +30,10 @@ public class UserCenterApp {
     }
 
     public static void main(String[] args) {
-        //设置nacos日志及缓存路径
+        // 设置nacos日志及缓存路径
         System.setProperty("nacos.logging.path", "logs/user-center/nacos");
         System.setProperty("com.alibaba.nacos.naming.cache.dir", "logs/user-center/nacos/naming");
-        //启动项目
+        // 启动项目
         SpringApplication.run(UserCenterApp.class, args);
         String repeat = "=".repeat(20);
         log.warn("{} UserCenter 启动成功 {}", repeat, repeat);

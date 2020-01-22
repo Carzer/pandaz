@@ -37,7 +37,7 @@ public class RedisConfig {
      * redis操作
      *
      * @param redisConnectionFactory redisConnectionFactory
-     * @return org.springframework.data.redis.core.RedisTemplate<?, ?>
+     * @return org.springframework.data.redis.core.RedisTemplate
      * <p>
      * getRedisTemplate 方法的注释
      */

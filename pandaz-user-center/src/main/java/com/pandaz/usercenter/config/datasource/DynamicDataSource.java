@@ -20,7 +20,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
      */
     @Override
     protected Object determineCurrentLookupKey() {
-        //从共享线程中获取数据源名称
+        // 从共享线程中获取数据源名称
         return DynamicDataSourceHolder.getDataSource();
     }
 

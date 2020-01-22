@@ -1,7 +1,6 @@
 package com.pandaz.redis;
 
 import com.pandaz.redis.service.RedisHelper;
-import lombok.RequiredArgsConstructor;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,10 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Carzer
  * @since 2019-10-23
  */
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class RedisTest extends BasisUnitTest {
 
-    private final RedisHelper redisHelper;
+    private RedisHelper redisHelper;
+
+    @Autowired
+    public void setRedisHelper(RedisHelper redisHelper) {
+        this.redisHelper = redisHelper;
+    }
 
     @Test
     public void test() {

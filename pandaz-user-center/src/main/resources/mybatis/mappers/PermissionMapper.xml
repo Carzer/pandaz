@@ -27,20 +27,6 @@
         deleted_by, deleted_date, deleted_flag,
         version
     </sql>
-    <insert id="insert" parameterType="com.pandaz.usercenter.entity.PermissionEntity">
-        insert into t_sys_permission (id, name, code,os_code,
-        menu_code, url, request_type,
-        priority, bit_result, created_by,
-        created_date, updated_by, updated_date,
-        deleted_by, deleted_date, deleted_flag,
-        version)
-        values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},#{osCode,jdbcType=VARCHAR},
-        #{menuCode,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{requestType,jdbcType=TINYINT},
-        #{priority,jdbcType=TINYINT}, #{bitResult,jdbcType=INTEGER}, #{createdBy,jdbcType=VARCHAR},
-        #{createdDate,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, #{updatedDate,jdbcType=TIMESTAMP},
-        #{deletedBy,jdbcType=VARCHAR}, #{deletedDate,jdbcType=TIMESTAMP}, #{deletedFlag,jdbcType=TINYINT},
-        #{version,jdbcType=INTEGER})
-    </insert>
     <insert id="insertSelective" parameterType="com.pandaz.usercenter.entity.PermissionEntity">
         insert into t_sys_permission
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -70,6 +56,9 @@
             </if>
             <if test="bitResult != null">
                 bit_result,
+            </if>
+            <if test="level != null">
+                level,
             </if>
             <if test="createdBy != null">
                 created_by,
@@ -124,6 +113,9 @@
             <if test="bitResult != null">
                 #{bitResult,jdbcType=INTEGER},
             </if>
+            <if test="level != null">
+                #{level,jdbcType=INTEGER},
+            </if>
             <if test="createdBy != null">
                 #{createdBy,jdbcType=VARCHAR},
             </if>
@@ -150,9 +142,4 @@
             </if>
         </trim>
     </insert>
-    <select id="findByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from t_sys_permission where code=#{code}
-    </select>
 </mapper>

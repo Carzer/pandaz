@@ -59,25 +59,25 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupEntity> impl
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insert(GroupEntity group) {
-        //组信息补充
+        // 组信息补充
         String groupCode = checkUtils.checkOrSetCode(group, groupMapper, "组编码已存在", SysConstants.GROUP_PREFIX, null);
         group.setId(UuidUtil.getUnsignedUuid());
         String groupName = group.getName();
         String createdBy = group.getCreatedBy();
         LocalDateTime createDate = group.getCreatedDate();
 
-        //创建私有角色
+        // 创建私有角色
         RoleEntity role = new RoleEntity();
         String roleCode = String.format("%s%s", SysConstants.ROLE_PREFIX, groupCode);
         role.setCode(roleCode);
-        role.setIsPrivate(SysConstants.IS_PRIVATE);
+        role.setIsPrivate(SysConstants.PRIVATE);
         role.setName(String.format("%s%s", groupName, SysConstants.PRIVATE_ROLE));
         role.setCreatedBy(createdBy);
         role.setCreatedDate(createDate);
-        //关联组及私有角色
+        // 关联组及私有角色
         GroupRoleEntity groupRole = new GroupRoleEntity();
         groupRole.setId(UuidUtil.getUnsignedUuid());
-        groupRole.setIsPrivate(SysConstants.IS_PRIVATE);
+        groupRole.setIsPrivate(SysConstants.PRIVATE);
         groupRole.setGroupCode(groupCode);
         groupRole.setRoleCode(roleCode);
         groupRole.setCreatedBy(createdBy);
@@ -98,15 +98,15 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupEntity> impl
     public int deleteByCode(String groupCode) {
         GroupRoleEntity groupRole = new GroupRoleEntity();
         groupRole.setGroupCode(groupCode);
-        groupRole.setIsPrivate(SysConstants.IS_PRIVATE);
-        //查询私有角色，并清理
+        groupRole.setIsPrivate(SysConstants.PRIVATE);
+        // 查询私有角色，并清理
         List<GroupRoleEntity> roleList = groupRoleService.findByGroupCode(groupRole);
         if (!CollectionUtils.isEmpty(roleList)) {
             roleList.forEach(role -> roleService.deleteByCode(role.getRoleCode()));
         }
-        //清理所有关系
+        // 清理所有关系
         groupRoleService.deleteByGroupCode(groupCode);
-        //最终删除组信息
+        // 最终删除组信息
         return groupMapper.deleteByCode(groupCode);
     }
 }

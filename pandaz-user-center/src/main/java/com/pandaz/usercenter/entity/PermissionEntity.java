@@ -76,9 +76,7 @@ public class PermissionEntity extends BaseEntity {
     private Integer bitResult;
 
     /**
-     * 权限级别，只有组织级别不大于权限级别，才可使用该权限
-     * #level
-     * {@link RoleEntity#getLevel()}
+     * 权限级别，只有组织级别小于等于权限级别，才可使用该权限
      */
     private Integer level;
 

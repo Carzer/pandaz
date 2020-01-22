@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = UserCenterApp.class)
-//@Rollback
+@Rollback
 public class BasisUnitTest {
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private static long startMills;
@@ -27,7 +27,6 @@ public class BasisUnitTest {
      *
      * <p>
      * setUp 方法的注释
-     *
      */
     @BeforeClass
     public static void setUp() {
@@ -44,7 +43,6 @@ public class BasisUnitTest {
      *
      * <p>
      * tearDown 方法的注释
-     *
      */
     @AfterClass
     public static void tearDown() {

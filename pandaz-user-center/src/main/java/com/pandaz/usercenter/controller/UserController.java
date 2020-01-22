@@ -79,7 +79,7 @@ public class UserController {
      * @return com.pandaz.commons.util.ExecuteResult<com.pandaz.usercenter.dto.UserDTO>
      */
     @PostMapping
-    public ExecuteResult<UserDTO> insert(@RequestBody UserPwdDTO userPwdDTO, Principal principal) {
+    public ExecuteResult<UserDTO> insert(@Valid @RequestBody UserPwdDTO userPwdDTO, Principal principal) {
         ExecuteResult<UserDTO> result = new ExecuteResult<>();
         try {
             UserDTO userDTO = userPwdDTO.getUserDTO();
@@ -88,7 +88,7 @@ public class UserController {
             user.setPassword(password);
             user.setCreatedBy(principal.getName());
             user.setCreatedDate(LocalDateTime.now());
-            //如果没有选择过期时间，就默认6个月后过期
+            // 如果没有选择过期时间，就默认6个月后过期
             if (user.getExpireAt() == null) {
                 user.setExpireAt(LocalDateTime.now().plusMonths(6L));
             }
@@ -108,10 +108,12 @@ public class UserController {
      * @return com.pandaz.commons.util.ExecuteResult<com.pandaz.usercenter.dto.UserDTO>
      */
     @PutMapping
-    public ExecuteResult<String> update(@Valid @RequestBody UserDTO userDTO) {
+    public ExecuteResult<String> update(@Valid @RequestBody UserDTO userDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
             UserEntity userEntity = BeanCopierUtil.copy(userDTO, UserEntity.class);
+            userEntity.setCreatedBy(principal.getName());
+            userEntity.setCreatedDate(LocalDateTime.now());
             userService.updateByCode(userEntity);
             result.setData("更新成功。");
         } catch (Exception e) {

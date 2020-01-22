@@ -33,6 +33,7 @@ public class CheckUtils<E extends BaseEntity, M extends BaseMapper<E>> {
 
     /**
      * 检查编码是否存在，如果编码为空，则自动生成新编码
+     * 使用前需校验实体是否为空
      *
      * @param entity   检查实体
      * @param mapper   mapper
@@ -42,26 +43,26 @@ public class CheckUtils<E extends BaseEntity, M extends BaseMapper<E>> {
      * @return java.lang.String
      */
     public String checkOrSetCode(E entity, M mapper, String errorMsg, String prefix, String suffix) {
-        //指定查询列
+        // 指定查询列
         String declaredCode = "code";
-        //最终code
+        // 最终code
         String lastCode = "";
         try {
-            //通过反射获取code
+            // 通过反射获取code
             Field field = entity.getClass().getDeclaredField(declaredCode);
             field.setAccessible(true);
-            String code = field.get(entity).toString();
-            //如果设置了code，则查询是否已存在，若已存在则返回错误
-            if (StringUtils.hasText(code)) {
+            Object code = field.get(entity);
+            // 如果设置了code，则查询是否已存在，若已存在则返回错误
+            if (!StringUtils.isEmpty(code) && StringUtils.hasText(code.toString())) {
+                lastCode = code.toString();
                 QueryWrapper<E> queryWrapper = new QueryWrapper<>();
                 queryWrapper.eq(declaredCode, code);
                 List<E> list = mapper.selectList(queryWrapper);
                 if (!CollectionUtils.isEmpty(list)) {
                     throw new IllegalArgumentException(errorMsg);
                 }
-                lastCode = code;
             }
-            //如果未设置code，则根据前缀、后缀生成code
+            // 如果未设置code，则根据前缀、后缀生成code
             else {
                 lastCode = UuidUtil.getUuid();
                 lastCode = StringUtils.hasText(prefix) ? String.format("%s%s", prefix, lastCode) : lastCode;
@@ -69,7 +70,7 @@ public class CheckUtils<E extends BaseEntity, M extends BaseMapper<E>> {
                 field.set(entity, lastCode);
             }
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            log.error(e.getMessage());
+            throw new IllegalArgumentException("illegalArgument");
         }
         return lastCode;
     }

@@ -17,10 +17,10 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 public class ActApp {
 
     public static void main(String[] args) {
-        //设置nacos日志及缓存路径
+        // 设置nacos日志及缓存路径
         System.setProperty("nacos.logging.path", "logs/activiti/nacos");
         System.setProperty("com.alibaba.nacos.naming.cache.dir", "logs/activiti/nacos/naming");
-        //启动项目
+        // 启动项目
         SpringApplication.run(ActApp.class, args);
         String repeat = "=".repeat(20);
         log.warn("{} ActApp 启动成功 {}", repeat, repeat);

@@ -56,7 +56,7 @@ public class IndexController {
      * @param principal principal
      * @return com.pandaz.commons.util.ExecuteResult<java.security.Principal>
      */
-    @GetMapping
+    @GetMapping("userInfo")
     @PreAuthorize("hasRole('ADMIN')")
     public ExecuteResult<ConcurrentHashMap<String, Principal>> home(Principal principal) {
         ExecuteResult<ConcurrentHashMap<String, Principal>> result = new ExecuteResult<>();
@@ -72,7 +72,7 @@ public class IndexController {
      * @param value value
      * @return com.pandaz.commons.util.ExecuteResult<java.lang.String>
      */
-    @GetMapping("/testRedis")
+    @GetMapping("testRedis")
     @PreAuthorize("hasRole('ADMIN')")
     public ExecuteResult<String> testRedis(String value) {
         ExecuteResult<String> result = new ExecuteResult<>();
@@ -96,7 +96,7 @@ public class IndexController {
      *
      * @return com.pandaz.commons.util.ExecuteResult<java.util.List>
      */
-    @GetMapping("/getAllUrl")
+    @GetMapping("getAllUrl")
     @PreAuthorize("hasRole('ADMIN')")
     public ExecuteResult<ArrayList<Map<String, String>>> getAllUrl() {
         ExecuteResult<ArrayList<Map<String, String>>> result = new ExecuteResult<>();
@@ -112,9 +112,9 @@ public class IndexController {
             singleMapping.put("className", method.getMethod().getDeclaringClass().getName());
             // 方法名
             singleMapping.put("method", method.getMethod().getName());
-            //url
+            // url
             patterns.forEach(url -> singleMapping.put("url", url));
-            //请求方式
+            // 请求方式
             methods.forEach(requestMethod -> singleMapping.put("type", requestMethod.toString()));
             list.add(singleMapping);
         });
@@ -129,7 +129,7 @@ public class IndexController {
      * @param file file
      * @return java.lang.String
      */
-    @PostMapping("/upload")
+    @PostMapping("upload")
     public String upload(MultipartFile file) {
         return uploadClient.handleFileUpload(file);
     }

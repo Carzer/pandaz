@@ -1,11 +1,11 @@
 # ![pandaz](logo.png)<sup><sup>PandaZ</sup></sup>
 
-    常用的微服务集合
+前端：[PandaZ-UI](https://github.com/Carzer/pandaz-ui.git)
 
 ----------------------------------------------------
 ## 一、 简介
 
-基于Java11、Spring Boot 2.1.7、Spring Cloud Greenwich.RELEASE
+基于Java11、Spring Boot 2.1.7、Spring Cloud Greenwich.RELEASE的常用微服务集合
 
 - 使用[Nacos](https://github.com/alibaba/nacos/releases)作为服务注册中心、分布式配置中心
 - 使用[Feign](https://spring.io/projects/spring-cloud-openfeign)消费微服务

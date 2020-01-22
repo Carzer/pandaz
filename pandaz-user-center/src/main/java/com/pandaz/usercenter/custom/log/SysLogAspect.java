@@ -26,7 +26,7 @@ public class SysLogAspect {
      */
     @Pointcut("@annotation(com.pandaz.usercenter.custom.log.SysLog)")
     public void logPointCut() {
-        //标记方法
+        // 标记方法
     }
 
     /**

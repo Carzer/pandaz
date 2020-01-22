@@ -1,7 +1,7 @@
 package com.pandaz.usercenter.custom.handler;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pandaz.commons.util.ExecuteResult;
+import com.pandaz.commons.util.PrintWriterUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
@@ -10,7 +10,6 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * 登录失败handler
@@ -32,17 +31,11 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException {
         String errorMsg = e.getMessage();
         log.warn(errorMsg);
-        httpServletResponse.setContentType("application/json;charset=utf-8");
         ExecuteResult<String> result = new ExecuteResult<>();
         if (e instanceof BadCredentialsException) {
             errorMsg = "密码错误。";
         }
         result.setError(errorMsg);
-        ObjectMapper objectMapper = new ObjectMapper();
-        String s = objectMapper.writeValueAsString(result);
-        try (PrintWriter out = httpServletResponse.getWriter()) {
-            out.write(s);
-            out.flush();
-        }
+        PrintWriterUtil.write(httpServletResponse, result);
     }
 }

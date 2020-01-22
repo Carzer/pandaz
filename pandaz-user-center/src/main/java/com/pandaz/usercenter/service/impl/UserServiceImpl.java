@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pandaz.commons.util.CustomPasswordEncoder;
 import com.pandaz.commons.util.UuidUtil;
+import com.pandaz.usercenter.config.SecurityConfig;
 import com.pandaz.usercenter.custom.constants.SysConstants;
 import com.pandaz.usercenter.entity.GroupEntity;
 import com.pandaz.usercenter.entity.UserEntity;
@@ -24,11 +25,9 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -107,40 +106,52 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
 
     /**
      * 插入用户信息
+     * <p>
+     * 由于PasswordEncoder与UserService同在SecurityConfig中实例化
+     * {@link SecurityConfig#userDetailsService,SecurityConfig#userService,SecurityConfig#passwordEncoder}
+     * 所以Spring无法在初始化时注入PasswordEncoder
+     * 故使用新建对象的方式来使用{@link CustomPasswordEncoder}
      *
      * @param user 用户
-     * @return int
+     * @return 用户信息
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public UserEntity insert(@NotNull UserEntity user) {
+    public UserEntity insert(UserEntity user) {
         String userCode = checkUtils.checkOrSetCode(user, userMapper, "用户编码已存在", null, null);
-        //用户信息补充
-        String rawPassword = user.getPassword();
-        Assert.hasText(rawPassword, SysConstants.PD_NOT_NULL_WARN);
-        String encodedPassword = new CustomPasswordEncoder().encode(rawPassword);
-        user.setPassword(encodedPassword);
+        UserEntity loginUser = loadUserByUsername(user.getLoginName());
+        if (loginUser != null) {
+            throw new IllegalArgumentException("登录名已存在");
+        }
+        // 用户信息补充
+        String rawPass = user.getPassword();
+        String encodedPass = SysConstants.DEFAULT_ENCODED_PASS;
+        if (StringUtils.hasText(rawPass)) {
+            CustomPasswordEncoder passwordEncoder = new CustomPasswordEncoder();
+            encodedPass = passwordEncoder.encode(rawPass);
+        }
+        user.setPassword(encodedPass);
         String userName = user.getName();
         String createdBy = user.getCreatedBy();
         LocalDateTime createdDate = user.getCreatedDate();
         user.setId(UuidUtil.getUnsignedUuid());
-        //建立用户私有组
+        // 建立用户私有组
         String groupCode = String.format("%s%s", SysConstants.GROUP_PREFIX, userCode);
         GroupEntity group = new GroupEntity();
         group.setName(String.format("%s%s", userName, SysConstants.PRIVATE_GROUP));
         group.setCode(groupCode);
-        group.setIsPrivate(SysConstants.IS_PRIVATE);
+        group.setIsPrivate(SysConstants.PRIVATE);
         group.setCreatedBy(createdBy);
         group.setCreatedDate(createdDate);
-        //关联用户及私有组
+        // 关联用户及私有组
         UserGroupEntity userGroup = new UserGroupEntity();
         userGroup.setId(UuidUtil.getUnsignedUuid());
         userGroup.setUserCode(userCode);
         userGroup.setGroupCode(groupCode);
         userGroup.setCreatedBy(createdBy);
         userGroup.setCreatedDate(createdDate);
-        userGroup.setIsPrivate(SysConstants.IS_PRIVATE);
-        //插入相关信息
+        userGroup.setIsPrivate(SysConstants.PRIVATE);
+        // 插入相关信息
         userGroupService.insert(userGroup);
         groupService.insert(group);
         userMapper.insertSelective(user);
@@ -157,17 +168,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int deleteByCode(String userCode) {
-        //查询私有组，并进行删除
+        // 查询私有组，并进行删除
         UserGroupEntity userGroup = new UserGroupEntity();
-        userGroup.setIsPrivate(SysConstants.IS_PRIVATE);
+        userGroup.setIsPrivate(SysConstants.PRIVATE);
         userGroup.setUserCode(userCode);
         List<UserGroupEntity> groupList = userGroupService.findByUserCode(userGroup);
         if (!CollectionUtils.isEmpty(groupList)) {
             groupList.forEach(group -> groupService.deleteByCode(group.getGroupCode()));
         }
-        //删除所有用户相关的组关联信息
+        // 删除所有用户相关的组关联信息
         userGroupService.deleteByUserCode(userCode);
-        //最终删除用户
+        // 最终删除用户
         return userMapper.deleteByCode(userCode);
     }
 

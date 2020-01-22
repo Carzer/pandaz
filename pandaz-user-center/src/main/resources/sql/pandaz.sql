@@ -338,8 +338,8 @@ CREATE TABLE `t_sys_user` (
   `version` int(8) NOT NULL DEFAULT '1' COMMENT '版本号',
   PRIMARY KEY (`id`),
   UNIQUE KEY `t_sys_user_code_key` (`code`),
+  UNIQUE KEY `t_sys_user_login_name_key` (`login_name`),
   KEY `t_sys_user_version_index` (`version`),
-  KEY `t_sys_user_login_name_index` (`login_name`),
   KEY `t_sys_user_phone_index` (`phone`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户信息';
 

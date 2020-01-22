@@ -1,5 +1,6 @@
 package com.pandaz.commons.util;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,17 @@ import lombok.Setter;
 @Setter
 @Getter
 public final class ExecuteResult<T> {
+
+    /**
+     * build 方法
+     *
+     * @return 返回成功
+     */
+    public static <T> ExecuteResult<T> buildSuccess() {
+        ExecuteResult<T> result = new ExecuteResult<>();
+        result.setSuccess(true);
+        return result;
+    }
 
     /**
      * 是否成功

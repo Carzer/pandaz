@@ -4,6 +4,8 @@ import com.pandaz.commons.custom.SecurityUser;
 import com.pandaz.commons.dto.usercenter.UserDTO;
 import com.pandaz.commons.util.BeanCopierUtil;
 import com.pandaz.commons.util.CustomPasswordEncoder;
+import com.pandaz.commons.util.ExecuteResult;
+import com.pandaz.commons.util.PrintWriterUtil;
 import com.pandaz.usercenter.custom.CustomDaoAuthenticationProvider;
 import com.pandaz.usercenter.custom.constants.SysConstants;
 import com.pandaz.usercenter.custom.handler.AuthDeniedHandler;
@@ -85,6 +87,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 // 允许登出
                 .logout().permitAll()
+                .logoutSuccessHandler((req, resp, authentication) -> PrintWriterUtil.write(resp, ExecuteResult.buildSuccess()))
                 .and()
                 // 关闭禁止跨域
                 .csrf().disable()
@@ -147,18 +150,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public UserDetailsService userDetailsService() {
         return loginName -> {
             UserEntity user = userService.loadUserByUsername(loginName);
-            //用户不存在
+            // 用户不存在
             if (user == null) {
                 String notFoundMsg = String.format("账号[%s]不存在。", loginName);
                 throw new UsernameNotFoundException(notFoundMsg);
             }
             Byte locked = user.getLocked();
-            //用户已锁定
-            if (SysConstants.IS_LOCKED.equals(locked)) {
+            // 用户已锁定
+            if (SysConstants.LOCKED.equals(locked)) {
                 throw new LockedException(String.format("用户[%s]已锁定，请联系管理员。", loginName));
             }
             LocalDateTime expireAt = user.getExpireAt();
-            //用户已过期
+            // 用户已过期
             if (expireAt == null || LocalDateTime.now().isAfter(expireAt)) {
                 String expireTime = expireAt == null ? "" : String.format("于%s", expireAt.toString());
                 String accountExpiredMsg = String.format("用户[%s]已%s过期。", loginName, expireTime);

@@ -29,7 +29,7 @@ public class DataSourceAspect {
      */
     @Pointcut("@annotation(TargetDataSource)")
     public void dataSourcePointCut() {
-        //标记方法
+        // 标记方法
     }
 
     /**
@@ -41,11 +41,11 @@ public class DataSourceAspect {
     public void before(JoinPoint joinPoint) {
         String threadName = Thread.currentThread().getName();
         try {
-            //如果方法上存在切换数据源的注解，则根据注解内容进行数据源切换
+            // 如果方法上存在切换数据源的注解，则根据注解内容进行数据源切换
             MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-            //获取切入点所在的方法
+            // 获取切入点所在的方法
             Method method = signature.getMethod();
-            //获取具体内容
+            // 获取具体内容
             TargetDataSource targetDataSource = method.getAnnotation(TargetDataSource.class);
             String dataSourceName = targetDataSource.value();
             DynamicDataSourceHolder.putDataSource(dataSourceName);

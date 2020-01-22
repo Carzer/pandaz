@@ -67,7 +67,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
     @Cacheable(key = "#userCode+':'+((1 == #isPrivate)?'private':'public')")
     @Override
     public List<RoleDetailEntity> findByUserCode(String userCode, Byte isPrivate) {
-        if (SysConstants.IS_PRIVATE.equals(isPrivate)) {
+        if (SysConstants.PRIVATE.equals(isPrivate)) {
             return roleMapper.getPrivateRoles(userCode);
         } else {
             return roleMapper.getPublicRoles(userCode);

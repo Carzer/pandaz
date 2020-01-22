@@ -45,13 +45,13 @@ public class SecurityConfig {
     SecurityWebFilterChain webFluxSecurityFilterChain(ServerHttpSecurity http) {
         http
                 .authorizeExchange()
-                //无需进行权限过滤的请求路径
+                // 无需进行权限过滤的请求路径
                 .pathMatchers(excludedAuthPages).permitAll()
                 .anyExchange().authenticated()
-                //必须支持跨域
+                // 必须支持跨域
                 .and().csrf().disable()
                 .logout().disable();
-        //设置jwtDecoder
+        // 设置jwtDecoder
         http.oauth2ResourceServer().jwt().jwtDecoder(jwtDecoder());
         return http.build();
     }
