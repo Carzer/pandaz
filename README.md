@@ -62,15 +62,14 @@
     - [x] feign调用服务时，传递token、sessionId
     - [ ] 微服务统一权限控制
     - [ ] 功能权限
-    - [ ] 前台UI开发
+    - [ ] UI开发
     - [ ] 数据权限
-- [ ] **框架集成**
+- [x] **框架集成**
     - [x] Spring Security
     - [x] Spring Session
     - [x] Spring Data Redis
     - [x] Spring Security Oauth2 
     - [x] Spring Security JWT
-    - [ ] ViewUI组件库
     
 ### 2. [Redis服务](http://localhost:9001)
 
