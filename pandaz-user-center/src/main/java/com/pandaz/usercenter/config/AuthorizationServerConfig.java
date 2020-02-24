@@ -132,7 +132,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .userDetailsService(refreshTokenUserDetailsService())
                 //jwt存储方式,其实就是不存储
                 .tokenStore(jwtTokenStore())
-                .accessTokenConverter(jwtTokenEnhancer())
+//                .accessTokenConverter(jwtTokenEnhancer())
                 .tokenEnhancer(enhancerChain)
         ;
     }

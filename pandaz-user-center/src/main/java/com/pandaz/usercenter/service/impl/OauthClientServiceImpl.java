@@ -44,6 +44,9 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Oauth
     @Cacheable(key = "#id")
     @Override
     public ClientDetails loadClientByClientId(String id) {
+        if (!StringUtils.hasText(id)) {
+            return null;
+        }
         QueryWrapper<OauthClientEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("client_id", id);
         OauthClientEntity oauthClientEntity = this.baseMapper.selectOne(queryWrapper);
