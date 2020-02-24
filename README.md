@@ -1,4 +1,4 @@
-# ![pandaz](logo.png)<sup><sup>PandaZ</sup></sup>
+# ![pandaz](https://github.com/Carzer/pandaz/blob/master/logo.png) <sup><sup>PandaZ</sup></sup>
 
 前端：[PandaZ-UI](https://github.com/Carzer/pandaz-ui.git)
 
@@ -11,7 +11,6 @@
 - 使用[Feign](https://spring.io/projects/spring-cloud-openfeign)消费微服务
 - 使用[Sentinel](https://github.com/alibaba/Sentinel/releases)进行流量控制、熔断降级
 - 使用[Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway)作为网关
-
 
 
 ## 二、 容器、数据库、中间件虚拟环境
@@ -46,10 +45,10 @@
     
     3. Redis：https://blog.csdn.net/qq_27047215/article/details/91411559
     
-    4. RabbitMQ：https://www.cnblogs.com/yufeng218/p/9452621.html
-
+    4. RabbitMQ：https://www.cnblogs.com/yufeng218/p/9452621.html <br/>
      由于 https://hub.docker.com/ 非常容易超时，所以需要改一下docker镜像源： https://www.cnblogs.com/ming369/p/10711771.html<br/>
      个人镜像加速器地址：https://xvaz3vtq.mirror.aliyuncs.com
+
 
 ## 三、 微服务列表
 
@@ -130,11 +129,11 @@
 
 要不来个表情包？
 
-
 ​    
 ## 四、 之前版本中遇到的问题（Eureka、Hystrix、Zuul）
 
 > 印象笔记： https://app.yinxiang.com/fx/20e1570e-7d37-48ac-b79b-aac23b1bf952
+
 
 ## 五、 License 
 
