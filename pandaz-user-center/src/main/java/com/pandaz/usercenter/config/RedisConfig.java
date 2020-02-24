@@ -60,7 +60,7 @@ public class RedisConfig {
      */
     @Bean("masterCacheManager")
     @Primary
-    public CacheManager masterCacheManager(RedisConnectionFactory redisConnectionFactory) {
+    public CacheManager masterCacheManager(LettuceConnectionFactory redisConnectionFactory) {
         CustomProperties.Cache cache = customProperties.getCache();
         Duration duration = Duration.of(cache.getMasterEntryTtl(), ChronoUnit.valueOf(cache.getMasterEntryTtlUnit().toUpperCase()));
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
@@ -80,7 +80,7 @@ public class RedisConfig {
      * cacheManager 方法的注释
      */
     @Bean("secondaryCacheManager")
-    public CacheManager secondaryCacheManager(RedisConnectionFactory redisConnectionFactory) {
+    public CacheManager secondaryCacheManager(LettuceConnectionFactory redisConnectionFactory) {
         CustomProperties.Cache cache = customProperties.getCache();
         Duration duration = Duration.of(cache.getSecondaryEntryTtl(), ChronoUnit.valueOf(cache.getSecondaryEntryTtlUnit().toUpperCase()));
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()

@@ -135,3 +135,9 @@
 ## 四、 之前版本中遇到的问题（Eureka、Hystrix、Zuul）
 
 > 印象笔记： https://app.yinxiang.com/fx/20e1570e-7d37-48ac-b79b-aac23b1bf952
+
+## 五、 License 
+
+[MIT](https://github.com/Carzer/pandaz/blob/master/LICENSE)
+
+Copyright (c) 2020 Carzer

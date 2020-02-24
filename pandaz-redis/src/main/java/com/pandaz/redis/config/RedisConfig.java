@@ -51,7 +51,7 @@ public class RedisConfig {
      * cacheManager 方法的注释
      */
     @Bean
-    public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
+    public CacheManager cacheManager(LettuceConnectionFactory redisConnectionFactory) {
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
                 // 设置缓存有效期一小时
                 .entryTtl(Duration.ofHours(1));
