@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 import javax.validation.constraints.NotEmpty;
 
 /**
- * 系统信息
+ * 系统信息DTO
  *
  * @author Carzer
  * @since 2019-10-25
@@ -26,7 +26,6 @@ public class OsInfoDTO extends BaseDTO {
     /**
      * 系统名
      */
-    @NotEmpty
     private String name;
 
     /**

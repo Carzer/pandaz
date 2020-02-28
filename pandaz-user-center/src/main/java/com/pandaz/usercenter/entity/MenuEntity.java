@@ -79,6 +79,7 @@ public class MenuEntity extends BaseEntity {
     /**
      * 子菜单
      */
+    @TableField(exist = false)
     private List<MenuEntity> children;
 
 }

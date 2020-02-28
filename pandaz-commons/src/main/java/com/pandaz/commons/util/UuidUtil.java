@@ -34,7 +34,7 @@ public final class UuidUtil {
      *
      * @return uuid
      */
-    public static String getUnsignedUuid() {
+    public static String getId() {
         UUID uuid = UUID.randomUUID();
         return uuid.toString().replaceAll(".-", "");
     }

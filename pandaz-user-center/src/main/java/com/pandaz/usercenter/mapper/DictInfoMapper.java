@@ -1,7 +1,7 @@
 package com.pandaz.usercenter.mapper;
 
-import com.pandaz.usercenter.entity.DictInfoEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.pandaz.usercenter.entity.DictInfoEntity;
 
 /**
  * <p>
@@ -13,4 +13,11 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface DictInfoMapper extends BaseMapper<DictInfoEntity> {
 
+    /**
+     * 插入方法
+     *
+     * @param dictInfoEntity 字典信息
+     * @return 执行结果
+     */
+    int insertSelective(DictInfoEntity dictInfoEntity);
 }

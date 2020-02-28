@@ -7,18 +7,17 @@
         <result column="group_code" jdbcType="VARCHAR" property="groupCode"/>
         <result column="created_by" jdbcType="VARCHAR" property="createdBy"/>
         <result column="created_date" jdbcType="TIMESTAMP" property="createdDate"/>
+        <result column="updated_by" jdbcType="VARCHAR" property="updatedBy"/>
+        <result column="updated_date" jdbcType="TIMESTAMP" property="updatedDate"/>
+        <result column="deleted_by" jdbcType="VARCHAR" property="deletedBy"/>
+        <result column="deleted_date" jdbcType="TIMESTAMP" property="deletedDate"/>
+        <result column="deleted_flag" jdbcType="TINYINT" property="deletedFlag"/>
         <result column="is_private" jdbcType="TINYINT" property="isPrivate"/>
     </resultMap>
     <sql id="Base_Column_List">
         id, user_code, group_code,
         created_by, created_date, is_private
     </sql>
-    <insert id="insert" parameterType="com.pandaz.usercenter.entity.UserGroupEntity">
-        insert into t_sys_user_group (id, user_code, group_code,
-        created_by, created_date, is_private)
-        values (#{id,jdbcType=VARCHAR}, #{userCode,jdbcType=VARCHAR}, #{groupCode,jdbcType=VARCHAR},
-        #{createdBy,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP}, #{isPrivate,jdbcType=TINYINT})
-    </insert>
     <insert id="insertSelective" parameterType="com.pandaz.usercenter.entity.UserGroupEntity">
         insert into t_sys_user_group
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -36,6 +35,21 @@
             </if>
             <if test="createdDate != null">
                 created_date,
+            </if>
+            <if test="updatedBy != null">
+                updated_by,
+            </if>
+            <if test="updatedDate != null">
+                updated_date,
+            </if>
+            <if test="deletedBy != null">
+                deleted_by,
+            </if>
+            <if test="deletedDate != null">
+                deleted_date,
+            </if>
+            <if test="deletedFlag != null">
+                deleted_flag,
             </if>
             <if test="isPrivate != null">
                 is_private,
@@ -57,33 +71,24 @@
             <if test="createdDate != null">
                 #{createdDate,jdbcType=TIMESTAMP},
             </if>
+            <if test="updatedBy != null">
+                #{updatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedDate != null">
+                #{updatedDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deletedBy != null">
+                #{deletedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="deletedDate != null">
+                #{deletedDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deletedFlag != null">
+                #{deletedFlag,jdbcType=TINYINT},
+            </if>
             <if test="isPrivate != null">
                 #{isPrivate,jdbcType=TINYINT},
             </if>
         </trim>
     </insert>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-        delete
-        from t_sys_user_group
-        where id = #{id,jdbcType=VARCHAR}
-    </delete>
-    <delete id="deleteByUserCode" parameterType="java.lang.String">
-        delete
-        from t_sys_user_group
-        where user_code = #{userCode,jdbcType=VARCHAR}
-    </delete>
-    <delete id="deleteByGroupCode" parameterType="java.lang.String">
-        delete
-        from t_sys_user_group
-        where group_code = #{groupCode,jdbcType=VARCHAR}
-    </delete>
-    <select id="findByUserCode" parameterType="com.pandaz.usercenter.entity.UserGroupEntity" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from t_sys_user_group
-        where user_code = #{userCode,jdbcType=VARCHAR}
-        <if test="isPrivate != null and isPrivate != ''">
-            and is_private =#{isPrivate,jdbcType=TINYINT}
-        </if>
-    </select>
 </mapper>

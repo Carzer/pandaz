@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.pandaz.commons.custom.SecurityUser;
 import com.pandaz.usercenter.entity.RoleDetailEntity;
@@ -53,8 +54,32 @@ public interface RoleService extends IService<RoleEntity> {
     /**
      * 根据角色编码删除信息
      *
-     * @param roleCode roleCode
+     * @param roleEntity 角色编码
      * @return int
      */
-    int deleteByCode(String roleCode);
+    int deleteByCode(RoleEntity roleEntity);
+
+    /**
+     * 根据编码查询
+     *
+     * @param code 角色编码
+     * @return 角色信息
+     */
+    RoleEntity findByCode(String code);
+
+    /**
+     * 分页查询
+     *
+     * @param roleEntity 角色信息
+     * @return 分页结果
+     */
+    IPage<RoleEntity> getPage(RoleEntity roleEntity);
+
+    /**
+     * 更新方法
+     *
+     * @param roleEntity 角色信息
+     * @return 执行结果
+     */
+    int updateByCode(RoleEntity roleEntity);
 }

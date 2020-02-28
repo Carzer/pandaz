@@ -8,7 +8,7 @@ import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
 /**
- * 用户数据传输类
+ * 用户数据DTO
  *
  * @author Carzer
  * @since 2019-07-17

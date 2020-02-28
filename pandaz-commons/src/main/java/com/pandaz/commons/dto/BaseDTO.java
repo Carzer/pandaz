@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 基础数据传输类
+ * 基础DTO
  *
  * @author Carzer
  * @since 2019-07-17

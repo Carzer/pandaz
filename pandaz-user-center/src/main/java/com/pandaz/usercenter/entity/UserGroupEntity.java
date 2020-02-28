@@ -1,8 +1,6 @@
 package com.pandaz.usercenter.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.pandaz.commons.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -43,4 +41,7 @@ public class UserGroupEntity extends BaseEntity {
      */
     @TableField("is_private")
     private Byte isPrivate;
+
+    @TableField(exist = false)
+    private Integer version;
 }

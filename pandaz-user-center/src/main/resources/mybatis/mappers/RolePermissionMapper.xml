@@ -4,21 +4,23 @@
     <resultMap id="BaseResultMap" type="com.pandaz.usercenter.entity.RolePermissionEntity">
         <result column="id" jdbcType="VARCHAR" property="id"/>
         <result column="role_code" jdbcType="VARCHAR" property="roleCode"/>
-        <result column="os_code" jdbcType="VARCHAR" property="osCode"/>
-        <result column="menu_code" jdbcType="VARCHAR" property="menuCode"/>
-        <result column="request_type" jdbcType="TINYINT" property="requestType"/>
-        <result column="permission_value" jdbcType="INTEGER" property="permissionValue"/>
+        <result column="permission_code" jdbcType="VARCHAR" property="permissionCode"/>
         <result column="created_by" jdbcType="VARCHAR" property="createdBy"/>
         <result column="created_date" jdbcType="TIMESTAMP" property="createdDate"/>
+        <result column="updated_by" jdbcType="VARCHAR" property="updatedBy"/>
+        <result column="updated_date" jdbcType="TIMESTAMP" property="updatedDate"/>
+        <result column="deleted_by" jdbcType="VARCHAR" property="deletedBy"/>
+        <result column="deleted_date" jdbcType="TIMESTAMP" property="deletedDate"/>
+        <result column="deleted_flag" jdbcType="TINYINT" property="deletedFlag"/>
     </resultMap>
     <insert id="insert" parameterType="com.pandaz.usercenter.entity.RolePermissionEntity">
-        insert into t_sys_role_permission (id, role_code, os_code,
-        menu_code, request_type, permission_value, created_by,
-        created_date)
-        values (#{id,jdbcType=VARCHAR}, #{roleCode,jdbcType=VARCHAR}, #{osCode,jdbcType=VARCHAR},
-        #{menuCode,jdbcType=VARCHAR}, #{requestType,jdbcType=TINYINT}, #{permissionValue,jdbcType=INTEGER},
-        #{createdBy,jdbcType=VARCHAR},
-        #{createdDate,jdbcType=TIMESTAMP})
+        insert into t_sys_role_permission (id, role_code, permission_code,
+        created_by,created_date, updated_by, updated_date,
+        deleted_by, deleted_date, deleted_flag)
+        values (#{id,jdbcType=VARCHAR}, #{roleCode,jdbcType=VARCHAR}, #{permissionCode,jdbcType=VARCHAR},
+        #{createdBy,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR},
+        #{updatedDate,jdbcType=TIMESTAMP},
+        #{deletedBy,jdbcType=VARCHAR}, #{deletedDate,jdbcType=TIMESTAMP}, #{deletedFlag,jdbcType=TINYINT})
     </insert>
     <insert id="insertSelective" parameterType="com.pandaz.usercenter.entity.RolePermissionEntity">
         insert into t_sys_role_permission
@@ -29,23 +31,29 @@
             <if test="roleCode != null">
                 role_code,
             </if>
-            <if test="osCode != null">
-                os_code,
-            </if>
-            <if test="menuCode != null">
-                menu_code,
-            </if>
-            <if test="requestType != null">
-                request_type,
-            </if>
-            <if test="permissionValue != null">
-                permission_value,
+            <if test="permissionCode != null">
+                permission_code,
             </if>
             <if test="createdBy != null">
                 created_by,
             </if>
             <if test="createdDate != null">
                 created_date,
+            </if>
+            <if test="updatedBy != null">
+                updated_by,
+            </if>
+            <if test="updatedDate != null">
+                updated_date,
+            </if>
+            <if test="deletedBy != null">
+                deleted_by,
+            </if>
+            <if test="deletedDate != null">
+                deleted_date,
+            </if>
+            <if test="deletedFlag != null">
+                deleted_flag,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -55,23 +63,29 @@
             <if test="roleCode != null">
                 #{roleCode,jdbcType=VARCHAR},
             </if>
-            <if test="osCode != null">
-                #{osCode,jdbcType=VARCHAR},
-            </if>
-            <if test="menuCode != null">
-                #{menuCode,jdbcType=VARCHAR},
-            </if>
-            <if test="requestType != null">
-                #{requestType,jdbcType=TINYINT},
-            </if>
-            <if test="permissionValue != null">
-                #{permissionValue,jdbcType=INTEGER},
+            <if test="permissionCode != null">
+                #{permissionCode,jdbcType=VARCHAR},
             </if>
             <if test="createdBy != null">
                 #{createdBy,jdbcType=VARCHAR},
             </if>
             <if test="createdDate != null">
                 #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedBy != null">
+                #{updatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedDate != null">
+                #{updatedDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deletedBy != null">
+                #{deletedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="deletedDate != null">
+                #{deletedDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deletedFlag != null">
+                #{deletedFlag,jdbcType=TINYINT},
             </if>
         </trim>
     </insert>

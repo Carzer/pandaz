@@ -1,5 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pandaz.usercenter.mapper.DictInfoMapper">
-
+    <insert id="insertSelective" parameterType="com.pandaz.usercenter.entity.DictInfoEntity">
+        insert into t_sys_dict_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="typeCode != null">
+                type_code,
+            </if>
+            <if test="createdBy != null">
+                created_by,
+            </if>
+            <if test="createdDate != null">
+                created_date,
+            </if>
+            <if test="updatedBy != null">
+                updated_by,
+            </if>
+            <if test="updatedDate != null">
+                updated_date,
+            </if>
+            <if test="deletedBy != null">
+                deleted_by,
+            </if>
+            <if test="deletedDate != null">
+                deleted_date,
+            </if>
+            <if test="deletedFlag != null">
+                deleted_flag,
+            </if>
+            <if test="locked != null">
+                locked,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="typeCode != null">
+                #{typeCode,jdbcType=VARCHAR},
+            </if>
+            <if test="createdBy != null">
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDate != null">
+                #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedBy != null">
+                #{updatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedDate != null">
+                #{updatedDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deletedBy != null">
+                #{deletedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="deletedDate != null">
+                #{deletedDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deletedFlag != null">
+                #{deletedFlag,jdbcType=TINYINT},
+            </if>
+            <if test="locked != null">
+                #{locked,jdbcType=TINYINT},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
 </mapper>

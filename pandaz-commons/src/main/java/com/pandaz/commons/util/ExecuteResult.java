@@ -1,8 +1,9 @@
 package com.pandaz.commons.util;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.io.Serializable;
 
 /**
  * 执行结果
@@ -12,14 +13,14 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-public final class ExecuteResult<T> {
+public final class ExecuteResult<T extends Serializable> {
 
     /**
      * build 方法
      *
      * @return 返回成功
      */
-    public static <T> ExecuteResult<T> buildSuccess() {
+    public static <T extends Serializable> ExecuteResult<T> buildSuccess() {
         ExecuteResult<T> result = new ExecuteResult<>();
         result.setSuccess(true);
         return result;

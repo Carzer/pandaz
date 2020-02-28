@@ -1,6 +1,9 @@
 package com.pandaz.usercenter.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.pandaz.usercenter.entity.GroupEntity;
 import com.pandaz.usercenter.entity.GroupRoleEntity;
 import com.pandaz.usercenter.mapper.GroupRoleMapper;
 import com.pandaz.usercenter.service.GroupRoleService;
@@ -44,17 +47,21 @@ public class GroupRoleServiceImpl extends ServiceImpl<GroupRoleMapper, GroupRole
      */
     @Override
     public List<GroupRoleEntity> findByGroupCode(GroupRoleEntity groupRole) {
-        return groupRoleMapper.findByGroupCode(groupRole);
+        QueryWrapper<GroupRoleEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("group_code", groupRole.getGroupCode());
+        return groupRoleMapper.selectList(queryWrapper);
     }
 
     /**
      * 跟组编码删除
      *
-     * @param groupCode groupCode
+     * @param groupEntity groupCode
      * @return int
      */
     @Override
-    public int deleteByGroupCode(String groupCode) {
-        return groupRoleMapper.deleteByGroupCode(groupCode);
+    public int deleteByGroupCode(GroupEntity groupEntity) {
+        UpdateWrapper<GroupRoleEntity> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("group_code", groupEntity.getCode());
+        return groupRoleMapper.delete(updateWrapper);
     }
 }

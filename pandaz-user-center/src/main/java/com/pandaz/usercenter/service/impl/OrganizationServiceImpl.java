@@ -1,12 +1,19 @@
 package com.pandaz.usercenter.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.entity.OrganizationEntity;
 import com.pandaz.usercenter.mapper.OrganizationMapper;
 import com.pandaz.usercenter.service.OrganizationService;
+import com.pandaz.usercenter.util.CheckUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 /**
  * 组织信息服务
@@ -22,4 +29,82 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
      * 组织信息mapper
      */
     private final OrganizationMapper organizationMapper;
+
+    /**
+     * 编码检查工具
+     */
+    private final CheckUtils<OrganizationEntity, OrganizationMapper> checkUtils;
+
+    /**
+     * 根据编码查询
+     *
+     * @param code 组织编码
+     * @return 组织信息
+     */
+    @Override
+    public OrganizationEntity findByCode(String code) {
+        QueryWrapper<OrganizationEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("code", code);
+        return organizationMapper.selectOne(queryWrapper);
+    }
+
+    /**
+     * 分页查询
+     *
+     * @param organizationEntity 组织信息
+     * @return 执行结果
+     */
+    @Override
+    public IPage<OrganizationEntity> getPage(OrganizationEntity organizationEntity) {
+        Page<OrganizationEntity> page = new Page<>(organizationEntity.getPageNum(), organizationEntity.getPageSize());
+        QueryWrapper<OrganizationEntity> queryWrapper = new QueryWrapper<>();
+        if (StringUtils.hasText(organizationEntity.getCode())) {
+            queryWrapper.likeRight("code", organizationEntity.getCode());
+        }
+        if (StringUtils.hasText(organizationEntity.getName())) {
+            queryWrapper.likeRight("name", organizationEntity.getName());
+        }
+        return page(page, queryWrapper);
+    }
+
+    /**
+     * 插入方法
+     *
+     * @param organizationEntity 组织信息
+     * @return 执行结果
+     */
+    @Override
+    public int insert(OrganizationEntity organizationEntity) {
+        checkUtils.checkOrSetCode(organizationEntity, organizationMapper, "组织编码已存在");
+        if (!StringUtils.hasText(organizationEntity.getId())) {
+            organizationEntity.setId(UuidUtil.getId());
+        }
+        return organizationMapper.insertSelective(organizationEntity);
+    }
+
+    /**
+     * 更新方法
+     *
+     * @param organizationEntity 组织信息
+     * @return 执行结果
+     */
+    @Override
+    public int updateByCode(OrganizationEntity organizationEntity) {
+        UpdateWrapper<OrganizationEntity> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("code", organizationEntity.getCode());
+        return organizationMapper.update(organizationEntity, updateWrapper);
+    }
+
+    /**
+     * 删除方法
+     *
+     * @param organizationEntity 组织信息
+     * @return 执行结果
+     */
+    @Override
+    public int deleteByCode(OrganizationEntity organizationEntity) {
+        UpdateWrapper<OrganizationEntity> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("code", organizationEntity.getCode());
+        return organizationMapper.delete(updateWrapper);
+    }
 }

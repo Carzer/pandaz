@@ -38,6 +38,19 @@ public class CheckUtils<E extends BaseEntity, M extends BaseMapper<E>> {
      * @param entity   检查实体
      * @param mapper   mapper
      * @param errorMsg 如果编码存在时的提示信息
+     * @return java.lang.String
+     */
+    public String checkOrSetCode(E entity, M mapper, String errorMsg) {
+        return checkOrSetCode(entity, mapper, errorMsg, null, null);
+    }
+
+    /**
+     * 检查编码是否存在，如果编码为空，则自动生成新编码
+     * 使用前需校验实体是否为空
+     *
+     * @param entity   检查实体
+     * @param mapper   mapper
+     * @param errorMsg 如果编码存在时的提示信息
      * @param prefix   id前缀
      * @param suffix   id后缀
      * @return java.lang.String

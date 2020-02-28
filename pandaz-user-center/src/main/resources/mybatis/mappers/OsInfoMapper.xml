@@ -120,9 +120,4 @@
             </if>
         </trim>
     </insert>
-    <select id="findByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from t_sys_os_info where code=#{code}
-    </select>
 </mapper>

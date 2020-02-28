@@ -19,8 +19,7 @@
     
     百度云盘： https://pan.baidu.com/s/1GYXQ5E6rIOvDcXINu8Wrlg  提取码： myef <br/>
     系统用户统一密码：pandaz123<br/>
-    启动Nacos、Sentinel的命令路径：`/usr/local/src/startup.sh`，可自行修改为开机启动、或置于docker中
-    
+    启动Nacos、Sentinel的命令路径：`/usr/local/src/startup.sh`，可自行修改为开机启动、或置于docker中    
     
 - 虚拟机ip设定：
     ```
@@ -45,7 +44,8 @@
     
     3. Redis：https://blog.csdn.net/qq_27047215/article/details/91411559
     
-    4. RabbitMQ：https://www.cnblogs.com/yufeng218/p/9452621.html <br/>
+    4. RabbitMQ：https://www.cnblogs.com/yufeng218/p/9452621.html <br/><br/>
+    
      由于 https://hub.docker.com/ 非常容易超时，所以需要改一下docker镜像源： https://www.cnblogs.com/ming369/p/10711771.html<br/>
      个人镜像加速器地址：https://xvaz3vtq.mirror.aliyuncs.com
 
@@ -53,6 +53,8 @@
 ## 三、 微服务列表
 
 ### 1. [用户中心](http://localhost:9007)
+
+    使用时，根据pandaz.sql更新数据库信息，默认用户：admin，密码：admin，默认逻辑删除
 
 - [ ] **功能实现**
     - [x] 完成会话管理

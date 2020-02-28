@@ -1,7 +1,7 @@
 package com.pandaz.usercenter.mapper;
 
-import com.pandaz.usercenter.entity.OauthClientEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.pandaz.usercenter.entity.OauthClientEntity;
 
 /**
  * <p>

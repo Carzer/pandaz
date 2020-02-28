@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
-import java.util.Map;
+import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -67,13 +67,13 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
         // 输出登录提示信息
         log.debug("用户：[{}]登录", authentication.getName());
         log.debug("IP :{}", IpUtil.getIpAddress(httpServletRequest));
-        Map<String, Object> resultMap = new ConcurrentHashMap<>(3);
+        HashMap<String, Object> resultMap = new HashMap<>(3);
         resultMap.put("authorities", authentication.getAuthorities());
         resultMap.put("user", authentication.getPrincipal());
         // 登陆成功后，返回用户信息的同时返回token
         resultMap.put("token", generateToken(authentication));
         resultMap.put("accessTokenExpireAt", expireAt);
-        ExecuteResult<Map<String, Object>> result = new ExecuteResult<>();
+        ExecuteResult<HashMap<String, Object>> result = new ExecuteResult<>();
         result.setData(resultMap);
         PrintWriterUtil.write(httpServletResponse, result);
     }

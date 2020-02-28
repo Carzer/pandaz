@@ -20,7 +20,7 @@ import lombok.EqualsAndHashCode;
 @TableName("t_sys_oauth_client")
 public class OauthClientEntity extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -8914139658642484148L;
 
     /**
      * 主键

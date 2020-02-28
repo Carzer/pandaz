@@ -1,6 +1,7 @@
 package com.pandaz.usercenter.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.pandaz.usercenter.entity.UserEntity;
 import com.pandaz.usercenter.entity.UserGroupEntity;
 
 import java.util.List;
@@ -25,10 +26,10 @@ public interface UserGroupService extends IService<UserGroupEntity> {
     /**
      * 根据用户编码删除
      *
-     * @param userCode userCode
+     * @param userEntity userEntity
      * @return int
      */
-    int deleteByUserCode(String userCode);
+    int deleteByUserCode(UserEntity userEntity);
 
     /**
      * 插入方法

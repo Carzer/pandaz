@@ -118,12 +118,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     @Override
     @Transactional(rollbackFor = Exception.class)
     public UserEntity insert(UserEntity user) {
+        // 校验重复
         String userCode = checkUtils.checkOrSetCode(user, userMapper, "用户编码已存在", null, null);
         UserEntity loginUser = loadUserByUsername(user.getLoginName());
         if (loginUser != null) {
             throw new IllegalArgumentException("登录名已存在");
         }
+
         // 用户信息补充
+        if (!StringUtils.hasText(user.getId())) {
+            user.setId(UuidUtil.getId());
+        }
         String rawPass = user.getPassword();
         String encodedPass = SysConstants.DEFAULT_ENCODED_PASS;
         if (StringUtils.hasText(rawPass)) {
@@ -134,7 +139,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         String userName = user.getName();
         String createdBy = user.getCreatedBy();
         LocalDateTime createdDate = user.getCreatedDate();
-        user.setId(UuidUtil.getUnsignedUuid());
+
         // 建立用户私有组
         String groupCode = String.format("%s%s", SysConstants.GROUP_PREFIX, userCode);
         GroupEntity group = new GroupEntity();
@@ -145,7 +150,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         group.setCreatedDate(createdDate);
         // 关联用户及私有组
         UserGroupEntity userGroup = new UserGroupEntity();
-        userGroup.setId(UuidUtil.getUnsignedUuid());
+        userGroup.setId(UuidUtil.getId());
         userGroup.setUserCode(userCode);
         userGroup.setGroupCode(groupCode);
         userGroup.setCreatedBy(createdBy);
@@ -161,25 +166,35 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     /**
      * 删除用户信息
      *
-     * @param userCode userCode
+     * @param userEntity 用户信息
      * @return int
      */
-    @CacheEvict(key = "#userCode")
+    @CacheEvict(key = "#userEntity.code")
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int deleteByCode(String userCode) {
+    public int deleteByCode(UserEntity userEntity) {
         // 查询私有组，并进行删除
         UserGroupEntity userGroup = new UserGroupEntity();
         userGroup.setIsPrivate(SysConstants.PRIVATE);
-        userGroup.setUserCode(userCode);
+        userGroup.setUserCode(userEntity.getCode());
         List<UserGroupEntity> groupList = userGroupService.findByUserCode(userGroup);
         if (!CollectionUtils.isEmpty(groupList)) {
-            groupList.forEach(group -> groupService.deleteByCode(group.getGroupCode()));
+            String deletedBy = userEntity.getDeletedBy();
+            LocalDateTime deletedDate = userEntity.getDeletedDate();
+            groupList.forEach(entity -> {
+                GroupEntity groupEntity = new GroupEntity();
+                groupEntity.setCode(entity.getGroupCode());
+                groupEntity.setDeletedBy(deletedBy);
+                groupEntity.setDeletedDate(deletedDate);
+                groupService.deleteByCode(groupEntity);
+            });
         }
         // 删除所有用户相关的组关联信息
-        userGroupService.deleteByUserCode(userCode);
+        userGroupService.deleteByUserCode(userEntity);
         // 最终删除用户
-        return userMapper.deleteByCode(userCode);
+        UpdateWrapper<UserEntity> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("code", userEntity.getCode());
+        return userMapper.delete(updateWrapper);
     }
 
     /**
@@ -193,13 +208,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     public IPage<UserEntity> getPage(UserEntity userEntity) {
         Page<UserEntity> page = new Page<>(userEntity.getPageNum(), userEntity.getPageSize());
         QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
-        String name = userEntity.getName();
-        String code = userEntity.getCode();
-        if (StringUtils.hasText(name)) {
-            queryWrapper.like("name", name);
+        if (StringUtils.hasText(userEntity.getName())) {
+            queryWrapper.likeRight("name", userEntity.getName());
         }
-        if (StringUtils.hasText(code)) {
-            queryWrapper.like("code", code);
+        if (StringUtils.hasText(userEntity.getCode())) {
+            queryWrapper.likeRight("code", userEntity.getCode());
         }
         return page(page, queryWrapper);
     }

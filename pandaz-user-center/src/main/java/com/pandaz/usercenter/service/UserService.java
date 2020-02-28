@@ -47,10 +47,10 @@ public interface UserService extends IService<UserEntity> {
     /**
      * 删除用户信息
      *
-     * @param userCode userCode
+     * @param userEntity 用户信息
      * @return int
      */
-    int deleteByCode(String userCode);
+    int deleteByCode(UserEntity userEntity);
 
     /**
      * 获取用户信息页

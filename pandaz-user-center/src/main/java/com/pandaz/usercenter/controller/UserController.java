@@ -3,22 +3,24 @@ package com.pandaz.usercenter.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.commons.dto.usercenter.UserDTO;
 import com.pandaz.commons.dto.usercenter.UserPwdDTO;
-import com.pandaz.commons.util.BeanCopierUtil;
+import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.ExecuteResult;
 import com.pandaz.usercenter.entity.UserEntity;
 import com.pandaz.usercenter.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.concurrent.ConcurrentMap;
+import java.util.HashMap;
 
 /**
- * 用户相关controller
+ * 用户
  *
  * @author Carzer
  * @since 2019-07-17
@@ -35,38 +37,39 @@ public class UserController {
     private final UserService userService;
 
     /**
-     * 获取用户分页信息
-     *
-     * @param userDTO userDTO
-     * @return com.pandaz.commons.util.ExecuteResult<java.util.Map < java.lang.String, java.lang.Object>>
-     */
-    @GetMapping("/getPage")
-    public ExecuteResult<ConcurrentMap<String, Object>> getPage(UserDTO userDTO) {
-        ExecuteResult<ConcurrentMap<String, Object>> result = new ExecuteResult<>();
-        try {
-            IPage<UserEntity> page = userService.getPage(BeanCopierUtil.copy(userDTO, UserEntity.class));
-            result.setData(BeanCopierUtil.convertToMap(page, UserDTO.class));
-        } catch (Exception e) {
-            log.error("获取用户信息分页异常：", e);
-            result.setError(e.getMessage());
-        }
-        return result;
-    }
-
-    /**
      * 根据用户编码获取用户信息
      *
      * @param userDTO 查询条件
      * @return com.pandaz.commons.util.ExecuteResult<com.pandaz.usercenter.dto.UserDTO>
      */
     @GetMapping
-    public ExecuteResult<UserDTO> get(UserDTO userDTO) {
+    public ExecuteResult<UserDTO> get(@Valid UserDTO userDTO) {
         ExecuteResult<UserDTO> result = new ExecuteResult<>();
         try {
-            UserDTO dto = BeanCopierUtil.copy(userService.findByCode(userDTO.getCode()), UserDTO.class);
+            UserDTO dto = BeanCopyUtil.copy(userService.findByCode(userDTO.getCode()), UserDTO.class);
             result.setData(dto);
         } catch (Exception e) {
-            log.error("根据编码查找用户信息异常：", e);
+            log.error("查询方法异常：", e);
+            result.setError(e.getMessage());
+        }
+        return result;
+    }
+
+
+    /**
+     * 获取用户分页信息
+     *
+     * @param userDTO userDTO
+     * @return com.pandaz.commons.util.ExecuteResult<java.util.Map < java.lang.String, java.lang.Object>>
+     */
+    @GetMapping("/getPage")
+    public ExecuteResult<HashMap<String, Object>> getPage(UserDTO userDTO) {
+        ExecuteResult<HashMap<String, Object>> result = new ExecuteResult<>();
+        try {
+            IPage<UserEntity> page = userService.getPage(BeanCopyUtil.copy(userDTO, UserEntity.class));
+            result.setData(BeanCopyUtil.convertToMap(page, UserDTO.class));
+        } catch (Exception e) {
+            log.error("分页查询异常：", e);
             result.setError(e.getMessage());
         }
         return result;
@@ -83,19 +86,21 @@ public class UserController {
         ExecuteResult<UserDTO> result = new ExecuteResult<>();
         try {
             UserDTO userDTO = userPwdDTO.getUserDTO();
+            check(userDTO);
             String password = userPwdDTO.getPassword();
-            UserEntity user = BeanCopierUtil.copy(userDTO, UserEntity.class);
-            user.setPassword(password);
+            UserEntity user = BeanCopyUtil.copy(userDTO, UserEntity.class);
+            if (StringUtils.hasText(password)) {
+                user.setPassword(password);
+            }
             user.setCreatedBy(principal.getName());
             user.setCreatedDate(LocalDateTime.now());
             // 如果没有选择过期时间，就默认6个月后过期
             if (user.getExpireAt() == null) {
                 user.setExpireAt(LocalDateTime.now().plusMonths(6L));
             }
-            userService.insert(user);
-            result.setData(BeanCopierUtil.copy(user, UserDTO.class));
+            result.setData(BeanCopyUtil.copy(userService.insert(user), UserDTO.class));
         } catch (Exception e) {
-            log.error("插入用户信息异常：", e);
+            log.error("插入方法异常：", e);
             result.setError(e.getMessage());
         }
         return result;
@@ -111,13 +116,14 @@ public class UserController {
     public ExecuteResult<String> update(@Valid @RequestBody UserDTO userDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
-            UserEntity userEntity = BeanCopierUtil.copy(userDTO, UserEntity.class);
+            check(userDTO);
+            UserEntity userEntity = BeanCopyUtil.copy(userDTO, UserEntity.class);
             userEntity.setCreatedBy(principal.getName());
             userEntity.setCreatedDate(LocalDateTime.now());
             userService.updateByCode(userEntity);
             result.setData("更新成功。");
         } catch (Exception e) {
-            log.error("更新用户异常：", e);
+            log.error("更新方法异常：", e);
             result.setError(e.getMessage());
         }
         return result;
@@ -130,16 +136,28 @@ public class UserController {
      * @return com.pandaz.commons.util.ExecuteResult<com.pandaz.usercenter.dto.UserDTO>
      */
     @DeleteMapping
-    public ExecuteResult<String> delete(@Valid @RequestBody UserDTO userDTO) {
+    public ExecuteResult<String> delete(@Valid @RequestBody UserDTO userDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
-            String userCode = userDTO.getCode();
-            userService.deleteByCode(userCode);
+            userDTO.setDeletedBy(principal.getName());
+            userDTO.setDeletedDate(LocalDateTime.now());
+            userService.deleteByCode(BeanCopyUtil.copy(userDTO, UserEntity.class));
             result.setData("删除成功。");
         } catch (Exception e) {
-            log.error("删除用户异常：", e);
+            log.error("删除方法异常：", e);
             result.setError(e.getMessage());
         }
         return result;
+    }
+
+    /**
+     * 检查方法
+     *
+     * @param userDTO 用户信息
+     */
+    private void check(UserDTO userDTO) {
+        Assert.hasText(userDTO.getLoginName(), "登陆名不能为空");
+        Assert.hasText(userDTO.getName(), "用户名不能为空");
+        Assert.hasText(userDTO.getPhone(), "电话好吗不能为空");
     }
 }

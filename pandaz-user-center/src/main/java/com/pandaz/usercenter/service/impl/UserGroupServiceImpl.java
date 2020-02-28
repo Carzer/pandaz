@@ -1,6 +1,9 @@
 package com.pandaz.usercenter.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.pandaz.usercenter.entity.UserEntity;
 import com.pandaz.usercenter.entity.UserGroupEntity;
 import com.pandaz.usercenter.mapper.UserGroupMapper;
 import com.pandaz.usercenter.service.UserGroupService;
@@ -33,18 +36,22 @@ public class UserGroupServiceImpl extends ServiceImpl<UserGroupMapper, UserGroup
      */
     @Override
     public List<UserGroupEntity> findByUserCode(UserGroupEntity userGroup) {
-        return userGroupMapper.findByUserCode(userGroup);
+        QueryWrapper<UserGroupEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_code", userGroup.getUserCode());
+        return userGroupMapper.selectList(queryWrapper);
     }
 
     /**
      * 根据用户编码删除
      *
-     * @param userCode userCode
+     * @param userEntity userEntity
      * @return int
      */
     @Override
-    public int deleteByUserCode(String userCode) {
-        return userGroupMapper.deleteByUserCode(userCode);
+    public int deleteByUserCode(UserEntity userEntity) {
+        UpdateWrapper<UserGroupEntity> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("user_code", userEntity.getCode());
+        return userGroupMapper.delete(updateWrapper);
     }
 
     /**

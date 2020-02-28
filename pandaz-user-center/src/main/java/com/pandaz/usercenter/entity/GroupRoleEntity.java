@@ -44,4 +44,6 @@ public class GroupRoleEntity extends BaseEntity {
     @TableField("is_private")
     private Byte isPrivate;
 
+    @TableField(exist = false)
+    private Integer version;
 }

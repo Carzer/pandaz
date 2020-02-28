@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.pandaz.usercenter.entity.GroupEntity;
 
@@ -22,8 +23,32 @@ public interface GroupService extends IService<GroupEntity> {
     /**
      * 根据编码删除
      *
-     * @param groupCode groupCode
+     * @param groupEntity 组信息
      * @return int
      */
-    int deleteByCode(String groupCode);
+    int deleteByCode(GroupEntity groupEntity);
+
+    /**
+     * 根据编码删除
+     *
+     * @param code 组编码
+     * @return 查询结果
+     */
+    GroupEntity findByCode(String code);
+
+    /**
+     * 分页方法
+     *
+     * @param groupEntity 查询信息
+     * @return 查询结果
+     */
+    IPage<GroupEntity> getPage(GroupEntity groupEntity);
+
+    /**
+     * 更新方法
+     *
+     * @param groupEntity 组信息
+     * @return 执行结果
+     */
+    int updateByCode(GroupEntity groupEntity);
 }

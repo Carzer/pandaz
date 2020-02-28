@@ -2,7 +2,7 @@ package com.pandaz.usercenter.config;
 
 import com.pandaz.commons.custom.SecurityUser;
 import com.pandaz.commons.dto.usercenter.UserDTO;
-import com.pandaz.commons.util.BeanCopierUtil;
+import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.CustomPasswordEncoder;
 import com.pandaz.commons.util.ExecuteResult;
 import com.pandaz.commons.util.PrintWriterUtil;
@@ -167,7 +167,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 String accountExpiredMsg = String.format("用户[%s]已%s过期。", loginName, expireTime);
                 throw new AccountExpiredException(accountExpiredMsg);
             }
-            UserDTO userDTO = BeanCopierUtil.copy(user, UserDTO.class);
+            UserDTO userDTO = BeanCopyUtil.copy(user, UserDTO.class);
             List<GrantedAuthority> authorities = new ArrayList<>();
             return new SecurityUser(loginName, user.getPassword(), authorities, userDTO);
         };
