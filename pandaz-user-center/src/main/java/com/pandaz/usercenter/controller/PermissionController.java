@@ -35,7 +35,6 @@ public class PermissionController {
      */
     private final PermissionService permissionService;
 
-
     /**
      * 查询方法
      *
@@ -89,7 +88,7 @@ public class PermissionController {
             permissionEntity.setCreatedBy(principal.getName());
             permissionEntity.setCreatedDate(LocalDateTime.now());
             Byte priority = permissionEntity.getPriority();
-            permissionEntity.setBitResult(1>>priority);
+            permissionEntity.setBitResult(1 >> priority);
             permissionService.insert(permissionEntity);
             result.setData(BeanCopyUtil.copy(permissionEntity, permissionDTO));
         } catch (Exception e) {
@@ -114,7 +113,7 @@ public class PermissionController {
             permissionEntity.setUpdatedBy(principal.getName());
             permissionEntity.setUpdatedDate(LocalDateTime.now());
             Byte priority = permissionEntity.getPriority();
-            permissionEntity.setBitResult(1>>priority);
+            permissionEntity.setBitResult(1 >> priority);
             permissionService.updateByCode(permissionEntity);
             result.setData("更新成功");
         } catch (Exception e) {
