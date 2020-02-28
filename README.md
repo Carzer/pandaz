@@ -15,28 +15,11 @@
 
 ## 二、 容器、数据库、中间件虚拟环境
 
-- 提供已搭建好的CentOS7虚拟机(VMware)
+- ~~提供已搭建好的CentOS7虚拟机(VMware)~~ 
     
-    百度云盘： https://pan.baidu.com/s/1GYXQ5E6rIOvDcXINu8Wrlg  提取码： myef <br/>
-    系统用户统一密码：pandaz123<br/>
-    启动Nacos、Sentinel的命令路径：`/usr/local/src/startup.sh`，可自行修改为开机启动、或置于docker中    
+    ~~百度云盘： https://pan.baidu.com/s/1GYXQ5E6rIOvDcXINu8Wrlg  提取码： myef ~~ <br/>
+    ~~启动Nacos、Sentinel的命令路径：`/usr/local/src/startup.sh`，可自行修改为开机启动、或置于docker中~~    
     
-- 虚拟机ip设定：
-    ```
-    进入
-    cd /etc/sysconfig/network-scripts
-    执行
-    vi ifcfg-ens33
-    设置BOOTPROTO为static
-    添加
-    IPADDR=172.16.2.130
-    PREFIX=24
-    GATEWAY=172.16.2.2
-    DNS1=172.16.2.2
-    NETMASK=255.255.255.0
-    重启
-    service network restart
-    ```
 - 搭建参考
     1. Docker：https://www.cnblogs.com/yufeng218/p/8370670.html
     
