@@ -17,7 +17,6 @@
 
 - ~~提供已搭建好的CentOS7虚拟机(VMware)~~ 
     
-    ~~百度云盘： https://pan.baidu.com/s/1GYXQ5E6rIOvDcXINu8Wrlg  提取码： myef~~ <br/>
     ~~启动Nacos、Sentinel的命令路径：`/usr/local/src/startup.sh`，可自行修改为开机启动、或置于docker中~~    
     
 - 搭建参考
