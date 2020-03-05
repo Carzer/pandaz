@@ -9,7 +9,7 @@ import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.entity.OrganizationEntity;
 import com.pandaz.usercenter.mapper.OrganizationMapper;
 import com.pandaz.usercenter.service.OrganizationService;
-import com.pandaz.usercenter.util.CheckUtils;
+import com.pandaz.usercenter.util.CheckUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +33,7 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
     /**
      * 编码检查工具
      */
-    private final CheckUtils<OrganizationEntity, OrganizationMapper> checkUtils;
+    private final CheckUtil<OrganizationEntity, OrganizationMapper> checkUtil;
 
     /**
      * 根据编码查询
@@ -75,7 +75,7 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
      */
     @Override
     public int insert(OrganizationEntity organizationEntity) {
-        checkUtils.checkOrSetCode(organizationEntity, organizationMapper, "组织编码已存在");
+        checkUtil.checkOrSetCode(organizationEntity, organizationMapper, "组织编码已存在");
         if (!StringUtils.hasText(organizationEntity.getId())) {
             organizationEntity.setId(UuidUtil.getId());
         }

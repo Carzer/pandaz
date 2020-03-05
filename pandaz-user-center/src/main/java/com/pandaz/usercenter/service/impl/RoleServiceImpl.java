@@ -14,7 +14,7 @@ import com.pandaz.usercenter.entity.RolePermissionEntity;
 import com.pandaz.usercenter.mapper.RoleMapper;
 import com.pandaz.usercenter.mapper.RolePermissionMapper;
 import com.pandaz.usercenter.service.RoleService;
-import com.pandaz.usercenter.util.CheckUtils;
+import com.pandaz.usercenter.util.CheckUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -55,7 +55,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
     /**
      * 编码检查工具
      */
-    private final CheckUtils<RoleEntity, RoleMapper> checkUtils;
+    private final CheckUtil<RoleEntity, RoleMapper> checkUtil;
 
     /**
      * 插入角色信息
@@ -65,7 +65,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
      */
     @Override
     public int insert(RoleEntity role) {
-        checkUtils.checkOrSetCode(role, roleMapper, "角色编码已存在", SysConstants.ROLE_PREFIX, null);
+        checkUtil.checkOrSetCode(role, roleMapper, "角色编码已存在", SysConstants.ROLE_PREFIX, null);
         role.setId(UuidUtil.getId());
         return roleMapper.insertSelective(role);
     }

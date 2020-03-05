@@ -14,7 +14,7 @@ import com.pandaz.usercenter.mapper.GroupMapper;
 import com.pandaz.usercenter.service.GroupRoleService;
 import com.pandaz.usercenter.service.GroupService;
 import com.pandaz.usercenter.service.RoleService;
-import com.pandaz.usercenter.util.CheckUtils;
+import com.pandaz.usercenter.util.CheckUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,7 +48,7 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupEntity> impl
     /**
      * 编码检查工具
      */
-    private final CheckUtils<GroupEntity, GroupMapper> checkUtils;
+    private final CheckUtil<GroupEntity, GroupMapper> checkUtil;
 
     /**
      * 组mapper
@@ -65,7 +65,7 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupEntity> impl
     @Transactional(rollbackFor = Exception.class)
     public int insert(GroupEntity group) {
         // 组信息补充
-        String groupCode = checkUtils.checkOrSetCode(group, groupMapper, "组编码已存在", SysConstants.GROUP_PREFIX, null);
+        String groupCode = checkUtil.checkOrSetCode(group, groupMapper, "组编码已存在", SysConstants.GROUP_PREFIX, null);
         if (!StringUtils.hasText(group.getId())) {
             group.setId(UuidUtil.getId());
         }
@@ -123,7 +123,7 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupEntity> impl
         groupRoleService.deleteByGroupCode(groupEntity);
         // 最终删除组信息
         UpdateWrapper<GroupEntity> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq("code",groupEntity.getCode());
+        updateWrapper.eq("code", groupEntity.getCode());
         return groupMapper.delete(updateWrapper);
     }
 

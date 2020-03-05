@@ -9,7 +9,7 @@ import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.entity.OsInfoEntity;
 import com.pandaz.usercenter.mapper.OsInfoMapper;
 import com.pandaz.usercenter.service.OsInfoService;
-import com.pandaz.usercenter.util.CheckUtils;
+import com.pandaz.usercenter.util.CheckUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +33,7 @@ public class OsInfoServiceImpl extends ServiceImpl<OsInfoMapper, OsInfoEntity> i
     /**
      * 编码检查工具
      */
-    private final CheckUtils<OsInfoEntity, OsInfoMapper> checkUtils;
+    private final CheckUtil<OsInfoEntity, OsInfoMapper> checkUtil;
 
     /**
      * 插入方法
@@ -43,7 +43,7 @@ public class OsInfoServiceImpl extends ServiceImpl<OsInfoMapper, OsInfoEntity> i
      */
     @Override
     public OsInfoEntity insert(OsInfoEntity osInfo) {
-        checkUtils.checkOrSetCode(osInfo, osInfoMapper, "系统编码已存在");
+        checkUtil.checkOrSetCode(osInfo, osInfoMapper, "系统编码已存在");
         if (!StringUtils.hasText(osInfo.getId())) {
             osInfo.setId(UuidUtil.getId());
         }

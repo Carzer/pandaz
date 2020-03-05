@@ -17,7 +17,7 @@ import com.pandaz.usercenter.mapper.UserMapper;
 import com.pandaz.usercenter.service.GroupService;
 import com.pandaz.usercenter.service.UserGroupService;
 import com.pandaz.usercenter.service.UserService;
-import com.pandaz.usercenter.util.CheckUtils;
+import com.pandaz.usercenter.util.CheckUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -60,7 +60,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     /**
      * 编码检查工具
      */
-    private final CheckUtils<UserEntity, UserMapper> checkUtils;
+    private final CheckUtil<UserEntity, UserMapper> checkUtil;
 
     /**
      * 根据用户名获取用户信息
@@ -119,7 +119,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     @Transactional(rollbackFor = Exception.class)
     public UserEntity insert(UserEntity user) {
         // 校验重复
-        String userCode = checkUtils.checkOrSetCode(user, userMapper, "用户编码已存在", null, null);
+        String userCode = checkUtil.checkOrSetCode(user, userMapper, "用户编码已存在", null, null);
         UserEntity loginUser = loadUserByUsername(user.getLoginName());
         if (loginUser != null) {
             throw new IllegalArgumentException("登录名已存在");

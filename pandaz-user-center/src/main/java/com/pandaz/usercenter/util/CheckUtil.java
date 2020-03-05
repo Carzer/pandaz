@@ -22,12 +22,12 @@ import java.util.List;
  */
 @Component
 @Slf4j
-public class CheckUtils<E extends BaseEntity, M extends BaseMapper<E>> {
+public class CheckUtil<E extends BaseEntity, M extends BaseMapper<E>> {
 
     /**
      * 私有构造方法
      */
-    private CheckUtils() {
+    private CheckUtil() {
 
     }
 

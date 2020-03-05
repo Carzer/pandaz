@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pandaz.usercenter.entity.DictInfoEntity;
 import com.pandaz.usercenter.mapper.DictInfoMapper;
 import com.pandaz.usercenter.service.DictInfoService;
-import com.pandaz.usercenter.util.CheckUtils;
+import com.pandaz.usercenter.util.CheckUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +34,7 @@ public class DictInfoServiceImpl extends ServiceImpl<DictInfoMapper, DictInfoEnt
     /**
      * 编码检查工具
      */
-    private final CheckUtils<DictInfoEntity,DictInfoMapper> checkUtils;
+    private final CheckUtil<DictInfoEntity, DictInfoMapper> checkUtil;
 
     /**
      * 查询方法
@@ -79,7 +79,7 @@ public class DictInfoServiceImpl extends ServiceImpl<DictInfoMapper, DictInfoEnt
      */
     @Override
     public int insert(DictInfoEntity dictInfoEntity) {
-        checkUtils.checkOrSetCode(dictInfoEntity, dictInfoMapper, "字典信息编码已存在");
+        checkUtil.checkOrSetCode(dictInfoEntity, dictInfoMapper, "字典信息编码已存在");
         return dictInfoMapper.insertSelective(dictInfoEntity);
     }
 

@@ -44,7 +44,7 @@ import java.util.List;
  */
 @Configuration
 @EnableWebSecurity
-@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 1200)
+@EnableRedisHttpSession(maxInactiveIntervalInSeconds = SysConstants.DEFAULT_EXPIRE_SECONDS)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 

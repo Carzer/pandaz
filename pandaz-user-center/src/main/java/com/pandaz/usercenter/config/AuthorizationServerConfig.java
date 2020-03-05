@@ -22,7 +22,6 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
-import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
@@ -79,6 +78,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     private final UserDetailsService userDetailsService;
 
+    private final CustomTokenEnhancer customTokenEnhancer;
+
     /**
      * jwt token管理方式  资源服务器需要和授权服务器一致
      *
@@ -126,7 +127,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         //增加转换链路，以增加自定义属性
         TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
-        enhancerChain.setTokenEnhancers(Arrays.asList(customTokenEnhancer(), jwtTokenEnhancer()));
+        enhancerChain.setTokenEnhancers(Arrays.asList(customTokenEnhancer, jwtTokenEnhancer()));
         endpoints
                 .authenticationManager(authenticationManager)
                 .userDetailsService(refreshTokenUserDetailsService())
@@ -156,16 +157,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Bean
     public ClientDetailsService clientDetailsService() {
         return oauthClientService::loadClientByClientId;
-    }
-
-    /**
-     * TokenEnhancer
-     *
-     * @return TokenEnhancer
-     */
-    @Bean
-    public TokenEnhancer customTokenEnhancer() {
-        return new CustomTokenEnhancer();
     }
 
     /**

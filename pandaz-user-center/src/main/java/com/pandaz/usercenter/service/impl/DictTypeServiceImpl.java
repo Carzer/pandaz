@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pandaz.usercenter.entity.DictTypeEntity;
 import com.pandaz.usercenter.mapper.DictTypeMapper;
 import com.pandaz.usercenter.service.DictTypeService;
-import com.pandaz.usercenter.util.CheckUtils;
+import com.pandaz.usercenter.util.CheckUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +34,7 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictTypeEnt
     /**
      * 编码检查工具
      */
-    private final CheckUtils<DictTypeEntity,DictTypeMapper> checkUtils;
+    private final CheckUtil<DictTypeEntity, DictTypeMapper> checkUtil;
 
     /**
      * 查询方法
@@ -76,7 +76,7 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictTypeEnt
      */
     @Override
     public int insert(DictTypeEntity dictTypeEntity) {
-        checkUtils.checkOrSetCode(dictTypeEntity, dictTypeMapper, "字典信息编码已存在");
+        checkUtil.checkOrSetCode(dictTypeEntity, dictTypeMapper, "字典信息编码已存在");
         return dictTypeMapper.insertSelective(dictTypeEntity);
     }
 
@@ -90,7 +90,7 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictTypeEnt
     public int updateByCode(DictTypeEntity dictTypeEntity) {
         UpdateWrapper<DictTypeEntity> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("code", dictTypeEntity.getCode());
-        return dictTypeMapper.update(dictTypeEntity,updateWrapper);
+        return dictTypeMapper.update(dictTypeEntity, updateWrapper);
     }
 
     /**

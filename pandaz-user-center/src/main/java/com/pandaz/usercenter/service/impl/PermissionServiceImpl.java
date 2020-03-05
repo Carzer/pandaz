@@ -11,7 +11,7 @@ import com.pandaz.usercenter.entity.RolePermissionEntity;
 import com.pandaz.usercenter.mapper.PermissionMapper;
 import com.pandaz.usercenter.mapper.RolePermissionMapper;
 import com.pandaz.usercenter.service.PermissionService;
-import com.pandaz.usercenter.util.CheckUtils;
+import com.pandaz.usercenter.util.CheckUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +43,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     /**
      * 编码检查工具
      */
-    private final CheckUtils<PermissionEntity, PermissionMapper> checkUtils;
+    private final CheckUtil<PermissionEntity, PermissionMapper> checkUtil;
 
     /**
      * 插入方法
@@ -53,7 +53,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
      */
     @Override
     public PermissionEntity insert(PermissionEntity permission) {
-        checkUtils.checkOrSetCode(permission, permissionMapper, "权限编码已存在");
+        checkUtil.checkOrSetCode(permission, permissionMapper, "权限编码已存在");
         if (!StringUtils.hasText(permission.getId())) {
             permission.setId(UuidUtil.getId());
         }

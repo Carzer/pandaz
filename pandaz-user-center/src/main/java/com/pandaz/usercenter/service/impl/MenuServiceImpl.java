@@ -10,7 +10,7 @@ import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.entity.MenuEntity;
 import com.pandaz.usercenter.mapper.MenuMapper;
 import com.pandaz.usercenter.service.MenuService;
-import com.pandaz.usercenter.util.CheckUtils;
+import com.pandaz.usercenter.util.CheckUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +34,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
     /**
      * 编码检查工具
      */
-    private final CheckUtils<MenuEntity, MenuMapper> checkUtils;
+    private final CheckUtil<MenuEntity, MenuMapper> checkUtil;
 
     /**
      * 插入方法
@@ -44,7 +44,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
      */
     @Override
     public MenuEntity insert(MenuEntity menu) {
-        checkUtils.checkOrSetCode(menu, menuMapper, "菜单编码已存在");
+        checkUtil.checkOrSetCode(menu, menuMapper, "菜单编码已存在");
         if (!StringUtils.hasText(menu.getId())) {
             menu.setId(UuidUtil.getId());
         }
