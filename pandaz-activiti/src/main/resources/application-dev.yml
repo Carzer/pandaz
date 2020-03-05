@@ -1,22 +1,22 @@
 spring:
   cloud:
-    #nacos
+    # nacos
     nacos:
       discovery:
         server-addr: 172.16.2.130:8848
-    #sentinel
+    # sentinel
     sentinel:
       transport:
         dashboard: 172.16.2.130:8787
       log:
         dir: logs/activiti/sentinel
-  #数据库配置
+  # 数据库配置
   datasource:
     url: jdbc:mysql://172.16.2.130:3306/activiti?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
     username: pandaz
     password: K0tXBGwNHBl#
     driver-class-name: com.mysql.cj.jdbc.Driver
-    #hikari连接池
+    # hikari连接池
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
       pool-name: ActAppHikariPool
@@ -31,18 +31,18 @@ spring:
     database-schema-update: true
     history-level: full
     db-history-used: true
-    #    最大连接数
+    # 最大连接数
     jdbcMaxActiveConnections: 200
-    #    最大空闲连接数
+    # 最大空闲连接数
     jdbcMaxIdleConnections: 20
-    #    连接检查时间,单位:毫秒
+    # 连接检查时间,单位:毫秒
     jdbcMaxCheckoutTime: 20000
-    #    连接无用后，是否主动连接
+    # 连接无用后，是否主动连接
     JdbcPingEnabled: true
-    #    连接无用检查并连接间隔，单位毫秒
+    # 连接无用检查并连接间隔，单位毫秒
     JdbcPingConnectionNotUsedFor: 3600000
 
-#自定义属性
+# 自定义属性
 custom:
-  #项目基础包
+  # 项目基础包
   projectPackage: com.pandaz

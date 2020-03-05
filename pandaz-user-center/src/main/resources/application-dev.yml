@@ -1,16 +1,16 @@
 spring:
   cloud:
-    #nacos
+    # nacos
     nacos:
       discovery:
         server-addr: 172.16.2.130:8848
-    #sentinel
+    # sentinel
     sentinel:
       transport:
         dashboard: 172.16.2.130:8787
       log:
         dir: logs/user-center/sentinel
-  #数据库配置
+  # 数据库配置
   datasource:
     ds0:
       jdbc-url: jdbc:mysql://172.16.2.130:3306/pandaz?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&allowMultiQueries=true
@@ -33,30 +33,30 @@ spring:
       connection-test-query: SELECT 1
       connection-timeout: 60000
 
-  #连接redis-sentinel集群配置
+  # 连接redis-sentinel集群配置
   redis:
     timeout: 6000ms
     password: 123456
     lettuce:
       pool:
-        #最大连接数
+        # 最大连接数
         max-active: 8
-        #最大阻塞等待时间(负数表示没限制)
+        # 最大阻塞等待时间(负数表示没限制)
         max-wait: -1ms
-        #最大空闲
+        # 最大空闲
         max-idle: 8
-        #最小空闲
+        # 最小空闲
         min-idle: 0
     sentinel:
       master: mymaster
       nodes: 172.16.2.130:26380,172.16.2.130:26381,172.16.2.130:26382
-#开启feign对sentinel的支持
-#SentinelFeignAutoConfiguration
+# 开启feign对sentinel的支持
+# SentinelFeignAutoConfiguration
 feign:
   sentinel:
     enabled: true
 
-#mybatis-plus配置
+# mybatis-plus配置
 mybatis-plus:
   mapper-locations: classpath:mybatis/mappers/**/*.xml
   type-aliases-package: com.pandaz.usercenter.entity
@@ -66,16 +66,16 @@ mybatis-plus:
       logic-delete-value: 1
       logic-not-delete-value: 0
 
-#自定义属性
+# 自定义属性
 custom:
-  #项目基础包
+  # 项目基础包
   projectPackage: com.pandaz
-  #调用服务名称
+  # 调用服务名称
   client:
     redis-server: pandaz-redis
     file-server: pandaz-file-server
   cache:
-    #缓存过期时间，单位：分钟
+    # 缓存过期时间，单位：分钟
     masterEntryTtlUnit: minutes
     masterEntryTtl: 1
     secondaryEntryTtlUnit: minutes

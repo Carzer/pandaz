@@ -3,7 +3,7 @@ server:
 spring:
   application:
     name: pandaz-task
-  #允许多个bean调用同一个服务
+  # 允许多个bean调用同一个服务
   main:
     allow-bean-definition-overriding: true
   profiles:

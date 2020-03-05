@@ -1,10 +1,10 @@
 spring:
   cloud:
-    #nacos
+    # nacos
     nacos:
       discovery:
         server-addr: 172.16.2.130:8848
-    #sentinel
+    # sentinel
     sentinel:
       transport:
         dashboard: 172.16.2.130:8787
@@ -13,7 +13,8 @@ spring:
     stream:
       bindings:
         input:
-          destination: queue.log.messages #要和output的destination一致, 这样才能将队列和写入消息的exchange关联起来
+          # 要和output的destination一致, 这样才能将队列和写入消息的exchange关联起来
+          destination: queue.log.messages
           group: logMessageConsumers
         output:
           destination: queue.log.messages
@@ -29,7 +30,14 @@ spring:
                 password: pandaz
                 virtual-host: my_vhost
 
-#自定义属性
+# 关闭rabbitmq的健康检查，以解决RabbitHealthIndicator: Rabbit health check failed
+# 具体原因，排查至RabbitAccessor的getConnectionFactory方法时暂停
+# 此为临时方案 todo
+management:
+  health:
+    rabbit:
+      enabled: false
+# 自定义属性
 custom:
-  #项目基础包
+  # 项目基础包
   projectPackage: com.pandaz

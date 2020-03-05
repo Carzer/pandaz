@@ -1,10 +1,10 @@
 server:
   port: 9005
-#当前配置环境
+# 当前配置环境
 spring:
   application:
     name: pandaz-file-server
-  #允许多个bean调用同一个服务
+  # 允许多个bean调用同一个服务
   main:
     allow-bean-definition-overriding: true
   profiles:

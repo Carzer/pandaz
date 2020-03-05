@@ -1,17 +1,17 @@
 spring:
   cloud:
-    #nacos
+    # nacos
     nacos:
       discovery:
         server-addr: 172.16.2.130:8848
-    #sentinel
+    # sentinel
     sentinel:
       transport:
         dashboard: 172.16.2.130:8787
       log:
         dir: logs/task/sentinel
 
-#自定义属性
+# 自定义属性
 custom:
-  #项目基础包
+  # 项目基础包
   projectPackage: com.pandaz

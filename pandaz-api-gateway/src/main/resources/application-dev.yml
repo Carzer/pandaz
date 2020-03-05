@@ -1,6 +1,6 @@
 spring:
   cloud:
-    #gateway
+    # gateway
     gateway:
       discovery:
         locator:
@@ -19,11 +19,11 @@ spring:
             - Path=/redis/**
           filters:
             - StripPrefix=1
-    #nacos
+    # nacos
     nacos:
       discovery:
         server-addr: 172.16.2.130:8848
-    #sentinel
+    # sentinel
     sentinel:
       transport:
         dashboard: 172.16.2.130:8787
@@ -36,9 +36,9 @@ security:
         # jwt公钥获取地址
         # Note: 需要先启动授权服务器
         key-uri: "http://localhost:9007/oauth/token_key"
-#自定义属性
+# 自定义属性
 custom:
-  #项目基础包
+  # 项目基础包
   projectPackage: com.pandaz
 
 
