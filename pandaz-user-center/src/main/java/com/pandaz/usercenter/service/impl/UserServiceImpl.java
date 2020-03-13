@@ -214,6 +214,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         if (StringUtils.hasText(userEntity.getCode())) {
             queryWrapper.likeRight("code", userEntity.getCode());
         }
+        queryWrapper.orderByDesc("created_date");
         return page(page, queryWrapper);
     }
 }
