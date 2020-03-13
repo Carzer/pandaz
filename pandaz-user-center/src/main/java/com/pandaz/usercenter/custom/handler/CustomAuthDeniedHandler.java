@@ -5,6 +5,7 @@ import com.pandaz.commons.util.ExecuteResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +19,8 @@ import java.io.PrintWriter;
  * @since 2019-10-25
  */
 @Slf4j
-public class AuthDeniedHandler implements AccessDeniedHandler {
+@Component
+public class CustomAuthDeniedHandler implements AccessDeniedHandler {
 
     /**
      * 权限不足

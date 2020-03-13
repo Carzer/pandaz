@@ -4,11 +4,10 @@ import com.pandaz.commons.custom.SecurityUser;
 import com.pandaz.commons.dto.usercenter.UserDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.CustomPasswordEncoder;
-import com.pandaz.commons.util.ExecuteResult;
-import com.pandaz.commons.util.PrintWriterUtil;
 import com.pandaz.usercenter.custom.CustomDaoAuthenticationProvider;
 import com.pandaz.usercenter.custom.constants.SysConstants;
-import com.pandaz.usercenter.custom.handler.AuthDeniedHandler;
+import com.pandaz.usercenter.custom.handler.CustomAuthDeniedHandler;
+import com.pandaz.usercenter.custom.handler.CustomLogoutSuccessHandler;
 import com.pandaz.usercenter.custom.handler.LoginFailureHandler;
 import com.pandaz.usercenter.custom.handler.LoginSuccessHandler;
 import com.pandaz.usercenter.entity.UserEntity;
@@ -17,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.LockedException;
@@ -54,6 +54,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserService userService;
 
     /**
+     * 登陆失败
+     */
+    private final LoginFailureHandler loginFailureHandler;
+
+    /**
+     * 访问拒绝
+     */
+    private final CustomAuthDeniedHandler authDeniedHandler;
+
+    /**
+     * 登出成功
+     */
+    private final CustomLogoutSuccessHandler logoutSuccessHandler;
+
+    /**
      * 获取登录用户的相关信息
      *
      * @param auth 权限管理器
@@ -77,22 +92,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 // 匹配/oauth
                 .antMatchers("/oauth/**").permitAll()
+                .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyRequest()
                 .authenticated().and()
                 .formLogin().permitAll()
                 // 登录成功后执行的方法
                 .successHandler(loginSuccessHandler())
                 // 登录失败执行的方法
-                .failureHandler(loginFailureHandler())
+                .failureHandler(loginFailureHandler)
                 .and()
                 // 允许登出
                 .logout().permitAll()
-                .logoutSuccessHandler((req, resp, authentication) -> PrintWriterUtil.write(resp, ExecuteResult.buildSuccess()))
+                .logoutSuccessHandler(logoutSuccessHandler)
                 .and()
                 // 关闭禁止跨域
                 .csrf().disable()
                 // 访问拒绝时执行的方法
-                .exceptionHandling().accessDeniedHandler(authDeniedHandler())
+                .exceptionHandling().accessDeniedHandler(authDeniedHandler)
         // 当前用户只准登陆一次，后续的禁止登陆
 //                .and().sessionManagement().maximumSessions(1)
 //                .maxSessionsPreventsLogin(true)
@@ -111,6 +127,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * 登录成功后执行的方法
+     * 创建Bean而不是直接注入，是因为会造成循环依赖
      *
      * @return com.pandaz.usercenter.util.LoginSuccessHandler
      */
@@ -118,27 +135,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public LoginSuccessHandler loginSuccessHandler() {
         return new LoginSuccessHandler();
     }
-
-    /**
-     * 登录失败执行的方法
-     *
-     * @return com.pandaz.usercenter.util.LoginFailureHandler
-     */
-    @Bean
-    public LoginFailureHandler loginFailureHandler() {
-        return new LoginFailureHandler();
-    }
-
-    /**
-     * 权限拒绝handler
-     *
-     * @return com.pandaz.usercenter.handler.AuthDeniedHandler
-     */
-    @Bean
-    public AuthDeniedHandler authDeniedHandler() {
-        return new AuthDeniedHandler();
-    }
-
 
     /**
      * 返回一个实现UserDetailsService接口的类

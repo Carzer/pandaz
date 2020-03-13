@@ -20,6 +20,7 @@ import java.util.HashMap;
 
 /**
  * 自定义token
+ * 只为已登陆用户提供服务
  *
  * @author Carzer
  * @since 2020-03-05
@@ -67,7 +68,7 @@ public class TokenController {
                 result.setData(resultMap);
             }
         } catch (Exception e) {
-            log.error("刷新token异常：", e);
+            log.error("刷新token异常：{}", e.getMessage());
             result.setError(e.getMessage());
         }
         return result;
