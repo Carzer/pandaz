@@ -88,4 +88,16 @@ public class UserEntity extends BaseEntity {
     @TableField("expire_at")
     private LocalDateTime expireAt;
 
+    /**
+     * 开始时间
+     */
+    @TableField(exist = false)
+    private LocalDateTime startDate;
+
+    /**
+     * 结束时间
+     */
+    @TableField(exist = false)
+    private LocalDateTime endDate;
+
 }

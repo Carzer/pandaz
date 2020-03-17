@@ -214,6 +214,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         if (StringUtils.hasText(userEntity.getCode())) {
             queryWrapper.likeRight("code", userEntity.getCode());
         }
+        if (userEntity.getLocked() != null) {
+            queryWrapper.eq("locked", userEntity.getLocked());
+        }
+        if (userEntity.getStartDate() != null) {
+            queryWrapper.ge("created_date", userEntity.getStartDate());
+        }
+        if (userEntity.getEndDate() != null) {
+            queryWrapper.le("created_date", userEntity.getEndDate());
+        }
         queryWrapper.orderByDesc("created_date");
         return page(page, queryWrapper);
     }
