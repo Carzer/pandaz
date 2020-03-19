@@ -100,4 +100,10 @@ public class UserEntity extends BaseEntity {
     @TableField(exist = false)
     private LocalDateTime endDate;
 
+    /**
+     * 是否过期的条件查询
+     */
+    @TableField(exist = false)
+    private String expireState;
+
 }

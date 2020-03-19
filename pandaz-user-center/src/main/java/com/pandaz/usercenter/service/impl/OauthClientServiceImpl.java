@@ -47,6 +47,11 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Oauth
     private final OauthClientMapper oauthClientMapper;
 
     /**
+     * clientIdColumn
+     */
+    private final String clientIdColumn = "client_id";
+
+    /**
      * 根据客户端ID查询客户端
      * <p>
      * {@link TokenEndpoint#postAccessToken}
@@ -61,7 +66,7 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Oauth
             return null;
         }
         QueryWrapper<OauthClientEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("client_id", clientId);
+        queryWrapper.eq(clientIdColumn, clientId);
         OauthClientEntity oauthClientEntity = oauthClientMapper.selectOne(queryWrapper);
         if (oauthClientEntity == null) {
             throw new NoSuchClientException(String.format("No client with requested id: %s", clientId));
@@ -79,7 +84,7 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Oauth
     @Override
     public int deleteByClientId(OauthClientEntity oauthClientEntity) {
         UpdateWrapper<OauthClientEntity> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq("client_id", oauthClientEntity.getClientId());
+        updateWrapper.eq(clientIdColumn, oauthClientEntity.getClientId());
         return oauthClientMapper.delete(updateWrapper);
     }
 
@@ -93,7 +98,7 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Oauth
     @Override
     public OauthClientEntity findByClientId(String clientId) {
         QueryWrapper<OauthClientEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("client_id", clientId);
+        queryWrapper.eq(clientIdColumn, clientId);
         return oauthClientMapper.selectOne(queryWrapper);
     }
 
@@ -107,7 +112,7 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Oauth
     @Override
     public int updateByClientId(OauthClientEntity oauthClientEntity) {
         UpdateWrapper<OauthClientEntity> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq("client_id", oauthClientEntity.getClientId());
+        updateWrapper.eq(clientIdColumn, oauthClientEntity.getClientId());
         return oauthClientMapper.update(oauthClientEntity, updateWrapper);
     }
 
@@ -143,7 +148,7 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Oauth
         Page<OauthClientEntity> page = new Page<>(oauthClientEntity.getPageNum(), oauthClientEntity.getPageSize());
         QueryWrapper<OauthClientEntity> queryWrapper = new QueryWrapper<>();
         if (StringUtils.hasText(oauthClientEntity.getClientId())) {
-            queryWrapper.likeRight("client_id", oauthClientEntity.getClientId());
+            queryWrapper.likeRight(clientIdColumn, oauthClientEntity.getClientId());
         }
         return page(page, queryWrapper);
     }

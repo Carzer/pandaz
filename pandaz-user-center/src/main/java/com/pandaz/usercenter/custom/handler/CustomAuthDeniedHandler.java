@@ -30,7 +30,8 @@ public class CustomAuthDeniedHandler implements AccessDeniedHandler {
      * @param e                   e
      */
     @Override
-    public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException {
+    public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+                       AccessDeniedException e) throws IOException {
         log.warn(e.getMessage());
         httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
         httpServletResponse.setContentType("application/json;charset=utf-8");

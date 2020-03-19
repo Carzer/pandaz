@@ -82,4 +82,9 @@ public class UserDTO extends BaseDTO {
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime endDate;
+
+    /**
+     * 是否过期的条件查询
+     */
+    private String expireState;
 }

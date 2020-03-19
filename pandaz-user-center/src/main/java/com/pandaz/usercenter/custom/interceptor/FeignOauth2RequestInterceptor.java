@@ -23,7 +23,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 @Component
 public class FeignOauth2RequestInterceptor implements RequestInterceptor {
 
-
     /**
      * 执行方法
      *

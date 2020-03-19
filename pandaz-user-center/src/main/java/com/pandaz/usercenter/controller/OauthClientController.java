@@ -11,6 +11,7 @@ import com.pandaz.usercenter.service.OauthClientService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -146,5 +147,6 @@ public class OauthClientController {
      * @param oauthClientDTO 客户端信息
      */
     private void check(OauthClientDTO oauthClientDTO) {
+        Assert.hasText(oauthClientDTO.getClientId(),"clientId不能为空");
     }
 }

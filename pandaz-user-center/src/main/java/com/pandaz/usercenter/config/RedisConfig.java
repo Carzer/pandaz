@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
@@ -31,6 +30,9 @@ import java.time.temporal.ChronoUnit;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class RedisConfig {
 
+    /**
+     * 自定义属性
+     */
     private final CustomProperties customProperties;
 
     /**

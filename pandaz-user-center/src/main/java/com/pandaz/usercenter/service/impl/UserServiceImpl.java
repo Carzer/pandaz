@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pandaz.commons.util.CustomPasswordEncoder;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.config.SecurityConfig;
+import com.pandaz.usercenter.custom.constants.ExpireStateEnum;
 import com.pandaz.usercenter.custom.constants.SysConstants;
 import com.pandaz.usercenter.entity.GroupEntity;
 import com.pandaz.usercenter.entity.UserEntity;
@@ -208,6 +209,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     public IPage<UserEntity> getPage(UserEntity userEntity) {
         Page<UserEntity> page = new Page<>(userEntity.getPageNum(), userEntity.getPageSize());
         QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
+        String createdDateColumn = "created_date";
         if (StringUtils.hasText(userEntity.getName())) {
             queryWrapper.likeRight("name", userEntity.getName());
         }
@@ -218,12 +220,44 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
             queryWrapper.eq("locked", userEntity.getLocked());
         }
         if (userEntity.getStartDate() != null) {
-            queryWrapper.ge("created_date", userEntity.getStartDate());
+            queryWrapper.ge(createdDateColumn, userEntity.getStartDate());
         }
         if (userEntity.getEndDate() != null) {
-            queryWrapper.le("created_date", userEntity.getEndDate());
+            queryWrapper.le(createdDateColumn, userEntity.getEndDate());
         }
-        queryWrapper.orderByDesc("created_date");
+        String expireState = userEntity.getExpireState();
+        if (StringUtils.hasText(expireState)) {
+            if (ExpireStateEnum.active.getVal().equals(expireState)) {
+                queryWrapper.ge("expire_at", LocalDateTime.now());
+            } else if (ExpireStateEnum.expired.getVal().equals(expireState)) {
+                queryWrapper.lt("expire_at", LocalDateTime.now());
+            }
+        }
+        queryWrapper.orderByDesc(createdDateColumn);
         return page(page, queryWrapper);
+    }
+
+    /**
+     * 批量删除用户
+     *
+     * @param deletedBy   删除人
+     * @param deletedDate 删除时间
+     * @param codes       编码
+     * @return 执行结果
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
+        if (CollectionUtils.isEmpty(codes)) {
+            return 0;
+        }
+        codes.forEach((code) -> {
+            UserEntity userEntity = new UserEntity();
+            userEntity.setCode(code);
+            userEntity.setDeletedBy(deletedBy);
+            userEntity.setDeletedDate(deletedDate);
+            deleteByCode(userEntity);
+        });
+        return codes.size();
     }
 }

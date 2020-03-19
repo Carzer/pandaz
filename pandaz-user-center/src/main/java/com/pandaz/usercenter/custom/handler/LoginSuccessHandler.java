@@ -30,6 +30,10 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
      */
     private TokenUtil tokenUtil;
 
+    /**
+     * set方法
+     * @param tokenUtil tokenUtil
+     */
     @Autowired
     public void setTokenUtil(TokenUtil tokenUtil) {
         this.tokenUtil = tokenUtil;

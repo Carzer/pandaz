@@ -18,6 +18,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * 用户
@@ -118,8 +119,8 @@ public class UserController {
         try {
             check(userDTO);
             UserEntity userEntity = BeanCopyUtil.copy(userDTO, UserEntity.class);
-            userEntity.setCreatedBy(principal.getName());
-            userEntity.setCreatedDate(LocalDateTime.now());
+            userEntity.setUpdatedBy(principal.getName());
+            userEntity.setUpdatedDate(LocalDateTime.now());
             userService.updateByCode(userEntity);
             result.setData("更新成功。");
         } catch (Exception e) {
@@ -132,16 +133,15 @@ public class UserController {
     /**
      * 删除方法
      *
-     * @param userDTO userDTO
-     * @return com.pandaz.commons.util.ExecuteResult<com.pandaz.usercenter.dto.UserDTO>
+     * @param codes     编码
+     * @param principal 当前用户
+     * @return 执行结果
      */
     @DeleteMapping
-    public ExecuteResult<String> delete(@Valid @RequestBody UserDTO userDTO, Principal principal) {
+    public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
-            userDTO.setDeletedBy(principal.getName());
-            userDTO.setDeletedDate(LocalDateTime.now());
-            userService.deleteByCode(BeanCopyUtil.copy(userDTO, UserEntity.class));
+            userService.deleteByCodes(principal.getName(), LocalDateTime.now(), codes);
             result.setData("删除成功。");
         } catch (Exception e) {
             log.error("删除方法异常：", e);
@@ -158,6 +158,6 @@ public class UserController {
     private void check(UserDTO userDTO) {
         Assert.hasText(userDTO.getLoginName(), "登陆名不能为空");
         Assert.hasText(userDTO.getName(), "用户名不能为空");
-        Assert.hasText(userDTO.getPhone(), "电话好吗不能为空");
+        Assert.hasText(userDTO.getPhone(), "电话号码不能为空");
     }
 }

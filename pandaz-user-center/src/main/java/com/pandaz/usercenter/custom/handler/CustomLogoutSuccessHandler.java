@@ -1,7 +1,6 @@
 package com.pandaz.usercenter.custom.handler;
 
 import com.pandaz.commons.util.ExecuteResult;
-import com.pandaz.commons.util.IpUtil;
 import com.pandaz.commons.util.PrintWriterUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -25,10 +24,11 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 
     /**
      * 登出成功
-     * @param request request
-     * @param response response
+     *
+     * @param request        request
+     * @param response       response
      * @param authentication authentication
-     * @throws IOException IOException
+     * @throws IOException      IOException
      * @throws ServletException ServletException
      */
     @Override

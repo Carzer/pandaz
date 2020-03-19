@@ -78,6 +78,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     private final UserDetailsService userDetailsService;
 
+    /**
+     * 自定义token处理
+     */
     private final CustomTokenEnhancer customTokenEnhancer;
 
     /**

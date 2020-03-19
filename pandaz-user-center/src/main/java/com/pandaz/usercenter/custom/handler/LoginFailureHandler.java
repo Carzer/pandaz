@@ -30,7 +30,9 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
      * @param e                   e
      */
     @Override
-    public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException {
+    public void onAuthenticationFailure(HttpServletRequest httpServletRequest,
+                                        HttpServletResponse httpServletResponse, AuthenticationException e)
+            throws IOException {
         String errorMsg = e.getMessage();
         log.warn(errorMsg);
         ExecuteResult<String> result = new ExecuteResult<>();

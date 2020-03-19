@@ -22,6 +22,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Component
 public class SecurityExceptionHandler {
 
+    /**
+     * 异常捕获
+     *
+     * @param e 异常
+     * @return 执行结果
+     */
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(AuthenticationException.class)
     public ExecuteResult<String> authFailed(AuthenticationException e) {

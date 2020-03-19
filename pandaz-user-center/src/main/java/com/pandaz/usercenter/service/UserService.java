@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.pandaz.usercenter.entity.UserEntity;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 /**
  * 用户信息相关服务
  *
@@ -59,4 +62,14 @@ public interface UserService extends IService<UserEntity> {
      * @return 分页结果
      */
     IPage<UserEntity> getPage(UserEntity userEntity);
+
+    /**
+     * 批量删除用户
+     *
+     * @param deletedBy   删除人
+     * @param deletedDate 删除时间
+     * @param codes       编码
+     * @return 执行结果
+     */
+    int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes);
 }
