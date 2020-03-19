@@ -147,6 +147,6 @@ public class OauthClientController {
      * @param oauthClientDTO 客户端信息
      */
     private void check(OauthClientDTO oauthClientDTO) {
-        Assert.hasText(oauthClientDTO.getClientId(),"clientId不能为空");
+        Assert.hasText(oauthClientDTO.getClientId(), "clientId不能为空");
     }
 }

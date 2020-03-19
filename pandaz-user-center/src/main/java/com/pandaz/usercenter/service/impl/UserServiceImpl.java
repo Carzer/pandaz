@@ -227,9 +227,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         }
         String expireState = userEntity.getExpireState();
         if (StringUtils.hasText(expireState)) {
-            if (ExpireStateEnum.active.getVal().equals(expireState)) {
+            if (ExpireStateEnum.ACTIVE.getVal().equals(expireState)) {
                 queryWrapper.ge("expire_at", LocalDateTime.now());
-            } else if (ExpireStateEnum.expired.getVal().equals(expireState)) {
+            } else if (ExpireStateEnum.EXPIRED.getVal().equals(expireState)) {
                 queryWrapper.lt("expire_at", LocalDateTime.now());
             }
         }
@@ -251,7 +251,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         if (CollectionUtils.isEmpty(codes)) {
             return 0;
         }
-        codes.forEach((code) -> {
+        codes.forEach(code -> {
             UserEntity userEntity = new UserEntity();
             userEntity.setCode(code);
             userEntity.setDeletedBy(deletedBy);

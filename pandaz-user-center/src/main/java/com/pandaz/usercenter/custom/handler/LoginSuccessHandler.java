@@ -32,6 +32,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 
     /**
      * set方法
+     *
      * @param tokenUtil tokenUtil
      */
     @Autowired
