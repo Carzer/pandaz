@@ -10,6 +10,7 @@ import com.pandaz.usercenter.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -137,6 +138,7 @@ public class UserController {
      * @param principal 当前用户
      * @return 执行结果
      */
+    @PreAuthorize("!#codes.contains('admin')")
     @DeleteMapping
     public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
