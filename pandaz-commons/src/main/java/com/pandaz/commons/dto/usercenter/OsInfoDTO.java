@@ -3,8 +3,10 @@ package com.pandaz.commons.dto.usercenter;
 import com.pandaz.commons.dto.BaseDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
 
 /**
  * 系统信息DTO
@@ -39,6 +41,17 @@ public class OsInfoDTO extends BaseDTO {
      */
     private String parentCode;
 
+    /**
+     * 开始时间
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime startDate;
+
+    /**
+     * 结束时间
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime endDate;
 
     /**
      * 是否锁定

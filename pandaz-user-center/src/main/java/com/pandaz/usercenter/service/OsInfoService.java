@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.pandaz.usercenter.entity.OsInfoEntity;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 /**
  * 系统信息服务
  *
@@ -51,4 +54,14 @@ public interface OsInfoService extends IService<OsInfoEntity> {
      * @return 执行结果
      */
     int deleteByCode(OsInfoEntity osInfoEntity);
+
+    /**
+     * 批量删除系统信息
+     *
+     * @param deletedBy   删除人
+     * @param deletedDate 删除时间
+     * @param codes       编码
+     * @return 执行结果
+     */
+    int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes);
 }

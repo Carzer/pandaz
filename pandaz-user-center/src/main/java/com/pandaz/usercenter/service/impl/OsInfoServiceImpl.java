@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pandaz.commons.util.UuidUtil;
+import com.pandaz.usercenter.custom.constants.SysConstants;
 import com.pandaz.usercenter.entity.OsInfoEntity;
 import com.pandaz.usercenter.mapper.OsInfoMapper;
 import com.pandaz.usercenter.service.OsInfoService;
@@ -13,7 +14,11 @@ import com.pandaz.usercenter.util.CheckUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 系统信息服务
@@ -80,6 +85,16 @@ public class OsInfoServiceImpl extends ServiceImpl<OsInfoMapper, OsInfoEntity> i
         if (StringUtils.hasText(osInfoEntity.getName())) {
             queryWrapper.likeRight("name", osInfoEntity.getName());
         }
+        if (osInfoEntity.getLocked() != null) {
+            queryWrapper.eq("locked", osInfoEntity.getLocked());
+        }
+        if (osInfoEntity.getStartDate() != null) {
+            queryWrapper.ge(SysConstants.CREATED_DATE_COLUMN, osInfoEntity.getStartDate());
+        }
+        if (osInfoEntity.getEndDate() != null) {
+            queryWrapper.le(SysConstants.CREATED_DATE_COLUMN, osInfoEntity.getEndDate());
+        }
+        queryWrapper.orderByDesc(SysConstants.CREATED_DATE_COLUMN);
         return page(page, queryWrapper);
     }
 
@@ -105,5 +120,28 @@ public class OsInfoServiceImpl extends ServiceImpl<OsInfoMapper, OsInfoEntity> i
     @Override
     public int deleteByCode(OsInfoEntity osInfoEntity) {
         return osInfoMapper.logicDelete(osInfoEntity);
+    }
+
+    /**
+     * 批量删除系统信息
+     *
+     * @param deletedBy   删除人
+     * @param deletedDate 删除时间
+     * @param codes       编码
+     * @return 执行结果
+     */
+    @Override
+    public int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
+        if (CollectionUtils.isEmpty(codes)) {
+            return 0;
+        }
+        codes.forEach(code -> {
+            OsInfoEntity osInfoEntity = new OsInfoEntity();
+            osInfoEntity.setCode(code);
+            osInfoEntity.setDeletedBy(deletedBy);
+            osInfoEntity.setDeletedDate(deletedDate);
+            deleteByCode(osInfoEntity);
+        });
+        return codes.size();
     }
 }

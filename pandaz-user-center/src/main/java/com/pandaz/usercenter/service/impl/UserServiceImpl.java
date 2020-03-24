@@ -207,7 +207,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     public IPage<UserEntity> getPage(UserEntity userEntity) {
         Page<UserEntity> page = new Page<>(userEntity.getPageNum(), userEntity.getPageSize());
         QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
-        String createdDateColumn = "created_date";
+
         if (StringUtils.hasText(userEntity.getName())) {
             queryWrapper.likeRight("name", userEntity.getName());
         }
@@ -218,10 +218,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
             queryWrapper.eq("locked", userEntity.getLocked());
         }
         if (userEntity.getStartDate() != null) {
-            queryWrapper.ge(createdDateColumn, userEntity.getStartDate());
+            queryWrapper.ge(SysConstants.CREATED_DATE_COLUMN, userEntity.getStartDate());
         }
         if (userEntity.getEndDate() != null) {
-            queryWrapper.le(createdDateColumn, userEntity.getEndDate());
+            queryWrapper.le(SysConstants.CREATED_DATE_COLUMN, userEntity.getEndDate());
         }
         String expireState = userEntity.getExpireState();
         if (StringUtils.hasText(expireState)) {
@@ -231,7 +231,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
                 queryWrapper.lt("expire_at", LocalDateTime.now());
             }
         }
-        queryWrapper.orderByDesc(createdDateColumn);
+        queryWrapper.orderByDesc(SysConstants.CREATED_DATE_COLUMN);
         return page(page, queryWrapper);
     }
 

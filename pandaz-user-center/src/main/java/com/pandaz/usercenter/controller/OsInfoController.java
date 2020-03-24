@@ -17,6 +17,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * 系统信息
@@ -122,16 +123,14 @@ public class OsInfoController {
     /**
      * 删除方法
      *
-     * @param osInfoDTO 系统信息
+     * @param codes 系统信息
      * @return 执行结果
      */
     @DeleteMapping
-    public ExecuteResult<String> delete(@Valid @RequestBody OsInfoDTO osInfoDTO, Principal principal) {
+    public ExecuteResult<String> delete(@Valid @RequestBody List<String> codes, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
-            osInfoDTO.setDeletedBy(principal.getName());
-            osInfoDTO.setDeletedDate(LocalDateTime.now());
-            osInfoService.deleteByCode(BeanCopyUtil.copy(osInfoDTO, OsInfoEntity.class));
+            osInfoService.deleteByCodes(principal.getName(), LocalDateTime.now(), codes);
             result.setData("删除成功");
         } catch (Exception e) {
             log.error("删除方法异常：", e);

@@ -7,6 +7,8 @@ import com.pandaz.commons.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.time.LocalDateTime;
+
 /**
  * 系统信息
  *
@@ -43,6 +45,18 @@ public class OsInfoEntity extends BaseEntity {
      */
     @TableField("parent_code")
     private String parentCode;
+
+    /**
+     * 开始时间
+     */
+    @TableField(exist = false)
+    private LocalDateTime startDate;
+
+    /**
+     * 结束时间
+     */
+    @TableField(exist = false)
+    private LocalDateTime endDate;
 
     /**
      * 是否锁定(0:未锁定，1:已锁定)
