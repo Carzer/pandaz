@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
+
 /**
  * 菜单服务
  *
@@ -108,8 +110,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
      */
     @Override
     public int deleteByCode(MenuEntity menuEntity) {
-        UpdateWrapper<MenuEntity> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq("code", menuEntity.getCode());
-        return menuMapper.delete(updateWrapper);
+        return menuMapper.logicDelete(menuEntity);
+    }
+
+    @Override
+    public List<MenuEntity> getAll(MenuEntity menuEntity) {
+        return menuMapper.getAllAsTree(menuEntity);
     }
 }

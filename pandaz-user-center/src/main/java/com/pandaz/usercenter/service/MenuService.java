@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.pandaz.usercenter.entity.MenuEntity;
 
+import java.util.List;
+
 /**
  * 菜单服务
  *
@@ -51,4 +53,12 @@ public interface MenuService extends IService<MenuEntity> {
      * @return 删除结果o
      */
     int deleteByCode(MenuEntity menuEntity);
+
+    /**
+     * 获取所有菜单
+     *
+     * @param menuEntity menuEntity
+     * @return 执行结果
+     */
+    List<MenuEntity> getAll(MenuEntity menuEntity);
 }

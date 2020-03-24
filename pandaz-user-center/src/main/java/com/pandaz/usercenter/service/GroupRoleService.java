@@ -3,6 +3,7 @@ package com.pandaz.usercenter.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.pandaz.usercenter.entity.GroupEntity;
 import com.pandaz.usercenter.entity.GroupRoleEntity;
+import com.pandaz.usercenter.entity.RoleEntity;
 
 import java.util.List;
 
@@ -37,4 +38,13 @@ public interface GroupRoleService extends IService<GroupRoleEntity> {
      * @return int
      */
     int deleteByGroupCode(GroupEntity groupEntity);
+
+
+    /**
+     * 跟角色编码删除
+     *
+     * @param roleEntity 删除信息
+     * @return int
+     */
+    int deleteByRoleCode(RoleEntity roleEntity);
 }

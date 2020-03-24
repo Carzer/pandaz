@@ -83,9 +83,7 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Oauth
     @CacheEvict(key = "#oauthClientEntity.clientId")
     @Override
     public int deleteByClientId(OauthClientEntity oauthClientEntity) {
-        UpdateWrapper<OauthClientEntity> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq(CLIENT_ID_COLUMN, oauthClientEntity.getClientId());
-        return oauthClientMapper.delete(updateWrapper);
+        return oauthClientMapper.logicDelete(oauthClientEntity);
     }
 
     /**
@@ -94,7 +92,6 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Oauth
      * @param clientId 客户端ID
      * @return 执行结果
      */
-    @Cacheable(key = "#clientId")
     @Override
     public OauthClientEntity findByClientId(String clientId) {
         QueryWrapper<OauthClientEntity> queryWrapper = new QueryWrapper<>();

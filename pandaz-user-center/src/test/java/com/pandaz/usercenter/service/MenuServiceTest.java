@@ -1,10 +1,17 @@
 package com.pandaz.usercenter.service;
 
+import com.pandaz.commons.constants.CommonConstants;
+import com.pandaz.commons.dto.usercenter.MenuDTO;
+import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.usercenter.BasisUnitTest;
+import com.pandaz.usercenter.custom.constants.SysConstants;
 import com.pandaz.usercenter.entity.MenuEntity;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 菜单测试
@@ -52,6 +59,20 @@ public class MenuServiceTest extends BasisUnitTest {
     public void deleteByCode() {
         MenuEntity menuEntity = new MenuEntity();
         menuEntity.setCode("menu_test");
+        menuEntity.setDeletedBy("admin");
+        menuEntity.setDeletedDate(LocalDateTime.now());
         menuService.deleteByCode(menuEntity);
+    }
+
+    @Test
+    public void getAll(){
+        MenuEntity menuEntity = new MenuEntity();
+        menuEntity.setParentCode(CommonConstants.ROOT_MENU_CODE);
+        menuEntity.setCode(CommonConstants.ROOT_MENU_CODE);
+        menuEntity.setOsCode(SysConstants.DEFAULT_SYS_CODE);
+        List<MenuEntity> list = menuService.getAll(menuEntity);
+        menuEntity.setChildren(list);
+        MenuDTO menuDTO = BeanCopyUtil.copy(menuEntity, MenuDTO.class);
+        System.out.println(menuDTO);
     }
 }

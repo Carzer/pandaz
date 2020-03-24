@@ -1,6 +1,5 @@
 package com.pandaz.usercenter.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pandaz.usercenter.entity.UserGroupEntity;
 
 /**
@@ -9,12 +8,20 @@ import com.pandaz.usercenter.entity.UserGroupEntity;
  * @author Carzer
  * @since 2019-10-23
  */
-public interface UserGroupMapper extends BaseMapper<UserGroupEntity> {
+public interface UserGroupMapper extends UcBaseMapper<UserGroupEntity> {
     /**
-     * 插入方法
+     * 逻辑删除
      *
-     * @param userGroup userGroup
-     * @return 插入结果
+     * @param userGroupEntity 删除信息
+     * @return 执行结果
      */
-    int insertSelective(UserGroupEntity userGroup);
+    int logicDeleteByUserCode(UserGroupEntity userGroupEntity);
+
+    /**
+     * 逻辑删除
+     *
+     * @param userGroupEntity 删除信息
+     * @return 执行结果
+     */
+    int logicDeleteByGroupCode(UserGroupEntity userGroupEntity);
 }

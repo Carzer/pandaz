@@ -51,7 +51,7 @@
         values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
         #{parentCode,jdbcType=VARCHAR}, #{isPrivate,jdbcType=TINYINT}, #{createdBy,jdbcType=VARCHAR},
         #{createdDate,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, #{updatedDate,jdbcType=TIMESTAMP},
-        #{deletedBy,jdbcType=VARCHAR}, #{deletedDate,jdbcType=TIMESTAMP}, #{deletedFlag,jdbcType=TINYINT},
+        #{deletedBy,jdbcType=VARCHAR}, #{deletedDate,jdbcType=TIMESTAMP}, #{deletedFlag,jdbcType=VARCHAR},
         #{locked,jdbcType=TINYINT}, #{version,jdbcType=INTEGER})
     </insert>
     <insert id="insertSelective" parameterType="com.pandaz.usercenter.entity.RoleEntity">
@@ -135,7 +135,7 @@
                 #{deletedDate,jdbcType=TIMESTAMP},
             </if>
             <if test="deletedFlag != null">
-                #{deletedFlag,jdbcType=TINYINT},
+                #{deletedFlag,jdbcType=VARCHAR},
             </if>
             <if test="locked != null">
                 #{locked,jdbcType=TINYINT},
@@ -193,4 +193,55 @@
         on gp_role.role_code = role.code
         where usr.code = #{userCode};
     </select>
+    <!-- 逻辑删除 -->
+    <update id="logicDelete">
+        update t_sys_role
+        <set>
+            <if test="deletedBy != null">
+                deleted_by = #{deletedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="deletedDate != null">
+                deleted_date = #{deletedDate,jdbcType=TIMESTAMP},
+            </if>
+            deleted_flag = id
+        </set>
+        <where>
+            deleted_flag='0'
+            <choose>
+                <when test="code != null and code != ''">
+                    and code = #{code,jdbcType=VARCHAR}
+                </when>
+                <otherwise>
+                    and 1 = 2
+                </otherwise>
+            </choose>
+        </where>
+    </update>
+    <!-- 批量逻辑删除 -->
+    <update id="batchLogicDelete" parameterType="java.util.HashMap">
+        update t_sys_role
+        <set>
+            <if test="deletedBy != null">
+                deleted_by = #{deletedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="deletedDate != null">
+                deleted_date = #{deletedDate,jdbcType=TIMESTAMP},
+            </if>
+            deleted_flag = id
+        </set>
+        <where>
+            deleted_flag='0'
+            <choose>
+                <when test="list != null and list.size() > 0">
+                    and code in
+                    <foreach collection="list" open="(" close=")" index="index" item="item" separator=",">
+                        #{item,jdbcType=VARCHAR}
+                    </foreach>
+                </when>
+                <otherwise>
+                    and 1 = 2
+                </otherwise>
+            </choose>
+        </where>
+    </update>
 </mapper>

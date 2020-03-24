@@ -6,6 +6,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 /**
  * 系统信息测试
  *
@@ -52,6 +54,8 @@ public class OsInfoServiceTest extends BasisUnitTest {
     public void deleteByCode() {
         OsInfoEntity osInfoEntity = new OsInfoEntity();
         osInfoEntity.setCode("os_test");
+        osInfoEntity.setDeletedBy("admin");
+        osInfoEntity.setDeletedDate(LocalDateTime.now());
         osInfoService.deleteByCode(osInfoEntity);
     }
 }

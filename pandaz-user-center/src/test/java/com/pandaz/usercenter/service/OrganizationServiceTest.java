@@ -6,6 +6,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 /**
  * 组织信息测试
  *
@@ -52,6 +54,8 @@ public class OrganizationServiceTest extends BasisUnitTest {
     public void deleteByCode() {
         OrganizationEntity organizationEntity = new OrganizationEntity();
         organizationEntity.setCode("org_test");
+        organizationEntity.setDeletedBy("admin");
+        organizationEntity.setDeletedDate(LocalDateTime.now());
         organizationService.deleteByCode(organizationEntity);
     }
 }

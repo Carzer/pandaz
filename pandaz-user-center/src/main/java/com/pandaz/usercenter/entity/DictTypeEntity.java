@@ -1,6 +1,5 @@
 package com.pandaz.usercenter.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -26,8 +25,8 @@ public class DictTypeEntity extends BaseEntity {
     /**
      * 主键
      */
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    @TableId("id")
+    private String id;
 
     /**
      * 类型名称

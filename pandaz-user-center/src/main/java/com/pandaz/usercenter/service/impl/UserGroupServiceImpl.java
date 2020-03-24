@@ -1,8 +1,8 @@
 package com.pandaz.usercenter.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.pandaz.usercenter.entity.GroupEntity;
 import com.pandaz.usercenter.entity.UserEntity;
 import com.pandaz.usercenter.entity.UserGroupEntity;
 import com.pandaz.usercenter.mapper.UserGroupMapper;
@@ -49,9 +49,26 @@ public class UserGroupServiceImpl extends ServiceImpl<UserGroupMapper, UserGroup
      */
     @Override
     public int deleteByUserCode(UserEntity userEntity) {
-        UpdateWrapper<UserGroupEntity> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq("user_code", userEntity.getCode());
-        return userGroupMapper.delete(updateWrapper);
+        UserGroupEntity userGroupEntity = new UserGroupEntity();
+        userGroupEntity.setUserCode(userEntity.getCode());
+        userGroupEntity.setDeletedBy(userEntity.getDeletedBy());
+        userGroupEntity.setDeletedDate(userEntity.getDeletedDate());
+        return userGroupMapper.logicDeleteByUserCode(userGroupEntity);
+    }
+
+    /**
+     * 根据用户组编码删除
+     *
+     * @param groupEntity groupEntity
+     * @return int
+     */
+    @Override
+    public int deleteByGroupCode(GroupEntity groupEntity) {
+        UserGroupEntity userGroupEntity = new UserGroupEntity();
+        userGroupEntity.setGroupCode(groupEntity.getCode());
+        userGroupEntity.setDeletedBy(groupEntity.getDeletedBy());
+        userGroupEntity.setDeletedDate(groupEntity.getDeletedDate());
+        return userGroupMapper.logicDeleteByGroupCode(userGroupEntity);
     }
 
     /**

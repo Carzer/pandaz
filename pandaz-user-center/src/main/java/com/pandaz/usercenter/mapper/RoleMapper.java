@@ -1,6 +1,5 @@
 package com.pandaz.usercenter.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pandaz.usercenter.entity.RoleDetailEntity;
 import com.pandaz.usercenter.entity.RoleEntity;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +12,7 @@ import java.util.List;
  * @author Carzer
  * @since 2019-10-23
  */
-public interface RoleMapper extends BaseMapper<RoleEntity> {
+public interface RoleMapper extends UcBaseMapper<RoleEntity> {
 
     /**
      * 根据用户编码获取非私有角色信息
@@ -38,13 +37,5 @@ public interface RoleMapper extends BaseMapper<RoleEntity> {
      * @return java.util.List<com.pandaz.usercenter.entity.RoleEntity>
      */
     List<RoleDetailEntity> getAllRoles(@Value("userCode") String userCode);
-
-    /**
-     * 插入方法
-     *
-     * @param role role
-     * @return 插入结果
-     */
-    int insertSelective(RoleEntity role);
 
 }

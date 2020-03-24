@@ -20,6 +20,26 @@
         <result column="locked" jdbcType="TINYINT" property="locked"/>
         <result column="version" jdbcType="INTEGER" property="version"/>
     </resultMap>
+    <resultMap id="CascadeResultMap" type="com.pandaz.usercenter.entity.MenuEntity">
+        <result column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="os_code" jdbcType="VARCHAR" property="osCode"/>
+        <result column="parent_code" jdbcType="VARCHAR" property="parentCode"/>
+        <result column="icon" jdbcType="VARCHAR" property="icon"/>
+        <result column="sorting" jdbcType="INTEGER" property="sorting"/>
+        <result column="is_leaf_node" jdbcType="TINYINT" property="isLeafNode"/>
+        <result column="created_by" jdbcType="VARCHAR" property="createdBy"/>
+        <result column="created_date" jdbcType="TIMESTAMP" property="createdDate"/>
+        <result column="updated_by" jdbcType="VARCHAR" property="updatedBy"/>
+        <result column="updated_date" jdbcType="TIMESTAMP" property="updatedDate"/>
+        <result column="deleted_by" jdbcType="VARCHAR" property="deletedBy"/>
+        <result column="deleted_date" jdbcType="TIMESTAMP" property="deletedDate"/>
+        <result column="deleted_flag" jdbcType="TINYINT" property="deletedFlag"/>
+        <result column="locked" jdbcType="TINYINT" property="locked"/>
+        <result column="version" jdbcType="INTEGER" property="version"/>
+        <association property="children" column="code" select="selectByParentCode"/>
+    </resultMap>
     <sql id="Base_Column_List">
         id, name, code, os_code,
         parent_code, icon,
@@ -39,7 +59,7 @@
         #{osCode,jdbcType=VARCHAR}, #{parentCode,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR},
         #{sorting,jdbcType=INTEGER}, #{isLeafNode,jdbcType=TINYINT}, #{createdBy,jdbcType=VARCHAR},
         #{createdDate,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, #{updatedDate,jdbcType=TIMESTAMP},
-        #{deletedBy,jdbcType=VARCHAR}, #{deletedDate,jdbcType=TIMESTAMP}, #{deletedFlag,jdbcType=TINYINT},
+        #{deletedBy,jdbcType=VARCHAR}, #{deletedDate,jdbcType=TIMESTAMP}, #{deletedFlag,jdbcType=VARCHAR},
         #{locked,jdbcType=TINYINT}, #{version,jdbcType=INTEGER})
     </insert>
     <insert id="insertSelective" parameterType="com.pandaz.usercenter.entity.MenuEntity">
@@ -141,7 +161,7 @@
                 #{deletedDate,jdbcType=TIMESTAMP},
             </if>
             <if test="deletedFlag != null">
-                #{deletedFlag,jdbcType=TINYINT},
+                #{deletedFlag,jdbcType=VARCHAR},
             </if>
             <if test="locked != null">
                 #{locked,jdbcType=TINYINT},
@@ -151,4 +171,75 @@
             </if>
         </trim>
     </insert>
+    <select id="getAllAsTree" resultMap="CascadeResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_sys_menu
+        <where>
+            deleted_flag = '0'
+            <if test="parentCode != null and parentCode !=''">
+                and parent_code=#{parentCode,jdbcType=VARCHAR}
+            </if>
+            <if test="osCode != null and osCode !=''">
+                and os_code=#{osCode,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+    <select id="selectByParentCode" resultMap="CascadeResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from t_sys_menu
+        where parent_code = #{parentCode,jdbcType=VARCHAR}
+    </select>
+    <!-- 逻辑删除 -->
+    <update id="logicDelete">
+        update t_sys_menu
+        <set>
+            <if test="deletedBy != null">
+                deleted_by = #{deletedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="deletedDate != null">
+                deleted_date = #{deletedDate,jdbcType=TIMESTAMP},
+            </if>
+            deleted_flag = id
+        </set>
+        <where>
+            deleted_flag='0'
+            <choose>
+                <when test="code != null and code != ''">
+                    and code = #{code,jdbcType=VARCHAR}
+                </when>
+                <otherwise>
+                    and 1 = 2
+                </otherwise>
+            </choose>
+        </where>
+    </update>
+    <!-- 批量逻辑删除 -->
+    <update id="batchLogicDelete" parameterType="java.util.HashMap">
+        update t_sys_menu
+        <set>
+            <if test="deletedBy != null">
+                deleted_by = #{deletedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="deletedDate != null">
+                deleted_date = #{deletedDate,jdbcType=TIMESTAMP},
+            </if>
+            deleted_flag = id
+        </set>
+        <where>
+            deleted_flag='0'
+            <choose>
+                <when test="list != null and list.size() > 0">
+                    and code in
+                    <foreach collection="list" open="(" close=")" index="index" item="item" separator=",">
+                        #{item,jdbcType=VARCHAR}
+                    </foreach>
+                </when>
+                <otherwise>
+                    and 1 = 2
+                </otherwise>
+            </choose>
+        </where>
+    </update>
 </mapper>

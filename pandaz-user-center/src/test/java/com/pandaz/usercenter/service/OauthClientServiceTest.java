@@ -6,6 +6,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 import static org.junit.Assert.*;
 
 /**
@@ -27,13 +29,15 @@ public class OauthClientServiceTest extends BasisUnitTest {
     @Test
     public void deleteByClientId() {
         OauthClientEntity oauthClientEntity = new OauthClientEntity();
-        oauthClientEntity.setClientId("client_test");
+        oauthClientEntity.setClientId("test");
+        oauthClientEntity.setDeletedBy("admin");
+        oauthClientEntity.setDeletedDate(LocalDateTime.now());
         oauthClientService.deleteByClientId(oauthClientEntity);
     }
 
     @Test
     public void findByClientId() {
-        oauthClientService.loadClientByClientId("client_test");
+        oauthClientService.loadClientByClientId("test");
         oauthClientService.findByClientId("test");
     }
 

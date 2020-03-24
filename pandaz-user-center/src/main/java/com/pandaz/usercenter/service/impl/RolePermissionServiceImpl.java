@@ -1,6 +1,8 @@
 package com.pandaz.usercenter.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.pandaz.usercenter.entity.PermissionEntity;
+import com.pandaz.usercenter.entity.RoleEntity;
 import com.pandaz.usercenter.entity.RolePermissionEntity;
 import com.pandaz.usercenter.mapper.RolePermissionMapper;
 import com.pandaz.usercenter.service.RolePermissionService;
@@ -32,5 +34,35 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
     @Override
     public int insert(RolePermissionEntity rolePermission) {
         return rolePermissionMapper.insertSelective(rolePermission);
+    }
+
+    /**
+     * 根据角色编码删除
+     *
+     * @param roleEntity 关系
+     * @return 执行结果
+     */
+    @Override
+    public int deleteByRoleCode(RoleEntity roleEntity) {
+        RolePermissionEntity rolePermissionEntity = new RolePermissionEntity();
+        rolePermissionEntity.setRoleCode(roleEntity.getCode());
+        rolePermissionEntity.setDeletedBy(roleEntity.getDeletedBy());
+        rolePermissionEntity.setDeletedDate(roleEntity.getDeletedDate());
+        return rolePermissionMapper.logicDeleteByRoleCode(rolePermissionEntity);
+    }
+
+    /**
+     * 根据权限编码删除
+     *
+     * @param permissionEntity 关系
+     * @return 执行结果
+     */
+    @Override
+    public int deleteByPermissionCode(PermissionEntity permissionEntity) {
+        RolePermissionEntity rolePermissionEntity = new RolePermissionEntity();
+        rolePermissionEntity.setPermissionCode(permissionEntity.getCode());
+        rolePermissionEntity.setDeletedBy(permissionEntity.getDeletedBy());
+        rolePermissionEntity.setDeletedDate(permissionEntity.getDeletedDate());
+        return rolePermissionMapper.logicDeleteByPermissionCode(rolePermissionEntity);
     }
 }

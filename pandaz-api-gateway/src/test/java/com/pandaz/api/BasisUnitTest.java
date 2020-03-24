@@ -1,4 +1,4 @@
-package com.pandaz.rabbitmq;
+package com.pandaz.api;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat;
  * @since 2019-07-02
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = RabbitMqApp.class)
+@SpringBootTest(classes = ApiGatewayApp.class)
 @Rollback
 public class BasisUnitTest {
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -27,13 +27,12 @@ public class BasisUnitTest {
      *
      * <p>
      * setUp 方法的注释
-     *
      */
     @BeforeClass
     public static void setUp() {
         // 设置nacos日志及缓存路径
-        System.setProperty("nacos.logging.path", "logs/rabbitmq/nacos");
-        System.setProperty("com.alibaba.nacos.naming.cache.dir", "logs/rabbitmq/nacos/naming");
+        System.setProperty("nacos.logging.path", "logs/api-gateway/nacos");
+        System.setProperty("com.alibaba.nacos.naming.cache.dir", "logs/api-gateway/nacos/naming");
         System.out.println("\n###########################################");
         startMills = System.currentTimeMillis();
         String dateStr = DATE_FORMAT.format(startMills);
@@ -47,7 +46,6 @@ public class BasisUnitTest {
      *
      * <p>
      * tearDown 方法的注释
-     *
      */
     @AfterClass
     public static void tearDown() {

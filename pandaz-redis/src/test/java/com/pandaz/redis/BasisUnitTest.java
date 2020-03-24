@@ -31,6 +31,9 @@ public class BasisUnitTest {
      */
     @BeforeClass
     public static void setUp() {
+        // 设置nacos日志及缓存路径
+        System.setProperty("nacos.logging.path", "logs/redis/nacos");
+        System.setProperty("com.alibaba.nacos.naming.cache.dir", "logs/redis/nacos/naming");
         System.out.println("\n###########################################");
         startMills = System.currentTimeMillis();
         String dateStr = DATE_FORMAT.format(startMills);

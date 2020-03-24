@@ -1,6 +1,5 @@
 package com.pandaz.usercenter.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pandaz.usercenter.entity.RolePermissionEntity;
 
 /**
@@ -9,13 +8,21 @@ import com.pandaz.usercenter.entity.RolePermissionEntity;
  * @author Carzer
  * @since 2019-10-23
  */
-public interface RolePermissionMapper extends BaseMapper<RolePermissionEntity> {
+public interface RolePermissionMapper extends UcBaseMapper<RolePermissionEntity> {
 
     /**
-     * 插入方法
+     * 根据角色编码删除
      *
-     * @param rolePermission rolePermission
-     * @return 插入结果
+     * @param rolePermissionEntity 删除信息
+     * @return 执行结果
      */
-    int insertSelective(RolePermissionEntity rolePermission);
+    int logicDeleteByRoleCode(RolePermissionEntity rolePermissionEntity);
+
+    /**
+     * 根据权限编码删除
+     *
+     * @param rolePermissionEntity 删除信息
+     * @return 执行结果
+     */
+    int logicDeleteByPermissionCode(RolePermissionEntity rolePermissionEntity);
 }

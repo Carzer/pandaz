@@ -10,9 +10,9 @@ import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.custom.constants.SysConstants;
 import com.pandaz.usercenter.entity.RoleDetailEntity;
 import com.pandaz.usercenter.entity.RoleEntity;
-import com.pandaz.usercenter.entity.RolePermissionEntity;
 import com.pandaz.usercenter.mapper.RoleMapper;
-import com.pandaz.usercenter.mapper.RolePermissionMapper;
+import com.pandaz.usercenter.service.GroupRoleService;
+import com.pandaz.usercenter.service.RolePermissionService;
 import com.pandaz.usercenter.service.RoleService;
 import com.pandaz.usercenter.util.CheckUtil;
 import lombok.RequiredArgsConstructor;
@@ -48,9 +48,14 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
     private final RoleMapper roleMapper;
 
     /**
-     * 角色-权限mapper
+     * 角色-权限服务
      */
-    private final RolePermissionMapper rolePermissionMapper;
+    private final RolePermissionService rolePermissionService;
+
+    /**
+     * 组-角色服务
+     */
+    private final GroupRoleService groupRoleService;
 
     /**
      * 编码检查工具
@@ -120,12 +125,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int deleteByCode(RoleEntity roleEntity) {
-        UpdateWrapper<RolePermissionEntity> rolePermissionEntityUpdateWrapper = new UpdateWrapper<>();
-        rolePermissionEntityUpdateWrapper.eq("role_code", roleEntity.getCode());
-        rolePermissionMapper.delete(rolePermissionEntityUpdateWrapper);
-        UpdateWrapper<RoleEntity> roleEntityUpdateWrapper = new UpdateWrapper<>();
-        roleEntityUpdateWrapper.eq("code", roleEntity.getCode());
-        return roleMapper.delete(roleEntityUpdateWrapper);
+        rolePermissionService.deleteByRoleCode(roleEntity);
+        groupRoleService.deleteByRoleCode(roleEntity);
+        return roleMapper.logicDelete(roleEntity);
     }
 
     /**

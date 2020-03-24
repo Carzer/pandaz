@@ -103,8 +103,6 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
      */
     @Override
     public int deleteByCode(OrganizationEntity organizationEntity) {
-        UpdateWrapper<OrganizationEntity> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq("code", organizationEntity.getCode());
-        return organizationMapper.delete(updateWrapper);
+        return organizationMapper.logicDelete(organizationEntity);
     }
 }

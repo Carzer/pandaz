@@ -193,9 +193,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         // 删除所有用户相关的组关联信息
         userGroupService.deleteByUserCode(userEntity);
         // 最终删除用户
-        UpdateWrapper<UserEntity> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq("code", userEntity.getCode());
-        return userMapper.delete(updateWrapper);
+        return userMapper.logicDelete(userEntity);
     }
 
     /**

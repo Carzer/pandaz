@@ -1,6 +1,5 @@
 package com.pandaz.usercenter.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pandaz.usercenter.entity.UserEntity;
 
 /**
@@ -9,13 +8,6 @@ import com.pandaz.usercenter.entity.UserEntity;
  * @author Carzer
  * @since 2019-10-23
  */
-public interface UserMapper extends BaseMapper<UserEntity> {
+public interface UserMapper extends UcBaseMapper<UserEntity> {
 
-    /**
-     * 插入方法
-     *
-     * @param user user
-     * @return 插入结果
-     */
-    int insertSelective(UserEntity user);
 }

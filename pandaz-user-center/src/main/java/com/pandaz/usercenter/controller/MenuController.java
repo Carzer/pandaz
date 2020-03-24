@@ -1,6 +1,7 @@
 package com.pandaz.usercenter.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.pandaz.commons.constants.CommonConstants;
 import com.pandaz.commons.dto.usercenter.MenuDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.ExecuteResult;
@@ -11,12 +12,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * 菜单信息
@@ -65,6 +69,29 @@ public class MenuController {
         try {
             IPage<MenuEntity> page = menuService.getPage(BeanCopyUtil.copy(menuDTO, MenuEntity.class));
             result.setData(BeanCopyUtil.convertToMap(page, MenuDTO.class));
+        } catch (Exception e) {
+            log.error("分页查询异常：", e);
+            result.setError(e.getMessage());
+        }
+        return result;
+    }
+
+    /**
+     * 获取所有菜单
+     *
+     * @param menuDTO 查询信息
+     * @return 所有菜单
+     */
+    @GetMapping("/getAll")
+    public ExecuteResult<MenuDTO> getAll(MenuDTO menuDTO) {
+        ExecuteResult<MenuDTO> result = new ExecuteResult<>();
+        try {
+            menuDTO.setCode(CommonConstants.ROOT_MENU_CODE);
+            menuDTO.setParentCode(CommonConstants.ROOT_MENU_CODE);
+            MenuEntity menuEntity = BeanCopyUtil.copy(menuDTO, MenuEntity.class);
+            List<MenuEntity> list = menuService.getAll(menuEntity);
+            menuEntity.setChildren(list);
+            result.setData(transferToDTO(menuEntity));
         } catch (Exception e) {
             log.error("分页查询异常：", e);
             result.setError(e.getMessage());
@@ -146,5 +173,20 @@ public class MenuController {
      */
     private void check(MenuDTO menuDTO) {
         Assert.hasText(menuDTO.getName(), "菜单名称不能为空");
+    }
+
+    private MenuDTO transferToDTO(MenuEntity menuEntity) {
+        MenuDTO menuDTO = new MenuDTO();
+        List<MenuEntity> entityList = menuEntity.getChildren();
+        if (!CollectionUtils.isEmpty(entityList)) {
+            List<MenuDTO> dtoList = new ArrayList<>();
+            entityList.forEach(menu -> dtoList.add(transferToDTO(menu)));
+            menuDTO.setChildren(dtoList);
+        }
+        menuDTO.setId(menuEntity.getId());
+        menuDTO.setCode(menuEntity.getCode());
+        menuDTO.setParentCode(menuEntity.getParentCode());
+        menuDTO.setName(menuEntity.getName());
+        return menuDTO;
     }
 }

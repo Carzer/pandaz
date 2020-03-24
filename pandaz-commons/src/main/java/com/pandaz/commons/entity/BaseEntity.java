@@ -52,11 +52,11 @@ public class BaseEntity implements Serializable {
     private LocalDateTime deletedDate;
 
     /**
-     * 删除标记(0:未删除，1:已删除)
+     * 删除标记(0:未删除，其他:已删除)
      */
     @TableField("deleted_flag")
     @TableLogic
-    private Byte deletedFlag;
+    private String deletedFlag;
 
     /**
      * 版本号

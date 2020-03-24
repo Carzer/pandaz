@@ -7,6 +7,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 /**
  * 角色服务测试
  *
@@ -66,6 +68,8 @@ public class RoleServiceTest extends BasisUnitTest {
     public void deleteByCode() {
         RoleEntity roleEntity = new RoleEntity();
         roleEntity.setCode("role_test");
+        roleEntity.setDeletedBy("admin");
+        roleEntity.setDeletedDate(LocalDateTime.now());
         int size = roleService.deleteByCode(roleEntity);
         log.info("成功删除角色：{}个", size);
     }

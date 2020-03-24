@@ -11,7 +11,7 @@
  Target Server Version : 50728
  File Encoding         : utf-8
 
- Date: 02/28/2020 15:09:17 PM
+ Date: 03/24/2020 14:25:37 PM
 */
 
 SET NAMES utf8mb4;
@@ -22,7 +22,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `t_sys_dict_info`;
 CREATE TABLE `t_sys_dict_info` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `id` varchar(32) NOT NULL COMMENT '主键',
   `name` varchar(100) NOT NULL COMMENT '类型名称',
   `code` varchar(50) NOT NULL COMMENT '类型编码',
   `type_code` varchar(50) NOT NULL COMMENT '字典类型编码',
@@ -32,7 +32,7 @@ CREATE TABLE `t_sys_dict_info` (
   `updated_date` datetime DEFAULT NULL COMMENT '修改时间',
   `deleted_by` varchar(50) DEFAULT NULL COMMENT '删除人',
   `deleted_date` datetime DEFAULT NULL COMMENT '删除时间',
-  `deleted_flag` tinyint(4) NOT NULL DEFAULT '0' COMMENT '删除标记(0:未删除，1:已删除)',
+  `deleted_flag` varchar(32) NOT NULL DEFAULT '0' COMMENT '删除标记(0:未删除，其他:已删除)',
   `locked` tinyint(4) NOT NULL DEFAULT '0' COMMENT '锁定标记(0:未锁定，1:已锁定)',
   `version` int(8) NOT NULL DEFAULT '1' COMMENT '版本号',
   PRIMARY KEY (`id`),
@@ -45,7 +45,7 @@ CREATE TABLE `t_sys_dict_info` (
 -- ----------------------------
 DROP TABLE IF EXISTS `t_sys_dict_type`;
 CREATE TABLE `t_sys_dict_type` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `id` varchar(32) NOT NULL COMMENT '主键',
   `name` varchar(100) NOT NULL COMMENT '类型名称',
   `code` varchar(50) NOT NULL COMMENT '类型编码',
   `created_by` varchar(50) NOT NULL DEFAULT 'system' COMMENT '创建人',
@@ -54,12 +54,12 @@ CREATE TABLE `t_sys_dict_type` (
   `updated_date` datetime DEFAULT NULL COMMENT '修改时间',
   `deleted_by` varchar(50) DEFAULT NULL COMMENT '删除人',
   `deleted_date` datetime DEFAULT NULL COMMENT '删除时间',
-  `deleted_flag` tinyint(4) NOT NULL DEFAULT '0' COMMENT '删除标记(0:未删除，1:已删除)',
+  `deleted_flag` varchar(32) NOT NULL DEFAULT '0' COMMENT '删除标记(0:未删除，其他:已删除)',
   `locked` tinyint(4) NOT NULL DEFAULT '0' COMMENT '锁定标记(0:未锁定，1:已锁定)',
   `version` int(8) NOT NULL DEFAULT '1' COMMENT '版本号',
   PRIMARY KEY (`id`),
   UNIQUE KEY `t_os_info_code_key` (`code`,`deleted_flag`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='字典类型表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='字典类型表';
 
 -- ----------------------------
 --  Table structure for `t_sys_group`
@@ -77,7 +77,7 @@ CREATE TABLE `t_sys_group` (
   `updated_date` datetime DEFAULT NULL COMMENT '修改时间',
   `deleted_by` varchar(50) DEFAULT NULL COMMENT '删除人',
   `deleted_date` datetime DEFAULT NULL COMMENT '删除时间',
-  `deleted_flag` tinyint(4) NOT NULL DEFAULT '0' COMMENT '删除标记(0:未删除，1:已删除)',
+  `deleted_flag` varchar(32) NOT NULL DEFAULT '0' COMMENT '删除标记(0:未删除，其他:已删除)',
   `locked` tinyint(4) NOT NULL DEFAULT '0' COMMENT '锁定标记(0:未锁定，1:已锁定)',
   `version` int(8) NOT NULL DEFAULT '1' COMMENT '版本号',
   PRIMARY KEY (`id`),
@@ -98,7 +98,7 @@ CREATE TABLE `t_sys_group_role` (
   `updated_date` datetime DEFAULT NULL COMMENT '修改时间',
   `deleted_by` varchar(50) DEFAULT NULL COMMENT '删除人',
   `deleted_date` datetime DEFAULT NULL COMMENT '删除时间',
-  `deleted_flag` tinyint(4) NOT NULL DEFAULT '0' COMMENT '删除标记(0:未删除，1:已删除)',
+  `deleted_flag` varchar(32) NOT NULL DEFAULT '0' COMMENT '删除标记(0:未删除，其他:已删除)',
   `is_private` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否私有',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户-组关联表';
@@ -122,7 +122,7 @@ CREATE TABLE `t_sys_menu` (
   `updated_date` datetime DEFAULT NULL COMMENT '修改时间',
   `deleted_by` varchar(50) DEFAULT NULL COMMENT '删除人',
   `deleted_date` datetime DEFAULT NULL COMMENT '删除时间',
-  `deleted_flag` tinyint(4) NOT NULL DEFAULT '0' COMMENT '删除标记(0:未删除，1:已删除)',
+  `deleted_flag` varchar(32) NOT NULL DEFAULT '0' COMMENT '删除标记(0:未删除，其他:已删除)',
   `locked` tinyint(4) NOT NULL DEFAULT '0' COMMENT '锁定标记(0:未锁定，1:已锁定)',
   `version` int(8) NOT NULL DEFAULT '1' COMMENT '版本号',
   PRIMARY KEY (`id`),
@@ -153,7 +153,7 @@ CREATE TABLE `t_sys_oauth_client` (
   `updated_date` datetime DEFAULT NULL COMMENT '修改时间',
   `deleted_by` varchar(50) DEFAULT NULL COMMENT '删除人',
   `deleted_date` datetime DEFAULT NULL COMMENT '删除时间',
-  `deleted_flag` tinyint(4) NOT NULL DEFAULT '0' COMMENT '删除标记(0:未删除，1:已删除)',
+  `deleted_flag` varchar(32) NOT NULL DEFAULT '0' COMMENT '删除标记(0:未删除，其他:已删除)',
   `locked` tinyint(4) NOT NULL DEFAULT '0' COMMENT '锁定标记(0:未锁定，1:已锁定)',
   `version` int(8) NOT NULL DEFAULT '1' COMMENT '版本号',
   PRIMARY KEY (`id`),
@@ -179,7 +179,7 @@ CREATE TABLE `t_sys_organization` (
   `updated_date` datetime DEFAULT NULL COMMENT '修改时间',
   `deleted_by` varchar(50) DEFAULT NULL COMMENT '删除人',
   `deleted_date` datetime DEFAULT NULL COMMENT '删除时间',
-  `deleted_flag` tinyint(4) NOT NULL DEFAULT '0' COMMENT '删除标记(0:未删除，1:已删除)',
+  `deleted_flag` varchar(32) NOT NULL DEFAULT '0' COMMENT '删除标记(0:未删除，其他:已删除)',
   `locked` tinyint(4) NOT NULL DEFAULT '0' COMMENT '锁定标记(0:未锁定，1:已锁定)',
   `version` int(8) NOT NULL DEFAULT '1' COMMENT '版本号',
   PRIMARY KEY (`id`),
@@ -201,7 +201,7 @@ CREATE TABLE `t_sys_os_info` (
   `updated_date` datetime DEFAULT NULL COMMENT '修改时间',
   `deleted_by` varchar(50) DEFAULT NULL COMMENT '删除人',
   `deleted_date` datetime DEFAULT NULL COMMENT '删除时间',
-  `deleted_flag` tinyint(4) NOT NULL DEFAULT '0' COMMENT '删除标记(0:未删除，1:已删除)',
+  `deleted_flag` varchar(32) NOT NULL DEFAULT '0' COMMENT '删除标记(0:未删除，其他:已删除)',
   `locked` tinyint(4) NOT NULL DEFAULT '0' COMMENT '锁定标记(0:未锁定，1:已锁定)',
   `version` int(8) NOT NULL DEFAULT '1' COMMENT '版本号',
   PRIMARY KEY (`id`),
@@ -229,7 +229,7 @@ CREATE TABLE `t_sys_permission` (
   `updated_date` datetime DEFAULT NULL COMMENT '修改时间',
   `deleted_by` varchar(50) DEFAULT NULL COMMENT '删除人',
   `deleted_date` datetime DEFAULT NULL COMMENT '删除时间',
-  `deleted_flag` tinyint(4) NOT NULL DEFAULT '0' COMMENT '删除标记(0:未删除，1:已删除)',
+  `deleted_flag` varchar(32) NOT NULL DEFAULT '0' COMMENT '删除标记(0:未删除，其他:已删除)',
   `version` int(8) NOT NULL DEFAULT '1' COMMENT '版本号',
   PRIMARY KEY (`id`),
   UNIQUE KEY `t_sys_menu_code_key` (`code`,`deleted_flag`),
@@ -252,7 +252,7 @@ CREATE TABLE `t_sys_role` (
   `updated_date` datetime DEFAULT NULL COMMENT '修改时间',
   `deleted_by` varchar(50) DEFAULT NULL COMMENT '删除人',
   `deleted_date` datetime DEFAULT NULL COMMENT '删除时间',
-  `deleted_flag` tinyint(4) NOT NULL DEFAULT '0' COMMENT '删除标记(0:未删除，1:已删除)',
+  `deleted_flag` varchar(32) NOT NULL DEFAULT '0' COMMENT '删除标记(0:未删除，其他:已删除)',
   `locked` tinyint(4) NOT NULL DEFAULT '0' COMMENT '锁定标记(0:未锁定，1:已锁定)',
   `version` int(8) NOT NULL DEFAULT '1' COMMENT '版本号',
   PRIMARY KEY (`id`),
@@ -273,7 +273,7 @@ CREATE TABLE `t_sys_role_permission` (
   `updated_date` datetime DEFAULT NULL COMMENT '更新时间',
   `deleted_by` varchar(50) DEFAULT NULL COMMENT '删除人',
   `deleted_date` datetime DEFAULT NULL COMMENT '删除时间',
-  `deleted_flag` tinyint(4) DEFAULT NULL COMMENT '删除标记(0:未删除，1:已删除)',
+  `deleted_flag` varchar(32) DEFAULT NULL COMMENT '删除标记(0:未删除，其他:已删除)',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='组-权限关联表';
 
@@ -297,7 +297,7 @@ CREATE TABLE `t_sys_user` (
   `updated_date` datetime DEFAULT NULL COMMENT '修改时间',
   `deleted_by` varchar(50) DEFAULT NULL COMMENT '删除人',
   `deleted_date` datetime DEFAULT NULL COMMENT '删除时间',
-  `deleted_flag` tinyint(4) NOT NULL DEFAULT '0' COMMENT '删除标记(0:未删除，1:已删除)',
+  `deleted_flag` varchar(32) NOT NULL DEFAULT '0' COMMENT '删除标记(0:未删除，其他:已删除)',
   `locked` tinyint(4) NOT NULL DEFAULT '0' COMMENT '锁定标记(0:未锁定，1:已锁定)',
   `expire_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '过期时间',
   `version` int(8) NOT NULL DEFAULT '1' COMMENT '版本号',
@@ -329,7 +329,7 @@ CREATE TABLE `t_sys_user_group` (
   `updated_date` datetime DEFAULT NULL COMMENT '修改时间',
   `deleted_by` varchar(50) DEFAULT NULL COMMENT '删除人',
   `deleted_date` datetime DEFAULT NULL COMMENT '删除时间',
-  `deleted_flag` tinyint(4) NOT NULL DEFAULT '0' COMMENT '删除标记(0:未删除，1:已删除)',
+  `deleted_flag` varchar(32) NOT NULL DEFAULT '0' COMMENT '删除标记(0:未删除，其他:已删除)',
   `is_private` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否私有',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户-组关联表';

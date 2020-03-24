@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.entity.DictInfoEntity;
 import com.pandaz.usercenter.mapper.DictInfoMapper;
 import com.pandaz.usercenter.service.DictInfoService;
@@ -80,6 +81,9 @@ public class DictInfoServiceImpl extends ServiceImpl<DictInfoMapper, DictInfoEnt
     @Override
     public int insert(DictInfoEntity dictInfoEntity) {
         checkUtil.checkOrSetCode(dictInfoEntity, dictInfoMapper, "字典信息编码已存在");
+        if (!StringUtils.hasText(dictInfoEntity.getId())) {
+            dictInfoEntity.setId(UuidUtil.getId());
+        }
         return dictInfoMapper.insertSelective(dictInfoEntity);
     }
 
@@ -104,8 +108,6 @@ public class DictInfoServiceImpl extends ServiceImpl<DictInfoMapper, DictInfoEnt
      */
     @Override
     public int deleteByCode(DictInfoEntity dictInfoEntity) {
-        UpdateWrapper<DictInfoEntity> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq("code", dictInfoEntity.getCode());
-        return dictInfoMapper.delete(updateWrapper);
+        return dictInfoMapper.logicDelete(dictInfoEntity);
     }
 }

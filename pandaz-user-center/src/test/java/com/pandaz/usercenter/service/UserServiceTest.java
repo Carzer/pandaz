@@ -6,6 +6,9 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 /**
  * 用户测试
  *
@@ -54,8 +57,16 @@ public class UserServiceTest extends BasisUnitTest {
     @Test
     public void deleteByCode() {
         UserEntity userEntity = new UserEntity();
+        userEntity.setDeletedDate(LocalDateTime.now());
+        userEntity.setDeletedBy("admin");
         userEntity.setCode("test17");
         userService.deleteByCode(userEntity);
+    }
+
+    @Test
+    public void deleteByCodes() {
+        List<String> list = List.of("test17", "test18");
+        userService.deleteByCodes("admin", LocalDateTime.now(), list);
     }
 
     @Test

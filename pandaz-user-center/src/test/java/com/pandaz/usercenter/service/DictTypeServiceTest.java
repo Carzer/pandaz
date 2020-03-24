@@ -6,6 +6,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 import static org.junit.Assert.*;
 
 /**
@@ -54,6 +56,8 @@ public class DictTypeServiceTest extends BasisUnitTest {
     public void deleteByCode() {
         DictTypeEntity dictTypeEntity = new DictTypeEntity();
         dictTypeEntity.setCode("dictType_test");
+        dictTypeEntity.setDeletedBy("admin");
+        dictTypeEntity.setDeletedDate(LocalDateTime.now());
         dictTypeService.deleteByCode(dictTypeEntity);
     }
 }

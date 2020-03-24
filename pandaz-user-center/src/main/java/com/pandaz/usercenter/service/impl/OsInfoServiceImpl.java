@@ -104,8 +104,6 @@ public class OsInfoServiceImpl extends ServiceImpl<OsInfoMapper, OsInfoEntity> i
      */
     @Override
     public int deleteByCode(OsInfoEntity osInfoEntity) {
-        UpdateWrapper<OsInfoEntity> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq("code", osInfoEntity.getCode());
-        return osInfoMapper.delete(updateWrapper);
+        return osInfoMapper.logicDelete(osInfoEntity);
     }
 }

@@ -49,7 +49,7 @@ public class BaseDTO implements Serializable {
     /**
      * 删除标记
      */
-    private Byte deletedFlag;
+    private String deletedFlag;
 
     /**
      * 版本号

@@ -6,6 +6,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 /**
  * 权限测试
  *
@@ -60,6 +62,8 @@ public class PermissionServiceTest extends BasisUnitTest {
     public void deleteByCode() {
         PermissionEntity permissionEntity = new PermissionEntity();
         permissionEntity.setCode("per_test");
+        permissionEntity.setDeletedBy("admin");
+        permissionEntity.setDeletedDate(LocalDateTime.now());
         permissionService.deleteByCode(permissionEntity);
     }
 }

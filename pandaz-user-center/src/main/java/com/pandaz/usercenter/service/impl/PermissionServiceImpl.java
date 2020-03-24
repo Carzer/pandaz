@@ -7,10 +7,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.entity.PermissionEntity;
-import com.pandaz.usercenter.entity.RolePermissionEntity;
 import com.pandaz.usercenter.mapper.PermissionMapper;
-import com.pandaz.usercenter.mapper.RolePermissionMapper;
 import com.pandaz.usercenter.service.PermissionService;
+import com.pandaz.usercenter.service.RolePermissionService;
 import com.pandaz.usercenter.util.CheckUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,9 +35,9 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     private final PermissionMapper permissionMapper;
 
     /**
-     * 角色权限mapper
+     * 角色权限服务
      */
-    private final RolePermissionMapper rolePermissionMapper;
+    private final RolePermissionService rolePermissionService;
 
     /**
      * 编码检查工具
@@ -115,11 +114,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int deleteByCode(PermissionEntity permissionEntity) {
-        UpdateWrapper<PermissionEntity> permissionEntityUpdateWrapper = new UpdateWrapper<>();
-        permissionEntityUpdateWrapper.eq("code", permissionEntity.getCode());
-        UpdateWrapper<RolePermissionEntity> rolePermissionEntityUpdateWrapper = new UpdateWrapper<>();
-        rolePermissionEntityUpdateWrapper.eq("permission_code", permissionEntity.getCode());
-        rolePermissionMapper.delete(rolePermissionEntityUpdateWrapper);
-        return permissionMapper.delete(permissionEntityUpdateWrapper);
+        rolePermissionService.deleteByPermissionCode(permissionEntity);
+        return permissionMapper.logicDelete(permissionEntity);
     }
 }

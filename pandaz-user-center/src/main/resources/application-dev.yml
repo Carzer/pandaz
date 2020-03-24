@@ -50,6 +50,7 @@ spring:
     sentinel:
       master: mymaster
       nodes: 172.16.2.130:26380,172.16.2.130:26381,172.16.2.130:26382
+
 # 开启feign对sentinel的支持
 # SentinelFeignAutoConfiguration
 feign:
@@ -63,7 +64,6 @@ mybatis-plus:
   config-location: classpath:mybatis/mybatis-config.xml
   global-config:
     db-config:
-      logic-delete-value: 1
       logic-not-delete-value: 0
 
 # 自定义属性

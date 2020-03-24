@@ -1,10 +1,10 @@
 package com.pandaz.usercenter.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pandaz.usercenter.entity.GroupEntity;
 import com.pandaz.usercenter.entity.GroupRoleEntity;
+import com.pandaz.usercenter.entity.RoleEntity;
 import com.pandaz.usercenter.mapper.GroupRoleMapper;
 import com.pandaz.usercenter.service.GroupRoleService;
 import lombok.RequiredArgsConstructor;
@@ -60,8 +60,25 @@ public class GroupRoleServiceImpl extends ServiceImpl<GroupRoleMapper, GroupRole
      */
     @Override
     public int deleteByGroupCode(GroupEntity groupEntity) {
-        UpdateWrapper<GroupRoleEntity> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq("group_code", groupEntity.getCode());
-        return groupRoleMapper.delete(updateWrapper);
+        GroupRoleEntity groupRoleEntity = new GroupRoleEntity();
+        groupRoleEntity.setGroupCode(groupEntity.getCode());
+        groupRoleEntity.setDeletedBy(groupEntity.getDeletedBy());
+        groupRoleEntity.setDeletedDate(groupEntity.getDeletedDate());
+        return groupRoleMapper.logicDeleteByGroupCode(groupRoleEntity);
+    }
+
+    /**
+     * 跟角色编码删除
+     *
+     * @param roleEntity 删除信息
+     * @return int
+     */
+    @Override
+    public int deleteByRoleCode(RoleEntity roleEntity) {
+        GroupRoleEntity groupRoleEntity = new GroupRoleEntity();
+        groupRoleEntity.setRoleCode(roleEntity.getCode());
+        groupRoleEntity.setDeletedBy(roleEntity.getDeletedBy());
+        groupRoleEntity.setDeletedDate(roleEntity.getDeletedDate());
+        return groupRoleMapper.logicDeleteByRoleCode(groupRoleEntity);
     }
 }

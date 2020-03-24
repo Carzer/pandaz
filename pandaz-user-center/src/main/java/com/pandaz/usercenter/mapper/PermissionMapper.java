@@ -1,6 +1,5 @@
 package com.pandaz.usercenter.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pandaz.usercenter.entity.PermissionEntity;
 
 /**
@@ -9,13 +8,6 @@ import com.pandaz.usercenter.entity.PermissionEntity;
  * @author Carzer
  * @since 2019-10-23
  */
-public interface PermissionMapper extends BaseMapper<PermissionEntity> {
+public interface PermissionMapper extends UcBaseMapper<PermissionEntity> {
 
-    /**
-     * 插入方法
-     *
-     * @param permission permission
-     * @return 插入结果
-     */
-    int insertSelective(PermissionEntity permission);
 }

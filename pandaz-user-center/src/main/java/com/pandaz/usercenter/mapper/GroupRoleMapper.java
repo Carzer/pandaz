@@ -1,6 +1,5 @@
 package com.pandaz.usercenter.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pandaz.usercenter.entity.GroupRoleEntity;
 
 /**
@@ -9,13 +8,21 @@ import com.pandaz.usercenter.entity.GroupRoleEntity;
  * @author Carzer
  * @since 2019-10-23
  */
-public interface GroupRoleMapper extends BaseMapper<GroupRoleEntity> {
+public interface GroupRoleMapper extends UcBaseMapper<GroupRoleEntity> {
 
     /**
-     * 插入方法
+     * 根据组编码删除
      *
-     * @param groupRole groupRole
-     * @return 插入结果
+     * @param groupRoleEntity 删除信息
+     * @return 执行结果
      */
-    int insertSelective(GroupRoleEntity groupRole);
+    int logicDeleteByGroupCode(GroupRoleEntity groupRoleEntity);
+
+    /**
+     * 根据角色编码删除
+     *
+     * @param groupRoleEntity 删除信息
+     * @return 执行结果
+     */
+    int logicDeleteByRoleCode(GroupRoleEntity groupRoleEntity);
 }

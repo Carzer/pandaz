@@ -11,7 +11,7 @@ public final class CommonConstants {
     /**
      * 构造方法
      */
-    private CommonConstants(){
+    private CommonConstants() {
 
     }
 

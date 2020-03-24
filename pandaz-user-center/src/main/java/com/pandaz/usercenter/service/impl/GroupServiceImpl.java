@@ -14,6 +14,7 @@ import com.pandaz.usercenter.mapper.GroupMapper;
 import com.pandaz.usercenter.service.GroupRoleService;
 import com.pandaz.usercenter.service.GroupService;
 import com.pandaz.usercenter.service.RoleService;
+import com.pandaz.usercenter.service.UserGroupService;
 import com.pandaz.usercenter.util.CheckUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,11 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupEntity> impl
      * 组-角色服务
      */
     private final GroupRoleService groupRoleService;
+
+    /**
+     * 用户-组服务
+     */
+    private final UserGroupService userGroupService;
 
     /**
      * 编码检查工具
@@ -121,10 +127,9 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupEntity> impl
         }
         // 清理所有关系
         groupRoleService.deleteByGroupCode(groupEntity);
+        userGroupService.deleteByGroupCode(groupEntity);
         // 最终删除组信息
-        UpdateWrapper<GroupEntity> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq("code", groupEntity.getCode());
-        return groupMapper.delete(updateWrapper);
+        return groupMapper.logicDelete(groupEntity);
     }
 
     /**

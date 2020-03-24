@@ -6,6 +6,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 /**
  * 组信息测试
  *
@@ -34,6 +36,8 @@ public class GroupServiceTest extends BasisUnitTest {
     public void deleteByCode() {
         GroupEntity groupEntity = new GroupEntity();
         groupEntity.setCode("group_test");
+        groupEntity.setDeletedBy("admin");
+        groupEntity.setDeletedDate(LocalDateTime.now());
         groupService.deleteByCode(groupEntity);
     }
 
