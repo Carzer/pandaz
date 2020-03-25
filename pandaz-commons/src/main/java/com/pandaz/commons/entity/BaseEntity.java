@@ -66,6 +66,18 @@ public class BaseEntity implements Serializable {
     private Integer version;
 
     /**
+     * 开始时间
+     */
+    @TableField(exist = false)
+    private LocalDateTime startDate;
+
+    /**
+     * 结束时间
+     */
+    @TableField(exist = false)
+    private LocalDateTime endDate;
+
+    /**
      * 起始页码
      */
     @TableField(exist = false)

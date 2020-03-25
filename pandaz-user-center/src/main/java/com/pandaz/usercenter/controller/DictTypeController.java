@@ -18,6 +18,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * <p>
@@ -127,16 +128,14 @@ public class DictTypeController {
     /**
      * 删除方法
      *
-     * @param dictTypeDTO 组信息
+     * @param codes 组信息
      * @return 执行结果
      */
     @DeleteMapping
-    public ExecuteResult<String> delete(@Valid @RequestBody DictTypeDTO dictTypeDTO, Principal principal) {
+    public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
-            dictTypeDTO.setDeletedBy(principal.getName());
-            dictTypeDTO.setDeletedDate(LocalDateTime.now());
-            dictTypeService.deleteByCode(BeanCopyUtil.copy(dictTypeDTO, DictTypeEntity.class));
+            dictTypeService.deleteByCodes(principal.getName(), LocalDateTime.now(), codes);
             result.setData("删除成功");
         } catch (Exception e) {
             log.error("删除方法异常：", e);

@@ -17,6 +17,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * <p>
@@ -47,7 +48,7 @@ public class DictInfoController {
     public ExecuteResult<DictInfoDTO> get(@Valid DictInfoDTO dictInfoDTO) {
         ExecuteResult<DictInfoDTO> result = new ExecuteResult<>();
         try {
-            result.setData(BeanCopyUtil.copy(dictInfoService.findByCode(dictInfoDTO.getCode()), DictInfoDTO.class));
+            result.setData(BeanCopyUtil.copy(dictInfoService.getWithTypeName(dictInfoDTO.getCode()), DictInfoDTO.class));
         } catch (Exception e) {
             log.error("查询方法异常：", e);
             result.setError(e.getMessage());
@@ -123,16 +124,14 @@ public class DictInfoController {
     /**
      * 删除方法
      *
-     * @param dictInfoDTO 字典信息
+     * @param codes 字典信息
      * @return 执行结果
      */
     @DeleteMapping
-    public ExecuteResult<String> delete(@Valid @RequestBody DictInfoDTO dictInfoDTO, Principal principal) {
+    public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
-            dictInfoDTO.setDeletedBy(principal.getName());
-            dictInfoDTO.setDeletedDate(LocalDateTime.now());
-            dictInfoService.deleteByCode(BeanCopyUtil.copy(dictInfoDTO, DictInfoEntity.class));
+            dictInfoService.deleteByCodes(principal.getName(), LocalDateTime.now(), codes);
             result.setData("删除成功");
         } catch (Exception e) {
             log.error("删除方法异常：", e);

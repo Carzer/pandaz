@@ -46,6 +46,11 @@ public class DictInfoEntity extends BaseEntity {
     @TableField("type_code")
     private String typeCode;
 
+    /**
+     * 字典类型名称
+     */
+    @TableField(exist = false)
+    private String typeName;
 
     /**
      * 是否锁定(0:未锁定，1:已锁定)

@@ -1,6 +1,7 @@
 package com.pandaz.commons.dto;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -55,6 +56,18 @@ public class BaseDTO implements Serializable {
      * 版本号
      */
     private Integer version;
+
+    /**
+     * 开始时间
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime startDate;
+
+    /**
+     * 结束时间
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime endDate;
 
     /**
      * 起始页码

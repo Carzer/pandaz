@@ -21,7 +21,7 @@ public class DictTypeDTO extends BaseDTO {
     /**
      * 主键
      */
-    private Integer id;
+    private String id;
 
     /**
      * 类型名称

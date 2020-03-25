@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.usercenter.BasisUnitTest;
 import com.pandaz.usercenter.entity.DictInfoEntity;
 import org.junit.Test;
@@ -7,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-
-import static org.junit.Assert.*;
 
 /**
  * 字典信息测试
@@ -32,8 +31,16 @@ public class DictInfoServiceTest extends BasisUnitTest {
     }
 
     @Test
+    public void getWithTypeName() {
+        DictInfoEntity test = dictInfoService.getWithTypeName("test");
+        System.out.println(test);
+    }
+
+    @Test
     public void getPage() {
-        dictInfoService.getPage(new DictInfoEntity());
+        IPage<DictInfoEntity> page = dictInfoService.getPage(new DictInfoEntity());
+        System.out.println(page);
+//        dictInfoService.getPage(new DictInfoEntity());
     }
 
     @Test

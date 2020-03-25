@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.pandaz.usercenter.entity.DictTypeEntity;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 /**
  * <p>
  * 字典类型表 服务类
@@ -53,4 +56,15 @@ public interface DictTypeService extends IService<DictTypeEntity> {
      * @return 执行结果
      */
     int deleteByCode(DictTypeEntity dictTypeEntity);
+
+    /**
+     * 批量删除
+     *
+     * @param deletedBy   删除人
+     * @param deletedDate 删除时间
+     * @param codes       编码
+     * @return 执行结果
+     */
+    int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes);
+
 }

@@ -19,7 +19,7 @@ public class DictInfoDTO extends BaseDTO {
     /**
      * 主键
      */
-    private Integer id;
+    private String id;
 
     /**
      * 类型名称
@@ -35,6 +35,11 @@ public class DictInfoDTO extends BaseDTO {
      * 字典类型编码
      */
     private String typeCode;
+
+    /**
+     * 字典类型名称
+     */
+    private String typeName;
 
     /**
      * 是否锁定(0:未锁定，1:已锁定)

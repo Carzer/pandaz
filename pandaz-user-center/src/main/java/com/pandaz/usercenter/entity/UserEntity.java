@@ -89,18 +89,6 @@ public class UserEntity extends BaseEntity {
     private LocalDateTime expireAt;
 
     /**
-     * 开始时间
-     */
-    @TableField(exist = false)
-    private LocalDateTime startDate;
-
-    /**
-     * 结束时间
-     */
-    @TableField(exist = false)
-    private LocalDateTime endDate;
-
-    /**
      * 是否过期的条件查询
      */
     @TableField(exist = false)

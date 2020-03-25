@@ -13,7 +13,13 @@ import com.pandaz.usercenter.util.CheckUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -59,17 +65,7 @@ public class DictInfoServiceImpl extends ServiceImpl<DictInfoMapper, DictInfoEnt
     @Override
     public IPage<DictInfoEntity> getPage(DictInfoEntity dictInfoEntity) {
         Page<DictInfoEntity> page = new Page<>(dictInfoEntity.getPageNum(), dictInfoEntity.getPageSize());
-        QueryWrapper<DictInfoEntity> queryWrapper = new QueryWrapper<>();
-        if (StringUtils.hasText(dictInfoEntity.getName())) {
-            queryWrapper.likeRight("name", dictInfoEntity.getName());
-        }
-        if (StringUtils.hasText(dictInfoEntity.getCode())) {
-            queryWrapper.likeRight("code", dictInfoEntity.getCode());
-        }
-        if (StringUtils.hasText(dictInfoEntity.getTypeCode())) {
-            queryWrapper.eq("type_code", dictInfoEntity.getTypeCode());
-        }
-        return page(page, queryWrapper);
+        return dictInfoMapper.getPageWithTypeName(page, dictInfoEntity);
     }
 
     /**
@@ -109,5 +105,36 @@ public class DictInfoServiceImpl extends ServiceImpl<DictInfoMapper, DictInfoEnt
     @Override
     public int deleteByCode(DictInfoEntity dictInfoEntity) {
         return dictInfoMapper.logicDelete(dictInfoEntity);
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param deletedBy   删除人
+     * @param deletedDate 删除时间
+     * @param codes       编码
+     * @return 执行结果
+     */
+    @Override
+    public int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
+        if (CollectionUtils.isEmpty(codes)) {
+            return 0;
+        }
+        Map<String, Object> map = new HashMap<>(3);
+        map.put("deletedBy", deletedBy);
+        map.put("deletedDate", deletedDate);
+        map.put("list", codes);
+        return dictInfoMapper.batchLogicDelete(map);
+    }
+
+    /**
+     * 查询方法
+     *
+     * @param code 编码
+     * @return 结果
+     */
+    @Override
+    public DictInfoEntity getWithTypeName(String code) {
+        return dictInfoMapper.getWithTypeName(code);
     }
 }
