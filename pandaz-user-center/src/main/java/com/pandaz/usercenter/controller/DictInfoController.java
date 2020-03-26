@@ -28,7 +28,7 @@ import java.util.List;
  * @since 2019-12-19
  */
 @RestController
-@RequestMapping("/dictInfo")
+@RequestMapping("/dict/info")
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class DictInfoController {
