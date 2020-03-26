@@ -7,6 +7,7 @@ import com.pandaz.commons.util.ExecuteResult;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.entity.PermissionEntity;
 import com.pandaz.usercenter.service.PermissionService;
+import com.pandaz.usercenter.util.ControllerUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * 权限
@@ -34,6 +36,11 @@ public class PermissionController {
      * 权限服务
      */
     private final PermissionService permissionService;
+
+    /**
+     * 工具类
+     */
+    private final ControllerUtil<PermissionService> controllerUtil;
 
     /**
      * 查询方法
@@ -126,22 +133,12 @@ public class PermissionController {
     /**
      * 删除方法
      *
-     * @param permissionDTO 权限信息
+     * @param codes 权限信息
      * @return 执行结果
      */
     @DeleteMapping
-    public ExecuteResult<String> delete(@Valid @RequestBody PermissionDTO permissionDTO, Principal principal) {
-        ExecuteResult<String> result = new ExecuteResult<>();
-        try {
-            permissionDTO.setDeletedBy(principal.getName());
-            permissionDTO.setDeletedDate(LocalDateTime.now());
-            permissionService.deleteByCode(BeanCopyUtil.copy(permissionDTO, PermissionEntity.class));
-            result.setData("删除成功");
-        } catch (Exception e) {
-            log.error("删除方法异常：", e);
-            result.setError(e.getMessage());
-        }
-        return result;
+    public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
+        return controllerUtil.getDeleteResult(permissionService, principal.getName(), LocalDateTime.now(), codes);
     }
 
     /**
@@ -156,4 +153,5 @@ public class PermissionController {
         Assert.notNull(permissionDTO.getRequestType(), "请求类型不能为空");
         Assert.notNull(permissionDTO.getPriority(), "优先级不能为空");
     }
+
 }

@@ -9,6 +9,12 @@ import com.pandaz.usercenter.service.RolePermissionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 角色-权限服务
@@ -28,12 +34,12 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
     /**
      * 插入方法
      *
-     * @param rolePermission rolePermission
+     * @param rolePermissionEntity rolePermission
      * @return int
      */
     @Override
-    public int insert(RolePermissionEntity rolePermission) {
-        return rolePermissionMapper.insertSelective(rolePermission);
+    public int insert(RolePermissionEntity rolePermissionEntity) {
+        return rolePermissionMapper.insertSelective(rolePermissionEntity);
     }
 
     /**
@@ -65,4 +71,25 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
         rolePermissionEntity.setDeletedDate(permissionEntity.getDeletedDate());
         return rolePermissionMapper.logicDeleteByPermissionCode(rolePermissionEntity);
     }
+
+    /**
+     * 批量删除
+     *
+     * @param deletedBy   删除人
+     * @param deletedDate 删除时间
+     * @param codes       编码
+     * @return 执行结果
+     */
+    @Override
+    public int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
+        if (CollectionUtils.isEmpty(codes)) {
+            return 0;
+        }
+        Map<String, Object> map = new HashMap<>(3);
+        map.put("deletedBy", deletedBy);
+        map.put("deletedDate", deletedDate);
+        map.put("list", codes);
+        return rolePermissionMapper.batchLogicDelete(map);
+    }
+
 }

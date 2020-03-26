@@ -8,6 +8,7 @@ import com.pandaz.commons.util.ExecuteResult;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.entity.MenuEntity;
 import com.pandaz.usercenter.service.MenuService;
+import com.pandaz.usercenter.util.ControllerUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,11 @@ public class MenuController {
      * 菜单服务
      */
     private final MenuService menuService;
+
+    /**
+     * 工具类
+     */
+    private final ControllerUtil<MenuService> controllerUtil;
 
     /**
      * 查询方法
@@ -114,7 +120,8 @@ public class MenuController {
             menuEntity.setId(UuidUtil.getId());
             menuEntity.setCreatedBy(principal.getName());
             menuEntity.setCreatedDate(LocalDateTime.now());
-            result.setData(BeanCopyUtil.copy(menuService.insert(menuEntity), menuDTO));
+            menuService.insert(menuEntity);
+            result.setData(BeanCopyUtil.copy(menuEntity, menuDTO));
         } catch (Exception e) {
             log.error("插入方法异常：", e);
             result.setError(e.getMessage());
@@ -148,22 +155,12 @@ public class MenuController {
     /**
      * 删除方法
      *
-     * @param menuDTO 菜单信息
+     * @param codes 菜单信息
      * @return 执行结果
      */
     @DeleteMapping
-    public ExecuteResult<String> delete(@Valid @RequestBody MenuDTO menuDTO, Principal principal) {
-        ExecuteResult<String> result = new ExecuteResult<>();
-        try {
-            menuDTO.setDeletedBy(principal.getName());
-            menuDTO.setDeletedDate(LocalDateTime.now());
-            menuService.deleteByCode(BeanCopyUtil.copy(menuDTO, MenuEntity.class));
-            result.setData("删除成功");
-        } catch (Exception e) {
-            log.error("删除方法异常：", e);
-            result.setError(e.getMessage());
-        }
-        return result;
+    public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
+        return controllerUtil.getDeleteResult(menuService, principal.getName(), LocalDateTime.now(), codes);
     }
 
     /**
@@ -175,6 +172,12 @@ public class MenuController {
         Assert.hasText(menuDTO.getName(), "菜单名称不能为空");
     }
 
+    /**
+     * 将entity及children转换为dto
+     *
+     * @param menuEntity entity
+     * @return dto
+     */
     private MenuDTO transferToDTO(MenuEntity menuEntity) {
         MenuDTO menuDTO = new MenuDTO();
         List<MenuEntity> entityList = menuEntity.getChildren();
@@ -189,4 +192,5 @@ public class MenuController {
         menuDTO.setName(menuEntity.getName());
         return menuDTO;
     }
+
 }

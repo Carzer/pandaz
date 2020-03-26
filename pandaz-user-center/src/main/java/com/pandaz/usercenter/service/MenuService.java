@@ -1,7 +1,6 @@
 package com.pandaz.usercenter.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.pandaz.usercenter.entity.MenuEntity;
 
 import java.util.List;
@@ -12,15 +11,7 @@ import java.util.List;
  * @author Carzer
  * @since 2019-11-01
  */
-public interface MenuService extends IService<MenuEntity> {
-
-    /**
-     * 插入方法
-     *
-     * @param menu 菜单信息
-     * @return 插入结果
-     */
-    MenuEntity insert(MenuEntity menu);
+public interface MenuService extends UcBaseService<MenuEntity> {
 
     /**
      * 根据编码查询
@@ -61,4 +52,5 @@ public interface MenuService extends IService<MenuEntity> {
      * @return 执行结果
      */
     List<MenuEntity> getAll(MenuEntity menuEntity);
+
 }

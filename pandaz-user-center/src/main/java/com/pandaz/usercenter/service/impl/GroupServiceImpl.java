@@ -64,20 +64,20 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupEntity> impl
     /**
      * 插入组信息
      *
-     * @param group group
+     * @param groupEntity group
      * @return int
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int insert(GroupEntity group) {
+    public int insert(GroupEntity groupEntity) {
         // 组信息补充
-        String groupCode = checkUtil.checkOrSetCode(group, groupMapper, "组编码已存在", SysConstants.GROUP_PREFIX, null);
-        if (!StringUtils.hasText(group.getId())) {
-            group.setId(UuidUtil.getId());
+        String groupCode = checkUtil.checkOrSetCode(groupEntity, groupMapper, "组编码已存在", SysConstants.GROUP_PREFIX, null);
+        if (!StringUtils.hasText(groupEntity.getId())) {
+            groupEntity.setId(UuidUtil.getId());
         }
-        String groupName = group.getName();
-        String createdBy = group.getCreatedBy();
-        LocalDateTime createDate = group.getCreatedDate();
+        String groupName = groupEntity.getName();
+        String createdBy = groupEntity.getCreatedBy();
+        LocalDateTime createDate = groupEntity.getCreatedDate();
 
         // 创建私有角色
         RoleEntity role = new RoleEntity();
@@ -88,16 +88,16 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupEntity> impl
         role.setCreatedBy(createdBy);
         role.setCreatedDate(createDate);
         // 关联组及私有角色
-        GroupRoleEntity groupRole = new GroupRoleEntity();
-        groupRole.setId(UuidUtil.getId());
-        groupRole.setIsPrivate(SysConstants.PRIVATE);
-        groupRole.setGroupCode(groupCode);
-        groupRole.setRoleCode(roleCode);
-        groupRole.setCreatedBy(createdBy);
-        groupRole.setCreatedDate(createDate);
-        groupRoleService.insert(groupRole);
+        GroupRoleEntity groupRoleEntity = new GroupRoleEntity();
+        groupRoleEntity.setId(UuidUtil.getId());
+        groupRoleEntity.setIsPrivate(SysConstants.PRIVATE);
+        groupRoleEntity.setGroupCode(groupCode);
+        groupRoleEntity.setRoleCode(roleCode);
+        groupRoleEntity.setCreatedBy(createdBy);
+        groupRoleEntity.setCreatedDate(createDate);
+        groupRoleService.insert(groupRoleEntity);
         roleService.insert(role);
-        return groupMapper.insertSelective(group);
+        return groupMapper.insertSelective(groupEntity);
     }
 
     /**
@@ -160,6 +160,8 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupEntity> impl
         if (StringUtils.hasText(groupEntity.getCode())) {
             queryWrapper.likeRight("code", groupEntity.getCode());
         }
+        queryWrapper.eq("is_private", SysConstants.PUBLIC);
+        queryWrapper.orderByDesc(SysConstants.CREATED_DATE_COLUMN);
         return page(page, queryWrapper);
     }
 
@@ -175,4 +177,29 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupEntity> impl
         updateWrapper.eq("code", groupEntity.getCode());
         return groupMapper.update(groupEntity, updateWrapper);
     }
+
+    /**
+     * 批量删除
+     *
+     * @param deletedBy   删除人
+     * @param deletedDate 删除时间
+     * @param codes       编码
+     * @return 执行结果
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
+        if (CollectionUtils.isEmpty(codes)) {
+            return 0;
+        }
+        codes.forEach(code -> {
+            GroupEntity groupEntity = new GroupEntity();
+            groupEntity.setCode(code);
+            groupEntity.setDeletedBy(deletedBy);
+            groupEntity.setDeletedDate(deletedDate);
+            deleteByCode(groupEntity);
+        });
+        return codes.size();
+    }
+
 }

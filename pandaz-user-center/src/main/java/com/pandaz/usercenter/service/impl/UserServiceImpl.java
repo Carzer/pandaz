@@ -118,7 +118,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public UserEntity insert(UserEntity user) {
+    public int insert(UserEntity user) {
         // 校验重复
         String userCode = checkUtil.checkOrSetCode(user, userMapper, "用户编码已存在", null, null);
         UserEntity loginUser = loadUserByUsername(user.getLoginName());
@@ -160,8 +160,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         // 插入相关信息
         userGroupService.insert(userGroup);
         groupService.insert(group);
-        userMapper.insertSelective(user);
-        return user;
+        return userMapper.insertSelective(user);
     }
 
     /**
@@ -258,4 +257,5 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         });
         return codes.size();
     }
+
 }

@@ -7,6 +7,7 @@ import com.pandaz.commons.util.ExecuteResult;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.entity.OsInfoEntity;
 import com.pandaz.usercenter.service.OsInfoService;
+import com.pandaz.usercenter.util.ControllerUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,11 @@ public class OsInfoController {
      * 系统信息服务
      */
     private final OsInfoService osInfoService;
+
+    /**
+     * 工具类
+     */
+    private final ControllerUtil<OsInfoService> controllerUtil;
 
     /**
      * 查询方法
@@ -127,16 +133,8 @@ public class OsInfoController {
      * @return 执行结果
      */
     @DeleteMapping
-    public ExecuteResult<String> delete(@Valid @RequestBody List<String> codes, Principal principal) {
-        ExecuteResult<String> result = new ExecuteResult<>();
-        try {
-            osInfoService.deleteByCodes(principal.getName(), LocalDateTime.now(), codes);
-            result.setData("删除成功");
-        } catch (Exception e) {
-            log.error("删除方法异常：", e);
-            result.setError(e.getMessage());
-        }
-        return result;
+    public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
+        return controllerUtil.getDeleteResult(osInfoService, principal.getName(), LocalDateTime.now(), codes);
     }
 
     /**
@@ -147,4 +145,5 @@ public class OsInfoController {
     private void check(OsInfoDTO osInfoDTO) {
         Assert.hasText(osInfoDTO.getName(), "系统名称不能为空");
     }
+
 }

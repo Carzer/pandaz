@@ -1,6 +1,5 @@
 package com.pandaz.usercenter.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.pandaz.usercenter.entity.PermissionEntity;
 import com.pandaz.usercenter.entity.RoleEntity;
 import com.pandaz.usercenter.entity.RolePermissionEntity;
@@ -11,15 +10,7 @@ import com.pandaz.usercenter.entity.RolePermissionEntity;
  * @author Carzer
  * @since 2019-11-06
  */
-public interface RolePermissionService extends IService<RolePermissionEntity> {
-
-    /**
-     * 插入方法
-     *
-     * @param rolePermission rolePermission
-     * @return int
-     */
-    int insert(RolePermissionEntity rolePermission);
+public interface RolePermissionService extends UcBaseService<RolePermissionEntity> {
 
     /**
      * 根据角色编码删除
@@ -36,4 +27,5 @@ public interface RolePermissionService extends IService<RolePermissionEntity> {
      * @return 执行结果
      */
     int deleteByPermissionCode(PermissionEntity permissionEntity);
+
 }

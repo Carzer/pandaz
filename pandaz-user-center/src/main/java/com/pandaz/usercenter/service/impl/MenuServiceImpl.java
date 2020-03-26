@@ -14,9 +14,13 @@ import com.pandaz.usercenter.util.CheckUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 菜单服务
@@ -41,20 +45,19 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
     /**
      * 插入方法
      *
-     * @param menu 菜单信息
+     * @param menuEntity 菜单信息
      * @return 插入结果
      */
     @Override
-    public MenuEntity insert(MenuEntity menu) {
-        checkUtil.checkOrSetCode(menu, menuMapper, "菜单编码已存在");
-        if (!StringUtils.hasText(menu.getId())) {
-            menu.setId(UuidUtil.getId());
+    public int insert(MenuEntity menuEntity) {
+        checkUtil.checkOrSetCode(menuEntity, menuMapper, "菜单编码已存在");
+        if (!StringUtils.hasText(menuEntity.getId())) {
+            menuEntity.setId(UuidUtil.getId());
         }
-        if (!StringUtils.hasText(menu.getParentCode())) {
-            menu.setParentCode(CommonConstants.ROOT_MENU_CODE);
+        if (!StringUtils.hasText(menuEntity.getParentCode())) {
+            menuEntity.setParentCode(CommonConstants.ROOT_MENU_CODE);
         }
-        menuMapper.insertSelective(menu);
-        return menu;
+        return menuMapper.insertSelective(menuEntity);
     }
 
     /**
@@ -113,8 +116,35 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
         return menuMapper.logicDelete(menuEntity);
     }
 
+    /**
+     * 获取所有菜单
+     *
+     * @param menuEntity menuEntity
+     * @return 执行结果
+     */
     @Override
     public List<MenuEntity> getAll(MenuEntity menuEntity) {
         return menuMapper.getAllAsTree(menuEntity);
     }
+
+    /**
+     * 批量删除
+     *
+     * @param deletedBy   删除人
+     * @param deletedDate 删除时间
+     * @param codes       编码
+     * @return 执行结果
+     */
+    @Override
+    public int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
+        if (CollectionUtils.isEmpty(codes)) {
+            return 0;
+        }
+        Map<String, Object> map = new HashMap<>(3);
+        map.put("deletedBy", deletedBy);
+        map.put("deletedDate", deletedDate);
+        map.put("list", codes);
+        return menuMapper.batchLogicDelete(map);
+    }
+
 }

@@ -1,7 +1,6 @@
 package com.pandaz.usercenter.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.pandaz.usercenter.entity.OauthClientEntity;
 import org.springframework.security.oauth2.provider.ClientDetails;
 
@@ -13,7 +12,7 @@ import org.springframework.security.oauth2.provider.ClientDetails;
  * @author Carzer
  * @since 2020-01-02
  */
-public interface OauthClientService extends IService<OauthClientEntity> {
+public interface OauthClientService extends UcBaseService<OauthClientEntity> {
 
     /**
      * 根据客户端ID查询客户端
@@ -48,18 +47,11 @@ public interface OauthClientService extends IService<OauthClientEntity> {
     int updateByClientId(OauthClientEntity oauthClientEntity);
 
     /**
-     * 插入方法
-     *
-     * @param oauthClientEntity 客户端信息
-     * @return 结果
-     */
-    int insert(OauthClientEntity oauthClientEntity);
-
-    /**
      * 分页方法
      *
      * @param oauthClientEntity 查询条件
      * @return 分页
      */
     IPage<OauthClientEntity> getPage(OauthClientEntity oauthClientEntity);
+
 }

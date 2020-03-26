@@ -7,6 +7,7 @@ import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.ExecuteResult;
 import com.pandaz.usercenter.entity.UserEntity;
 import com.pandaz.usercenter.service.UserService;
+import com.pandaz.usercenter.util.ControllerUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,11 @@ public class UserController {
      * 用户信息服务
      */
     private final UserService userService;
+
+    /**
+     * 工具类
+     */
+    private final ControllerUtil<UserService> controllerUtil;
 
     /**
      * 根据用户编码获取用户信息
@@ -100,7 +106,8 @@ public class UserController {
             if (user.getExpireAt() == null) {
                 user.setExpireAt(LocalDateTime.now().plusMonths(6L));
             }
-            result.setData(BeanCopyUtil.copy(userService.insert(user), UserDTO.class));
+            userService.insert(user);
+            result.setData(BeanCopyUtil.copy(user, UserDTO.class));
         } catch (Exception e) {
             log.error("插入方法异常：", e);
             result.setError(e.getMessage());
@@ -141,15 +148,7 @@ public class UserController {
     @PreAuthorize("!#codes.contains('admin')")
     @DeleteMapping
     public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
-        ExecuteResult<String> result = new ExecuteResult<>();
-        try {
-            userService.deleteByCodes(principal.getName(), LocalDateTime.now(), codes);
-            result.setData("删除成功。");
-        } catch (Exception e) {
-            log.error("删除方法异常：", e);
-            result.setError(e.getMessage());
-        }
-        return result;
+        return controllerUtil.getDeleteResult(userService, principal.getName(), LocalDateTime.now(), codes);
     }
 
     /**
@@ -162,4 +161,5 @@ public class UserController {
         Assert.hasText(userDTO.getName(), "用户名不能为空");
         Assert.hasText(userDTO.getPhone(), "电话号码不能为空");
     }
+
 }

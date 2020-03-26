@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -65,14 +66,14 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
     /**
      * 插入角色信息
      *
-     * @param role 角色信息
+     * @param roleEntity 角色信息
      * @return int
      */
     @Override
-    public int insert(RoleEntity role) {
-        checkUtil.checkOrSetCode(role, roleMapper, "角色编码已存在", SysConstants.ROLE_PREFIX, null);
-        role.setId(UuidUtil.getId());
-        return roleMapper.insertSelective(role);
+    public int insert(RoleEntity roleEntity) {
+        checkUtil.checkOrSetCode(roleEntity, roleMapper, "角色编码已存在", SysConstants.ROLE_PREFIX, null);
+        roleEntity.setId(UuidUtil.getId());
+        return roleMapper.insertSelective(roleEntity);
     }
 
     /**
@@ -174,4 +175,29 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
         updateWrapper.eq("code", roleEntity.getCode());
         return roleMapper.delete(updateWrapper);
     }
+
+    /**
+     * 批量删除用户
+     *
+     * @param deletedBy   删除人
+     * @param deletedDate 删除时间
+     * @param codes       编码
+     * @return 执行结果
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
+        if (CollectionUtils.isEmpty(codes)) {
+            return 0;
+        }
+        codes.forEach(code -> {
+            RoleEntity roleEntity = new RoleEntity();
+            roleEntity.setCode(code);
+            roleEntity.setDeletedBy(deletedBy);
+            roleEntity.setDeletedDate(deletedDate);
+            deleteByCode(roleEntity);
+        });
+        return codes.size();
+    }
+
 }

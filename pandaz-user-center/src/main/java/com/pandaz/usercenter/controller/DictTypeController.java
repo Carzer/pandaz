@@ -1,13 +1,13 @@
 package com.pandaz.usercenter.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.commons.dto.usercenter.DictTypeDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.ExecuteResult;
 import com.pandaz.usercenter.entity.DictTypeEntity;
 import com.pandaz.usercenter.service.DictTypeService;
+import com.pandaz.usercenter.util.ControllerUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +39,11 @@ public class DictTypeController {
      * 字典类型服务
      */
     private final DictTypeService dictTypeService;
+
+    /**
+     * 工具类
+     */
+    private final ControllerUtil<DictTypeService> controllerUtil;
 
     /**
      * 查询方法
@@ -131,10 +136,6 @@ public class DictTypeController {
             DictTypeEntity dictTypeEntity = BeanCopyUtil.copy(dictTypeDTO, DictTypeEntity.class);
             dictTypeEntity.setUpdatedBy(principal.getName());
             dictTypeEntity.setUpdatedDate(LocalDateTime.now());
-
-            UpdateWrapper<DictTypeEntity> updateWrapper = new UpdateWrapper<>();
-            updateWrapper.eq("code", dictTypeEntity.getCode());
-
             dictTypeService.updateByCode(dictTypeEntity);
             result.setData("更新成功");
         } catch (Exception e) {
@@ -152,15 +153,7 @@ public class DictTypeController {
      */
     @DeleteMapping
     public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
-        ExecuteResult<String> result = new ExecuteResult<>();
-        try {
-            dictTypeService.deleteByCodes(principal.getName(), LocalDateTime.now(), codes);
-            result.setData("删除成功");
-        } catch (Exception e) {
-            log.error("删除方法异常：", e);
-            result.setError(e.getMessage());
-        }
-        return result;
+        return controllerUtil.getDeleteResult(dictTypeService, principal.getName(), LocalDateTime.now(), codes);
     }
 
     /**
@@ -171,4 +164,5 @@ public class DictTypeController {
     private void check(DictTypeDTO dictTypeDTO) {
         Assert.hasText(dictTypeDTO.getName(), "字典类型名称不能为空");
     }
+
 }

@@ -3,7 +3,6 @@ package com.pandaz.usercenter.controller;
 import com.pandaz.commons.util.ExecuteResult;
 import com.pandaz.usercenter.client.RedisClient;
 import com.pandaz.usercenter.client.UploadClient;
-import com.pandaz.usercenter.custom.CustomProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +31,6 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class IndexController {
-
-    private final CustomProperties customProperties;
 
     /**
      * 上传客户端

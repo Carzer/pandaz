@@ -1,7 +1,6 @@
 package com.pandaz.usercenter.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.pandaz.usercenter.entity.OrganizationEntity;
 
 /**
@@ -10,7 +9,7 @@ import com.pandaz.usercenter.entity.OrganizationEntity;
  * @author Carzer
  * @since 2019/12/13
  */
-public interface OrganizationService extends IService<OrganizationEntity> {
+public interface OrganizationService extends UcBaseService<OrganizationEntity> {
 
     /**
      * 根据编码查询
@@ -29,14 +28,6 @@ public interface OrganizationService extends IService<OrganizationEntity> {
     IPage<OrganizationEntity> getPage(OrganizationEntity organizationEntity);
 
     /**
-     * 插入方法
-     *
-     * @param organizationEntity 组织信息
-     * @return 执行结果
-     */
-    int insert(OrganizationEntity organizationEntity);
-
-    /**
      * 更新方法
      *
      * @param organizationEntity 组织信息
@@ -51,4 +42,5 @@ public interface OrganizationService extends IService<OrganizationEntity> {
      * @return 执行结果
      */
     int deleteByCode(OrganizationEntity organizationEntity);
+
 }

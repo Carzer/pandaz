@@ -16,7 +16,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 权限相关服务
@@ -47,17 +51,16 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     /**
      * 插入方法
      *
-     * @param permission permission
+     * @param permissionEntity permission
      * @return com.pandaz.usercenter.entity.PermissionEntity
      */
     @Override
-    public PermissionEntity insert(PermissionEntity permission) {
-        checkUtil.checkOrSetCode(permission, permissionMapper, "权限编码已存在");
-        if (!StringUtils.hasText(permission.getId())) {
-            permission.setId(UuidUtil.getId());
+    public int insert(PermissionEntity permissionEntity) {
+        checkUtil.checkOrSetCode(permissionEntity, permissionMapper, "权限编码已存在");
+        if (!StringUtils.hasText(permissionEntity.getId())) {
+            permissionEntity.setId(UuidUtil.getId());
         }
-        permissionMapper.insertSelective(permission);
-        return permission;
+        return permissionMapper.insertSelective(permissionEntity);
     }
 
     /**
@@ -117,4 +120,29 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         rolePermissionService.deleteByPermissionCode(permissionEntity);
         return permissionMapper.logicDelete(permissionEntity);
     }
+
+    /**
+     * 批量删除用户
+     *
+     * @param deletedBy   删除人
+     * @param deletedDate 删除时间
+     * @param codes       编码
+     * @return 执行结果
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
+        if (CollectionUtils.isEmpty(codes)) {
+            return 0;
+        }
+        codes.forEach(code -> {
+            PermissionEntity permissionEntity = new PermissionEntity();
+            permissionEntity.setCode(code);
+            permissionEntity.setDeletedBy(deletedBy);
+            permissionEntity.setDeletedDate(deletedDate);
+            deleteByCode(permissionEntity);
+        });
+        return codes.size();
+    }
+
 }

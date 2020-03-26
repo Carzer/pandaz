@@ -1,7 +1,6 @@
 package com.pandaz.usercenter.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.pandaz.commons.custom.SecurityUser;
 import com.pandaz.usercenter.entity.RoleDetailEntity;
 import com.pandaz.usercenter.entity.RoleEntity;
@@ -16,15 +15,7 @@ import java.util.Set;
  * @author Carzer
  * @since 2019-10-25
  */
-public interface RoleService extends IService<RoleEntity> {
-
-    /**
-     * 插入角色信息
-     *
-     * @param role 角色信息
-     * @return int
-     */
-    int insert(RoleEntity role);
+public interface RoleService extends UcBaseService<RoleEntity> {
 
     /**
      * 根据用户编码查询角色信息
@@ -82,4 +73,5 @@ public interface RoleService extends IService<RoleEntity> {
      * @return 执行结果
      */
     int updateByCode(RoleEntity roleEntity);
+
 }

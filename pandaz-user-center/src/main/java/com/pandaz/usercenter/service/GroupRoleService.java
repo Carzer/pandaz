@@ -1,6 +1,5 @@
 package com.pandaz.usercenter.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.pandaz.usercenter.entity.GroupEntity;
 import com.pandaz.usercenter.entity.GroupRoleEntity;
 import com.pandaz.usercenter.entity.RoleEntity;
@@ -13,15 +12,7 @@ import java.util.List;
  * @author Carzer
  * @since 2019-11-05 17:33
  */
-public interface GroupRoleService extends IService<GroupRoleEntity> {
-
-    /**
-     * 插入方法
-     *
-     * @param groupRole groupRole
-     * @return int
-     */
-    int insert(GroupRoleEntity groupRole);
+public interface GroupRoleService extends UcBaseService<GroupRoleEntity> {
 
     /**
      * 根据组编码查询
@@ -47,4 +38,5 @@ public interface GroupRoleService extends IService<GroupRoleEntity> {
      * @return int
      */
     int deleteByRoleCode(RoleEntity roleEntity);
+
 }

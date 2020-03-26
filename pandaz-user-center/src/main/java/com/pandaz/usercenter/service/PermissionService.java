@@ -1,7 +1,6 @@
 package com.pandaz.usercenter.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.pandaz.usercenter.entity.PermissionEntity;
 
 /**
@@ -10,15 +9,7 @@ import com.pandaz.usercenter.entity.PermissionEntity;
  * @author Carzer
  * @since 2019-11-05
  */
-public interface PermissionService extends IService<PermissionEntity> {
-
-    /**
-     * 插入方法
-     *
-     * @param permission permission
-     * @return com.pandaz.usercenter.entity.PermissionEntity
-     */
-    PermissionEntity insert(PermissionEntity permission);
+public interface PermissionService extends UcBaseService<PermissionEntity> {
 
     /**
      * 根据编码查询
@@ -51,4 +42,5 @@ public interface PermissionService extends IService<PermissionEntity> {
      * @return 执行结果
      */
     int deleteByCode(PermissionEntity permissionEntity);
+
 }

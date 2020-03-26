@@ -10,8 +10,12 @@ import com.pandaz.usercenter.service.GroupRoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 组-角色服务
@@ -31,12 +35,12 @@ public class GroupRoleServiceImpl extends ServiceImpl<GroupRoleMapper, GroupRole
     /**
      * 插入方法
      *
-     * @param groupRole groupRole
+     * @param groupRoleEntity groupRoleEntity
      * @return int
      */
     @Override
-    public int insert(GroupRoleEntity groupRole) {
-        return groupRoleMapper.insertSelective(groupRole);
+    public int insert(GroupRoleEntity groupRoleEntity) {
+        return groupRoleMapper.insertSelective(groupRoleEntity);
     }
 
     /**
@@ -81,4 +85,25 @@ public class GroupRoleServiceImpl extends ServiceImpl<GroupRoleMapper, GroupRole
         groupRoleEntity.setDeletedDate(roleEntity.getDeletedDate());
         return groupRoleMapper.logicDeleteByRoleCode(groupRoleEntity);
     }
+
+    /**
+     * 批量删除
+     *
+     * @param deletedBy   删除人
+     * @param deletedDate 删除时间
+     * @param codes       编码
+     * @return 执行结果
+     */
+    @Override
+    public int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
+        if (CollectionUtils.isEmpty(codes)) {
+            return 0;
+        }
+        Map<String, Object> map = new HashMap<>(3);
+        map.put("deletedBy", deletedBy);
+        map.put("deletedDate", deletedDate);
+        map.put("list", codes);
+        return groupRoleMapper.batchLogicDelete(map);
+    }
+
 }

@@ -7,6 +7,7 @@ import com.pandaz.commons.util.ExecuteResult;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.entity.RoleEntity;
 import com.pandaz.usercenter.service.RoleService;
+import com.pandaz.usercenter.util.ControllerUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * 角色
@@ -34,6 +36,11 @@ public class RoleController {
      * 角色服务
      */
     private final RoleService roleService;
+
+    /**
+     * 工具类
+     */
+    private final ControllerUtil<RoleService> controllerUtil;
 
     /**
      * 查询方法
@@ -122,22 +129,12 @@ public class RoleController {
     /**
      * 删除方法
      *
-     * @param roleDTO 角色信息
+     * @param codes 角色信息
      * @return 执行结果
      */
     @DeleteMapping
-    public ExecuteResult<String> delete(@Valid @RequestBody RoleDTO roleDTO, Principal principal) {
-        ExecuteResult<String> result = new ExecuteResult<>();
-        try {
-            roleDTO.setDeletedBy(principal.getName());
-            roleDTO.setDeletedDate(LocalDateTime.now());
-            roleService.deleteByCode(BeanCopyUtil.copy(roleDTO, RoleEntity.class));
-            result.setData("删除成功");
-        } catch (Exception e) {
-            log.error("删除方法异常：", e);
-            result.setError(e.getMessage());
-        }
-        return result;
+    public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
+        return controllerUtil.getDeleteResult(roleService, principal.getName(), LocalDateTime.now(), codes);
     }
 
     /**
@@ -148,4 +145,5 @@ public class RoleController {
     private void check(RoleDTO roleDTO) {
         Assert.hasText(roleDTO.getName(), "角色名不能为空");
     }
+
 }

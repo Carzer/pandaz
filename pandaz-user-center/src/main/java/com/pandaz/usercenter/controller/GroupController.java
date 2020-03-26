@@ -7,6 +7,7 @@ import com.pandaz.commons.util.ExecuteResult;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.entity.GroupEntity;
 import com.pandaz.usercenter.service.GroupService;
+import com.pandaz.usercenter.util.ControllerUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * 组信息
@@ -34,6 +36,11 @@ public class GroupController {
      * 组服务
      */
     private final GroupService groupService;
+
+    /**
+     * 工具类
+     */
+    private final ControllerUtil<GroupService> controllerUtil;
 
     /**
      * 查询方法
@@ -122,22 +129,12 @@ public class GroupController {
     /**
      * 删除方法
      *
-     * @param groupDTO 组信息
+     * @param codes 组信息
      * @return 执行结果
      */
     @DeleteMapping
-    public ExecuteResult<String> delete(@Valid @RequestBody GroupDTO groupDTO, Principal principal) {
-        ExecuteResult<String> result = new ExecuteResult<>();
-        try {
-            groupDTO.setDeletedBy(principal.getName());
-            groupDTO.setDeletedDate(LocalDateTime.now());
-            groupService.deleteByCode(BeanCopyUtil.copy(groupDTO, GroupEntity.class));
-            result.setData("删除成功");
-        } catch (Exception e) {
-            log.error("删除方法异常：", e);
-            result.setError(e.getMessage());
-        }
-        return result;
+    public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
+        return controllerUtil.getDeleteResult(groupService, principal.getName(), LocalDateTime.now(), codes);
     }
 
     /**
@@ -148,4 +145,5 @@ public class GroupController {
     private void check(GroupDTO groupDTO) {
         Assert.hasText(groupDTO.getName(), "用户组名称不能为空");
     }
+
 }

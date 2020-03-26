@@ -21,9 +21,13 @@ import org.springframework.security.oauth2.provider.NoSuchClientException;
 import org.springframework.security.oauth2.provider.client.BaseClientDetails;
 import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -184,4 +188,25 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Oauth
         }
         return baseClientDetails;
     }
+
+    /**
+     * 批量删除
+     *
+     * @param deletedBy   删除人
+     * @param deletedDate 删除时间
+     * @param codes       编码
+     * @return 执行结果
+     */
+    @Override
+    public int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
+        if (CollectionUtils.isEmpty(codes)) {
+            return 0;
+        }
+        Map<String, Object> map = new HashMap<>(3);
+        map.put("deletedBy", deletedBy);
+        map.put("deletedDate", deletedDate);
+        map.put("list", codes);
+        return oauthClientMapper.batchLogicDelete(map);
+    }
+
 }

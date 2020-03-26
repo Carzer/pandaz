@@ -7,6 +7,7 @@ import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.ExecuteResult;
 import com.pandaz.usercenter.entity.DictInfoEntity;
 import com.pandaz.usercenter.service.DictInfoService;
+import com.pandaz.usercenter.util.ControllerUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,11 @@ public class DictInfoController {
      * 字典信息服务
      */
     private final DictInfoService dictInfoService;
+
+    /**
+     * 工具类
+     */
+    private final ControllerUtil<DictInfoService> controllerUtil;
 
     /**
      * 查询方法
@@ -129,15 +135,7 @@ public class DictInfoController {
      */
     @DeleteMapping
     public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
-        ExecuteResult<String> result = new ExecuteResult<>();
-        try {
-            dictInfoService.deleteByCodes(principal.getName(), LocalDateTime.now(), codes);
-            result.setData("删除成功");
-        } catch (Exception e) {
-            log.error("删除方法异常：", e);
-            result.setError(e.getMessage());
-        }
-        return result;
+        return controllerUtil.getDeleteResult(dictInfoService, principal.getName(), LocalDateTime.now(), codes);
     }
 
     /**
@@ -149,4 +147,5 @@ public class DictInfoController {
         Assert.hasText(dictInfoDTO.getName(), "字典信息名称不能为空");
         Assert.hasText(dictInfoDTO.getTypeCode(), "请关联字典类型");
     }
+
 }

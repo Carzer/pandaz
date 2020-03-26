@@ -13,7 +13,13 @@ import com.pandaz.usercenter.util.CheckUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 组织信息服务
@@ -105,4 +111,25 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
     public int deleteByCode(OrganizationEntity organizationEntity) {
         return organizationMapper.logicDelete(organizationEntity);
     }
+
+    /**
+     * 批量删除
+     *
+     * @param deletedBy   删除人
+     * @param deletedDate 删除时间
+     * @param codes       编码
+     * @return 执行结果
+     */
+    @Override
+    public int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
+        if (CollectionUtils.isEmpty(codes)) {
+            return 0;
+        }
+        Map<String, Object> map = new HashMap<>(3);
+        map.put("deletedBy", deletedBy);
+        map.put("deletedDate", deletedDate);
+        map.put("list", codes);
+        return organizationMapper.batchLogicDelete(map);
+    }
+
 }

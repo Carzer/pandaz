@@ -1,11 +1,7 @@
 package com.pandaz.usercenter.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.pandaz.usercenter.entity.OsInfoEntity;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * 系统信息服务
@@ -13,15 +9,7 @@ import java.util.List;
  * @author Carzer
  * @since 2019-11-01 15:04
  */
-public interface OsInfoService extends IService<OsInfoEntity> {
-
-    /**
-     * 插入方法
-     *
-     * @param osInfo osInfo
-     * @return com.pandaz.usercenter.entity.OsInfoEntity
-     */
-    OsInfoEntity insert(OsInfoEntity osInfo);
+public interface OsInfoService extends UcBaseService<OsInfoEntity> {
 
     /**
      * 根据编码查询
@@ -55,13 +43,4 @@ public interface OsInfoService extends IService<OsInfoEntity> {
      */
     int deleteByCode(OsInfoEntity osInfoEntity);
 
-    /**
-     * 批量删除系统信息
-     *
-     * @param deletedBy   删除人
-     * @param deletedDate 删除时间
-     * @param codes       编码
-     * @return 执行结果
-     */
-    int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes);
 }

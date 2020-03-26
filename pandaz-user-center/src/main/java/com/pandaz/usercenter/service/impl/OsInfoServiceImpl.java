@@ -43,17 +43,16 @@ public class OsInfoServiceImpl extends ServiceImpl<OsInfoMapper, OsInfoEntity> i
     /**
      * 插入方法
      *
-     * @param osInfo osInfo
+     * @param osInfoEntity osInfo
      * @return com.pandaz.usercenter.entity.OsInfoEntity
      */
     @Override
-    public OsInfoEntity insert(OsInfoEntity osInfo) {
-        checkUtil.checkOrSetCode(osInfo, osInfoMapper, "系统编码已存在");
-        if (!StringUtils.hasText(osInfo.getId())) {
-            osInfo.setId(UuidUtil.getId());
+    public int insert(OsInfoEntity osInfoEntity) {
+        checkUtil.checkOrSetCode(osInfoEntity, osInfoMapper, "系统编码已存在");
+        if (!StringUtils.hasText(osInfoEntity.getId())) {
+            osInfoEntity.setId(UuidUtil.getId());
         }
-        osInfoMapper.insertSelective(osInfo);
-        return osInfo;
+        return osInfoMapper.insertSelective(osInfoEntity);
     }
 
     /**
@@ -144,4 +143,5 @@ public class OsInfoServiceImpl extends ServiceImpl<OsInfoMapper, OsInfoEntity> i
         });
         return codes.size();
     }
+
 }
