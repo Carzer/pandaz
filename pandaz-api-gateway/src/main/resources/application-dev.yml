@@ -22,11 +22,11 @@ spring:
     # nacos
     nacos:
       discovery:
-        server-addr: 172.16.2.130:8848
+        server-addr: localhost:8848
     # sentinel
     sentinel:
       transport:
-        dashboard: 172.16.2.130:8787
+        dashboard: localhost:8787
       log:
         dir: logs/api-gateway/sentinel
 security:

@@ -5,6 +5,7 @@ import com.pandaz.commons.dto.usercenter.GroupDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.ExecuteResult;
 import com.pandaz.commons.util.UuidUtil;
+import com.pandaz.usercenter.custom.constants.SysConstants;
 import com.pandaz.usercenter.entity.GroupEntity;
 import com.pandaz.usercenter.service.GroupService;
 import com.pandaz.usercenter.util.ControllerUtil;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -92,6 +94,9 @@ public class GroupController {
             check(groupDTO);
             GroupEntity groupEntity = BeanCopyUtil.copy(groupDTO, GroupEntity.class);
             groupEntity.setId(UuidUtil.getId());
+            if (StringUtils.hasText(groupEntity.getCode())) {
+                groupEntity.setCode(String.format("%s%s", SysConstants.GROUP_PREFIX, groupEntity.getCode()));
+            }
             groupEntity.setCreatedBy(principal.getName());
             groupEntity.setCreatedDate(LocalDateTime.now());
             groupService.insert(groupEntity);

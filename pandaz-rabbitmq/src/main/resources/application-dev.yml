@@ -3,11 +3,11 @@ spring:
     # nacos
     nacos:
       discovery:
-        server-addr: 172.16.2.130:8848
+        server-addr: localhost:8848
     # sentinel
     sentinel:
       transport:
-        dashboard: 172.16.2.130:8787
+        dashboard: localhost:8787
       log:
         dir: logs/rabbitmq/sentinel
     stream:
@@ -24,7 +24,7 @@ spring:
           environment:
             spring:
               rabbitmq:
-                host: 172.16.2.130
+                host: localhost
                 port: 5672
                 username: pandaz
                 password: pandaz

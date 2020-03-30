@@ -309,13 +309,6 @@ CREATE TABLE `t_sys_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户信息';
 
 -- ----------------------------
---  Records of `t_sys_user`
--- ----------------------------
-BEGIN;
-INSERT INTO `t_sys_user` VALUES   ('54337a8904b64341a2be6532e1393954', '管理员', 'admin', 'admin', '$2a$10$HUU2dCFoglJWi7Jv.F6b3.T50OAwGsNEqUT/NDSvbnSu1cAd9gKlC', '0', '0', null, '15100000000', 'system', '2019-08-22 15:55:09', null, null, null, null, '0', '0', '2020-11-23 15:26:28', '1');
-COMMIT;
-
--- ----------------------------
 --  Table structure for `t_sys_user_group`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_sys_user_group`;

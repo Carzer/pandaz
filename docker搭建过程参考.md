@@ -1,0 +1,181 @@
+# 写在前面
+
+> 调整时区:
+cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+或
+docker cp /etc/localtime [容器ID或者NAME]:/etc/localtime
+
+> docker间互相访问时，可以使用172.17.0.1，而非localhost
+
+# 搭建过程
+
+## 0. 文件夹准备
+
+```shell
+mkdir -p [docker统一目录]/mysql/data
+mkdir -p [docker统一目录]/mysql/conf
+```
+可能用到的配置文件（[docker统一目录]/mysql/conf）
+[docker.cnf](./conf/docker.cnf)
+[mysql.cnf](./conf/mysql.cnf)
+[mysqldump.cnf](./conf/mysqldump.cnf)
+
+```shell
+mkdir -p [docker统一目录]/redis/conf
+mkdir -p [docker统一目录]/redis/data
+mkdir -p [docker统一目录]/redis/data/log
+```
+可能用到的配置文件（[docker统一目录]/redis/conf）
+[redis.conf](./conf/redis.conf)
+
+```shell
+mkdir -p [docker统一目录]/rabbitmq/data
+```
+```shell
+mkdir -p [docker统一目录]/mongo/data
+```
+```shell
+mkdir -p [docker统一目录]/postgres/data
+```
+```shell
+mkdir -p [docker统一目录]/sonarqube/conf
+mkdir -p [docker统一目录]/sonarqube/data
+mkdir -p [docker统一目录]/sonarqube/extensions
+mkdir -p [docker统一目录]/sonarqube/bundled-plugins
+```
+```shell
+mkdir -p [docker统一目录]/nginx
+mkdir -p [docker统一目录]/nginx/ext
+mkdir -p [docker统一目录]/logs/nginx
+mkdir -p [docker统一目录]/nginx/html
+```
+```shell
+mkdir -p [docker统一目录]/nacos/nacos
+mkdir -p [docker统一目录]/nacos/nacos/prometheus/prometheus
+mkdir -p [docker统一目录]/nacos/sentinel
+```
+可能用到的配置文件（[docker统一目录]/nginx）
+[nginx.conf](./conf/nginx.conf)
+
+##  1. mysql
+
+mysql高版本会有驱动异常等问题，所以选用5.7.29版本
+
+```shell
+docker pull mysql:5.7.29
+```
+
+```shell
+docker run -p 3306:3306 --name mysql -v [docker统一目录]/mysql/data:/var/lib/mysql -v [docker统一目录]/mysql/conf:/etc/mysql/conf.d -e MYSQL_ROOT_PASSWORD=XApdgiFrv3#N -d mysql:5.7.29
+```
+
+```mysql
+mysql -u root -p
+XApdgiFrv3#N
+CREATE USER 'pandaz'@'%' IDENTIFIED WITH mysql_native_password BY 'K0tXBGwNHBl#';
+GRANT ALL PRIVILEGES ON *.* TO 'pandaz'@'%';
+flush privileges;
+```
+
+## 2. redis
+
+```shell
+docker pull redis
+```
+
+```shell
+docker run -d --privileged=true -p 6379:6379 -v [docker统一目录]/redis/conf/redis.conf:/etc/redis/redis.conf -v [docker统一目录]/redis/data:/data --name redis redis redis-server /etc/redis/redis.conf --appendonly yes
+```
+
+## 3. rabbitmq
+
+```shell
+docker pull rabbitmq:3.7.7-management
+```
+
+```shell
+docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 -v [docker统一目录]/rabbitmq/data:/var/lib/rabbitmq --hostname myRabbit -e RABBITMQ_DEFAULT_VHOST=my_vhost -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=admin rabbitmq:3.7.7-management
+```
+
+## 4. mongo
+
+```shell
+docker pull mongo
+```
+
+```shell
+docker run --name mongo -p 27017:27017 -v [docker统一目录]/mongo/data:/data -d mongo --auth
+```
+
+```shell
+use admin
+db.createUser({ user:'admin',pwd:'123456',roles:[{role:'userAdminAnyDatabase',db:'admin'}]})
+db.auth("admin","123456")
+db.grantRolesToUser("admin",[{role:"dbOwner", db:"admin"}])
+```
+
+## 5.postgres
+
+```shell
+docker pull postgres
+```
+
+```shell
+docker run -d --name postgres -p 5432:5432 -v [docker统一目录]/postgres/data:/var/lib/postgresql/data -e POSTGRES_USER=sonar -e POSTGRES_PASSWORD=sonar postgres
+```
+
+## 6.sonarqube
+
+sonarqube7.9以后，不再对mysql提供支持，所以搭配了postgres使用
+```shell
+docker pull sonarqube
+```
+
+```shell
+docker run -d --name sonar -p 9000:9000 -p 9092:9092 -v [docker统一目录]/sonarqube/conf:/opt/sonarqube/conf -v [docker统一目录]/sonarqube/data:/opt/sonarqube/data -v [docker统一目录]/sonarqube/extensions:/opt/sonarqube/extensions -v [docker统一目录]/sonarqube/bundled-plugins:/opt/sonarqube/lib/bundled-plugins -e SONARQUBE_JDBC_USERNAME=sonar -e SONARQUBE_JDBC_PASSWORD=sonar -e SONARQUBE_JDBC_URL=jdbc:postgresql://172.17.0.1:5432/sonar sonarqube
+```
+
+## 7.nginx
+
+```shell
+docker pull nginx
+```
+
+```shell
+docker run --name nginx -p 8090:8090 -v [docker统一目录]/nginx/nginx.conf:/etc/nginx/nginx.conf -v [docker统一目录]/nginx/ext:/etc/nginx/ext -v [docker统一目录]/logs/nginx:/var/log/nginx -v [docker统一目录]/nginx/html:/etc/nginx/html -d nginx
+```
+
+## 8.nacos&sentinel
+
+```shell
+git clone --depth 1 https://github.com/nacos-group/nacos-docker.git
+cd nacos-docker
+```
+将example文件夹复制到`[docker统一目录]/nacos/nacos`
+修改standalone-derby.yaml文件，增加的内容
+
+1. services.prometheus.volumes
+
+```shell
+- ./prometheus/prometheus:/prometheus
+```
+2. services.nacos.volumes
+```shell
+- ../sentinel:/sentinel
+```
+3. services.nacos.ports
+```shell
+- "8787:8787"
+```
+
+执行
+
+~~docker-compose -f example/standalone-derby.yaml up~~
+
+```shell
+docker-compose -f standalone-derby.yaml up
+```
+
+sentinel在nacos-server的docker中运行，相关命令文件为：
+[startup.sh](./conf/startup.sh)
+[stop.sh](./conf/stop.sh)

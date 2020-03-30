@@ -5,6 +5,7 @@ import com.pandaz.commons.dto.usercenter.RoleDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.ExecuteResult;
 import com.pandaz.commons.util.UuidUtil;
+import com.pandaz.usercenter.custom.constants.SysConstants;
 import com.pandaz.usercenter.entity.RoleEntity;
 import com.pandaz.usercenter.service.RoleService;
 import com.pandaz.usercenter.util.ControllerUtil;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -92,6 +94,9 @@ public class RoleController {
             check(roleDTO);
             RoleEntity roleEntity = BeanCopyUtil.copy(roleDTO, RoleEntity.class);
             roleEntity.setId(UuidUtil.getId());
+            if (StringUtils.hasText(roleEntity.getCode())) {
+                roleEntity.setCode(String.format("%s%s", SysConstants.ROLE_PREFIX, roleEntity.getCode()));
+            }
             roleEntity.setCreatedBy(principal.getName());
             roleEntity.setCreatedDate(LocalDateTime.now());
             roleService.insert(roleEntity);

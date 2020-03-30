@@ -3,15 +3,17 @@ spring:
     # nacos
     nacos:
       discovery:
-        server-addr: 172.16.2.130:8848
+        server-addr: localhost:8848
     # sentinel
     sentinel:
       transport:
-        dashboard: 172.16.2.130:8787
+        dashboard: localhost:8787
       log:
         dir: logs/redis/sentinel
   # redis配置
   redis:
+    host: localhost
+    port: 6379
     timeout: 6000ms
     password: 123456
     lettuce:
@@ -24,9 +26,10 @@ spring:
         max-idle: 8
         # 最小空闲
         min-idle: 0
-    sentinel:
-      master: mymaster
-      nodes: 172.16.2.130:26380,172.16.2.130:26381,172.16.2.130:26382
+    # 哨兵集群用
+#    sentinel:
+#      master: mymaster
+#      nodes: 172.16.2.130:26380,172.16.2.130:26381,172.16.2.130:26382
 security:
   oauth2:
     resource:

@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.pandaz.commons.util.CustomPasswordEncoder;
 import com.pandaz.commons.util.UuidUtil;
+import com.pandaz.usercenter.custom.constants.SysConstants;
 import com.pandaz.usercenter.entity.OauthClientEntity;
 import com.pandaz.usercenter.mapper.OauthClientMapper;
 import com.pandaz.usercenter.service.OauthClientService;
@@ -134,6 +136,13 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Oauth
         } else {
             oauthClientEntity.setClientId(UuidUtil.getId());
         }
+        String rawPass = oauthClientEntity.getClientSecret();
+        String encodedPass = SysConstants.DEFAULT_ENCODED_PASS;
+        if (StringUtils.hasText(rawPass)) {
+            CustomPasswordEncoder passwordEncoder = new CustomPasswordEncoder();
+            encodedPass = passwordEncoder.encode(rawPass);
+        }
+        oauthClientEntity.setClientSecret(encodedPass);
         oauthClientEntity.setId(UuidUtil.getId());
         return oauthClientMapper.insert(oauthClientEntity);
     }

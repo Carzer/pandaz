@@ -2,6 +2,7 @@ package com.pandaz.usercenter.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.entity.GroupEntity;
 import com.pandaz.usercenter.entity.GroupRoleEntity;
 import com.pandaz.usercenter.entity.RoleEntity;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -40,6 +42,9 @@ public class GroupRoleServiceImpl extends ServiceImpl<GroupRoleMapper, GroupRole
      */
     @Override
     public int insert(GroupRoleEntity groupRoleEntity) {
+        if (!StringUtils.hasText(groupRoleEntity.getId())) {
+            groupRoleEntity.setId(UuidUtil.getId());
+        }
         return groupRoleMapper.insertSelective(groupRoleEntity);
     }
 

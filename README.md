@@ -19,24 +19,17 @@
   
     ~~启动Nacos、Sentinel的命令路径：`/usr/local/src/startup.sh`，可自行修改为开机启动、或置于docker中~~    
     
-- 搭建参考
-    1. Docker：https://www.cnblogs.com/yufeng218/p/8370670.html
-    
-    2. MySQL：https://www.cnblogs.com/bigbrotherer/p/7241845.html
-    
-    3. Redis：https://blog.csdn.net/qq_27047215/article/details/91411559
-    
-    4. RabbitMQ：https://www.cnblogs.com/yufeng218/p/9452621.html <br/><br/>
-    
-     由于 https://hub.docker.com/ 非常容易超时，所以需要改一下docker镜像源： https://www.cnblogs.com/ming369/p/10711771.html<br/>
-     个人镜像加速器地址：https://xvaz3vtq.mirror.aliyuncs.com
+- ~~搭建参考~~
+推荐使用Docker直接搭建，搭建过程参考：[docker搭建过程参考](./docker搭建过程参考.md)
 
 
 ## 三、 微服务列表
 
 ### 1. [用户中心](http://localhost:9007)
 
-    使用时，根据pandaz.sql更新数据库信息，默认用户：admin，密码：admin，默认逻辑删除
+    使用时，根据pandaz.sql更新数据库信息.使用InitTest初始化数据。
+    默认用户：admin，密码：admin。测试oauth2客户端：test，密码：test。
+    所有数据默认逻辑删除。
 <details>
 <summary>进行中...</summary>
 <pre><code>

@@ -30,7 +30,6 @@ public interface GroupRoleService extends UcBaseService<GroupRoleEntity> {
      */
     int deleteByGroupCode(GroupEntity groupEntity);
 
-
     /**
      * 跟角色编码删除
      *

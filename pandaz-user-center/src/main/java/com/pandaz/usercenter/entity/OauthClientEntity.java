@@ -71,13 +71,13 @@ public class OauthClientEntity extends BaseEntity {
     private String authorities;
 
     /**
-     * token有效期
+     * token有效期，单位秒
      */
     @TableField("access_token_validity")
     private Integer accessTokenValidity;
 
     /**
-     * refresh_token有效期
+     * refresh_token有效期，单位秒
      */
     @TableField("refresh_token_validity")
     private Integer refreshTokenValidity;

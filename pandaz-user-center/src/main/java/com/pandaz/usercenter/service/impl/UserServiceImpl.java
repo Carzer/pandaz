@@ -119,6 +119,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insert(UserEntity user) {
+
         // 校验重复
         String userCode = checkUtil.checkOrSetCode(user, userMapper, "用户编码已存在", null, null);
         UserEntity loginUser = loadUserByUsername(user.getLoginName());
@@ -142,21 +143,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         LocalDateTime createdDate = user.getCreatedDate();
 
         // 建立用户私有组
-        String groupCode = String.format("%s%s", SysConstants.GROUP_PREFIX, userCode);
         GroupEntity group = new GroupEntity();
         group.setName(String.format("%s%s", userName, SysConstants.PRIVATE_GROUP));
-        group.setCode(groupCode);
+        group.setCode(userCode);
         group.setIsPrivate(SysConstants.PRIVATE);
         group.setCreatedBy(createdBy);
         group.setCreatedDate(createdDate);
+
         // 关联用户及私有组
         UserGroupEntity userGroup = new UserGroupEntity();
         userGroup.setId(UuidUtil.getId());
         userGroup.setUserCode(userCode);
-        userGroup.setGroupCode(groupCode);
+        userGroup.setGroupCode(userCode);
         userGroup.setCreatedBy(createdBy);
         userGroup.setCreatedDate(createdDate);
         userGroup.setIsPrivate(SysConstants.PRIVATE);
+
         // 插入相关信息
         userGroupService.insert(userGroup);
         groupService.insert(group);

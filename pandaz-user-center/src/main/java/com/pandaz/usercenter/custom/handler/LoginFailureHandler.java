@@ -34,11 +34,11 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
                                         HttpServletResponse httpServletResponse, AuthenticationException e)
             throws IOException {
         String errorMsg = e.getMessage();
-        log.warn(errorMsg);
         ExecuteResult<String> result = new ExecuteResult<>();
         if (e instanceof BadCredentialsException) {
             errorMsg = "密码错误。";
         }
+        log.warn(errorMsg);
         result.setError(errorMsg);
         PrintWriterUtil.write(httpServletResponse, result);
     }

@@ -33,7 +33,7 @@
     <property name="ALL_TOTAL_SIZE_CAP" value="3GB"/>
 
     <springProperty scope="context" name="customProjectPackage" source="custom.projectPackage"/>
-<!--    <springProperty scope="context" name="customProjectPackage" source="custom.projectPackage" defaultValue="com.pandaz"/>-->
+    <!--    <springProperty scope="context" name="customProjectPackage" source="custom.projectPackage" defaultValue="com.pandaz"/>-->
 
     <!-- debug -->
     <appender name="DEBUG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -136,6 +136,7 @@
 
     <!--logger-->
     <logger name="com.alibaba.nacos" level="ERROR"/>
+
     <springProfile name="dev">
         <logger name="${customProjectPackage}" level="DEBUG"/>
     </springProfile>
@@ -144,6 +145,8 @@
     </springProfile>
     <springProfile name="prod">
         <logger name="${customProjectPackage}" level="ERROR"/>
+        <logger name="org.springframework.security.oauth2.provider.endpoint" level="OFF"/>
+        <logger name="org.springframework.security.web.authentication" level="OFF"/>
     </springProfile>
 
     <root level="INFO">
