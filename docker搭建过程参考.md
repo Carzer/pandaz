@@ -7,6 +7,12 @@ docker cp /etc/localtime [容器ID或者NAME]:/etc/localtime
 
 > docker间互相访问时，可以使用172.17.0.1，而非localhost
 
+>由于 https://hub.docker.com/ 非常容易超时，所以需要改一下docker镜像源  
+>找到/etc/docker/daemon.json，添加`{ "registry-mirrors" :["https://docker.mirrors.ustc.edu.cn"]}`    
+>如果高版本docker出现问题，可以使用其他方式：`curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io`
+
+>个人镜像加速器地址：https://xvaz3vtq.mirror.aliyuncs.com
+
 # 搭建过程
 
 ## 0. 文件夹准备
@@ -15,33 +21,24 @@ docker cp /etc/localtime [容器ID或者NAME]:/etc/localtime
 mkdir -p [docker统一目录]/mysql/data
 mkdir -p [docker统一目录]/mysql/conf
 ```
-可能用到的配置文件（[docker统一目录]/mysql/conf）
-[docker.cnf](./conf/docker.cnf)
-[mysql.cnf](./conf/mysql.cnf)
-[mysqldump.cnf](./conf/mysqldump.cnf)
+可能用到的配置文件（[docker统一目录]/mysql/conf）  
+[docker.cnf](./conf/docker.cnf)  
+[mysql.cnf](./conf/mysql.cnf)  
+[mysqldump.cnf](./conf/mysqldump.cnf)  
 
 ```shell
 mkdir -p [docker统一目录]/redis/conf
 mkdir -p [docker统一目录]/redis/data
 mkdir -p [docker统一目录]/redis/data/log
 ```
-可能用到的配置文件（[docker统一目录]/redis/conf）
-[redis.conf](./conf/redis.conf)
+可能用到的配置文件（[docker统一目录]/redis/conf）  
+[redis.conf](./conf/redis.conf)  
 
 ```shell
 mkdir -p [docker统一目录]/rabbitmq/data
 ```
 ```shell
 mkdir -p [docker统一目录]/mongo/data
-```
-```shell
-mkdir -p [docker统一目录]/postgres/data
-```
-```shell
-mkdir -p [docker统一目录]/sonarqube/conf
-mkdir -p [docker统一目录]/sonarqube/data
-mkdir -p [docker统一目录]/sonarqube/extensions
-mkdir -p [docker统一目录]/sonarqube/bundled-plugins
 ```
 ```shell
 mkdir -p [docker统一目录]/nginx
@@ -54,8 +51,8 @@ mkdir -p [docker统一目录]/nacos/nacos
 mkdir -p [docker统一目录]/nacos/nacos/prometheus/prometheus
 mkdir -p [docker统一目录]/nacos/sentinel
 ```
-可能用到的配置文件（[docker统一目录]/nginx）
-[nginx.conf](./conf/nginx.conf)
+可能用到的配置文件（[docker统一目录]/nginx）  
+[nginx.conf](./conf/nginx.conf)  
 
 ##  1. mysql
 
@@ -114,28 +111,7 @@ db.auth("admin","123456")
 db.grantRolesToUser("admin",[{role:"dbOwner", db:"admin"}])
 ```
 
-## 5.postgres
-
-```shell
-docker pull postgres
-```
-
-```shell
-docker run -d --name postgres -p 5432:5432 -v [docker统一目录]/postgres/data:/var/lib/postgresql/data -e POSTGRES_USER=sonar -e POSTGRES_PASSWORD=sonar postgres
-```
-
-## 6.sonarqube
-
-sonarqube7.9以后，不再对mysql提供支持，所以搭配了postgres使用
-```shell
-docker pull sonarqube
-```
-
-```shell
-docker run -d --name sonar -p 9000:9000 -p 9092:9092 -v [docker统一目录]/sonarqube/conf:/opt/sonarqube/conf -v [docker统一目录]/sonarqube/data:/opt/sonarqube/data -v [docker统一目录]/sonarqube/extensions:/opt/sonarqube/extensions -v [docker统一目录]/sonarqube/bundled-plugins:/opt/sonarqube/lib/bundled-plugins -e SONARQUBE_JDBC_USERNAME=sonar -e SONARQUBE_JDBC_PASSWORD=sonar -e SONARQUBE_JDBC_URL=jdbc:postgresql://172.17.0.1:5432/sonar sonarqube
-```
-
-## 7.nginx
+## 5.nginx
 
 ```shell
 docker pull nginx
@@ -145,7 +121,7 @@ docker pull nginx
 docker run --name nginx -p 8090:8090 -v [docker统一目录]/nginx/nginx.conf:/etc/nginx/nginx.conf -v [docker统一目录]/nginx/ext:/etc/nginx/ext -v [docker统一目录]/logs/nginx:/var/log/nginx -v [docker统一目录]/nginx/html:/etc/nginx/html -d nginx
 ```
 
-## 8.nacos&sentinel
+## 6.nacos&sentinel
 
 ```shell
 git clone --depth 1 https://github.com/nacos-group/nacos-docker.git
@@ -176,6 +152,6 @@ cd nacos-docker
 docker-compose -f standalone-derby.yaml up
 ```
 
-sentinel在nacos-server的docker中运行，相关命令文件为：
-[startup.sh](./conf/startup.sh)
-[stop.sh](./conf/stop.sh)
+sentinel在nacos-server的docker中运行，相关命令文件为：  
+[startup.sh](./conf/startup.sh)  
+[stop.sh](./conf/stop.sh)  

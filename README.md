@@ -1,4 +1,4 @@
-# ![pandaz](https://github.com/Carzer/pandaz/blob/master/logo.png) <sup><sup>PandaZ</sup></sup>
+# ![pandaz](./logo.png) <sup><sup>PandaZ</sup></sup>
 
 前端：[PandaZ-UI](https://github.com/Carzer/pandaz-ui.git)
 
@@ -14,12 +14,9 @@
 
 
 ## 二、 容器、数据库、中间件虚拟环境
-
-- ~~提供已搭建好的CentOS7虚拟机(VMware)~~ 
   
-    ~~启动Nacos、Sentinel的命令路径：`/usr/local/src/startup.sh`，可自行修改为开机启动、或置于docker中~~    
-    
-- ~~搭建参考~~
+- 搭建参考
+
 推荐使用Docker直接搭建，搭建过程参考：[docker搭建过程参考](./docker搭建过程参考.md)
 
 
@@ -134,9 +131,7 @@
 </code></pre>
 </details> 
 
-### 8. 未来
-
-emmm...，未来太远了，再说吧
+### 8. 其他
 ​    
 ## 四、 之前版本中遇到的问题（Eureka、Hystrix、Zuul）
 
@@ -145,6 +140,6 @@ emmm...，未来太远了，再说吧
 
 ## 五、 License 
 
-[MIT](https://github.com/Carzer/pandaz/blob/master/LICENSE)
+[MIT](./LICENSE)
 
 Copyright (c) 2020 Carzer
