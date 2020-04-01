@@ -52,6 +52,7 @@ public class OauthClientServiceTest extends BasisUnitTest {
     public void insert() {
         OauthClientEntity oauthClientEntity = new OauthClientEntity();
         oauthClientEntity.setClientId("client_test");
+        oauthClientEntity.setClientName("client_test");
         oauthClientService.insert(oauthClientEntity);
     }
 

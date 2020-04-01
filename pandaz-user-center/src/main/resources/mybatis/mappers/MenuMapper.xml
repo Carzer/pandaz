@@ -65,22 +65,22 @@
     <insert id="insertSelective" parameterType="com.pandaz.usercenter.entity.MenuEntity">
         insert into t_sys_menu
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
+            <if test="id != null and id != ''">
                 id,
             </if>
-            <if test="name != null">
+            <if test="name != null and name != ''">
                 name,
             </if>
-            <if test="code != null">
+            <if test="code != null and code != ''">
                 code,
             </if>
-            <if test="osCode != null">
+            <if test="osCode != null and osCode != ''">
                 os_code,
             </if>
-            <if test="parentCode != null">
+            <if test="parentCode != null and parentCode != ''">
                 parent_code,
             </if>
-            <if test="icon != null">
+            <if test="icon != null and icon != ''">
                 icon,
             </if>
             <if test="sorting != null">
@@ -89,19 +89,19 @@
             <if test="isLeafNode != null">
                 is_leaf_node,
             </if>
-            <if test="createdBy != null">
+            <if test="createdBy != null and createdBy != ''">
                 created_by,
             </if>
             <if test="createdDate != null">
                 created_date,
             </if>
-            <if test="updatedBy != null">
+            <if test="updatedBy != null and updatedBy != ''">
                 updated_by,
             </if>
             <if test="updatedDate != null">
                 updated_date,
             </if>
-            <if test="deletedBy != null">
+            <if test="deletedBy != null and deletedBy != ''">
                 deleted_by,
             </if>
             <if test="deletedDate != null">
@@ -118,43 +118,43 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
+            <if test="id != null and id != ''">
                 #{id,jdbcType=VARCHAR},
             </if>
-            <if test="name != null">
+            <if test="name != null and name != ''">
                 #{name,jdbcType=VARCHAR},
             </if>
-            <if test="code != null">
+            <if test="code != null and code != ''">
                 #{code,jdbcType=VARCHAR},
             </if>
-            <if test="osCode != null">
+            <if test="osCode != null and osCode != ''">
                 #{osCode,jdbcType=VARCHAR},
             </if>
-            <if test="parentCode != null">
+            <if test="parentCode != null and parentCode != ''">
                 #{parentCode,jdbcType=VARCHAR},
             </if>
-            <if test="icon != null">
+            <if test="icon != null and icon != ''">
                 #{icon,jdbcType=VARCHAR},
             </if>
             <if test="sorting != null">
                 #{sorting,jdbcType=INTEGER},
             </if>
-            <if test="isLeafNode != null">
+            <if test="isLeafNode != null and isLeafNode != ''">
                 #{isLeafNode,jdbcType=TINYINT},
             </if>
-            <if test="createdBy != null">
+            <if test="createdBy != null and createdBy != ''">
                 #{createdBy,jdbcType=VARCHAR},
             </if>
             <if test="createdDate != null">
                 #{createdDate,jdbcType=TIMESTAMP},
             </if>
-            <if test="updatedBy != null">
+            <if test="updatedBy != null and updatedBy != ''">
                 #{updatedBy,jdbcType=VARCHAR},
             </if>
             <if test="updatedDate != null">
                 #{updatedDate,jdbcType=TIMESTAMP},
             </if>
-            <if test="deletedBy != null">
+            <if test="deletedBy != null and deletedBy != ''">
                 #{deletedBy,jdbcType=VARCHAR},
             </if>
             <if test="deletedDate != null">

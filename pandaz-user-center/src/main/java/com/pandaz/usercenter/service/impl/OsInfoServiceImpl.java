@@ -7,13 +7,16 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.custom.constants.SysConstants;
+import com.pandaz.usercenter.entity.MenuEntity;
 import com.pandaz.usercenter.entity.OsInfoEntity;
 import com.pandaz.usercenter.mapper.OsInfoMapper;
+import com.pandaz.usercenter.service.MenuService;
 import com.pandaz.usercenter.service.OsInfoService;
 import com.pandaz.usercenter.util.CheckUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -34,6 +37,11 @@ public class OsInfoServiceImpl extends ServiceImpl<OsInfoMapper, OsInfoEntity> i
      * 系统信息mapper
      */
     private final OsInfoMapper osInfoMapper;
+
+    /**
+     * 菜单服务
+     */
+    private final MenuService menuService;
 
     /**
      * 编码检查工具
@@ -117,7 +125,13 @@ public class OsInfoServiceImpl extends ServiceImpl<OsInfoMapper, OsInfoEntity> i
      * @return 执行结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteByCode(OsInfoEntity osInfoEntity) {
+        MenuEntity menuEntity = new MenuEntity();
+        menuEntity.setOsCode(osInfoEntity.getCode());
+        menuEntity.setDeletedBy(osInfoEntity.getDeletedBy());
+        menuEntity.setDeletedDate(osInfoEntity.getDeletedDate());
+        menuService.deleteByOsCode(menuEntity);
         return osInfoMapper.logicDelete(osInfoEntity);
     }
 
@@ -130,6 +144,7 @@ public class OsInfoServiceImpl extends ServiceImpl<OsInfoMapper, OsInfoEntity> i
      * @return 执行结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
         if (CollectionUtils.isEmpty(codes)) {
             return 0;

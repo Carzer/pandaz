@@ -30,6 +30,12 @@ public class OauthClientDTO extends BaseDTO {
     private String clientId;
 
     /**
+     * 客户端名称
+     */
+    @NotEmpty
+    private String clientName;
+
+    /**
      * 可访问资源ID
      */
     private String resourceIds;
@@ -78,4 +84,10 @@ public class OauthClientDTO extends BaseDTO {
      * 授权码模式自动跳过页面授权步骤
      */
     private String autoApprove;
+
+    /**
+     * 是否锁定
+     */
+    private Byte locked;
+
 }

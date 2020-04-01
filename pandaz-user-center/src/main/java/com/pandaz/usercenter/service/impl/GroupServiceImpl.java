@@ -159,6 +159,15 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupEntity> impl
         if (StringUtils.hasText(groupEntity.getCode())) {
             queryWrapper.likeRight("code", groupEntity.getCode());
         }
+        if (groupEntity.getLocked() != null) {
+            queryWrapper.eq("locked", groupEntity.getLocked());
+        }
+        if (groupEntity.getStartDate() != null) {
+            queryWrapper.ge(SysConstants.CREATED_DATE_COLUMN, groupEntity.getStartDate());
+        }
+        if (groupEntity.getEndDate() != null) {
+            queryWrapper.le(SysConstants.CREATED_DATE_COLUMN, groupEntity.getEndDate());
+        }
         queryWrapper.eq("is_private", SysConstants.PUBLIC);
         queryWrapper.orderByDesc(SysConstants.CREATED_DATE_COLUMN);
         return page(page, queryWrapper);

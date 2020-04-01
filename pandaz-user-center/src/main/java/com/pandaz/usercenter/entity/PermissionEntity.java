@@ -45,10 +45,22 @@ public class PermissionEntity extends BaseEntity {
     private String osCode;
 
     /**
+     * 系统名称
+     */
+    @TableField(exist = false)
+    private String osName;
+
+    /**
      * 菜单编码
      */
     @TableField("menu_code")
     private String menuCode;
+
+    /**
+     * 菜单名称
+     */
+    @TableField(exist = false)
+    private String menuName;
 
     /**
      * 资源URL
@@ -64,10 +76,10 @@ public class PermissionEntity extends BaseEntity {
     private Byte requestType;
 
     /**
-     * 优先级及位移数
+     * 位移数
      */
-    @TableField("priority")
-    private Byte priority;
+    @TableField("bit_digit")
+    private Byte bitDigit;
 
     /**
      * 位运算结果
@@ -78,6 +90,13 @@ public class PermissionEntity extends BaseEntity {
     /**
      * 权限级别，只有组织级别小于等于权限级别，才可使用该权限
      */
+    @TableField("level")
     private Integer level;
+
+    /**
+     * 是否私有(0:否，1:是)
+     */
+    @TableField("is_private")
+    private Byte isPrivate;
 
 }

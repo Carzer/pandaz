@@ -61,6 +61,11 @@ public final class SysConstants {
     public static final Byte LOCKED = 1;
 
     /**
+     * 最大位移数
+     */
+    public static final Byte MAX_DIGIT = 25;
+
+    /**
      * 图片验证码存于session中的key
      */
     public static final String SESSION_KEY_IMAGE_CODE = "SESSION_KEY_IMAGE_CODE";

@@ -5,7 +5,10 @@ import com.pandaz.commons.dto.usercenter.PermissionDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.ExecuteResult;
 import com.pandaz.commons.util.UuidUtil;
+import com.pandaz.usercenter.custom.constants.SysConstants;
+import com.pandaz.usercenter.entity.MenuEntity;
 import com.pandaz.usercenter.entity.PermissionEntity;
+import com.pandaz.usercenter.service.MenuService;
 import com.pandaz.usercenter.service.PermissionService;
 import com.pandaz.usercenter.util.ControllerUtil;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +39,11 @@ public class PermissionController {
      * 权限服务
      */
     private final PermissionService permissionService;
+
+    /**
+     * 菜单服务
+     */
+    private final MenuService menuService;
 
     /**
      * 工具类
@@ -94,8 +102,7 @@ public class PermissionController {
             permissionEntity.setId(UuidUtil.getId());
             permissionEntity.setCreatedBy(principal.getName());
             permissionEntity.setCreatedDate(LocalDateTime.now());
-            Byte priority = permissionEntity.getPriority();
-            permissionEntity.setBitResult(1 >> priority);
+            setMenuInfo(permissionEntity);
             permissionService.insert(permissionEntity);
             result.setData(BeanCopyUtil.copy(permissionEntity, permissionDTO));
         } catch (Exception e) {
@@ -119,8 +126,7 @@ public class PermissionController {
             PermissionEntity permissionEntity = BeanCopyUtil.copy(permissionDTO, PermissionEntity.class);
             permissionEntity.setUpdatedBy(principal.getName());
             permissionEntity.setUpdatedDate(LocalDateTime.now());
-            Byte priority = permissionEntity.getPriority();
-            permissionEntity.setBitResult(1 >> priority);
+            setMenuInfo(permissionEntity);
             permissionService.updateByCode(permissionEntity);
             result.setData("更新成功");
         } catch (Exception e) {
@@ -148,10 +154,21 @@ public class PermissionController {
      */
     private void check(PermissionDTO permissionDTO) {
         Assert.hasText(permissionDTO.getName(), "权限名称不能为空");
-        Assert.hasText(permissionDTO.getOsCode(), "请关联系统信息");
-        Assert.hasText(permissionDTO.getUrl(), "URL不能为空");
         Assert.notNull(permissionDTO.getRequestType(), "请求类型不能为空");
-        Assert.notNull(permissionDTO.getPriority(), "优先级不能为空");
+    }
+
+    /**
+     * 设置菜单信息
+     *
+     * @param permissionEntity 权限信息
+     */
+    private void setMenuInfo(PermissionEntity permissionEntity) {
+        if (SysConstants.PRIVATE.equals(permissionEntity.getIsPrivate())) {
+            MenuEntity menuEntity = menuService.findByCode(permissionEntity.getMenuCode());
+            Assert.notNull(menuEntity, "菜单不存在");
+            permissionEntity.setOsCode(menuEntity.getOsCode());
+            permissionEntity.setUrl(menuEntity.getUrl());
+        }
     }
 
 }

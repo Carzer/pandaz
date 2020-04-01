@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pandaz.commons.util.UuidUtil;
+import com.pandaz.usercenter.custom.constants.SysConstants;
 import com.pandaz.usercenter.entity.OrganizationEntity;
 import com.pandaz.usercenter.mapper.OrganizationMapper;
 import com.pandaz.usercenter.service.OrganizationService;
@@ -70,6 +71,16 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
         if (StringUtils.hasText(organizationEntity.getName())) {
             queryWrapper.likeRight("name", organizationEntity.getName());
         }
+        if (organizationEntity.getLocked() != null) {
+            queryWrapper.eq("locked", organizationEntity.getLocked());
+        }
+        if (organizationEntity.getStartDate() != null) {
+            queryWrapper.ge(SysConstants.CREATED_DATE_COLUMN, organizationEntity.getStartDate());
+        }
+        if (organizationEntity.getEndDate() != null) {
+            queryWrapper.le(SysConstants.CREATED_DATE_COLUMN, organizationEntity.getEndDate());
+        }
+        queryWrapper.orderByDesc(SysConstants.CREATED_DATE_COLUMN);
         return page(page, queryWrapper);
     }
 

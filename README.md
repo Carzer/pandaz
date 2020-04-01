@@ -1,6 +1,6 @@
 # ![pandaz](./logo.png) <sup><sup>PandaZ</sup></sup>
 
-前端：[PandaZ-UI](https://github.com/Carzer/pandaz-ui.git)
+前端：[PandaZ-UI](https://github.com/Carzer/pandaz-ui)
 
 ----------------------------------------------------
 ## 一、 简介

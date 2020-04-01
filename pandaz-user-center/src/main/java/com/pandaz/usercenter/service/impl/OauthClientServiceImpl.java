@@ -144,7 +144,7 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Oauth
         }
         oauthClientEntity.setClientSecret(encodedPass);
         oauthClientEntity.setId(UuidUtil.getId());
-        return oauthClientMapper.insert(oauthClientEntity);
+        return oauthClientMapper.insertSelective(oauthClientEntity);
     }
 
     /**
@@ -160,6 +160,19 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Oauth
         if (StringUtils.hasText(oauthClientEntity.getClientId())) {
             queryWrapper.likeRight(CLIENT_ID_COLUMN, oauthClientEntity.getClientId());
         }
+        if (StringUtils.hasText(oauthClientEntity.getClientName())) {
+            queryWrapper.likeRight("client_name", oauthClientEntity.getClientName());
+        }
+        if (oauthClientEntity.getLocked() != null) {
+            queryWrapper.eq("locked", oauthClientEntity.getLocked());
+        }
+        if (oauthClientEntity.getStartDate() != null) {
+            queryWrapper.ge(SysConstants.CREATED_DATE_COLUMN, oauthClientEntity.getStartDate());
+        }
+        if (oauthClientEntity.getEndDate() != null) {
+            queryWrapper.le(SysConstants.CREATED_DATE_COLUMN, oauthClientEntity.getEndDate());
+        }
+        queryWrapper.orderByDesc(SysConstants.CREATED_DATE_COLUMN);
         return page(page, queryWrapper);
     }
 

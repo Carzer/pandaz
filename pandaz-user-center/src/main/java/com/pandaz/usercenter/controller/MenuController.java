@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 菜单信息
@@ -99,7 +100,27 @@ public class MenuController {
             menuEntity.setChildren(list);
             result.setData(transferToDTO(menuEntity));
         } catch (Exception e) {
-            log.error("分页查询异常：", e);
+            log.error("获取所有菜单异常：", e);
+            result.setError(e.getMessage());
+        }
+        return result;
+    }
+
+    /**
+     * 获取所有菜单
+     *
+     * @return 所有菜单
+     */
+    @GetMapping("/listByOsCode")
+    public ExecuteResult<ArrayList<MenuDTO>> listByOsCode(String osCode) {
+        ExecuteResult<ArrayList<MenuDTO>> result = new ExecuteResult<>();
+        try {
+            Map<String, Object> map = new HashMap<>(1);
+            map.put("os_code", osCode);
+            List<MenuEntity> list = menuService.listByMap(map);
+            result.setData((ArrayList<MenuDTO>) BeanCopyUtil.copyList(list, MenuDTO.class));
+        } catch (Exception e) {
+            log.error("获取所有菜单异常：", e);
             result.setError(e.getMessage());
         }
         return result;
@@ -188,8 +209,11 @@ public class MenuController {
         }
         menuDTO.setId(menuEntity.getId());
         menuDTO.setCode(menuEntity.getCode());
+        menuDTO.setOsCode(menuEntity.getOsCode());
         menuDTO.setParentCode(menuEntity.getParentCode());
         menuDTO.setName(menuEntity.getName());
+        menuDTO.setUrl(menuEntity.getUrl());
+        menuDTO.setRouter(menuEntity.getRouter());
         return menuDTO;
     }
 

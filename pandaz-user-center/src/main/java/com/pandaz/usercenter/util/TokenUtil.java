@@ -23,7 +23,6 @@ import org.springframework.util.StringUtils;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * token工具
@@ -61,7 +60,7 @@ public class TokenUtil {
             baseClientDetails.setClientId("DEFAULT_CLIENT");
             baseClientDetails.setScope(StringUtils.commaDelimitedListToSet("read,write"));
             // 创建token请求
-            TokenRequest tokenRequest = new TokenRequest(new ConcurrentHashMap<>(0), baseClientDetails.getClientId(),
+            TokenRequest tokenRequest = new TokenRequest(new HashMap<>(0), baseClientDetails.getClientId(),
                     baseClientDetails.getScope(), "custom");
             OAuth2Request oAuth2Request = tokenRequest.createOAuth2Request(baseClientDetails);
             // 创建Authentication

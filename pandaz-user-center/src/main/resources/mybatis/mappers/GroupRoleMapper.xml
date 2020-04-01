@@ -17,28 +17,28 @@
     <insert id="insertSelective" parameterType="com.pandaz.usercenter.entity.GroupRoleEntity">
         insert into t_sys_group_role
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
+            <if test="id != null and id != ''">
                 id,
             </if>
-            <if test="groupCode != null">
+            <if test="groupCode != null and groupCode != ''">
                 group_code,
             </if>
-            <if test="roleCode != null">
+            <if test="roleCode != null and roleCode != ''">
                 role_code,
             </if>
-            <if test="createdBy != null">
+            <if test="createdBy != null and createdBy != ''">
                 created_by,
             </if>
             <if test="createdDate != null">
                 created_date,
             </if>
-            <if test="updatedBy != null">
+            <if test="updatedBy != null and updatedBy != ''">
                 updated_by,
             </if>
             <if test="updatedDate != null">
                 updated_date,
             </if>
-            <if test="deletedBy != null">
+            <if test="deletedBy != null and deletedBy != ''">
                 deleted_by,
             </if>
             <if test="deletedDate != null">
@@ -52,28 +52,28 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
+            <if test="id != null and id != ''">
                 #{id,jdbcType=VARCHAR},
             </if>
-            <if test="groupCode != null">
+            <if test="groupCode != null and groupCode != ''">
                 #{groupCode,jdbcType=VARCHAR},
             </if>
-            <if test="roleCode != null">
+            <if test="roleCode != null and roleCode != ''">
                 #{roleCode,jdbcType=VARCHAR},
             </if>
-            <if test="createdBy != null">
+            <if test="createdBy != null and createdBy != ''">
                 #{createdBy,jdbcType=VARCHAR},
             </if>
             <if test="createdDate != null">
                 #{createdDate,jdbcType=TIMESTAMP},
             </if>
-            <if test="updatedBy != null">
+            <if test="updatedBy != null and updatedBy != ''">
                 #{updatedBy,jdbcType=VARCHAR},
             </if>
             <if test="updatedDate != null">
                 #{updatedDate,jdbcType=TIMESTAMP},
             </if>
-            <if test="deletedBy != null">
+            <if test="deletedBy != null and deletedBy != ''">
                 #{deletedBy,jdbcType=VARCHAR},
             </if>
             <if test="deletedDate != null">

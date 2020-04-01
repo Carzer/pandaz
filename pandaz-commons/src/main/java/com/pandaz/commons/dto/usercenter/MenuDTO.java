@@ -46,6 +46,16 @@ public class MenuDTO extends BaseDTO {
     private String parentCode;
 
     /**
+     * url
+     */
+    private String url;
+
+    /**
+     * router
+     */
+    private String router;
+
+    /**
      * 图标
      */
     private String icon;

@@ -8,12 +8,15 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pandaz.commons.constants.CommonConstants;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.entity.MenuEntity;
+import com.pandaz.usercenter.entity.PermissionEntity;
 import com.pandaz.usercenter.mapper.MenuMapper;
 import com.pandaz.usercenter.service.MenuService;
+import com.pandaz.usercenter.service.PermissionService;
 import com.pandaz.usercenter.util.CheckUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -36,6 +39,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
      * 菜单mapper
      */
     private final MenuMapper menuMapper;
+
+    /**
+     * 权限服务
+     */
+    private final PermissionService permissionService;
 
     /**
      * 编码检查工具
@@ -112,7 +120,13 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
      * @return 删除结果o
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteByCode(MenuEntity menuEntity) {
+        PermissionEntity permissionEntity = new PermissionEntity();
+        permissionEntity.setMenuCode(menuEntity.getCode());
+        permissionEntity.setDeletedBy(menuEntity.getDeletedBy());
+        permissionEntity.setDeletedDate(menuEntity.getDeletedDate());
+        permissionService.deleteByMenuCode(permissionEntity);
         return menuMapper.logicDelete(menuEntity);
     }
 
@@ -147,4 +161,21 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
         return menuMapper.batchLogicDelete(map);
     }
 
+    /**
+     * 根据系统编码删除
+     *
+     * @param menuEntity 删除信息
+     * @return 执行结果
+     */
+    @Override
+    public int deleteByOsCode(MenuEntity menuEntity) {
+        QueryWrapper<MenuEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("os_code", menuEntity.getOsCode());
+        List<MenuEntity> list = menuMapper.selectList(queryWrapper);
+        if (!CollectionUtils.isEmpty(list)) {
+            list.forEach(this::deleteByCode);
+            return list.size();
+        }
+        return 0;
+    }
 }

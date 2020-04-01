@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pandaz.commons.util.UuidUtil;
+import com.pandaz.usercenter.custom.constants.SysConstants;
 import com.pandaz.usercenter.entity.PermissionEntity;
 import com.pandaz.usercenter.mapper.PermissionMapper;
 import com.pandaz.usercenter.service.PermissionService;
@@ -55,11 +56,13 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
      * @return com.pandaz.usercenter.entity.PermissionEntity
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int insert(PermissionEntity permissionEntity) {
         checkUtil.checkOrSetCode(permissionEntity, permissionMapper, "权限编码已存在");
         if (!StringUtils.hasText(permissionEntity.getId())) {
             permissionEntity.setId(UuidUtil.getId());
         }
+        setBitResult(permissionEntity);
         return permissionMapper.insertSelective(permissionEntity);
     }
 
@@ -85,14 +88,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     @Override
     public IPage<PermissionEntity> getPage(PermissionEntity permissionEntity) {
         Page<PermissionEntity> page = new Page<>(permissionEntity.getPageNum(), permissionEntity.getPageSize());
-        QueryWrapper<PermissionEntity> queryWrapper = new QueryWrapper<>();
-        if (StringUtils.hasText(permissionEntity.getCode())) {
-            queryWrapper.likeRight("code", permissionEntity.getCode());
-        }
-        if (StringUtils.hasText(permissionEntity.getName())) {
-            queryWrapper.likeRight("name", permissionEntity.getName());
-        }
-        return page(page, queryWrapper);
+        return permissionMapper.getPageWithFullInfo(page, permissionEntity);
     }
 
     /**
@@ -102,9 +98,11 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
      * @return 执行结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int updateByCode(PermissionEntity permissionEntity) {
         UpdateWrapper<PermissionEntity> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("code", permissionEntity.getCode());
+        setBitResult(permissionEntity);
         return permissionMapper.update(permissionEntity, updateWrapper);
     }
 
@@ -145,4 +143,48 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         return codes.size();
     }
 
+    /**
+     * 根据菜单编码删除
+     *
+     * @param permissionEntity 编码信息
+     * @return 执行结果
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int deleteByMenuCode(PermissionEntity permissionEntity) {
+        QueryWrapper<PermissionEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("menu_code", permissionEntity.getMenuCode());
+        queryWrapper.eq("is_private", permissionEntity.getIsPrivate());
+        List<PermissionEntity> list = permissionMapper.selectList(queryWrapper);
+        if (!CollectionUtils.isEmpty(list)) {
+            list.forEach(this::deleteByCode);
+            return list.size();
+        }
+        return 0;
+    }
+
+    /**
+     * 查询权限数量
+     *
+     * @param permissionEntity 条件
+     */
+    private void setBitResult(PermissionEntity permissionEntity) {
+        List<Byte> list = permissionMapper.selectBitDigits(permissionEntity);
+        byte bitDigit = 0;
+        int bitResult = 1;
+        if (!CollectionUtils.isEmpty(list)) {
+            Byte i = 0;
+            while (i <= SysConstants.MAX_DIGIT && list.contains(i)) {
+                i++;
+            }
+            if (i > SysConstants.MAX_DIGIT) {
+                throw new IllegalArgumentException("超出最大权限数量，请联系管理员");
+            } else {
+                bitDigit = i;
+                bitResult = 1 << i;
+            }
+        }
+        permissionEntity.setBitDigit(bitDigit);
+        permissionEntity.setBitResult(bitResult);
+    }
 }

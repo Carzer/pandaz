@@ -2,7 +2,143 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pandaz.usercenter.mapper.OauthClientMapper">
     <insert id="insertSelective">
-
+        insert into t_sys_oauth_client
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id !=''">
+                id,
+            </if>
+            <if test="clientId != null and clientId !=''">
+                client_id,
+            </if>
+            <if test="clientName != null and clientName !=''">
+                client_name,
+            </if>
+            <if test="resourceIds != null and resourceIds !=''">
+                resource_ids,
+            </if>
+            <if test="clientSecret != null and clientSecret !=''">
+                client_secret,
+            </if>
+            <if test="scope != null and scope !=''">
+                scope,
+            </if>
+            <if test="authorizedGrantTypes != null and authorizedGrantTypes !=''">
+                authorized_grant_types,
+            </if>
+            <if test="webServerRedirectUri != null and webServerRedirectUri !=''">
+                web_server_redirect_uri,
+            </if>
+            <if test="authorities != null and authorities !=''">
+                authorities,
+            </if>
+            <if test="accessTokenValidity != null">
+                access_token_validity,
+            </if>
+            <if test="refreshTokenValidity != null">
+                refresh_token_validity,
+            </if>
+            <if test="additionalInformation != null and additionalInformation !=''">
+                additional_information,
+            </if>
+            <if test="autoApprove != null and autoApprove !=''">
+                auto_approve,
+            </if>
+            <if test="createdBy != null and createdBy !=''">
+                created_by,
+            </if>
+            <if test="createdDate != null">
+                created_date,
+            </if>
+            <if test="updatedBy != null and updatedBy !=''">
+                updated_by,
+            </if>
+            <if test="updatedDate != null">
+                updated_date,
+            </if>
+            <if test="deletedBy != null and deletedBy !=''">
+                deleted_by,
+            </if>
+            <if test="deletedDate != null">
+                deleted_date,
+            </if>
+            <if test="deletedFlag != null">
+                deleted_flag,
+            </if>
+            <if test="locked != null">
+                locked,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id !=''">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="clientId != null and clientId !=''">
+                #{clientId,jdbcType=VARCHAR},
+            </if>
+            <if test="clientName != null and clientName !=''">
+                #{clientName,jdbcType=VARCHAR},
+            </if>
+            <if test="resourceIds != null and resourceIds !=''">
+                #{resourceIds,jdbcType=VARCHAR},
+            </if>
+            <if test="clientSecret != null and clientSecret !=''">
+                #{clientSecret,jdbcType=VARCHAR},
+            </if>
+            <if test="scope != null and scope !=''">
+                #{scope,jdbcType=VARCHAR},
+            </if>
+            <if test="authorizedGrantTypes != null and authorizedGrantTypes !=''">
+                #{authorizedGrantTypes,jdbcType=VARCHAR},
+            </if>
+            <if test="webServerRedirectUri != null and webServerRedirectUri !=''">
+                #{webServerRedirectUri,jdbcType=VARCHAR},
+            </if>
+            <if test="authorities != null and authorities !=''">
+                #{authorities,jdbcType=VARCHAR},
+            </if>
+            <if test="accessTokenValidity != null">
+                #{accessTokenValidity,jdbcType=INTEGER},
+            </if>
+            <if test="refreshTokenValidity != null">
+                #{refreshTokenValidity,jdbcType=INTEGER},
+            </if>
+            <if test="additionalInformation != null and additionalInformation !=''">
+                #{additionalInformation,jdbcType=VARCHAR},
+            </if>
+            <if test="autoApprove != null and autoApprove !=''">
+                #{auto_approve,jdbcType=VARCHAR},
+            </if>
+            <if test="createdBy != null and createdBy !=''">
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDate != null">
+                #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedBy != null and createdBy !=''">
+                #{updatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedDate != null">
+                #{updatedDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deletedBy != null and createdBy !=''">
+                #{deletedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="deletedDate != null">
+                #{deletedDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deletedFlag != null">
+                #{deletedFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="locked != null">
+                #{locked,jdbcType=TINYINT},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=INTEGER},
+            </if>
+        </trim>
     </insert>
     <!-- 逻辑删除 -->
     <update id="logicDelete">

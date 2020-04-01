@@ -53,6 +53,18 @@ public class MenuEntity extends BaseEntity {
     private String parentCode;
 
     /**
+     * url
+     */
+    @TableField("url")
+    private String url;
+
+    /**
+     * router
+     */
+    @TableField("router")
+    private String router;
+
+    /**
      * 图标
      */
     @TableField("icon")

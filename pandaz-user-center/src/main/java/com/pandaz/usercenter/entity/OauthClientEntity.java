@@ -35,6 +35,12 @@ public class OauthClientEntity extends BaseEntity {
     private String clientId;
 
     /**
+     * 客户端名称
+     */
+    @TableField("client_name")
+    private String clientName;
+
+    /**
      * 可访问资源ID
      */
     @TableField("resource_ids")
@@ -93,5 +99,11 @@ public class OauthClientEntity extends BaseEntity {
      */
     @TableField("auto_approve")
     private String autoApprove;
+
+    /**
+     * 是否锁定(0:未锁定，1:已锁定)
+     */
+    @TableField("locked")
+    private Byte locked;
 
 }

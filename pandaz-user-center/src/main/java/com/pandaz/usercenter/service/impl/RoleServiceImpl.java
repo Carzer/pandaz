@@ -160,6 +160,17 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
         if (StringUtils.hasText(roleEntity.getName())) {
             queryWrapper.likeRight("name", roleEntity.getName());
         }
+        if (roleEntity.getLocked() != null) {
+            queryWrapper.eq("locked", roleEntity.getLocked());
+        }
+        if (roleEntity.getStartDate() != null) {
+            queryWrapper.ge(SysConstants.CREATED_DATE_COLUMN, roleEntity.getStartDate());
+        }
+        if (roleEntity.getEndDate() != null) {
+            queryWrapper.le(SysConstants.CREATED_DATE_COLUMN, roleEntity.getEndDate());
+        }
+        queryWrapper.eq("is_private", SysConstants.PUBLIC);
+        queryWrapper.orderByDesc(SysConstants.CREATED_DATE_COLUMN);
         return page(page, queryWrapper);
     }
 
@@ -173,7 +184,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
     public int updateByCode(RoleEntity roleEntity) {
         UpdateWrapper<RoleEntity> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("code", roleEntity.getCode());
-        return roleMapper.delete(updateWrapper);
+        return roleMapper.update(roleEntity, updateWrapper);
     }
 
     /**

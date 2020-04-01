@@ -16,9 +16,9 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 默认controller
@@ -55,9 +55,9 @@ public class IndexController {
      */
     @GetMapping("userInfo")
     @PreAuthorize("hasRole('ADMIN')")
-    public ExecuteResult<ConcurrentHashMap<String, Principal>> home(Principal principal) {
-        ExecuteResult<ConcurrentHashMap<String, Principal>> result = new ExecuteResult<>();
-        ConcurrentHashMap<String, Principal> map = new ConcurrentHashMap<>(1);
+    public ExecuteResult<HashMap<String, Principal>> home(Principal principal) {
+        ExecuteResult<HashMap<String, Principal>> result = new ExecuteResult<>();
+        HashMap<String, Principal> map = new HashMap<>(1);
         map.put("user", principal);
         result.setData(map);
         return result;
@@ -104,7 +104,7 @@ public class IndexController {
         map.forEach((info, method) -> {
             Set<String> patterns = info.getPatternsCondition().getPatterns();
             Set<RequestMethod> methods = info.getMethodsCondition().getMethods();
-            Map<String, String> singleMapping = new ConcurrentHashMap<>(patterns.size() + methods.size() + 2);
+            Map<String, String> singleMapping = new HashMap<>(patterns.size() + methods.size() + 2);
             // 类名
             singleMapping.put("className", method.getMethod().getDeclaringClass().getName());
             // 方法名

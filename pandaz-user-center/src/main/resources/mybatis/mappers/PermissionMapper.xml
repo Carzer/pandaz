@@ -8,7 +8,7 @@
         <result column="menu_code" jdbcType="VARCHAR" property="menuCode"/>
         <result column="url" jdbcType="VARCHAR" property="url"/>
         <result column="request_type" jdbcType="TINYINT" property="requestType"/>
-        <result column="priority" jdbcType="TINYINT" property="priority"/>
+        <result column="bit_digit" jdbcType="TINYINT" property="bitDigit"/>
         <result column="bit_result" jdbcType="INTEGER" property="bitResult"/>
         <result column="created_by" jdbcType="VARCHAR" property="createdBy"/>
         <result column="created_date" jdbcType="TIMESTAMP" property="createdDate"/>
@@ -22,37 +22,37 @@
     <sql id="Base_Column_List">
         id, name, code,os_code,
         menu_code, url, request_type,
-        priority, bit_result, created_by,
-        created_date, updated_by, updated_date,
+        priority, bit_result, level, is_private,
+        created_by, created_date, updated_by, updated_date,
         deleted_by, deleted_date, deleted_flag,
         version
     </sql>
     <insert id="insertSelective" parameterType="com.pandaz.usercenter.entity.PermissionEntity">
         insert into t_sys_permission
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
+            <if test="id != null and id !=''">
                 id,
             </if>
-            <if test="name != null">
+            <if test="name != null and name !=''">
                 name,
             </if>
-            <if test="code != null">
+            <if test="code != null and code !=''">
                 code,
             </if>
-            <if test="osCode != null">
+            <if test="osCode != null and osCode !=''">
                 os_code,
             </if>
-            <if test="menuCode != null">
+            <if test="menuCode != null and menuCode !=''">
                 menu_code,
             </if>
-            <if test="url != null">
+            <if test="url != null and url !=''">
                 url,
             </if>
             <if test="requestType != null">
                 request_type,
             </if>
-            <if test="priority != null">
-                priority,
+            <if test="bitDigit != null">
+                bit_digit,
             </if>
             <if test="bitResult != null">
                 bit_result,
@@ -60,19 +60,22 @@
             <if test="level != null">
                 level,
             </if>
-            <if test="createdBy != null">
+            <if test="isPrivate != null">
+                is_private,
+            </if>
+            <if test="createdBy != null and createdBy !=''">
                 created_by,
             </if>
             <if test="createdDate != null">
                 created_date,
             </if>
-            <if test="updatedBy != null">
+            <if test="updatedBy != null and updatedBy !=''">
                 updated_by,
             </if>
             <if test="updatedDate != null">
                 updated_date,
             </if>
-            <if test="deletedBy != null">
+            <if test="deletedBy != null and deletedBy !=''">
                 deleted_by,
             </if>
             <if test="deletedDate != null">
@@ -86,29 +89,29 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
+            <if test="id != null and id !=''">
                 #{id,jdbcType=VARCHAR},
             </if>
-            <if test="name != null">
+            <if test="name != null and name !=''">
                 #{name,jdbcType=VARCHAR},
             </if>
-            <if test="code != null">
+            <if test="code != null and code !=''">
                 #{code,jdbcType=VARCHAR},
             </if>
-            <if test="osCode != null">
+            <if test="osCode != null and osCode !=''">
                 #{osCode,jdbcType=VARCHAR},
             </if>
-            <if test="menuCode != null">
+            <if test="menuCode != null and menuCode !=''">
                 #{menuCode,jdbcType=VARCHAR},
             </if>
-            <if test="url != null">
+            <if test="url != null and url !=''">
                 #{url,jdbcType=VARCHAR},
             </if>
             <if test="requestType != null">
                 #{requestType,jdbcType=TINYINT},
             </if>
-            <if test="priority != null">
-                #{priority,jdbcType=TINYINT},
+            <if test="bitDigit != null">
+                #{bitDigit,jdbcType=TINYINT},
             </if>
             <if test="bitResult != null">
                 #{bitResult,jdbcType=INTEGER},
@@ -116,19 +119,22 @@
             <if test="level != null">
                 #{level,jdbcType=INTEGER},
             </if>
-            <if test="createdBy != null">
+            <if test="isPrivate != null">
+                #{isPrivate,jdbcType=TINYINT},
+            </if>
+            <if test="createdBy != null and createdBy !=''">
                 #{createdBy,jdbcType=VARCHAR},
             </if>
             <if test="createdDate != null">
                 #{createdDate,jdbcType=TIMESTAMP},
             </if>
-            <if test="updatedBy != null">
+            <if test="updatedBy != null and updatedBy !=''">
                 #{updatedBy,jdbcType=VARCHAR},
             </if>
             <if test="updatedDate != null">
                 #{updatedDate,jdbcType=TIMESTAMP},
             </if>
-            <if test="deletedBy != null">
+            <if test="deletedBy != null and deletedBy !=''">
                 #{deletedBy,jdbcType=VARCHAR},
             </if>
             <if test="deletedDate != null">
@@ -193,4 +199,73 @@
             </choose>
         </where>
     </update>
+    <select id="getPageWithFullInfo" resultType="com.pandaz.usercenter.entity.PermissionEntity"
+            parameterType="com.pandaz.usercenter.entity.PermissionEntity">
+        select permission.id,
+        permission.name,
+        permission.code,
+        permission.os_code,
+        permission.menu_code,
+        permission.url,
+        permission.request_type,
+        permission.bit_digit,
+        permission.bit_result,
+        permission.level,
+        permission.is_private,
+        permission.created_by,
+        permission.created_date,
+        permission.updated_by,
+        permission.updated_date,
+        permission.deleted_by,
+        permission.deleted_date,
+        permission.deleted_flag,
+        permission.version,
+        osInfo.name as osName,
+        menu.name as menuName
+        from t_sys_permission permission
+        inner join t_sys_os_info osInfo
+        on permission.os_code = osInfo.code
+        left join t_sys_menu menu
+        on permission.menu_code = menu.code
+        <where>
+            permission.deleted_flag = '0'
+            <if test="entity.code != null and entity.code !=''">
+                and permission.code like concat(#{entity.code,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="entity.name != null and entity.name !=''">
+                and permission.name like concat(#{entity.name,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="entity.osCode != null and entity.osCode !=''">
+                and permission.os_code = #{entity.osCode,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.startDate != null">
+                and permission.created_date >= #{entity.startDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="entity.endDate != null">
+                and permission.created_date <![CDATA[<=]]> #{entity.endDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+        order by permission.is_private desc, permission.created_date desc
+    </select>
+    <select id="selectBitDigits" resultType="java.lang.Byte"
+            parameterType="com.pandaz.usercenter.entity.PermissionEntity">
+        select bit_digit
+        from t_sys_permission
+        <where>
+            deleted_flag = '0'
+            <if test="osCode != null and osCode !=''">
+                and os_code = #{osCode,jdbcType=VARCHAR}
+            </if>
+            <if test="menuCode != null and menuCode !=''">
+                and menu_code = #{menuCode,jdbcType=VARCHAR}
+            </if>
+            <if test="requestType != null">
+                and request_type = #{requestType,jdbcType=TINYINT}
+            </if>
+            <if test="isPrivate != null">
+                and is_private = #{isPrivate,jdbcType=TINYINT}
+            </if>
+        </where>
+    </select>
+
 </mapper>

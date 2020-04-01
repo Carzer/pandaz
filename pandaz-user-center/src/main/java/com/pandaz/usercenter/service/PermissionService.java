@@ -43,4 +43,12 @@ public interface PermissionService extends UcBaseService<PermissionEntity> {
      */
     int deleteByCode(PermissionEntity permissionEntity);
 
+    /**
+     * 根据菜单编码删除
+     *
+     * @param permissionEntity 编码信息
+     * @return 执行结果
+     */
+    int deleteByMenuCode(PermissionEntity permissionEntity);
+
 }

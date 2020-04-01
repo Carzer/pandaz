@@ -53,4 +53,12 @@ public interface MenuService extends UcBaseService<MenuEntity> {
      */
     List<MenuEntity> getAll(MenuEntity menuEntity);
 
+    /**
+     * 根据系统编码删除
+     *
+     * @param menuEntity 删除信息
+     * @return 执行结果
+     */
+    int deleteByOsCode(MenuEntity menuEntity);
+
 }

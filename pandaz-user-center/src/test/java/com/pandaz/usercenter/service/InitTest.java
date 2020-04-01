@@ -7,15 +7,17 @@ import com.pandaz.usercenter.entity.RoleEntity;
 import com.pandaz.usercenter.entity.UserEntity;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
 /**
- * TODO
+ * 初始化
  *
  * @author Carzer
  * @since 2020-03-30
  */
+@Transactional
 public class InitTest extends BasisUnitTest {
 
     private OauthClientService oauthClientService;
@@ -68,6 +70,7 @@ public class InitTest extends BasisUnitTest {
     private void insertClient() {
         OauthClientEntity oauthClientEntity = new OauthClientEntity();
         oauthClientEntity.setClientId("test");
+        oauthClientEntity.setClientName("测试客户端");
         oauthClientEntity.setClientSecret("test");
         oauthClientEntity.setScope("read,write");
         oauthClientEntity.setAuthorizedGrantTypes("password,refresh");

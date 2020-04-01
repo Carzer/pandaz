@@ -90,10 +90,9 @@ public class DictTypeController {
     public ExecuteResult<ArrayList<DictTypeDTO>> listAll() {
         ExecuteResult<ArrayList<DictTypeDTO>> result = new ExecuteResult<>();
         try {
-            List<DictTypeEntity> list = dictTypeService.list();
-            result.setData((ArrayList<DictTypeDTO>) BeanCopyUtil.copyList(list, DictTypeDTO.class));
+            result.setData((ArrayList<DictTypeDTO>) BeanCopyUtil.copyList(dictTypeService.list(), DictTypeDTO.class));
         } catch (Exception e) {
-            log.error("分页查询异常：", e);
+            log.error("获取全部字典类型异常：", e);
             result.setError(e.getMessage());
         }
         return result;

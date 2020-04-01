@@ -40,9 +40,19 @@ public class PermissionDTO extends BaseDTO {
     private String osCode;
 
     /**
+     * 系统名称
+     */
+    private String osName;
+
+    /**
      * 菜单编码
      */
     private String menuCode;
+
+    /**
+     * 菜单名称
+     */
+    private String menuName;
 
     /**
      * 资源URL
@@ -55,9 +65,9 @@ public class PermissionDTO extends BaseDTO {
     private Byte requestType;
 
     /**
-     * 优先级及位移数
+     * 位移数
      */
-    private Byte priority;
+    private Byte bitDigit;
 
     /**
      * 位运算结果
@@ -68,4 +78,9 @@ public class PermissionDTO extends BaseDTO {
      * 权限级别，只有组织级别小于等于权限级别，才可使用该权限
      */
     private Integer level;
+
+    /**
+     * 是否私有(0:否，1:是)
+     */
+    private Byte isPrivate;
 }

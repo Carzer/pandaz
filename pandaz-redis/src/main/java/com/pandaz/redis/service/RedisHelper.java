@@ -10,11 +10,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -98,7 +94,7 @@ public class RedisHelper {
         if (CollectionUtils.isEmpty(map)) {
             return false;
         } else {
-            Map<String, Object> setMap = new ConcurrentHashMap<>(map.size());
+            Map<String, Object> setMap = new HashMap<>(map.size());
             map.forEach((key, value) -> setMap.put(String.format("%s%s", RedisConstants.REDIS_PREFIX, key), value));
             SessionCallback<Object> sessionCallback = new SessionCallback<>() {
                 @Override
