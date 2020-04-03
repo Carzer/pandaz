@@ -46,13 +46,21 @@ mkdir -p [docker统一目录]/nginx/ext
 mkdir -p [docker统一目录]/logs/nginx
 mkdir -p [docker统一目录]/nginx/html
 ```
+
+可能用到的配置文件（[docker统一目录]/nginx）  
+[nginx.conf](./conf/nginx.conf)  
+
 ```shell
 mkdir -p [docker统一目录]/nacos/nacos
 mkdir -p [docker统一目录]/nacos/nacos/prometheus/prometheus
 mkdir -p [docker统一目录]/nacos/sentinel
 ```
-可能用到的配置文件（[docker统一目录]/nginx）  
-[nginx.conf](./conf/nginx.conf)  
+
+可能用到的配置文件（[docker统一目录]/nacos/sentinel）  
+[startup.sh](./conf/startup.sh)  
+[stop.sh](./conf/stop.sh)  
+[start_sentinel.sh](./conf/start_sentinel.sh)
+
 
 ##  1. mysql
 
@@ -152,6 +160,20 @@ cd nacos-docker
 docker-compose -f standalone-derby.yaml up
 ```
 
-sentinel在nacos-server的docker中运行，相关命令文件为：  
-[startup.sh](./conf/startup.sh)  
-[stop.sh](./conf/stop.sh)  
+sentinel在nacos-server的**docker**中运行，执行以下命令，完成sentinel的自启动
+
+```shell
+chmod +x startup.sh
+chmod +x stop.sh
+chmod +x start_sentinel.sh
+```
+
+```shell
+cp start_sentinel.sh /etc/profile.d/start_sentinel.sh
+cp start_sentinel.sh /etc/init.d/start_sentinel.sh
+```
+
+```shell
+chkconfig --add start_sentinel.sh
+chkconfig start_sentinel.sh on
+```
