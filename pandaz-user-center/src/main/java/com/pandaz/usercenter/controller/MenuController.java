@@ -93,9 +93,8 @@ public class MenuController {
     public ExecuteResult<MenuDTO> getAll(MenuDTO menuDTO) {
         ExecuteResult<MenuDTO> result = new ExecuteResult<>();
         try {
-            menuDTO.setCode(CommonConstants.ROOT_MENU_CODE);
-            menuDTO.setParentCode(CommonConstants.ROOT_MENU_CODE);
             MenuEntity menuEntity = BeanCopyUtil.copy(menuDTO, MenuEntity.class);
+            menuEntity.setParentCode(CommonConstants.ROOT_MENU_CODE);
             List<MenuEntity> list = menuService.getAll(menuEntity);
             menuEntity.setChildren(list);
             result.setData(transferToDTO(menuEntity));
@@ -141,6 +140,7 @@ public class MenuController {
             menuEntity.setId(UuidUtil.getId());
             menuEntity.setCreatedBy(principal.getName());
             menuEntity.setCreatedDate(LocalDateTime.now());
+            menuEntity.setIsLeafNode(Byte.valueOf("1"));
             menuService.insert(menuEntity);
             result.setData(BeanCopyUtil.copy(menuEntity, menuDTO));
         } catch (Exception e) {

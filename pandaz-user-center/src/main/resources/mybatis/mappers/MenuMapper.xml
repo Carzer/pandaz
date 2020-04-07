@@ -42,7 +42,7 @@
     </resultMap>
     <sql id="Base_Column_List">
         id, name, code, os_code,
-        parent_code, icon,
+        parent_code, icon, url, router,
         sorting, is_leaf_node, created_by,
         created_date, updated_by, updated_date,
         deleted_by, deleted_date, deleted_flag,
@@ -50,17 +50,17 @@
     </sql>
     <insert id="insert" parameterType="com.pandaz.usercenter.entity.MenuEntity">
         insert into t_sys_menu (id, name, code, os_code,
-        parent_code, icon,
-        sorting, is_leaf_node, created_by,
-        created_date, updated_by, updated_date,
-        deleted_by, deleted_date, deleted_flag,
-        locked, version)
+                                parent_code, icon,
+                                sorting, is_leaf_node, created_by,
+                                created_date, updated_by, updated_date,
+                                deleted_by, deleted_date, deleted_flag,
+                                locked, version)
         values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
-        #{osCode,jdbcType=VARCHAR}, #{parentCode,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR},
-        #{sorting,jdbcType=INTEGER}, #{isLeafNode,jdbcType=TINYINT}, #{createdBy,jdbcType=VARCHAR},
-        #{createdDate,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, #{updatedDate,jdbcType=TIMESTAMP},
-        #{deletedBy,jdbcType=VARCHAR}, #{deletedDate,jdbcType=TIMESTAMP}, #{deletedFlag,jdbcType=VARCHAR},
-        #{locked,jdbcType=TINYINT}, #{version,jdbcType=INTEGER})
+                #{osCode,jdbcType=VARCHAR}, #{parentCode,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR},
+                #{sorting,jdbcType=INTEGER}, #{isLeafNode,jdbcType=TINYINT}, #{createdBy,jdbcType=VARCHAR},
+                #{createdDate,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, #{updatedDate,jdbcType=TIMESTAMP},
+                #{deletedBy,jdbcType=VARCHAR}, #{deletedDate,jdbcType=TIMESTAMP}, #{deletedFlag,jdbcType=VARCHAR},
+                #{locked,jdbcType=TINYINT}, #{version,jdbcType=INTEGER})
     </insert>
     <insert id="insertSelective" parameterType="com.pandaz.usercenter.entity.MenuEntity">
         insert into t_sys_menu
@@ -82,6 +82,12 @@
             </if>
             <if test="icon != null and icon != ''">
                 icon,
+            </if>
+            <if test="url != null and url != ''">
+                url,
+            </if>
+            <if test="router != null and router != ''">
+                router,
             </if>
             <if test="sorting != null">
                 sorting,
@@ -136,6 +142,12 @@
             <if test="icon != null and icon != ''">
                 #{icon,jdbcType=VARCHAR},
             </if>
+            <if test="url != null and url != ''">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="router != null and router != ''">
+                #{router,jdbcType=VARCHAR},
+            </if>
             <if test="sorting != null">
                 #{sorting,jdbcType=INTEGER},
             </if>
@@ -184,12 +196,14 @@
                 and os_code=#{osCode,jdbcType=VARCHAR}
             </if>
         </where>
+        order by created_date
     </select>
     <select id="selectByParentCode" resultMap="CascadeResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List"/>
         from t_sys_menu
-        where parent_code = #{parentCode,jdbcType=VARCHAR}
+        where deleted_flag = '0' and parent_code = #{parentCode,jdbcType=VARCHAR}
+        order by created_date
     </select>
     <!-- 逻辑删除 -->
     <update id="logicDelete">
@@ -242,4 +256,14 @@
             </choose>
         </where>
     </update>
+    <!--获取没有父级的菜单编码-->
+    <select id="listMenusWithoutParent" resultType="java.lang.String">
+        select child.code
+        from t_sys_menu child
+        where child.parent_code not in (
+            select parent.code from t_sys_menu parent where parent.deleted_flag = '0'
+        )
+          and child.deleted_flag = '0'
+          and child.parent_code != 'root'
+    </select>
 </mapper>

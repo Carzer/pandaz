@@ -61,4 +61,10 @@ public interface MenuService extends UcBaseService<MenuEntity> {
      */
     int deleteByOsCode(MenuEntity menuEntity);
 
+    /**
+     * 获取没有父级的菜单编码
+     *
+     * @return 菜单编码
+     */
+    List<String> listMenusWithoutParent();
 }

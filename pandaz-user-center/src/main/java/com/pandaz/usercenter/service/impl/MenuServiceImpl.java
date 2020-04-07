@@ -12,6 +12,7 @@ import com.pandaz.usercenter.entity.PermissionEntity;
 import com.pandaz.usercenter.mapper.MenuMapper;
 import com.pandaz.usercenter.service.MenuService;
 import com.pandaz.usercenter.service.PermissionService;
+import com.pandaz.usercenter.task.SimpleTask;
 import com.pandaz.usercenter.util.CheckUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
      * @return 插入结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int insert(MenuEntity menuEntity) {
         checkUtil.checkOrSetCode(menuEntity, menuMapper, "菜单编码已存在");
         if (!StringUtils.hasText(menuEntity.getId())) {
@@ -65,6 +67,12 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
         if (!StringUtils.hasText(menuEntity.getParentCode())) {
             menuEntity.setParentCode(CommonConstants.ROOT_MENU_CODE);
         }
+        QueryWrapper<MenuEntity> parentWrapper = new QueryWrapper<>();
+        parentWrapper.eq("code", menuEntity.getParentCode());
+        parentWrapper.eq("is_leaf_node", Byte.valueOf("1"));
+        MenuEntity parent = new MenuEntity();
+        parent.setIsLeafNode(Byte.valueOf("0"));
+        menuMapper.update(parent, parentWrapper);
         return menuMapper.insertSelective(menuEntity);
     }
 
@@ -143,6 +151,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
 
     /**
      * 批量删除
+     * <p>
+     * 删除的同时，不会直接及联删除子菜单，而是由定时任务进行脏数据的清理
+     * {@link SimpleTask#clear()}
      *
      * @param deletedBy   删除人
      * @param deletedDate 删除时间
@@ -177,5 +188,15 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
             return list.size();
         }
         return 0;
+    }
+
+    /**
+     * 获取没有父级的菜单编码
+     *
+     * @return 菜单编码
+     */
+    @Override
+    public List<String> listMenusWithoutParent() {
+        return menuMapper.listMenusWithoutParent();
     }
 }

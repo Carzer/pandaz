@@ -29,4 +29,10 @@ public interface MenuMapper extends UcBaseMapper<MenuEntity> {
      */
     List<MenuEntity> selectByParentCode(@Value("parentCode") String parentCode);
 
+    /**
+     * 获取没有父级的菜单编码
+     *
+     * @return 菜单编码
+     */
+    List<String> listMenusWithoutParent();
 }

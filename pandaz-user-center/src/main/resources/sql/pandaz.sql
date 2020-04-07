@@ -11,7 +11,7 @@
  Target Server Version : 50729
  File Encoding         : utf-8
 
- Date: 03/31/2020 12:13:30 PM
+ Date: 04/07/2020 15:19:20 PM
 */
 
 SET NAMES utf8mb4;
@@ -113,6 +113,8 @@ CREATE TABLE `t_sys_menu` (
                               `code` varchar(50) NOT NULL COMMENT '菜单编码',
                               `os_code` varchar(50) DEFAULT NULL COMMENT '系统编码',
                               `parent_code` varchar(50) NOT NULL DEFAULT 'root' COMMENT '父菜单编码',
+                              `url` varchar(500) DEFAULT NULL COMMENT '后台URL',
+                              `router` varchar(200) DEFAULT NULL COMMENT '前台router',
                               `icon` varchar(200) DEFAULT NULL COMMENT '图标',
                               `sorting` int(8) NOT NULL DEFAULT '0' COMMENT '排序',
                               `is_leaf_node` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否叶子节点',
@@ -219,9 +221,9 @@ CREATE TABLE `t_sys_permission` (
                                     `code` varchar(36) NOT NULL COMMENT '权限编码',
                                     `os_code` varchar(50) NOT NULL COMMENT '系统编码',
                                     `menu_code` varchar(50) DEFAULT NULL COMMENT '菜单编码',
-                                    `url` varchar(200) NOT NULL COMMENT '资源URL',
+                                    `url` varchar(500) DEFAULT NULL COMMENT '资源URL',
                                     `request_type` tinyint(4) NOT NULL COMMENT '请求方法(1:get,2:post,3:put,4:delete)',
-                                    `priority` tinyint(2) NOT NULL COMMENT '优先级',
+                                    `bit_digit` tinyint(2) NOT NULL COMMENT '位移数',
                                     `bit_result` int(8) NOT NULL COMMENT '位运算结果',
                                     `level` int(8) DEFAULT NULL COMMENT '权限级别',
                                     `is_private` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否私有(0:否，1:是)',
