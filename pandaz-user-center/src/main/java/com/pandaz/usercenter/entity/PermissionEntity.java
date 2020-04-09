@@ -99,4 +99,10 @@ public class PermissionEntity extends BaseEntity {
     @TableField("is_private")
     private Byte isPrivate;
 
+    /**
+     * 倒序排列
+     */
+    @TableField(exist = false)
+    private String orderDesc;
+
 }

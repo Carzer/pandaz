@@ -89,6 +89,12 @@ public class MenuEntity extends BaseEntity {
     private Byte locked;
 
     /**
+     * 描述
+     */
+    @TableField("remark")
+    private String remark;
+
+    /**
      * 子菜单
      */
     @TableField(exist = false)

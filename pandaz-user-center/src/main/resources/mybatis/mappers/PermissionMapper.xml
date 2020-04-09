@@ -244,8 +244,19 @@
             <if test="entity.endDate != null">
                 and permission.created_date <![CDATA[<=]]> #{entity.endDate,jdbcType=TIMESTAMP}
             </if>
+            <if test="entity.isPrivate != null">
+                and permission.is_private = #{entity.isPrivate,jdbcType=TINYINT}
+            </if>
+            <if test="entity.menuCode != null and entity.menuCode !=''">
+                and (permission.menu_code = #{entity.menuCode,jdbcType=VARCHAR}
+                or permission.is_private = 0)
+            </if>
         </where>
-        order by permission.is_private desc, permission.created_date desc
+        order by permission.is_private
+        <if test="entity.orderDesc != null and entity.orderDesc !=''">
+            desc
+        </if>
+        , permission.created_date desc
     </select>
     <select id="selectBitDigits" resultType="java.lang.Byte"
             parameterType="com.pandaz.usercenter.entity.PermissionEntity">

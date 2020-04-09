@@ -8,8 +8,11 @@
         <result column="os_code" jdbcType="VARCHAR" property="osCode"/>
         <result column="parent_code" jdbcType="VARCHAR" property="parentCode"/>
         <result column="icon" jdbcType="VARCHAR" property="icon"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="router" jdbcType="VARCHAR" property="router"/>
         <result column="sorting" jdbcType="INTEGER" property="sorting"/>
         <result column="is_leaf_node" jdbcType="TINYINT" property="isLeafNode"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
         <result column="created_by" jdbcType="VARCHAR" property="createdBy"/>
         <result column="created_date" jdbcType="TIMESTAMP" property="createdDate"/>
         <result column="updated_by" jdbcType="VARCHAR" property="updatedBy"/>
@@ -27,8 +30,11 @@
         <result column="os_code" jdbcType="VARCHAR" property="osCode"/>
         <result column="parent_code" jdbcType="VARCHAR" property="parentCode"/>
         <result column="icon" jdbcType="VARCHAR" property="icon"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="router" jdbcType="VARCHAR" property="router"/>
         <result column="sorting" jdbcType="INTEGER" property="sorting"/>
         <result column="is_leaf_node" jdbcType="TINYINT" property="isLeafNode"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
         <result column="created_by" jdbcType="VARCHAR" property="createdBy"/>
         <result column="created_date" jdbcType="TIMESTAMP" property="createdDate"/>
         <result column="updated_by" jdbcType="VARCHAR" property="updatedBy"/>
@@ -43,25 +49,11 @@
     <sql id="Base_Column_List">
         id, name, code, os_code,
         parent_code, icon, url, router,
-        sorting, is_leaf_node, created_by,
+        sorting, is_leaf_node, remark, created_by,
         created_date, updated_by, updated_date,
         deleted_by, deleted_date, deleted_flag,
         locked, version
     </sql>
-    <insert id="insert" parameterType="com.pandaz.usercenter.entity.MenuEntity">
-        insert into t_sys_menu (id, name, code, os_code,
-                                parent_code, icon,
-                                sorting, is_leaf_node, created_by,
-                                created_date, updated_by, updated_date,
-                                deleted_by, deleted_date, deleted_flag,
-                                locked, version)
-        values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
-                #{osCode,jdbcType=VARCHAR}, #{parentCode,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR},
-                #{sorting,jdbcType=INTEGER}, #{isLeafNode,jdbcType=TINYINT}, #{createdBy,jdbcType=VARCHAR},
-                #{createdDate,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, #{updatedDate,jdbcType=TIMESTAMP},
-                #{deletedBy,jdbcType=VARCHAR}, #{deletedDate,jdbcType=TIMESTAMP}, #{deletedFlag,jdbcType=VARCHAR},
-                #{locked,jdbcType=TINYINT}, #{version,jdbcType=INTEGER})
-    </insert>
     <insert id="insertSelective" parameterType="com.pandaz.usercenter.entity.MenuEntity">
         insert into t_sys_menu
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -94,6 +86,9 @@
             </if>
             <if test="isLeafNode != null">
                 is_leaf_node,
+            </if>
+            <if test="remark != null and remark != ''">
+                remark,
             </if>
             <if test="createdBy != null and createdBy != ''">
                 created_by,
@@ -153,6 +148,9 @@
             </if>
             <if test="isLeafNode != null and isLeafNode != ''">
                 #{isLeafNode,jdbcType=TINYINT},
+            </if>
+            <if test="remark != null and remark != ''">
+                #{remark,jdbcType=VARCHAR},
             </if>
             <if test="createdBy != null and createdBy != ''">
                 #{createdBy,jdbcType=VARCHAR},

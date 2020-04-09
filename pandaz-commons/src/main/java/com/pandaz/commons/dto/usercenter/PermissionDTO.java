@@ -83,4 +83,10 @@ public class PermissionDTO extends BaseDTO {
      * 是否私有(0:否，1:是)
      */
     private Byte isPrivate;
+
+    /**
+     * 倒序排列
+     */
+    private String orderDesc;
+
 }

@@ -214,6 +214,7 @@ public class MenuController {
         menuDTO.setName(menuEntity.getName());
         menuDTO.setUrl(menuEntity.getUrl());
         menuDTO.setRouter(menuEntity.getRouter());
+        menuDTO.setRemark(menuEntity.getRemark());
         return menuDTO;
     }
 

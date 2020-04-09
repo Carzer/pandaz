@@ -76,7 +76,13 @@ public class MenuDTO extends BaseDTO {
     private Byte locked;
 
     /**
+     * 描述
+     */
+    private String remark;
+
+    /**
      * 子菜单
      */
     private List<MenuDTO> children;
+
 }
