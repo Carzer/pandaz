@@ -55,11 +55,6 @@ public class PermissionDTO extends BaseDTO {
     private String menuName;
 
     /**
-     * 资源URL
-     */
-    private String url;
-
-    /**
      * 请求类型get\post\put\delete
      */
     private Byte requestType;

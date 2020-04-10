@@ -92,7 +92,7 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
      */
     @Override
     public int insert(OrganizationEntity organizationEntity) {
-        checkUtil.checkOrSetCode(organizationEntity, organizationMapper, "组织编码已存在");
+        checkUtil.checkOrSetCode(organizationEntity, organizationMapper, "组织编码重复");
         if (!StringUtils.hasText(organizationEntity.getId())) {
             organizationEntity.setId(UuidUtil.getId());
         }

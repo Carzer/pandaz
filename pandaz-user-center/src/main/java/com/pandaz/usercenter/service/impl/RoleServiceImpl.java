@@ -71,7 +71,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
      */
     @Override
     public int insert(RoleEntity roleEntity) {
-        checkUtil.checkOrSetCode(roleEntity, roleMapper, "角色编码已存在", SysConstants.ROLE_PREFIX, null);
+        checkUtil.checkOrSetCode(roleEntity, roleMapper, "角色编码重复", SysConstants.ROLE_PREFIX, null);
         roleEntity.setId(UuidUtil.getId());
         return roleMapper.insertSelective(roleEntity);
     }

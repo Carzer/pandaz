@@ -94,7 +94,7 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictTypeEnt
      */
     @Override
     public int insert(DictTypeEntity dictTypeEntity) {
-        checkUtil.checkOrSetCode(dictTypeEntity, dictTypeMapper, "字典信息编码已存在");
+        checkUtil.checkOrSetCode(dictTypeEntity, dictTypeMapper, "字典信息编码重复");
         if (!StringUtils.hasText(dictTypeEntity.getId())) {
             dictTypeEntity.setId(UuidUtil.getId());
         }

@@ -60,7 +60,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insert(MenuEntity menuEntity) {
-        checkUtil.checkOrSetCode(menuEntity, menuMapper, "菜单编码已存在");
+        checkUtil.checkOrSetCode(menuEntity, menuMapper, "菜单编码重复");
         if (!StringUtils.hasText(menuEntity.getId())) {
             menuEntity.setId(UuidUtil.getId());
         }
@@ -199,4 +199,5 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
     public List<String> listMenusWithoutParent() {
         return menuMapper.listMenusWithoutParent();
     }
+
 }

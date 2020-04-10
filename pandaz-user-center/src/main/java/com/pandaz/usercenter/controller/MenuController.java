@@ -3,11 +3,16 @@ package com.pandaz.usercenter.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.commons.constants.CommonConstants;
 import com.pandaz.commons.dto.usercenter.MenuDTO;
+import com.pandaz.commons.dto.usercenter.OsInfoDTO;
+import com.pandaz.commons.dto.usercenter.PermissionDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.ExecuteResult;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.entity.MenuEntity;
+import com.pandaz.usercenter.entity.PermissionEntity;
 import com.pandaz.usercenter.service.MenuService;
+import com.pandaz.usercenter.service.OsInfoService;
+import com.pandaz.usercenter.service.PermissionService;
 import com.pandaz.usercenter.util.ControllerUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +45,16 @@ public class MenuController {
      * 菜单服务
      */
     private final MenuService menuService;
+
+    /**
+     * 权限服务
+     */
+    private final PermissionService permissionService;
+
+    /**
+     * 系统信息服务
+     */
+    private final OsInfoService osInfoService;
 
     /**
      * 工具类
@@ -84,6 +99,25 @@ public class MenuController {
     }
 
     /**
+     * 权限分页方法
+     *
+     * @param permissionDTO 查询信息
+     * @return 分页信息
+     */
+    @GetMapping("/getPermissionPage")
+    public ExecuteResult<HashMap<String, Object>> getPermissionPage(PermissionDTO permissionDTO) {
+        ExecuteResult<HashMap<String, Object>> result = new ExecuteResult<>();
+        try {
+            IPage<PermissionEntity> page = permissionService.getPage(BeanCopyUtil.copy(permissionDTO, PermissionEntity.class));
+            result.setData(BeanCopyUtil.convertToMap(page, PermissionDTO.class));
+        } catch (Exception e) {
+            log.error("权限分页查询异常：", e);
+            result.setError(e.getMessage());
+        }
+        return result;
+    }
+
+    /**
      * 获取所有菜单
      *
      * @param menuDTO 查询信息
@@ -100,6 +134,23 @@ public class MenuController {
             result.setData(transferToDTO(menuEntity));
         } catch (Exception e) {
             log.error("获取所有菜单异常：", e);
+            result.setError(e.getMessage());
+        }
+        return result;
+    }
+
+    /**
+     * 获取全部系统信息
+     *
+     * @return 系统信息
+     */
+    @GetMapping("/osListAll")
+    public ExecuteResult<ArrayList<OsInfoDTO>> osListAll() {
+        ExecuteResult<ArrayList<OsInfoDTO>> result = new ExecuteResult<>();
+        try {
+            result.setData((ArrayList<OsInfoDTO>) BeanCopyUtil.copyList(osInfoService.list(), OsInfoDTO.class));
+        } catch (Exception e) {
+            log.error("获取全部系统信息异常：", e);
             result.setError(e.getMessage());
         }
         return result;

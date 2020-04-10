@@ -67,4 +67,5 @@ public interface MenuService extends UcBaseService<MenuEntity> {
      * @return 菜单编码
      */
     List<String> listMenusWithoutParent();
+
 }

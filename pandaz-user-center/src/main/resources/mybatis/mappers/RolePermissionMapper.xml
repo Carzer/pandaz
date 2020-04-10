@@ -5,6 +5,8 @@
         <result column="id" jdbcType="VARCHAR" property="id"/>
         <result column="role_code" jdbcType="VARCHAR" property="roleCode"/>
         <result column="permission_code" jdbcType="VARCHAR" property="permissionCode"/>
+        <result column="os_code" jdbcType="VARCHAR" property="osCode"/>
+        <result column="menu_code" jdbcType="VARCHAR" property="menuCode"/>
         <result column="created_by" jdbcType="VARCHAR" property="createdBy"/>
         <result column="created_date" jdbcType="TIMESTAMP" property="createdDate"/>
         <result column="updated_by" jdbcType="VARCHAR" property="updatedBy"/>
@@ -13,15 +15,6 @@
         <result column="deleted_date" jdbcType="TIMESTAMP" property="deletedDate"/>
         <result column="deleted_flag" jdbcType="TINYINT" property="deletedFlag"/>
     </resultMap>
-    <insert id="insert" parameterType="com.pandaz.usercenter.entity.RolePermissionEntity">
-        insert into t_sys_role_permission (id, role_code, permission_code,
-        created_by,created_date, updated_by, updated_date,
-        deleted_by, deleted_date, deleted_flag)
-        values (#{id,jdbcType=VARCHAR}, #{roleCode,jdbcType=VARCHAR}, #{permissionCode,jdbcType=VARCHAR},
-        #{createdBy,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR},
-        #{updatedDate,jdbcType=TIMESTAMP},
-        #{deletedBy,jdbcType=VARCHAR}, #{deletedDate,jdbcType=TIMESTAMP}, #{deletedFlag,jdbcType=VARCHAR})
-    </insert>
     <insert id="insertSelective" parameterType="com.pandaz.usercenter.entity.RolePermissionEntity">
         insert into t_sys_role_permission
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -33,6 +26,12 @@
             </if>
             <if test="permissionCode != null and permissionCode != ''">
                 permission_code,
+            </if>
+            <if test="osCode != null and osCode != ''">
+                os_code,
+            </if>
+            <if test="menuCode != null and menuCode != ''">
+                menu_code,
             </if>
             <if test="createdBy != null and createdBy !=''">
                 created_by,
@@ -66,6 +65,12 @@
             <if test="permissionCode != null and permissionCode != ''">
                 #{permissionCode,jdbcType=VARCHAR},
             </if>
+            <if test="osCode != null and osCode != ''">
+                #{osCode,jdbcType=VARCHAR},
+            </if>
+            <if test="menuCode != null and menuCode != ''">
+                #{menuCode,jdbcType=VARCHAR},
+            </if>
             <if test="createdBy != null and createdBy !=''">
                 #{createdBy,jdbcType=VARCHAR},
             </if>
@@ -88,6 +93,22 @@
                 #{deletedFlag,jdbcType=VARCHAR},
             </if>
         </trim>
+    </insert>
+    <insert id="batchInsert" parameterType="com.pandaz.usercenter.entity.RolePermissionEntity">
+        insert into t_sys_role_permission
+        (id,role_code,permission_code,os_code,menu_code,created_by,created_date)
+        values
+        <foreach collection="list" separator="," item="item" index="index">
+            (
+            #{item.id,jdbcType=VARCHAR},
+            #{item.roleCode,jdbcType=VARCHAR},
+            #{item.permissionCode,jdbcType=VARCHAR},
+            #{item.osCode,jdbcType=VARCHAR},
+            #{item.menuCode,jdbcType=VARCHAR},
+            #{item.createdBy,jdbcType=VARCHAR},
+            #{item.createdDate,jdbcType=TIMESTAMP}
+            )
+        </foreach>
     </insert>
     <!-- 逻辑删除 -->
     <update id="logicDelete">

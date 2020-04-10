@@ -6,11 +6,9 @@ import com.pandaz.commons.entity.BaseEntity;
 import com.pandaz.commons.util.UuidUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
-import java.util.List;
 
 /**
  * pandaz:com.pandaz.usercenter.util
@@ -70,8 +68,9 @@ public class CheckUtil<E extends BaseEntity, M extends BaseMapper<E>> {
                 lastCode = code.toString();
                 QueryWrapper<E> queryWrapper = new QueryWrapper<>();
                 queryWrapper.eq(declaredCode, code);
-                List<E> list = mapper.selectList(queryWrapper);
-                if (!CollectionUtils.isEmpty(list)) {
+
+                // 如果根据编码查询的结果大于0，则抛出错误
+                if (mapper.selectCount(queryWrapper) > 0) {
                     throw new IllegalArgumentException(errorMsg);
                 }
             }

@@ -56,7 +56,7 @@ public class OsInfoServiceImpl extends ServiceImpl<OsInfoMapper, OsInfoEntity> i
      */
     @Override
     public int insert(OsInfoEntity osInfoEntity) {
-        checkUtil.checkOrSetCode(osInfoEntity, osInfoMapper, "系统编码已存在");
+        checkUtil.checkOrSetCode(osInfoEntity, osInfoMapper, "系统编码重复");
         if (!StringUtils.hasText(osInfoEntity.getId())) {
             osInfoEntity.setId(UuidUtil.getId());
         }

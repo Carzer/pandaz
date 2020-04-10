@@ -167,9 +167,8 @@ public class PermissionController {
             MenuEntity menuEntity = menuService.findByCode(permissionEntity.getMenuCode());
             Assert.notNull(menuEntity, "菜单不存在");
             permissionEntity.setOsCode(menuEntity.getOsCode());
-            permissionEntity.setUrl(menuEntity.getUrl());
         } else {
-            permissionEntity.setMenuCode(null);
+            permissionEntity.setMenuCode("");
         }
     }
 

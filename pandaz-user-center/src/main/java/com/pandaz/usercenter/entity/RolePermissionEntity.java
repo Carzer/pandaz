@@ -32,9 +32,27 @@ public class RolePermissionEntity extends BaseEntity {
     @TableField("role_code")
     private String roleCode;
 
+    /**
+     * 权限编码
+     */
     @TableField("permission_code")
     private String permissionCode;
 
+    /**
+     * 系统编码
+     */
+    @TableField("os_code")
+    private String osCode;
+
+    /**
+     * 菜单编码
+     */
+    @TableField("menu_code")
+    private String menuCode;
+
+    /**
+     * 版本
+     */
     @TableField(exist = false)
     private Integer version;
 }

@@ -2,11 +2,14 @@ package com.pandaz.usercenter.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.commons.dto.usercenter.RoleDTO;
+import com.pandaz.commons.dto.usercenter.RolePermissionDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.ExecuteResult;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.custom.constants.SysConstants;
+import com.pandaz.usercenter.entity.PermissionEntity;
 import com.pandaz.usercenter.entity.RoleEntity;
+import com.pandaz.usercenter.service.RolePermissionService;
 import com.pandaz.usercenter.service.RoleService;
 import com.pandaz.usercenter.util.ControllerUtil;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +41,11 @@ public class RoleController {
      * 角色服务
      */
     private final RoleService roleService;
+
+    /**
+     * 角色-权限服务
+     */
+    private final RolePermissionService rolePermissionService;
 
     /**
      * 工具类
@@ -140,6 +148,27 @@ public class RoleController {
     @DeleteMapping
     public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(roleService, principal.getName(), LocalDateTime.now(), codes);
+    }
+
+    /**
+     * 绑定权限
+     *
+     * @param rolePermissionDTO 权限信息
+     * @param principal         当前用户
+     * @return 执行结果
+     */
+    @PostMapping("/bindPermission")
+    public ExecuteResult<String> bindPermission(@RequestBody RolePermissionDTO rolePermissionDTO, Principal principal) {
+        ExecuteResult<String> result = new ExecuteResult<>();
+        try {
+            List<PermissionEntity> permissionEntityList = BeanCopyUtil.copyList(rolePermissionDTO.getPermissions(), PermissionEntity.class);
+            rolePermissionService.bindPermission(principal.getName(), LocalDateTime.now(), rolePermissionDTO.getRoleCode(), permissionEntityList);
+            result.setData("绑定成功");
+        } catch (Exception e) {
+            log.error("绑定权限异常：", e);
+            result.setError(e.getMessage());
+        }
+        return result;
     }
 
     /**

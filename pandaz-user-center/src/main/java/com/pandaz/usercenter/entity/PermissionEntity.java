@@ -63,12 +63,6 @@ public class PermissionEntity extends BaseEntity {
     private String menuName;
 
     /**
-     * 资源URL
-     */
-    @TableField("url")
-    private String url;
-
-    /**
      * 请求类型get\post\put\delete
      * {@link com.pandaz.usercenter.custom.constants.PermissionConstants}
      */

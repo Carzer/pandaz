@@ -6,7 +6,6 @@
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="code" jdbcType="VARCHAR" property="code"/>
         <result column="menu_code" jdbcType="VARCHAR" property="menuCode"/>
-        <result column="url" jdbcType="VARCHAR" property="url"/>
         <result column="request_type" jdbcType="TINYINT" property="requestType"/>
         <result column="bit_digit" jdbcType="TINYINT" property="bitDigit"/>
         <result column="bit_result" jdbcType="INTEGER" property="bitResult"/>
@@ -44,9 +43,6 @@
             </if>
             <if test="menuCode != null and menuCode !=''">
                 menu_code,
-            </if>
-            <if test="url != null and url !=''">
-                url,
             </if>
             <if test="requestType != null">
                 request_type,
@@ -103,9 +99,6 @@
             </if>
             <if test="menuCode != null and menuCode !=''">
                 #{menuCode,jdbcType=VARCHAR},
-            </if>
-            <if test="url != null and url !=''">
-                #{url,jdbcType=VARCHAR},
             </if>
             <if test="requestType != null">
                 #{requestType,jdbcType=TINYINT},
@@ -206,7 +199,6 @@
         permission.code,
         permission.os_code,
         permission.menu_code,
-        permission.url,
         permission.request_type,
         permission.bit_digit,
         permission.bit_result,
@@ -229,6 +221,8 @@
         on permission.menu_code = menu.code
         <where>
             permission.deleted_flag = '0'
+            and osInfo.deleted_flag = '0'
+            and menu.deleted_flag = '0'
             <if test="entity.code != null and entity.code !=''">
                 and permission.code like concat(#{entity.code,jdbcType=VARCHAR},'%')
             </if>

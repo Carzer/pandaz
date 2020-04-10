@@ -76,7 +76,7 @@ public class DictInfoServiceImpl extends ServiceImpl<DictInfoMapper, DictInfoEnt
      */
     @Override
     public int insert(DictInfoEntity dictInfoEntity) {
-        checkUtil.checkOrSetCode(dictInfoEntity, dictInfoMapper, "字典信息编码已存在");
+        checkUtil.checkOrSetCode(dictInfoEntity, dictInfoMapper, "字典信息编码重复");
         if (!StringUtils.hasText(dictInfoEntity.getId())) {
             dictInfoEntity.setId(UuidUtil.getId());
         }

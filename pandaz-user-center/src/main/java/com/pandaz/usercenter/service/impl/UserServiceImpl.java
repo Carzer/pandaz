@@ -121,7 +121,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     public int insert(UserEntity user) {
 
         // 校验重复
-        String userCode = checkUtil.checkOrSetCode(user, userMapper, "用户编码已存在", null, null);
+        String userCode = checkUtil.checkOrSetCode(user, userMapper, "用户编码重复", null, null);
         UserEntity loginUser = loadUserByUsername(user.getLoginName());
         if (loginUser != null) {
             throw new IllegalArgumentException("登录名已存在");

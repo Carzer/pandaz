@@ -131,7 +131,7 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Oauth
         //判断是否重复
         if (StringUtils.hasText(clientId)) {
             if (findByClientId(clientId) != null) {
-                throw new IllegalArgumentException("客户端编码已存在");
+                throw new IllegalArgumentException("客户端编码重复");
             }
         } else {
             oauthClientEntity.setClientId(UuidUtil.getId());

@@ -71,7 +71,7 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupEntity> impl
     @Transactional(rollbackFor = Exception.class)
     public int insert(GroupEntity groupEntity) {
         // 组信息补充
-        String groupCode = checkUtil.checkOrSetCode(groupEntity, groupMapper, "组编码已存在", SysConstants.GROUP_PREFIX, null);
+        String groupCode = checkUtil.checkOrSetCode(groupEntity, groupMapper, "组编码重复", SysConstants.GROUP_PREFIX, null);
         if (!StringUtils.hasText(groupEntity.getId())) {
             groupEntity.setId(UuidUtil.getId());
         }

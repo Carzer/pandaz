@@ -11,7 +11,6 @@ import com.pandaz.usercenter.entity.PermissionEntity;
 import com.pandaz.usercenter.mapper.PermissionMapper;
 import com.pandaz.usercenter.service.PermissionService;
 import com.pandaz.usercenter.service.RolePermissionService;
-import com.pandaz.usercenter.util.CheckUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,11 +44,6 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     private final RolePermissionService rolePermissionService;
 
     /**
-     * 编码检查工具
-     */
-    private final CheckUtil<PermissionEntity, PermissionMapper> checkUtil;
-
-    /**
      * 插入方法
      *
      * @param permissionEntity permission
@@ -58,7 +52,14 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insert(PermissionEntity permissionEntity) {
-        checkUtil.checkOrSetCode(permissionEntity, permissionMapper, "权限编码已存在");
+        QueryWrapper<PermissionEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("os_code", permissionEntity.getOsCode());
+        queryWrapper.eq("code", permissionEntity.getCode());
+        queryWrapper.eq("menu_code", permissionEntity.getMenuCode());
+        int count = permissionMapper.selectCount(queryWrapper);
+        if (count > 0) {
+            throw new IllegalArgumentException("权限编码重复");
+        }
         if (!StringUtils.hasText(permissionEntity.getId())) {
             permissionEntity.setId(UuidUtil.getId());
         }

@@ -2,6 +2,8 @@ package com.pandaz.usercenter.mapper;
 
 import com.pandaz.usercenter.entity.RolePermissionEntity;
 
+import java.util.List;
+
 /**
  * 角色-权限mapper
  *
@@ -25,4 +27,12 @@ public interface RolePermissionMapper extends UcBaseMapper<RolePermissionEntity>
      * @return 执行结果
      */
     int logicDeleteByPermissionCode(RolePermissionEntity rolePermissionEntity);
+
+    /**
+     * 批量插入
+     *
+     * @param list 权限关系
+     * @return 执行结果
+     */
+    int batchInsert(List<RolePermissionEntity> list);
 }
