@@ -218,11 +218,10 @@
         inner join t_sys_os_info osInfo
         on permission.os_code = osInfo.code
         left join t_sys_menu menu
-        on permission.menu_code = menu.code
+        on permission.menu_code = menu.code and menu.deleted_flag = '0'
         <where>
             permission.deleted_flag = '0'
             and osInfo.deleted_flag = '0'
-            and menu.deleted_flag = '0'
             <if test="entity.code != null and entity.code !=''">
                 and permission.code like concat(#{entity.code,jdbcType=VARCHAR},'%')
             </if>
