@@ -81,7 +81,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
      * 根据编码查询
      *
      * @param code code
-     * @return com.pandaz.usercenter.entity.UserEntity
+     * @return 用户信息
      */
     @Cacheable(key = "#code")
     @Override

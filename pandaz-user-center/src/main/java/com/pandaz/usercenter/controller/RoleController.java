@@ -7,6 +7,7 @@ import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.ExecuteResult;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.custom.constants.SysConstants;
+import com.pandaz.usercenter.custom.constants.UrlConstants;
 import com.pandaz.usercenter.entity.PermissionEntity;
 import com.pandaz.usercenter.entity.RoleEntity;
 import com.pandaz.usercenter.service.RolePermissionService;
@@ -58,7 +59,7 @@ public class RoleController {
      * @param roleDTO 查询条件
      * @return 角色信息
      */
-    @GetMapping("/get")
+    @GetMapping(UrlConstants.GET)
     public ExecuteResult<RoleDTO> get(@Valid RoleDTO roleDTO) {
         ExecuteResult<RoleDTO> result = new ExecuteResult<>();
         try {
@@ -76,7 +77,7 @@ public class RoleController {
      * @param roleDTO 查询信息
      * @return 分页信息
      */
-    @GetMapping("/getPage")
+    @GetMapping(UrlConstants.PAGE)
     public ExecuteResult<HashMap<String, Object>> getPage(RoleDTO roleDTO) {
         ExecuteResult<HashMap<String, Object>> result = new ExecuteResult<>();
         try {
@@ -95,7 +96,7 @@ public class RoleController {
      * @param roleDTO 角色信息
      * @return 角色信息
      */
-    @PostMapping("/insert")
+    @PostMapping(UrlConstants.INSERT)
     public ExecuteResult<RoleDTO> insert(@RequestBody RoleDTO roleDTO, Principal principal) {
         ExecuteResult<RoleDTO> result = new ExecuteResult<>();
         try {
@@ -122,7 +123,7 @@ public class RoleController {
      * @param roleDTO 角色信息
      * @return 执行结果
      */
-    @PutMapping("/update")
+    @PutMapping(UrlConstants.UPDATE)
     public ExecuteResult<String> update(@Valid @RequestBody RoleDTO roleDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
@@ -145,7 +146,7 @@ public class RoleController {
      * @param codes 角色信息
      * @return 执行结果
      */
-    @DeleteMapping("/delete")
+    @DeleteMapping(UrlConstants.DELETE)
     public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(roleService, principal.getName(), LocalDateTime.now(), codes);
     }

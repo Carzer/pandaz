@@ -36,7 +36,7 @@ public class OperationController {
      * 获取Redis value
      *
      * @param key key
-     * @return com.pandaz.commons.util.ExecuteResult<java.lang.Object>
+     * @return 执行结果
      */
     @GetMapping("/getValue")
     public ExecuteResult<String> getValue(String key) {
@@ -59,7 +59,7 @@ public class OperationController {
      * 获取Redis value
      *
      * @param value value
-     * @return com.pandaz.commons.util.ExecuteResult<java.lang.String>
+     * @return 执行结果
      */
     @PostMapping("/setValue")
     public ExecuteResult<String> setValue(String value) {

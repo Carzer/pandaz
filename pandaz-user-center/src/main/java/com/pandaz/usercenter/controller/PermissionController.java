@@ -6,6 +6,7 @@ import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.ExecuteResult;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.custom.constants.SysConstants;
+import com.pandaz.usercenter.custom.constants.UrlConstants;
 import com.pandaz.usercenter.entity.MenuEntity;
 import com.pandaz.usercenter.entity.PermissionEntity;
 import com.pandaz.usercenter.service.MenuService;
@@ -56,7 +57,7 @@ public class PermissionController {
      * @param permissionDTO 查询条件
      * @return 权限信息
      */
-    @GetMapping("/get")
+    @GetMapping(UrlConstants.GET)
     public ExecuteResult<PermissionDTO> get(@Valid PermissionDTO permissionDTO) {
         ExecuteResult<PermissionDTO> result = new ExecuteResult<>();
         try {
@@ -74,7 +75,7 @@ public class PermissionController {
      * @param permissionDTO 查询信息
      * @return 分页信息
      */
-    @GetMapping("/getPage")
+    @GetMapping(UrlConstants.PAGE)
     public ExecuteResult<HashMap<String, Object>> getPage(PermissionDTO permissionDTO) {
         ExecuteResult<HashMap<String, Object>> result = new ExecuteResult<>();
         try {
@@ -93,7 +94,7 @@ public class PermissionController {
      * @param permissionDTO 权限信息
      * @return 权限信息
      */
-    @PostMapping("/insert")
+    @PostMapping(UrlConstants.INSERT)
     public ExecuteResult<PermissionDTO> insert(@RequestBody PermissionDTO permissionDTO, Principal principal) {
         ExecuteResult<PermissionDTO> result = new ExecuteResult<>();
         try {
@@ -118,7 +119,7 @@ public class PermissionController {
      * @param permissionDTO 权限信息
      * @return 执行结果
      */
-    @PutMapping("/update")
+    @PutMapping(UrlConstants.UPDATE)
     public ExecuteResult<String> update(@Valid @RequestBody PermissionDTO permissionDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
@@ -142,7 +143,7 @@ public class PermissionController {
      * @param codes 权限信息
      * @return 执行结果
      */
-    @DeleteMapping("/delete")
+    @DeleteMapping(UrlConstants.DELETE)
     public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(permissionService, principal.getName(), LocalDateTime.now(), codes);
     }

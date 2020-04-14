@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.commons.dto.usercenter.DictTypeDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.ExecuteResult;
+import com.pandaz.usercenter.custom.constants.UrlConstants;
 import com.pandaz.usercenter.entity.DictTypeEntity;
 import com.pandaz.usercenter.service.DictTypeService;
 import com.pandaz.usercenter.util.ControllerUtil;
@@ -68,7 +69,7 @@ public class DictTypeController {
      * @param dictTypeDTO 查询信息
      * @return 分页信息
      */
-    @GetMapping("/getPage")
+    @GetMapping(UrlConstants.PAGE)
     public ExecuteResult<HashMap<String, Object>> getPage(DictTypeDTO dictTypeDTO) {
         ExecuteResult<HashMap<String, Object>> result = new ExecuteResult<>();
         try {
@@ -104,7 +105,7 @@ public class DictTypeController {
      * @param dictTypeDTO 字典类型
      * @return 执行结果
      */
-    @PostMapping("/insert")
+    @PostMapping(UrlConstants.INSERT)
     public ExecuteResult<DictTypeDTO> insert(@Valid @RequestBody DictTypeDTO dictTypeDTO, Principal principal) {
         ExecuteResult<DictTypeDTO> result = new ExecuteResult<>();
         try {
@@ -127,7 +128,7 @@ public class DictTypeController {
      * @param dictTypeDTO 字典类型
      * @return 执行结果
      */
-    @PutMapping("/update")
+    @PutMapping(UrlConstants.UPDATE)
     public ExecuteResult<String> update(@Valid @RequestBody DictTypeDTO dictTypeDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
@@ -150,7 +151,7 @@ public class DictTypeController {
      * @param codes 组信息
      * @return 执行结果
      */
-    @DeleteMapping("/delete")
+    @DeleteMapping(UrlConstants.DELETE)
     public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(dictTypeService, principal.getName(), LocalDateTime.now(), codes);
     }

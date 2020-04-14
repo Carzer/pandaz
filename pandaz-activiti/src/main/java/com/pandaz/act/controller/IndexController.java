@@ -51,7 +51,7 @@ public class IndexController {
     /**
      * 获取所有mapping地址
      *
-     * @return com.pandaz.commons.util.ExecuteResult<java.util.List>
+     * @return 执行结果
      */
     @GetMapping("/getAllUrl")
     public ExecuteResult<ArrayList<Map<String, String>>> getAllUrl() {

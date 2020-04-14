@@ -129,7 +129,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * 登录成功后执行的方法
      * 创建Bean而不是直接注入，是因为会造成循环依赖
      *
-     * @return com.pandaz.usercenter.util.LoginSuccessHandler
+     * @return LoginSuccessHandler
      */
     @Bean
     public LoginSuccessHandler loginSuccessHandler() {
@@ -172,7 +172,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * 自定义授权管理器
      *
-     * @return com.pandaz.usercenter.provider.CustomDaoAuthenticationProvider
+     * @return CustomDaoAuthenticationProvider
      */
     @Bean
     public CustomDaoAuthenticationProvider customDaoAuthenticationProvider() {

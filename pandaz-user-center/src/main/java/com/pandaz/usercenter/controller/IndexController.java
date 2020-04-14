@@ -51,7 +51,7 @@ public class IndexController {
      * home
      *
      * @param principal principal
-     * @return com.pandaz.commons.util.ExecuteResult<java.security.Principal>
+     * @return 执行结果
      */
     @GetMapping("userInfo")
     @PreAuthorize("hasRole('ADMIN')")
@@ -67,7 +67,7 @@ public class IndexController {
      * 测试Redis服务
      *
      * @param value value
-     * @return com.pandaz.commons.util.ExecuteResult<java.lang.String>
+     * @return 执行结果
      */
     @GetMapping("testRedis")
     @PreAuthorize("hasRole('ADMIN')")
@@ -91,7 +91,7 @@ public class IndexController {
     /**
      * 获取所有mapping地址
      *
-     * @return com.pandaz.commons.util.ExecuteResult<java.util.List>
+     * @return 执行结果
      */
     @GetMapping("getAllUrl")
     @PreAuthorize("hasRole('ADMIN')")

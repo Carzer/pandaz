@@ -8,6 +8,7 @@ import com.pandaz.commons.dto.usercenter.PermissionDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.ExecuteResult;
 import com.pandaz.commons.util.UuidUtil;
+import com.pandaz.usercenter.custom.constants.UrlConstants;
 import com.pandaz.usercenter.entity.MenuEntity;
 import com.pandaz.usercenter.entity.PermissionEntity;
 import com.pandaz.usercenter.service.MenuService;
@@ -67,7 +68,7 @@ public class MenuController {
      * @param menuDTO 查询条件
      * @return 菜单信息
      */
-    @GetMapping("/get")
+    @GetMapping(UrlConstants.GET)
     public ExecuteResult<MenuDTO> get(@Valid MenuDTO menuDTO) {
         ExecuteResult<MenuDTO> result = new ExecuteResult<>();
         try {
@@ -85,7 +86,7 @@ public class MenuController {
      * @param menuDTO 查询信息
      * @return 分页信息
      */
-    @GetMapping("/getPage")
+    @GetMapping(UrlConstants.PAGE)
     public ExecuteResult<HashMap<String, Object>> getPage(MenuDTO menuDTO) {
         ExecuteResult<HashMap<String, Object>> result = new ExecuteResult<>();
         try {
@@ -182,7 +183,7 @@ public class MenuController {
      * @param menuDTO 菜单信息
      * @return 菜单信息
      */
-    @PostMapping("/insert")
+    @PostMapping(UrlConstants.INSERT)
     public ExecuteResult<MenuDTO> insert(@RequestBody MenuDTO menuDTO, Principal principal) {
         ExecuteResult<MenuDTO> result = new ExecuteResult<>();
         try {
@@ -207,7 +208,7 @@ public class MenuController {
      * @param menuDTO 菜单信息
      * @return 执行结果
      */
-    @PutMapping("/update")
+    @PutMapping(UrlConstants.UPDATE)
     public ExecuteResult<String> update(@Valid @RequestBody MenuDTO menuDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
@@ -230,7 +231,7 @@ public class MenuController {
      * @param codes 菜单信息
      * @return 执行结果
      */
-    @DeleteMapping("/delete")
+    @DeleteMapping(UrlConstants.DELETE)
     public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(menuService, principal.getName(), LocalDateTime.now(), codes);
     }

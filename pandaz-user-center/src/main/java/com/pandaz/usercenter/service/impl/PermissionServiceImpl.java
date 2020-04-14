@@ -47,7 +47,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
      * 插入方法
      *
      * @param permissionEntity permission
-     * @return com.pandaz.usercenter.entity.PermissionEntity
+     * @return 执行结果
      */
     @Override
     @Transactional(rollbackFor = Exception.class)

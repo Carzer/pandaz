@@ -30,7 +30,7 @@ public final class UserUtil {
      * 由security上下文环境中获取用户信息
      *
      * @param principal principal
-     * @return com.pandaz.commons.util.ExecuteResult<com.pandaz.usercenter.dto.UserDTO>
+     * @return 当前用户
      */
     public static ExecuteResult<UserDTO> getUserFromPrincipal(Principal principal) {
         ExecuteResult<UserDTO> result = new ExecuteResult<>();

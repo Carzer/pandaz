@@ -6,6 +6,7 @@ import com.pandaz.commons.dto.usercenter.OauthClientDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.ExecuteResult;
 import com.pandaz.commons.util.UuidUtil;
+import com.pandaz.usercenter.custom.constants.UrlConstants;
 import com.pandaz.usercenter.entity.OauthClientEntity;
 import com.pandaz.usercenter.service.OauthClientService;
 import com.pandaz.usercenter.util.ControllerUtil;
@@ -49,7 +50,7 @@ public class OauthClientController {
      * @param oauthClientDTO 查询条件
      * @return 客户端信息
      */
-    @GetMapping("/get")
+    @GetMapping(UrlConstants.GET)
     public ExecuteResult<OauthClientDTO> get(@Valid OauthClientDTO oauthClientDTO) {
         ExecuteResult<OauthClientDTO> result = new ExecuteResult<>();
         try {
@@ -67,7 +68,7 @@ public class OauthClientController {
      * @param oauthClientDTO 查询信息
      * @return 分页信息
      */
-    @GetMapping("/getPage")
+    @GetMapping(UrlConstants.PAGE)
     public ExecuteResult<HashMap<String, Object>> getPage(OauthClientDTO oauthClientDTO) {
         ExecuteResult<HashMap<String, Object>> result = new ExecuteResult<>();
         try {
@@ -86,7 +87,7 @@ public class OauthClientController {
      * @param oauthClientDTO 客户端信息
      * @return 客户端信息
      */
-    @PostMapping("/insert")
+    @PostMapping(UrlConstants.INSERT)
     public ExecuteResult<OauthClientDTO> insert(@RequestBody OauthClientDTO oauthClientDTO, Principal principal) {
         ExecuteResult<OauthClientDTO> result = new ExecuteResult<>();
         try {
@@ -110,7 +111,7 @@ public class OauthClientController {
      * @param oauthClientDTO 客户端信息
      * @return 执行结果
      */
-    @PutMapping("/update")
+    @PutMapping(UrlConstants.UPDATE)
     public ExecuteResult<String> update(@Valid @RequestBody OauthClientDTO oauthClientDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
@@ -133,7 +134,7 @@ public class OauthClientController {
      * @param codes 客户端信息
      * @return 执行结果
      */
-    @DeleteMapping("/delete")
+    @DeleteMapping(UrlConstants.DELETE)
     public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(oauthClientService, principal.getName(), LocalDateTime.now(), codes);
     }

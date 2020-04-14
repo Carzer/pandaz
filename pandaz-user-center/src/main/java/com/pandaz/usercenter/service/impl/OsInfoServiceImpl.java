@@ -52,7 +52,7 @@ public class OsInfoServiceImpl extends ServiceImpl<OsInfoMapper, OsInfoEntity> i
      * 插入方法
      *
      * @param osInfoEntity osInfo
-     * @return com.pandaz.usercenter.entity.OsInfoEntity
+     * @return 执行结果
      */
     @Override
     public int insert(OsInfoEntity osInfoEntity) {

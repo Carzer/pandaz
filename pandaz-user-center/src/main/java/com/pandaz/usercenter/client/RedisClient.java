@@ -1,8 +1,8 @@
 package com.pandaz.usercenter.client;
 
 import com.pandaz.commons.util.ExecuteResult;
-import com.pandaz.usercenter.custom.interceptor.FeignOauth2RequestInterceptor;
 import com.pandaz.usercenter.client.fallback.RedisClientFallBackFactory;
+import com.pandaz.usercenter.custom.interceptor.FeignOauth2RequestInterceptor;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +23,7 @@ public interface RedisClient {
      * 获取Redis value
      *
      * @param key key
-     * @return com.pandaz.commons.util.ExecuteResult<java.lang.Object>
+     * @return redis值
      */
     @GetMapping("/getValue")
     ExecuteResult<String> getRedisValue(@RequestParam String key);
@@ -32,7 +32,7 @@ public interface RedisClient {
      * 设置Redis value
      *
      * @param value value
-     * @return com.pandaz.commons.util.ExecuteResult<java.lang.String>
+     * @return 执行结果
      */
     @PostMapping("/setValue")
     ExecuteResult<String> setRedisValue(@RequestParam String value);

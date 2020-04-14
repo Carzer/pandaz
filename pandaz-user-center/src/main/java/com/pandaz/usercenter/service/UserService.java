@@ -23,7 +23,7 @@ public interface UserService extends UcBaseService<UserEntity> {
      * 根据ID查找用户信息
      *
      * @param code code
-     * @return com.pandaz.usercenter.entity.UserEntity
+     * @return 用户信息
      */
     UserEntity findByCode(String code);
 

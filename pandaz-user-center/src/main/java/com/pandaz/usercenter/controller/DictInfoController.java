@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.commons.dto.usercenter.DictInfoDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.ExecuteResult;
+import com.pandaz.usercenter.custom.constants.UrlConstants;
 import com.pandaz.usercenter.entity.DictInfoEntity;
 import com.pandaz.usercenter.service.DictInfoService;
 import com.pandaz.usercenter.util.ControllerUtil;
@@ -50,7 +51,7 @@ public class DictInfoController {
      * @param dictInfoDTO 查询条件
      * @return 组信息
      */
-    @GetMapping("/get")
+    @GetMapping(UrlConstants.GET)
     public ExecuteResult<DictInfoDTO> get(@Valid DictInfoDTO dictInfoDTO) {
         ExecuteResult<DictInfoDTO> result = new ExecuteResult<>();
         try {
@@ -68,7 +69,7 @@ public class DictInfoController {
      * @param dictInfoDTO 查询信息
      * @return 分页信息
      */
-    @GetMapping("/getPage")
+    @GetMapping(UrlConstants.PAGE)
     public ExecuteResult<HashMap<String, Object>> getPage(DictInfoDTO dictInfoDTO) {
         ExecuteResult<HashMap<String, Object>> result = new ExecuteResult<>();
         try {
@@ -87,7 +88,7 @@ public class DictInfoController {
      * @param dictInfoDTO 字典信息
      * @return 字典信息
      */
-    @PostMapping("/insert")
+    @PostMapping(UrlConstants.INSERT)
     public ExecuteResult<DictInfoDTO> insert(@RequestBody DictInfoDTO dictInfoDTO, Principal principal) {
         ExecuteResult<DictInfoDTO> result = new ExecuteResult<>();
         try {
@@ -110,7 +111,7 @@ public class DictInfoController {
      * @param dictInfoDTO 字典信息
      * @return 执行结果
      */
-    @PutMapping("/update")
+    @PutMapping(UrlConstants.UPDATE)
     public ExecuteResult<String> update(@Valid @RequestBody DictInfoDTO dictInfoDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
@@ -133,7 +134,7 @@ public class DictInfoController {
      * @param codes 字典信息
      * @return 执行结果
      */
-    @DeleteMapping("/delete")
+    @DeleteMapping(UrlConstants.DELETE)
     public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(dictInfoService, principal.getName(), LocalDateTime.now(), codes);
     }

@@ -5,6 +5,7 @@ import com.pandaz.commons.dto.usercenter.UserDTO;
 import com.pandaz.commons.dto.usercenter.UserPwdDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.ExecuteResult;
+import com.pandaz.usercenter.custom.constants.UrlConstants;
 import com.pandaz.usercenter.entity.UserEntity;
 import com.pandaz.usercenter.service.UserService;
 import com.pandaz.usercenter.util.ControllerUtil;
@@ -48,9 +49,9 @@ public class UserController {
      * 根据用户编码获取用户信息
      *
      * @param userDTO 查询条件
-     * @return com.pandaz.commons.util.ExecuteResult<com.pandaz.usercenter.dto.UserDTO>
+     * @return 执行结果
      */
-    @GetMapping("/get")
+    @GetMapping(UrlConstants.GET)
     public ExecuteResult<UserDTO> get(@Valid UserDTO userDTO) {
         ExecuteResult<UserDTO> result = new ExecuteResult<>();
         try {
@@ -67,9 +68,9 @@ public class UserController {
      * 获取用户分页信息
      *
      * @param userDTO userDTO
-     * @return com.pandaz.commons.util.ExecuteResult<java.util.Map < java.lang.String, java.lang.Object>>
+     * @return 执行结果
      */
-    @GetMapping("/getPage")
+    @GetMapping(UrlConstants.PAGE)
     public ExecuteResult<HashMap<String, Object>> getPage(UserDTO userDTO) {
         ExecuteResult<HashMap<String, Object>> result = new ExecuteResult<>();
         try {
@@ -86,9 +87,9 @@ public class UserController {
      * 插入用户信息
      *
      * @param userPwdDTO 用户信息
-     * @return com.pandaz.commons.util.ExecuteResult<com.pandaz.usercenter.dto.UserDTO>
+     * @return 执行结果
      */
-    @PostMapping("/insert")
+    @PostMapping(UrlConstants.INSERT)
     public ExecuteResult<UserDTO> insert(@Valid @RequestBody UserPwdDTO userPwdDTO, Principal principal) {
         ExecuteResult<UserDTO> result = new ExecuteResult<>();
         try {
@@ -118,9 +119,9 @@ public class UserController {
      * 更新方法
      *
      * @param userDTO userDTO
-     * @return com.pandaz.commons.util.ExecuteResult<com.pandaz.usercenter.dto.UserDTO>
+     * @return 执行结果
      */
-    @PutMapping("/update")
+    @PutMapping(UrlConstants.UPDATE)
     public ExecuteResult<String> update(@Valid @RequestBody UserDTO userDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
@@ -145,7 +146,7 @@ public class UserController {
      * @return 执行结果
      */
     @PreAuthorize("!#codes.contains('admin')")
-    @DeleteMapping("/delete")
+    @DeleteMapping(UrlConstants.DELETE)
     public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(userService, principal.getName(), LocalDateTime.now(), codes);
     }

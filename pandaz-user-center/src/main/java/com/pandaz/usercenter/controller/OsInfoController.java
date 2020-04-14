@@ -5,6 +5,7 @@ import com.pandaz.commons.dto.usercenter.OsInfoDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.ExecuteResult;
 import com.pandaz.commons.util.UuidUtil;
+import com.pandaz.usercenter.custom.constants.UrlConstants;
 import com.pandaz.usercenter.entity.OsInfoEntity;
 import com.pandaz.usercenter.service.OsInfoService;
 import com.pandaz.usercenter.util.ControllerUtil;
@@ -49,7 +50,7 @@ public class OsInfoController {
      * @param osInfoDTO 查询条件
      * @return 系统信息
      */
-    @GetMapping("/get")
+    @GetMapping(UrlConstants.GET)
     public ExecuteResult<OsInfoDTO> get(@Valid OsInfoDTO osInfoDTO) {
         ExecuteResult<OsInfoDTO> result = new ExecuteResult<>();
         try {
@@ -67,7 +68,7 @@ public class OsInfoController {
      * @param osInfoDTO 查询信息
      * @return 分页信息
      */
-    @GetMapping("/getPage")
+    @GetMapping(UrlConstants.PAGE)
     public ExecuteResult<HashMap<String, Object>> getPage(OsInfoDTO osInfoDTO) {
         ExecuteResult<HashMap<String, Object>> result = new ExecuteResult<>();
         try {
@@ -103,7 +104,7 @@ public class OsInfoController {
      * @param osInfoDTO 系统信息
      * @return 系统信息
      */
-    @PostMapping("/insert")
+    @PostMapping(UrlConstants.INSERT)
     public ExecuteResult<OsInfoDTO> insert(@RequestBody OsInfoDTO osInfoDTO, Principal principal) {
         ExecuteResult<OsInfoDTO> result = new ExecuteResult<>();
         try {
@@ -127,7 +128,7 @@ public class OsInfoController {
      * @param osInfoDTO 系统信息
      * @return 执行结果
      */
-    @PutMapping("/update")
+    @PutMapping(UrlConstants.UPDATE)
     public ExecuteResult<String> update(@Valid @RequestBody OsInfoDTO osInfoDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
@@ -150,7 +151,7 @@ public class OsInfoController {
      * @param codes 系统信息
      * @return 执行结果
      */
-    @DeleteMapping("/delete")
+    @DeleteMapping(UrlConstants.DELETE)
     public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(osInfoService, principal.getName(), LocalDateTime.now(), codes);
     }

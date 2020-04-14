@@ -6,6 +6,7 @@ import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.ExecuteResult;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.custom.constants.SysConstants;
+import com.pandaz.usercenter.custom.constants.UrlConstants;
 import com.pandaz.usercenter.entity.GroupEntity;
 import com.pandaz.usercenter.service.GroupService;
 import com.pandaz.usercenter.util.ControllerUtil;
@@ -50,7 +51,7 @@ public class GroupController {
      * @param groupDTO 查询条件
      * @return 组信息
      */
-    @GetMapping("/get")
+    @GetMapping(UrlConstants.GET)
     public ExecuteResult<GroupDTO> get(@Valid GroupDTO groupDTO) {
         ExecuteResult<GroupDTO> result = new ExecuteResult<>();
         try {
@@ -68,7 +69,7 @@ public class GroupController {
      * @param groupDTO 查询信息
      * @return 分页信息
      */
-    @GetMapping("/getPage")
+    @GetMapping(UrlConstants.PAGE)
     public ExecuteResult<HashMap<String, Object>> getPage(GroupDTO groupDTO) {
         ExecuteResult<HashMap<String, Object>> result = new ExecuteResult<>();
         try {
@@ -87,7 +88,7 @@ public class GroupController {
      * @param groupDTO 组信息
      * @return 组信息
      */
-    @PostMapping("/insert")
+    @PostMapping(UrlConstants.INSERT)
     public ExecuteResult<GroupDTO> insert(@RequestBody GroupDTO groupDTO, Principal principal) {
         ExecuteResult<GroupDTO> result = new ExecuteResult<>();
         try {
@@ -114,7 +115,7 @@ public class GroupController {
      * @param groupDTO 组信息
      * @return 执行结果
      */
-    @PutMapping("/update")
+    @PutMapping(UrlConstants.UPDATE)
     public ExecuteResult<String> update(@Valid @RequestBody GroupDTO groupDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
@@ -137,7 +138,7 @@ public class GroupController {
      * @param codes 组信息
      * @return 执行结果
      */
-    @DeleteMapping("/delete")
+    @DeleteMapping(UrlConstants.DELETE)
     public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(groupService, principal.getName(), LocalDateTime.now(), codes);
     }

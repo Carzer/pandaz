@@ -20,7 +20,7 @@ public class RedisClientFallBackFactory implements FallbackFactory<RedisClient> 
      * 默认方法
      *
      * @param cause cause
-     * @return com.pandaz.usercenter.client.RedisClient
+     * @return 执行结果
      */
     @Override
     public RedisClient create(Throwable cause) {
