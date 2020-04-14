@@ -104,7 +104,7 @@ public class DictTypeController {
      * @param dictTypeDTO 字典类型
      * @return 执行结果
      */
-    @PostMapping
+    @PostMapping("/insert")
     public ExecuteResult<DictTypeDTO> insert(@Valid @RequestBody DictTypeDTO dictTypeDTO, Principal principal) {
         ExecuteResult<DictTypeDTO> result = new ExecuteResult<>();
         try {
@@ -127,7 +127,7 @@ public class DictTypeController {
      * @param dictTypeDTO 字典类型
      * @return 执行结果
      */
-    @PutMapping
+    @PutMapping("/update")
     public ExecuteResult<String> update(@Valid @RequestBody DictTypeDTO dictTypeDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
@@ -150,7 +150,7 @@ public class DictTypeController {
      * @param codes 组信息
      * @return 执行结果
      */
-    @DeleteMapping
+    @DeleteMapping("/delete")
     public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(dictTypeService, principal.getName(), LocalDateTime.now(), codes);
     }

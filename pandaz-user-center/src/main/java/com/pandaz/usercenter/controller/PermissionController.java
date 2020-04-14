@@ -56,7 +56,7 @@ public class PermissionController {
      * @param permissionDTO 查询条件
      * @return 权限信息
      */
-    @GetMapping
+    @GetMapping("/get")
     public ExecuteResult<PermissionDTO> get(@Valid PermissionDTO permissionDTO) {
         ExecuteResult<PermissionDTO> result = new ExecuteResult<>();
         try {
@@ -93,7 +93,7 @@ public class PermissionController {
      * @param permissionDTO 权限信息
      * @return 权限信息
      */
-    @PostMapping
+    @PostMapping("/insert")
     public ExecuteResult<PermissionDTO> insert(@RequestBody PermissionDTO permissionDTO, Principal principal) {
         ExecuteResult<PermissionDTO> result = new ExecuteResult<>();
         try {
@@ -118,7 +118,7 @@ public class PermissionController {
      * @param permissionDTO 权限信息
      * @return 执行结果
      */
-    @PutMapping
+    @PutMapping("/update")
     public ExecuteResult<String> update(@Valid @RequestBody PermissionDTO permissionDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
@@ -142,7 +142,7 @@ public class PermissionController {
      * @param codes 权限信息
      * @return 执行结果
      */
-    @DeleteMapping
+    @DeleteMapping("/delete")
     public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(permissionService, principal.getName(), LocalDateTime.now(), codes);
     }

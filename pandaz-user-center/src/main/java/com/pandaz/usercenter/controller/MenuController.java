@@ -67,7 +67,7 @@ public class MenuController {
      * @param menuDTO 查询条件
      * @return 菜单信息
      */
-    @GetMapping
+    @GetMapping("/get")
     public ExecuteResult<MenuDTO> get(@Valid MenuDTO menuDTO) {
         ExecuteResult<MenuDTO> result = new ExecuteResult<>();
         try {
@@ -182,7 +182,7 @@ public class MenuController {
      * @param menuDTO 菜单信息
      * @return 菜单信息
      */
-    @PostMapping
+    @PostMapping("/insert")
     public ExecuteResult<MenuDTO> insert(@RequestBody MenuDTO menuDTO, Principal principal) {
         ExecuteResult<MenuDTO> result = new ExecuteResult<>();
         try {
@@ -207,7 +207,7 @@ public class MenuController {
      * @param menuDTO 菜单信息
      * @return 执行结果
      */
-    @PutMapping
+    @PutMapping("/update")
     public ExecuteResult<String> update(@Valid @RequestBody MenuDTO menuDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
@@ -230,7 +230,7 @@ public class MenuController {
      * @param codes 菜单信息
      * @return 执行结果
      */
-    @DeleteMapping
+    @DeleteMapping("/delete")
     public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(menuService, principal.getName(), LocalDateTime.now(), codes);
     }
@@ -266,6 +266,9 @@ public class MenuController {
         menuDTO.setUrl(menuEntity.getUrl());
         menuDTO.setRouter(menuEntity.getRouter());
         menuDTO.setRemark(menuEntity.getRemark());
+        menuDTO.setLocked(menuEntity.getLocked());
+        menuDTO.setSorting(menuEntity.getSorting());
+        menuDTO.setIsLeafNode(menuEntity.getIsLeafNode());
         return menuDTO;
     }
 

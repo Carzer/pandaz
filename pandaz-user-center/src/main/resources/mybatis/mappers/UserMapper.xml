@@ -54,19 +54,19 @@
     <insert id="insertSelective" parameterType="com.pandaz.usercenter.entity.UserEntity">
         insert into t_sys_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null id != ''">
+            <if test="id != null and id != ''">
                 id,
             </if>
-            <if test="name != null name != ''">
+            <if test="name != null and name != ''">
                 name,
             </if>
-            <if test="code != null code != ''">
+            <if test="code != null and code != ''">
                 code,
             </if>
-            <if test="loginName != null loginName != ''">
+            <if test="loginName != null and loginName != ''">
                 login_name,
             </if>
-            <if test="password != null password != ''">
+            <if test="password != null and password != ''">
                 password,
             </if>
             <if test="gender != null">
@@ -75,10 +75,10 @@
             <if test="userType != null">
                 user_type,
             </if>
-            <if test="email != null email != ''">
+            <if test="email != null and email != ''">
                 email,
             </if>
-            <if test="phone != null phone != ''">
+            <if test="phone != null and phone != ''">
                 phone,
             </if>
             <if test="createdBy != null and createdBy !=''">
@@ -113,19 +113,19 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null id != ''">
+            <if test="id != null and id != ''">
                 #{id,jdbcType=VARCHAR},
             </if>
-            <if test="name != null name != ''">
+            <if test="name != null and name != ''">
                 #{name,jdbcType=VARCHAR},
             </if>
-            <if test="code != null code != ''">
+            <if test="code != null and code != ''">
                 #{code,jdbcType=VARCHAR},
             </if>
-            <if test="loginName != null loginName != ''">
+            <if test="loginName != null and loginName != ''">
                 #{loginName,jdbcType=VARCHAR},
             </if>
-            <if test="password != null password != ''">
+            <if test="password != null and password != ''">
                 #{password,jdbcType=VARCHAR},
             </if>
             <if test="gender != null">
@@ -134,10 +134,10 @@
             <if test="userType != null">
                 #{userType,jdbcType=VARCHAR},
             </if>
-            <if test="email != null email != ''">
+            <if test="email != null and email != ''">
                 #{email,jdbcType=VARCHAR},
             </if>
-            <if test="phone != null phone != ''">
+            <if test="phone != null and phone != ''">
                 #{phone,jdbcType=VARCHAR},
             </if>
             <if test="createdBy != null and createdBy !=''">

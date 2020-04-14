@@ -58,7 +58,7 @@ public class RoleController {
      * @param roleDTO 查询条件
      * @return 角色信息
      */
-    @GetMapping
+    @GetMapping("/get")
     public ExecuteResult<RoleDTO> get(@Valid RoleDTO roleDTO) {
         ExecuteResult<RoleDTO> result = new ExecuteResult<>();
         try {
@@ -95,7 +95,7 @@ public class RoleController {
      * @param roleDTO 角色信息
      * @return 角色信息
      */
-    @PostMapping
+    @PostMapping("/insert")
     public ExecuteResult<RoleDTO> insert(@RequestBody RoleDTO roleDTO, Principal principal) {
         ExecuteResult<RoleDTO> result = new ExecuteResult<>();
         try {
@@ -122,7 +122,7 @@ public class RoleController {
      * @param roleDTO 角色信息
      * @return 执行结果
      */
-    @PutMapping
+    @PutMapping("/update")
     public ExecuteResult<String> update(@Valid @RequestBody RoleDTO roleDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
@@ -145,7 +145,7 @@ public class RoleController {
      * @param codes 角色信息
      * @return 执行结果
      */
-    @DeleteMapping
+    @DeleteMapping("/delete")
     public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(roleService, principal.getName(), LocalDateTime.now(), codes);
     }

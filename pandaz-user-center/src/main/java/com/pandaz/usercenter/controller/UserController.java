@@ -50,7 +50,7 @@ public class UserController {
      * @param userDTO 查询条件
      * @return com.pandaz.commons.util.ExecuteResult<com.pandaz.usercenter.dto.UserDTO>
      */
-    @GetMapping
+    @GetMapping("/get")
     public ExecuteResult<UserDTO> get(@Valid UserDTO userDTO) {
         ExecuteResult<UserDTO> result = new ExecuteResult<>();
         try {
@@ -88,7 +88,7 @@ public class UserController {
      * @param userPwdDTO 用户信息
      * @return com.pandaz.commons.util.ExecuteResult<com.pandaz.usercenter.dto.UserDTO>
      */
-    @PostMapping
+    @PostMapping("/insert")
     public ExecuteResult<UserDTO> insert(@Valid @RequestBody UserPwdDTO userPwdDTO, Principal principal) {
         ExecuteResult<UserDTO> result = new ExecuteResult<>();
         try {
@@ -120,7 +120,7 @@ public class UserController {
      * @param userDTO userDTO
      * @return com.pandaz.commons.util.ExecuteResult<com.pandaz.usercenter.dto.UserDTO>
      */
-    @PutMapping
+    @PutMapping("/update")
     public ExecuteResult<String> update(@Valid @RequestBody UserDTO userDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
@@ -145,7 +145,7 @@ public class UserController {
      * @return 执行结果
      */
     @PreAuthorize("!#codes.contains('admin')")
-    @DeleteMapping
+    @DeleteMapping("/delete")
     public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(userService, principal.getName(), LocalDateTime.now(), codes);
     }

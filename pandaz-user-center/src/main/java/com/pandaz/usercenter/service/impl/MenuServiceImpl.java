@@ -14,17 +14,18 @@ import com.pandaz.usercenter.service.MenuService;
 import com.pandaz.usercenter.service.PermissionService;
 import com.pandaz.usercenter.task.SimpleTask;
 import com.pandaz.usercenter.util.CheckUtil;
+import com.pandaz.usercenter.util.SpringBeanUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 菜单服务
@@ -34,6 +35,7 @@ import java.util.Map;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@Slf4j
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> implements MenuService {
 
     /**
@@ -161,15 +163,22 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
      * @return 执行结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
         if (CollectionUtils.isEmpty(codes)) {
             return 0;
         }
-        Map<String, Object> map = new HashMap<>(3);
-        map.put("deletedBy", deletedBy);
-        map.put("deletedDate", deletedDate);
-        map.put("list", codes);
-        return menuMapper.batchLogicDelete(map);
+        codes.forEach(code -> {
+            MenuEntity menuEntity = new MenuEntity();
+            menuEntity.setCode(code);
+            menuEntity.setDeletedBy(deletedBy);
+            menuEntity.setDeletedDate(deletedDate);
+            deleteByCode(menuEntity);
+        });
+        // 由于Spring的异步方法，实际上是异步调用实例方法（以类的实例为单位），this.clearChildren()无法异步进行
+        // 所以在使用@Async注解时，应当使用实例进行调用
+        SpringBeanUtil.getBean(this.getClass()).clearMenuChildren(deletedBy, deletedDate, codes);
+        return codes.size();
     }
 
     /**
@@ -198,6 +207,46 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
     @Override
     public List<String> listMenusWithoutParent() {
         return menuMapper.listMenusWithoutParent();
+    }
+
+    /**
+     * 清理子菜单
+     *
+     * @param deletedBy   删除人
+     * @param deletedDate 删除时间
+     * @param codes       编码
+     */
+    @Async
+    public void clearMenuChildren(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
+        try {
+            log.debug("异步清理菜单开始");
+            codes.forEach(code -> {
+                MenuEntity menuEntity = new MenuEntity();
+                menuEntity.setDeletedBy(deletedBy);
+                menuEntity.setDeletedDate(deletedDate);
+                menuEntity.setCode(code);
+                clearChildren(menuEntity);
+            });
+            log.debug("异步清理菜单结束");
+        } catch (Exception e) {
+            log.error("异步清理子菜单异常：", e);
+        }
+    }
+
+    /**
+     * 清理子菜单
+     */
+    private void clearChildren(MenuEntity menuEntity) {
+        List<MenuEntity> list = menuMapper.selectByParentCode(menuEntity.getCode());
+        if (!CollectionUtils.isEmpty(list)) {
+            list.forEach(menu -> {
+                menu.setDeletedBy(menuEntity.getDeletedBy());
+                menu.setDeletedDate(menuEntity.getDeletedDate());
+                clearChildren(menu);
+                deleteByCode(menu);
+            });
+            ;
+        }
     }
 
 }

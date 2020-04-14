@@ -194,14 +194,14 @@
                 and os_code=#{osCode,jdbcType=VARCHAR}
             </if>
         </where>
-        order by created_date
+        order by sorting, created_date
     </select>
     <select id="selectByParentCode" resultMap="CascadeResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List"/>
         from t_sys_menu
         where deleted_flag = '0' and parent_code = #{parentCode,jdbcType=VARCHAR}
-        order by created_date
+        order by sorting, created_date
     </select>
     <!-- 逻辑删除 -->
     <update id="logicDelete">

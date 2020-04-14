@@ -49,7 +49,7 @@ public class OsInfoController {
      * @param osInfoDTO 查询条件
      * @return 系统信息
      */
-    @GetMapping
+    @GetMapping("/get")
     public ExecuteResult<OsInfoDTO> get(@Valid OsInfoDTO osInfoDTO) {
         ExecuteResult<OsInfoDTO> result = new ExecuteResult<>();
         try {
@@ -103,7 +103,7 @@ public class OsInfoController {
      * @param osInfoDTO 系统信息
      * @return 系统信息
      */
-    @PostMapping
+    @PostMapping("/insert")
     public ExecuteResult<OsInfoDTO> insert(@RequestBody OsInfoDTO osInfoDTO, Principal principal) {
         ExecuteResult<OsInfoDTO> result = new ExecuteResult<>();
         try {
@@ -127,7 +127,7 @@ public class OsInfoController {
      * @param osInfoDTO 系统信息
      * @return 执行结果
      */
-    @PutMapping
+    @PutMapping("/update")
     public ExecuteResult<String> update(@Valid @RequestBody OsInfoDTO osInfoDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
@@ -150,7 +150,7 @@ public class OsInfoController {
      * @param codes 系统信息
      * @return 执行结果
      */
-    @DeleteMapping
+    @DeleteMapping("/delete")
     public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(osInfoService, principal.getName(), LocalDateTime.now(), codes);
     }

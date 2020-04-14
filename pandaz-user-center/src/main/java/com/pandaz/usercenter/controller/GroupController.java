@@ -50,7 +50,7 @@ public class GroupController {
      * @param groupDTO 查询条件
      * @return 组信息
      */
-    @GetMapping
+    @GetMapping("/get")
     public ExecuteResult<GroupDTO> get(@Valid GroupDTO groupDTO) {
         ExecuteResult<GroupDTO> result = new ExecuteResult<>();
         try {
@@ -87,7 +87,7 @@ public class GroupController {
      * @param groupDTO 组信息
      * @return 组信息
      */
-    @PostMapping
+    @PostMapping("/insert")
     public ExecuteResult<GroupDTO> insert(@RequestBody GroupDTO groupDTO, Principal principal) {
         ExecuteResult<GroupDTO> result = new ExecuteResult<>();
         try {
@@ -114,7 +114,7 @@ public class GroupController {
      * @param groupDTO 组信息
      * @return 执行结果
      */
-    @PutMapping
+    @PutMapping("/update")
     public ExecuteResult<String> update(@Valid @RequestBody GroupDTO groupDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
@@ -137,7 +137,7 @@ public class GroupController {
      * @param codes 组信息
      * @return 执行结果
      */
-    @DeleteMapping
+    @DeleteMapping("/delete")
     public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(groupService, principal.getName(), LocalDateTime.now(), codes);
     }

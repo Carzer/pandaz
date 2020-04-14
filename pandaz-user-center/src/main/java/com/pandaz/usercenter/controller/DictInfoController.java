@@ -50,7 +50,7 @@ public class DictInfoController {
      * @param dictInfoDTO 查询条件
      * @return 组信息
      */
-    @GetMapping
+    @GetMapping("/get")
     public ExecuteResult<DictInfoDTO> get(@Valid DictInfoDTO dictInfoDTO) {
         ExecuteResult<DictInfoDTO> result = new ExecuteResult<>();
         try {
@@ -87,7 +87,7 @@ public class DictInfoController {
      * @param dictInfoDTO 字典信息
      * @return 字典信息
      */
-    @PostMapping
+    @PostMapping("/insert")
     public ExecuteResult<DictInfoDTO> insert(@RequestBody DictInfoDTO dictInfoDTO, Principal principal) {
         ExecuteResult<DictInfoDTO> result = new ExecuteResult<>();
         try {
@@ -110,7 +110,7 @@ public class DictInfoController {
      * @param dictInfoDTO 字典信息
      * @return 执行结果
      */
-    @PutMapping
+    @PutMapping("/update")
     public ExecuteResult<String> update(@Valid @RequestBody DictInfoDTO dictInfoDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
@@ -133,7 +133,7 @@ public class DictInfoController {
      * @param codes 字典信息
      * @return 执行结果
      */
-    @DeleteMapping
+    @DeleteMapping("/delete")
     public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(dictInfoService, principal.getName(), LocalDateTime.now(), codes);
     }

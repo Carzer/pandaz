@@ -65,7 +65,7 @@ public class MenuServiceTest extends BasisUnitTest {
     }
 
     @Test
-    public void getAll(){
+    public void getAll() {
         MenuEntity menuEntity = new MenuEntity();
         menuEntity.setParentCode(CommonConstants.ROOT_MENU_CODE);
         menuEntity.setCode(CommonConstants.ROOT_MENU_CODE);
@@ -74,5 +74,11 @@ public class MenuServiceTest extends BasisUnitTest {
         menuEntity.setChildren(list);
         MenuDTO menuDTO = BeanCopyUtil.copy(menuEntity, MenuDTO.class);
         System.out.println(menuDTO);
+    }
+
+    @Test
+    public void deleteByCodes() {
+        int size = menuService.deleteByCodes("test", LocalDateTime.now(), List.of("test"));
+        System.out.println("删除结束:" + size);
     }
 }

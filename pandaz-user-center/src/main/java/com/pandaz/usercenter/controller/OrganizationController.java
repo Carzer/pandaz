@@ -48,7 +48,7 @@ public class OrganizationController {
      * @param organizationDTO 查询条件
      * @return 组织信息
      */
-    @GetMapping
+    @GetMapping("/get")
     public ExecuteResult<OrganizationDTO> get(@Valid OrganizationDTO organizationDTO) {
         ExecuteResult<OrganizationDTO> result = new ExecuteResult<>();
         try {
@@ -85,7 +85,7 @@ public class OrganizationController {
      * @param organizationDTO 组织信息
      * @return 组织信息
      */
-    @PostMapping
+    @PostMapping("/insert")
     public ExecuteResult<OrganizationDTO> insert(@RequestBody OrganizationDTO organizationDTO, Principal principal) {
         ExecuteResult<OrganizationDTO> result = new ExecuteResult<>();
         try {
@@ -109,7 +109,7 @@ public class OrganizationController {
      * @param organizationDTO 组织信息
      * @return 执行结果
      */
-    @PutMapping
+    @PutMapping("/update")
     public ExecuteResult<String> update(@Valid @RequestBody OrganizationDTO organizationDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
@@ -132,7 +132,7 @@ public class OrganizationController {
      * @param codes 组织信息
      * @return 执行结果
      */
-    @DeleteMapping
+    @DeleteMapping("/delete")
     public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(organizationService, principal.getName(), LocalDateTime.now(), codes);
     }

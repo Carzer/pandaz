@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import javax.annotation.PostConstruct;
 import java.util.TimeZone;
@@ -19,6 +20,7 @@ import java.util.TimeZone;
 @EnableDiscoveryClient
 @EnableFeignClients
 @Slf4j
+@EnableAsync
 public class UserCenterApp {
 
     /**
