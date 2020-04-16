@@ -1,6 +1,8 @@
 package com.pandaz.usercenter.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.pandaz.commons.dto.usercenter.MenuDTO;
+import com.pandaz.commons.dto.usercenter.OsInfoDTO;
 import com.pandaz.commons.dto.usercenter.PermissionDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.ExecuteResult;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -146,6 +149,41 @@ public class PermissionController {
     @DeleteMapping(UrlConstants.DELETE)
     public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(permissionService, principal.getName(), LocalDateTime.now(), codes);
+    }
+
+    /**
+     * 获取全部系统信息
+     *
+     * @return 系统信息
+     */
+    @GetMapping("/listAllOs")
+    public ExecuteResult<ArrayList<OsInfoDTO>> listAll() {
+        ExecuteResult<ArrayList<OsInfoDTO>> result = new ExecuteResult<>();
+        try {
+            result.setData(controllerUtil.listAllOs());
+        } catch (Exception e) {
+            log.error("获取全部系统信息异常：", e);
+            result.setError(e.getMessage());
+        }
+        return result;
+    }
+
+
+    /**
+     * 根据系统编码获取所有菜单信息
+     *
+     * @return 所有菜单
+     */
+    @GetMapping("/listMenuByOsCode")
+    public ExecuteResult<ArrayList<MenuDTO>> listByOsCode(String osCode) {
+        ExecuteResult<ArrayList<MenuDTO>> result = new ExecuteResult<>();
+        try {
+            result.setData(controllerUtil.listMenuByOsCode(osCode));
+        } catch (Exception e) {
+            log.error("获取所有菜单异常：", e);
+            result.setError(e.getMessage());
+        }
+        return result;
     }
 
     /**

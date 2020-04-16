@@ -66,6 +66,11 @@ public final class SysConstants {
     public static final Byte MAX_DIGIT = 25;
 
     /**
+     * 最小位移数
+     */
+    public static final Byte MIN_DIGIT = 1;
+
+    /**
      * 图片验证码存于session中的key
      */
     public static final String SESSION_KEY_IMAGE_CODE = "SESSION_KEY_IMAGE_CODE";
@@ -79,4 +84,5 @@ public final class SysConstants {
      * 默认session、token过期时间为60分钟
      */
     public static final int DEFAULT_EXPIRE_SECONDS = 60 * 60;
+
 }

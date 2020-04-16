@@ -154,7 +154,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
     /**
      * 批量删除
      * <p>
-     * 删除的同时，不会直接及联删除子菜单，而是由定时任务进行脏数据的清理
+     * 删除的同时，异步删除子菜单
+     * 由定时任务进行脏数据的清理
      * {@link SimpleTask#clear()}
      *
      * @param deletedBy   删除人
@@ -245,7 +246,6 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
                 clearChildren(menu);
                 deleteByCode(menu);
             });
-            ;
         }
     }
 

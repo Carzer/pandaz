@@ -28,7 +28,7 @@ public class SpringBeanUtil implements ApplicationContextAware {
      * @throws BeansException exception
      */
     @Override
-    public void setApplicationContext(@NonNull ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(@NonNull ApplicationContext applicationContext) {
         SpringBeanUtil.applicationContext = applicationContext;
     }
 
@@ -62,4 +62,5 @@ public class SpringBeanUtil implements ApplicationContextAware {
     public static <T> T getBean(String name) {
         return (T) getApplicationContext().getBean(name);
     }
+
 }

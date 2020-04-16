@@ -165,14 +165,14 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     }
 
     /**
-     * 查询权限数量
+     * 设置权限值
      *
      * @param permissionEntity 条件
      */
     private void setBitResult(PermissionEntity permissionEntity) {
         List<Byte> list = permissionMapper.selectBitDigits(permissionEntity);
-        byte bitDigit = 0;
-        int bitResult = 1;
+        byte bitDigit = SysConstants.MIN_DIGIT;
+        int bitResult = 1 << SysConstants.MIN_DIGIT;
         if (!CollectionUtils.isEmpty(list)) {
             Byte i = 0;
             while (i <= SysConstants.MAX_DIGIT && list.contains(i)) {
@@ -188,4 +188,5 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         permissionEntity.setBitDigit(bitDigit);
         permissionEntity.setBitResult(bitResult);
     }
+
 }

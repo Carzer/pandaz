@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -76,23 +75,6 @@ public class OsInfoController {
             result.setData(BeanCopyUtil.convertToMap(page, OsInfoDTO.class));
         } catch (Exception e) {
             log.error("分页查询异常：", e);
-            result.setError(e.getMessage());
-        }
-        return result;
-    }
-
-    /**
-     * 获取全部系统信息
-     *
-     * @return 系统信息
-     */
-    @GetMapping("/listAll")
-    public ExecuteResult<ArrayList<OsInfoDTO>> listAll() {
-        ExecuteResult<ArrayList<OsInfoDTO>> result = new ExecuteResult<>();
-        try {
-            result.setData((ArrayList<OsInfoDTO>) BeanCopyUtil.copyList(osInfoService.list(), OsInfoDTO.class));
-        } catch (Exception e) {
-            log.error("获取全部系统信息异常：", e);
             result.setError(e.getMessage());
         }
         return result;

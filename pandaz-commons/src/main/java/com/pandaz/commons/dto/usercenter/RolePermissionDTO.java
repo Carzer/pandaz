@@ -19,11 +19,11 @@ public class RolePermissionDTO implements Serializable {
     /**
      * 角色编码
      */
-    String roleCode;
+    private String roleCode;
 
     /**
      * 权限
      */
-    List<SimplePermissionDTO> permissions;
+    private List<SimplePermissionDTO> permissions;
 
 }

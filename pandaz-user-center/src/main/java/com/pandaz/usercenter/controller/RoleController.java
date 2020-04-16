@@ -1,8 +1,7 @@
 package com.pandaz.usercenter.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.pandaz.commons.dto.usercenter.RoleDTO;
-import com.pandaz.commons.dto.usercenter.RolePermissionDTO;
+import com.pandaz.commons.dto.usercenter.*;
 import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.ExecuteResult;
 import com.pandaz.commons.util.UuidUtil;
@@ -23,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -167,6 +167,75 @@ public class RoleController {
             result.setData("绑定成功");
         } catch (Exception e) {
             log.error("绑定权限异常：", e);
+            result.setError(e.getMessage());
+        }
+        return result;
+    }
+
+    /**
+     * 获取全部系统信息
+     *
+     * @return 系统信息
+     */
+    @GetMapping("/listAllOs")
+    public ExecuteResult<ArrayList<OsInfoDTO>> listAllOs() {
+        ExecuteResult<ArrayList<OsInfoDTO>> result = new ExecuteResult<>();
+        try {
+            result.setData(controllerUtil.listAllOs());
+        } catch (Exception e) {
+            log.error("获取全部系统信息异常：", e);
+            result.setError(e.getMessage());
+        }
+        return result;
+    }
+
+    /**
+     * 获取所有菜单
+     *
+     * @return 所有菜单
+     */
+    @GetMapping("/getAllMenu")
+    public ExecuteResult<MenuDTO> getAllMenu(MenuDTO menuDTO) {
+        ExecuteResult<MenuDTO> result = new ExecuteResult<>();
+        try {
+            result.setData(controllerUtil.getAllMenu(menuDTO));
+        } catch (Exception e) {
+            log.error("获取所有菜单异常：", e);
+            result.setError(e.getMessage());
+        }
+        return result;
+    }
+
+    /**
+     * 权限分页方法
+     *
+     * @param permissionDTO 查询信息
+     * @return 分页信息
+     */
+    @GetMapping("/getPermissionPage")
+    public ExecuteResult<HashMap<String, Object>> getPermissionPage(PermissionDTO permissionDTO) {
+        ExecuteResult<HashMap<String, Object>> result = new ExecuteResult<>();
+        try {
+            result.setData(controllerUtil.getPermissionPage(permissionDTO));
+        } catch (Exception e) {
+            log.error("权限分页查询异常：", e);
+            result.setError(e.getMessage());
+        }
+        return result;
+    }
+
+    /**
+     * 根据系统编码获取所有菜单信息
+     *
+     * @return 所有菜单
+     */
+    @GetMapping("/listMenuByOsCode")
+    public ExecuteResult<ArrayList<MenuDTO>> listByOsCode(String osCode) {
+        ExecuteResult<ArrayList<MenuDTO>> result = new ExecuteResult<>();
+        try {
+            result.setData(controllerUtil.listMenuByOsCode(osCode));
+        } catch (Exception e) {
+            log.error("获取所有菜单异常：", e);
             result.setError(e.getMessage());
         }
         return result;

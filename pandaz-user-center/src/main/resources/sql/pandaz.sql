@@ -11,7 +11,7 @@
  Target Server Version : 50729
  File Encoding         : utf-8
 
- Date: 04/07/2020 15:19:20 PM
+ Date: 04/14/2020 13:14:14 PM
 */
 
 SET NAMES utf8mb4;
@@ -118,6 +118,7 @@ CREATE TABLE `t_sys_menu` (
                               `icon` varchar(200) DEFAULT NULL COMMENT '图标',
                               `sorting` int(8) NOT NULL DEFAULT '0' COMMENT '排序',
                               `is_leaf_node` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否叶子节点',
+                              `remark` varchar(256) DEFAULT NULL COMMENT '描述',
                               `created_by` varchar(50) NOT NULL DEFAULT 'system' COMMENT '创建人',
                               `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                               `updated_by` varchar(50) DEFAULT NULL COMMENT '修改人',
@@ -236,7 +237,7 @@ CREATE TABLE `t_sys_permission` (
                                     `deleted_flag` varchar(32) NOT NULL DEFAULT '0' COMMENT '删除标记(0:未删除，其他:已删除)',
                                     `version` int(8) NOT NULL DEFAULT '1' COMMENT '版本号',
                                     PRIMARY KEY (`id`),
-                                    UNIQUE KEY `t_sys_menu_code_key` (`code`,`deleted_flag`),
+                                    UNIQUE KEY `t_sys_menu_code_key` (`code`,`os_code`,`menu_code`,`deleted_flag`),
                                     KEY `t_sys_permission_code_index` (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='权限信息';
 
@@ -271,6 +272,8 @@ CREATE TABLE `t_sys_role_permission` (
                                          `id` varchar(32) NOT NULL COMMENT '主键',
                                          `role_code` varchar(50) NOT NULL COMMENT '角色编码',
                                          `permission_code` varchar(50) NOT NULL COMMENT '权限编码',
+                                         `os_code` varchar(50) NOT NULL COMMENT '系统编码',
+                                         `menu_code` varchar(50) NOT NULL COMMENT '菜单编码',
                                          `created_by` varchar(50) NOT NULL DEFAULT 'system' COMMENT '创建人',
                                          `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                                          `updated_by` varchar(50) DEFAULT NULL COMMENT '更新人',

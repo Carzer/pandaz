@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -77,23 +76,6 @@ public class DictTypeController {
             result.setData(BeanCopyUtil.convertToMap(page, DictTypeDTO.class));
         } catch (Exception e) {
             log.error("分页查询异常：", e);
-            result.setError(e.getMessage());
-        }
-        return result;
-    }
-
-    /**
-     * 获取全部字典类型
-     *
-     * @return 字典类型
-     */
-    @GetMapping("/listAll")
-    public ExecuteResult<ArrayList<DictTypeDTO>> listAll() {
-        ExecuteResult<ArrayList<DictTypeDTO>> result = new ExecuteResult<>();
-        try {
-            result.setData((ArrayList<DictTypeDTO>) BeanCopyUtil.copyList(dictTypeService.list(), DictTypeDTO.class));
-        } catch (Exception e) {
-            log.error("获取全部字典类型异常：", e);
             result.setError(e.getMessage());
         }
         return result;

@@ -3,6 +3,7 @@ package com.pandaz.usercenter.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.commons.dto.usercenter.DictInfoDTO;
+import com.pandaz.commons.dto.usercenter.DictTypeDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.ExecuteResult;
 import com.pandaz.usercenter.custom.constants.UrlConstants;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -137,6 +139,24 @@ public class DictInfoController {
     @DeleteMapping(UrlConstants.DELETE)
     public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(dictInfoService, principal.getName(), LocalDateTime.now(), codes);
+    }
+
+
+    /**
+     * 获取全部字典类型
+     *
+     * @return 字典类型
+     */
+    @GetMapping("/listAllTypes")
+    public ExecuteResult<ArrayList<DictTypeDTO>> listAllTypes() {
+        ExecuteResult<ArrayList<DictTypeDTO>> result = new ExecuteResult<>();
+        try {
+            result.setData(controllerUtil.listAllTypes());
+        } catch (Exception e) {
+            log.error("获取全部字典类型异常：", e);
+            result.setError(e.getMessage());
+        }
+        return result;
     }
 
     /**
