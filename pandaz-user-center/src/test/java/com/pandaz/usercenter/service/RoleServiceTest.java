@@ -1,10 +1,6 @@
 package com.pandaz.usercenter.service;
 
-import com.pandaz.commons.dto.usercenter.PermissionDTO;
-import com.pandaz.commons.dto.usercenter.SimplePermissionDTO;
-import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.usercenter.BasisUnitTest;
-import com.pandaz.usercenter.entity.PermissionEntity;
 import com.pandaz.usercenter.entity.RoleEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -12,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 角色服务测试
@@ -87,22 +81,4 @@ public class RoleServiceTest extends BasisUnitTest {
         log.info("成功删除角色：{}个", size);
     }
 
-    @Test
-    public void bindPermission() {
-        String operator = "system";
-        String roleCode = "ROLE_ADMIN";
-        String osCode = "portal";
-        String menuCode = "test";
-        List<SimplePermissionDTO> simplePermissionDTOList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            SimplePermissionDTO permissionDTO = new SimplePermissionDTO();
-            permissionDTO.setCode("test_per" + i);
-            permissionDTO.setOsCode(osCode);
-            permissionDTO.setMenuCode(menuCode);
-            simplePermissionDTOList.add(permissionDTO);
-        }
-        List<PermissionEntity> list = BeanCopyUtil.copyList(simplePermissionDTOList, PermissionEntity.class);
-        rolePermissionService.bindPermission(operator, LocalDateTime.now(), roleCode, list);
-        
-    }
 }

@@ -150,7 +150,10 @@
             deleted_flag='0'
             <choose>
                 <when test="list != null and list.size() > 0">
-                    and code in
+                    and role_code = #{roleCode,jdbcType=VARCHAR}
+                    and os_code = #{osCode,jdbcType=VARCHAR}
+                    and menu_code = #{menuCode,jdbcType=VARCHAR}
+                    and permission_code in
                     <foreach collection="list" open="(" close=")" index="index" item="item" separator=",">
                         #{item,jdbcType=VARCHAR}
                     </foreach>
@@ -209,4 +212,16 @@
             </choose>
         </where>
     </update>
+    <!-- 查询已绑定的权限编码 -->
+    <select id="listCodes" resultType="java.lang.String"
+            parameterType="com.pandaz.usercenter.entity.RolePermissionEntity">
+        select permission_code
+        from t_sys_role_permission
+        <where>
+            deleted_flag='0'
+            and role_code = #{roleCode,jdbcType=VARCHAR}
+            and os_code = #{osCode,jdbcType=VARCHAR}
+            and menu_code = #{menuCode,jdbcType=VARCHAR}
+        </where>
+    </select>
 </mapper>

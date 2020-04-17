@@ -7,8 +7,8 @@ import com.pandaz.commons.util.ExecuteResult;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.custom.constants.SysConstants;
 import com.pandaz.usercenter.custom.constants.UrlConstants;
-import com.pandaz.usercenter.entity.PermissionEntity;
 import com.pandaz.usercenter.entity.RoleEntity;
+import com.pandaz.usercenter.entity.RolePermissionEntity;
 import com.pandaz.usercenter.service.RolePermissionService;
 import com.pandaz.usercenter.service.RoleService;
 import com.pandaz.usercenter.util.ControllerUtil;
@@ -158,12 +158,12 @@ public class RoleController {
      * @param principal         当前用户
      * @return 执行结果
      */
-    @PostMapping("/bindPermission")
-    public ExecuteResult<String> bindPermission(@RequestBody RolePermissionDTO rolePermissionDTO, Principal principal) {
+    @PostMapping("/bindPermissions")
+    public ExecuteResult<String> bindPermissions(@RequestBody RolePermissionDTO rolePermissionDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
-            List<PermissionEntity> permissionEntityList = BeanCopyUtil.copyList(rolePermissionDTO.getPermissions(), PermissionEntity.class);
-            rolePermissionService.bindPermission(principal.getName(), LocalDateTime.now(), rolePermissionDTO.getRoleCode(), permissionEntityList);
+            RolePermissionEntity rolePermissionEntity = BeanCopyUtil.copy(rolePermissionDTO, RolePermissionEntity.class);
+            rolePermissionService.bindPermissions(principal.getName(), LocalDateTime.now(), rolePermissionEntity);
             result.setData("绑定成功");
         } catch (Exception e) {
             log.error("绑定权限异常：", e);
@@ -227,6 +227,7 @@ public class RoleController {
     /**
      * 根据系统编码获取所有菜单信息
      *
+     * @param osCode 系统编码
      * @return 所有菜单
      */
     @GetMapping("/listMenuByOsCode")
@@ -234,6 +235,26 @@ public class RoleController {
         ExecuteResult<ArrayList<MenuDTO>> result = new ExecuteResult<>();
         try {
             result.setData(controllerUtil.listMenuByOsCode(osCode));
+        } catch (Exception e) {
+            log.error("获取所有菜单异常：", e);
+            result.setError(e.getMessage());
+        }
+        return result;
+    }
+
+    /**
+     * 根据系统编码、角色编码、菜单编码获取所有权限
+     *
+     * @param roleCode 角色编码
+     * @param osCode   系统编码
+     * @param menuCode 菜单编码
+     * @return 权限编码
+     */
+    @GetMapping("/getPermissionCodes")
+    public ExecuteResult<ArrayList<String>> getPermissionCodes(String roleCode, String osCode, String menuCode) {
+        ExecuteResult<ArrayList<String>> result = new ExecuteResult<>();
+        try {
+            result.setData(controllerUtil.getPermissionCodes(roleCode, osCode, menuCode));
         } catch (Exception e) {
             log.error("获取所有菜单异常：", e);
             result.setError(e.getMessage());

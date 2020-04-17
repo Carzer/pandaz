@@ -85,49 +85,77 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
      */
     @Override
     public int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
-        if (CollectionUtils.isEmpty(codes)) {
-            return 0;
-        }
-        Map<String, Object> map = new HashMap<>(3);
-        map.put("deletedBy", deletedBy);
-        map.put("deletedDate", deletedDate);
-        map.put("list", codes);
-        return rolePermissionMapper.batchLogicDelete(map);
+        return 0;
     }
 
     /**
      * 绑定权限
      *
-     * @param operator           操作人
-     * @param currentDate        当前时间
-     * @param roleCode           角色编码
-     * @param permissionEntities 权限信息
+     * @param operator             操作人
+     * @param currentDate          当前时间
+     * @param rolePermissionEntity 权限信息
      * @return 执行结果
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int bindPermission(String operator, LocalDateTime currentDate, String roleCode, List<PermissionEntity> permissionEntities) {
+    public int bindPermissions(String operator, LocalDateTime currentDate, RolePermissionEntity rolePermissionEntity) {
+        String roleCode = rolePermissionEntity.getRoleCode();
+        String osCode = rolePermissionEntity.getOsCode();
+        String menuCode = rolePermissionEntity.getMenuCode();
+        List<String> existingCodes = rolePermissionMapper.listCodes(rolePermissionEntity);
+        List<String> newCodes = rolePermissionEntity.getPermissionCodes();
+        List<String> codesToRemove = existingCodes.stream().filter(code -> !(newCodes.contains(code))).collect(Collectors.toList());
+        List<String> codesToAdd = newCodes.stream().filter(code -> !(existingCodes.contains(code))).collect(Collectors.toList());
         // 清理之前的角色菜单关系
-        // todo 根据前端决定全部清理还是清理部分菜单
-        RoleEntity roleEntity = new RoleEntity();
-        roleEntity.setCode(roleCode);
-        roleEntity.setDeletedDate(currentDate);
-        roleEntity.setDeletedBy(operator);
-        deleteByRoleCode(roleEntity);
+        rolePermissionEntity.setDeletedBy(operator);
+        rolePermissionEntity.setDeletedDate(currentDate);
+        deleteByCodes(rolePermissionEntity, codesToRemove);
 
         // 保存关系
-        List<RolePermissionEntity> list = permissionEntities.stream().map(permissionEntity -> {
-            RolePermissionEntity rolePermissionEntity = new RolePermissionEntity();
-            rolePermissionEntity.setId(UuidUtil.getId());
-            rolePermissionEntity.setPermissionCode(permissionEntity.getCode());
-            rolePermissionEntity.setRoleCode(roleCode);
-            rolePermissionEntity.setOsCode(permissionEntity.getOsCode());
-            rolePermissionEntity.setMenuCode(permissionEntity.getMenuCode());
-            rolePermissionEntity.setCreatedBy(operator);
-            rolePermissionEntity.setCreatedDate(currentDate);
-            return rolePermissionEntity;
+        List<RolePermissionEntity> list = codesToAdd.stream().map(code -> {
+            RolePermissionEntity rolePermission = new RolePermissionEntity();
+            rolePermission.setId(UuidUtil.getId());
+            rolePermission.setPermissionCode(code);
+            rolePermission.setRoleCode(roleCode);
+            rolePermission.setOsCode(osCode);
+            rolePermission.setMenuCode(menuCode);
+            rolePermission.setCreatedBy(operator);
+            rolePermission.setCreatedDate(currentDate);
+            return rolePermission;
         }).collect(Collectors.toList());
-        return rolePermissionMapper.batchInsert(list);
+        if (!CollectionUtils.isEmpty(list)) {
+            return rolePermissionMapper.batchInsert(list);
+        }
+        return 0;
     }
 
+    /**
+     * 查询已绑定的权限编码
+     *
+     * @param rolePermissionEntity 查询条件
+     * @return 权限编码
+     */
+    @Override
+    public List<String> listCodes(RolePermissionEntity rolePermissionEntity) {
+        return rolePermissionMapper.listCodes(rolePermissionEntity);
+    }
+
+    /**
+     * 删除绑定权限
+     *
+     * @param rolePermissionEntity rolePermissionEntity
+     * @param codes                codes
+     */
+    private void deleteByCodes(RolePermissionEntity rolePermissionEntity, List<String> codes) {
+        if (!CollectionUtils.isEmpty(codes)) {
+            Map<String, Object> map = new HashMap<>(6);
+            map.put("deletedBy", rolePermissionEntity.getDeletedBy());
+            map.put("deletedDate", rolePermissionEntity.getDeletedDate());
+            map.put("roleCode", rolePermissionEntity.getRoleCode());
+            map.put("osCode", rolePermissionEntity.getOsCode());
+            map.put("menuCode", rolePermissionEntity.getMenuCode());
+            map.put("list", codes);
+            rolePermissionMapper.batchLogicDelete(map);
+        }
+    }
 }

@@ -10,12 +10,14 @@ import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.ExecuteResult;
 import com.pandaz.usercenter.entity.MenuEntity;
 import com.pandaz.usercenter.entity.PermissionEntity;
+import com.pandaz.usercenter.entity.RolePermissionEntity;
 import com.pandaz.usercenter.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -54,6 +56,11 @@ public class ControllerUtil<S extends UcBaseService> {
      * 权限服务
      */
     private final PermissionService permissionService;
+
+    /**
+     * 角色-权限服务
+     */
+    private final RolePermissionService rolePermissionService;
 
     /**
      * 执行删除方法并获取结果
@@ -160,4 +167,22 @@ public class ControllerUtil<S extends UcBaseService> {
         return menuDTO;
     }
 
+    /**
+     * 根据系统编码、角色编码、菜单编码获取所有权限
+     *
+     * @param roleCode 角色编码
+     * @param osCode   系统编码
+     * @param menuCode 菜单编码
+     * @return 权限编码
+     */
+    public ArrayList<String> getPermissionCodes(String roleCode, String osCode, String menuCode) {
+        if (StringUtils.hasText(roleCode) && StringUtils.hasText(osCode) && StringUtils.hasText(menuCode)) {
+            RolePermissionEntity rolePermissionEntity = new RolePermissionEntity();
+            rolePermissionEntity.setRoleCode(roleCode);
+            rolePermissionEntity.setOsCode(osCode);
+            rolePermissionEntity.setMenuCode(menuCode);
+            return (ArrayList<String>) rolePermissionService.listCodes(rolePermissionEntity);
+        }
+        return new ArrayList<>();
+    }
 }

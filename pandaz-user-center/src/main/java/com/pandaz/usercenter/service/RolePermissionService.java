@@ -34,12 +34,18 @@ public interface RolePermissionService extends UcBaseService<RolePermissionEntit
     /**
      * 绑定权限
      *
-     * @param operator           操作人
-     * @param currentDate        当前时间
-     * @param roleCode           角色编码
-     * @param permissionEntities 权限信息
+     * @param operator             操作人
+     * @param currentDate          当前时间
+     * @param rolePermissionEntity 权限信息
      * @return 执行结果
      */
-    int bindPermission(String operator, LocalDateTime currentDate, String roleCode, List<PermissionEntity> permissionEntities);
+    int bindPermissions(String operator, LocalDateTime currentDate, RolePermissionEntity rolePermissionEntity);
 
+    /**
+     * 查询已绑定的权限编码
+     *
+     * @param rolePermissionEntity 查询条件
+     * @return 权限编码
+     */
+    List<String> listCodes(RolePermissionEntity rolePermissionEntity);
 }

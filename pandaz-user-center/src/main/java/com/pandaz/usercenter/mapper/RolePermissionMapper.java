@@ -35,4 +35,12 @@ public interface RolePermissionMapper extends UcBaseMapper<RolePermissionEntity>
      * @return 执行结果
      */
     int batchInsert(List<RolePermissionEntity> list);
+
+    /**
+     * 查询已绑定的权限编码
+     *
+     * @param rolePermissionEntity 插叙条件
+     * @return 权限编码
+     */
+    List<String> listCodes(RolePermissionEntity rolePermissionEntity);
 }

@@ -7,6 +7,8 @@ import com.pandaz.commons.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.List;
+
 /**
  * 角色-权限
  *
@@ -49,6 +51,12 @@ public class RolePermissionEntity extends BaseEntity {
      */
     @TableField("menu_code")
     private String menuCode;
+
+    /**
+     * 权限编码
+     */
+    @TableField(exist = false)
+    private List<String> permissionCodes;
 
     /**
      * 版本
