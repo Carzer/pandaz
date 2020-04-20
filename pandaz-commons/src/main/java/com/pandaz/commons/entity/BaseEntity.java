@@ -106,4 +106,5 @@ public class BaseEntity implements Serializable {
     public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize == null ? 10 : pageSize;
     }
+
 }

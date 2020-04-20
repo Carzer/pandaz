@@ -65,4 +65,5 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
         result.setData(resultMap);
         PrintWriterUtil.write(httpServletResponse, result);
     }
+
 }

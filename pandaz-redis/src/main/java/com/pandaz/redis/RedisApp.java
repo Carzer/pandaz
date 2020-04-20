@@ -25,4 +25,5 @@ public class RedisApp {
         String repeat = "=".repeat(20);
         log.warn("{} RedisApp 启动成功 {}", repeat, repeat);
     }
+
 }

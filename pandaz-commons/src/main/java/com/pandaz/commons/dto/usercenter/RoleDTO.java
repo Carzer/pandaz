@@ -48,4 +48,5 @@ public class RoleDTO extends BaseDTO {
      * 是否锁定(0:未锁定，1:已锁定)
      */
     private Byte locked;
+
 }

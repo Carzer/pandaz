@@ -49,4 +49,5 @@ public class OsInfoEntity extends BaseEntity {
      */
     @TableField("locked")
     private Byte locked;
+
 }

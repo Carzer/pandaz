@@ -74,4 +74,5 @@ public class UserDTO extends BaseDTO {
      * 是否过期的条件查询
      */
     private String expireState;
+
 }

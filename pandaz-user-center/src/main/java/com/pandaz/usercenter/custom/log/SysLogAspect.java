@@ -46,5 +46,4 @@ public class SysLogAspect {
         log.error(String.format("target:%s throws exception", joinPoint.getTarget()), e);
     }
 
-
 }

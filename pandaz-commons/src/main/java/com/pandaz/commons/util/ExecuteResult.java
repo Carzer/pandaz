@@ -50,4 +50,5 @@ public final class ExecuteResult<T extends Serializable> {
         this.success = true;
         this.data = data;
     }
+
 }

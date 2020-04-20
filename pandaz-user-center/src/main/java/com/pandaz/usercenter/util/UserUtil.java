@@ -47,4 +47,5 @@ public final class UserUtil {
         }
         return result;
     }
+
 }

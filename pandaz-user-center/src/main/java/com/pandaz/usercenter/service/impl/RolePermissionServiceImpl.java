@@ -158,4 +158,5 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
             rolePermissionMapper.batchLogicDelete(map);
         }
     }
+
 }

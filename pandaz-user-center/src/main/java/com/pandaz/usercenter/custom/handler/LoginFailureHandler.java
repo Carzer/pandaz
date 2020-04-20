@@ -42,4 +42,5 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
         result.setError(errorMsg);
         PrintWriterUtil.write(httpServletResponse, result);
     }
+
 }

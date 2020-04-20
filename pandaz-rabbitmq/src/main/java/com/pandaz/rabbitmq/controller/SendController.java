@@ -32,4 +32,5 @@ public class SendController {
     public void send(@RequestParam String message) {
         pipe.output().send(MessageBuilder.withPayload(message).build());
     }
+
 }

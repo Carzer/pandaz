@@ -181,4 +181,5 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
             return new SecurityUser(loginName, securityUser.getPassword(), authorities, securityUser.getUser());
         };
     }
+
 }

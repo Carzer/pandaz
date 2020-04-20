@@ -19,4 +19,5 @@ public final class RedisConstants {
      * Redis前缀
      */
     public static final String REDIS_PREFIX = "pandaz:";
+
 }

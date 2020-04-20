@@ -36,4 +36,5 @@ public interface UcBaseMapper<T extends BaseEntity> extends BaseMapper<T> {
      * @return 执行结果
      */
     int batchLogicDelete(Map<String, Object> map);
+
 }

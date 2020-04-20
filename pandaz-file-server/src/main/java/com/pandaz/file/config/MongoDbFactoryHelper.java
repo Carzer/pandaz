@@ -41,4 +41,5 @@ class MongoDbFactoryHelper {
         MongoClient mongoClient = new MongoClient(uri);
         return new SimpleMongoDbFactory(mongoClient, name);
     }
+
 }

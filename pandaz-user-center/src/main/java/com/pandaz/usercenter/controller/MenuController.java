@@ -14,6 +14,8 @@ import com.pandaz.usercenter.util.ControllerUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +25,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 菜单信息
@@ -170,6 +173,28 @@ public class MenuController {
         ExecuteResult<MenuDTO> result = new ExecuteResult<>();
         try {
             result.setData(controllerUtil.getAllMenu(menuDTO));
+        } catch (Exception e) {
+            log.error("获取所有菜单异常：", e);
+            result.setError(e.getMessage());
+        }
+        return result;
+    }
+
+    /**
+     * 获取所有菜单
+     *
+     * @return 所有菜单
+     */
+    @GetMapping("/getAuthorizedMenu")
+    public ExecuteResult<ArrayList<MenuDTO>> getAuthorizedMenu(String osCode, Principal principal) {
+        ExecuteResult<ArrayList<MenuDTO>> result = new ExecuteResult<>();
+        try {
+            List<String> roleList = new ArrayList<>();
+            if (principal instanceof UsernamePasswordAuthenticationToken) {
+                roleList = ((UsernamePasswordAuthenticationToken) principal).getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
+            }
+            List<MenuEntity> menuList = menuService.getAuthorizedMenu(osCode, roleList);
+            result.setData((ArrayList<MenuDTO>) BeanCopyUtil.copyList(menuList, MenuDTO.class));
         } catch (Exception e) {
             log.error("获取所有菜单异常：", e);
             result.setError(e.getMessage());

@@ -86,4 +86,5 @@ public class CheckUtil<E extends BaseEntity, M extends BaseMapper<E>> {
         }
         return lastCode;
     }
+
 }

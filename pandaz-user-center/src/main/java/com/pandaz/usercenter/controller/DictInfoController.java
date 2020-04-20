@@ -141,7 +141,6 @@ public class DictInfoController {
         return controllerUtil.getDeleteResult(dictInfoService, principal.getName(), LocalDateTime.now(), codes);
     }
 
-
     /**
      * 获取全部字典类型
      *

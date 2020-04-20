@@ -63,4 +63,5 @@ public class RolePermissionEntity extends BaseEntity {
      */
     @TableField(exist = false)
     private Integer version;
+
 }

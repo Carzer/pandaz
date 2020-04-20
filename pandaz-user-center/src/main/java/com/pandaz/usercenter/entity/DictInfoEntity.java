@@ -57,4 +57,5 @@ public class DictInfoEntity extends BaseEntity {
      */
     @TableField("locked")
     private Byte locked;
+
 }

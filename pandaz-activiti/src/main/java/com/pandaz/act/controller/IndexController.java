@@ -77,4 +77,5 @@ public class IndexController {
         result.setData(list);
         return result;
     }
+
 }

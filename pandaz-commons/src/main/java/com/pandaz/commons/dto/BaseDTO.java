@@ -102,4 +102,5 @@ public class BaseDTO implements Serializable {
         }
         return pageSize;
     }
+
 }

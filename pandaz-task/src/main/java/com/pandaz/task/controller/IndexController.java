@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class IndexController {
+
     private final DiscoveryClient discoveryClient;
 
     @GetMapping("/dc")
@@ -27,4 +28,5 @@ public class IndexController {
         log.info(services);
         return services;
     }
+
 }

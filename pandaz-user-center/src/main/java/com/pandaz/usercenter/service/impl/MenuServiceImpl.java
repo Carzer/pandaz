@@ -25,7 +25,9 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 菜单服务
@@ -208,6 +210,21 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
     @Override
     public List<String> listMenusWithoutParent() {
         return menuMapper.listMenusWithoutParent();
+    }
+
+    /**
+     * 获取已授权的菜单
+     *
+     * @param osCode   系统编码
+     * @param roleList 角色列表
+     * @return 菜单列表
+     */
+    @Override
+    public List<MenuEntity> getAuthorizedMenu(String osCode, List<String> roleList) {
+        Map<String, Object> map = new HashMap<>(2);
+        map.put("osCode", osCode);
+        map.put("list", roleList);
+        return menuMapper.getAuthorizedMenu(map);
     }
 
     /**

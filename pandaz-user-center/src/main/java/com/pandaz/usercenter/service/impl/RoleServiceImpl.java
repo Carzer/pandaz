@@ -105,6 +105,12 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
         return roleMapper.getAllRoles(userCode);
     }
 
+    /**
+     * 根据用户角色
+     *
+     * @param securityUser 安全用户类
+     * @return 执行结果
+     */
     @Override
     public Set<GrantedAuthority> findBySecurityUser(SecurityUser securityUser) {
         List<RoleDetailEntity> roleDetailEntities = findByUserCode(securityUser.getUser().getCode());

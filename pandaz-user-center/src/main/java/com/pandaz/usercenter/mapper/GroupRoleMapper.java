@@ -25,4 +25,5 @@ public interface GroupRoleMapper extends UcBaseMapper<GroupRoleEntity> {
      * @return 执行结果
      */
     int logicDeleteByRoleCode(GroupRoleEntity groupRoleEntity);
+
 }

@@ -33,4 +33,5 @@ public class PermissionConstants {
      * delete请求方式
      */
     public static final Byte PERMISSION_DELETE = 4;
+
 }

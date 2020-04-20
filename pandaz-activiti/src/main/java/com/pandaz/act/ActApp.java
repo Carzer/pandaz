@@ -25,4 +25,5 @@ public class ActApp {
         String repeat = "=".repeat(20);
         log.warn("{} ActApp 启动成功 {}", repeat, repeat);
     }
+
 }

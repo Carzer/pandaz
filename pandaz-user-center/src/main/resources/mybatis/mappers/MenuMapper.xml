@@ -264,4 +264,35 @@
           and child.deleted_flag = '0'
           and child.parent_code != 'root'
     </select>
+    <select id="getAuthorizedMenu" resultType="com.pandaz.usercenter.entity.MenuEntity"
+            parameterType="java.util.HashMap">
+        select tsrp.menu_code,
+        tsm.name as menu_name,
+        tsm.url as url,
+        tsm.router as router,
+        tsrp.permission_code,
+        tsp.bit_digit,
+        tsp.bit_result
+        FROM t_sys_role_permission tsrp
+        inner join t_sys_permission tsp on tsrp.permission_code = tsp.code
+        and tsp.deleted_flag = '0'
+        inner join t_sys_menu tsm on tsrp.menu_code = tsm.code and tsm.deleted_flag = '0'
+        <where>
+            tsrp.deleted_flag = '0'
+            <choose>
+                <when test="list != null and list.size >0 ">
+                    and tsrp.role_code in
+                    <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+                        #{item,jdbcType=VARCHAR}
+                    </foreach>
+                    <if test="osCode != null and osCode != ''">
+                        and tsrp.os_code = #{osCode,jdbcType=VARCHAR}
+                    </if>
+                </when>
+                <otherwise>
+                    and 1 = 2
+                </otherwise>
+            </choose>
+        </where>
+    </select>
 </mapper>

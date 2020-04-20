@@ -43,4 +43,5 @@ public interface RolePermissionMapper extends UcBaseMapper<RolePermissionEntity>
      * @return 权限编码
      */
     List<String> listCodes(RolePermissionEntity rolePermissionEntity);
+
 }

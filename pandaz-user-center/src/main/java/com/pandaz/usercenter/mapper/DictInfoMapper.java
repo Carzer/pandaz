@@ -30,4 +30,5 @@ public interface DictInfoMapper extends UcBaseMapper<DictInfoEntity> {
      * @return 执行结果
      */
     IPage<DictInfoEntity> getPageWithTypeName(Page<?> page, DictInfoEntity entity);
+
 }

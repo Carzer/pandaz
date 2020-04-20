@@ -46,4 +46,5 @@ public class GroupRoleEntity extends BaseEntity {
 
     @TableField(exist = false)
     private Integer version;
+
 }

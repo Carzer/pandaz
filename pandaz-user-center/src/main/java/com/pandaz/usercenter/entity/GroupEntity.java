@@ -55,4 +55,5 @@ public class GroupEntity extends BaseEntity {
      */
     @TableField("locked")
     private Byte locked;
+
 }

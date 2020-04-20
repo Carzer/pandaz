@@ -24,4 +24,5 @@ public interface UserGroupMapper extends UcBaseMapper<UserGroupEntity> {
      * @return 执行结果
      */
     int logicDeleteByGroupCode(UserGroupEntity userGroupEntity);
+
 }

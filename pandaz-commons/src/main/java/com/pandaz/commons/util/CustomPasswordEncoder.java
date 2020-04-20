@@ -43,4 +43,5 @@ public final class CustomPasswordEncoder extends BCryptPasswordEncoder {
         log.debug("rawPassword is {}", rawPassword);
         return super.matches(rawPassword, encodedPassword);
     }
+
 }

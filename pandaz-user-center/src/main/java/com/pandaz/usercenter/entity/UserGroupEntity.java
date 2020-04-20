@@ -44,4 +44,5 @@ public class UserGroupEntity extends BaseEntity {
 
     @TableField(exist = false)
     private Integer version;
+
 }

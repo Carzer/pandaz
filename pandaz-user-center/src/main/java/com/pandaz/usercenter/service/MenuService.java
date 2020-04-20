@@ -68,4 +68,13 @@ public interface MenuService extends UcBaseService<MenuEntity> {
      */
     List<String> listMenusWithoutParent();
 
+    /**
+     * 获取已授权的菜单
+     *
+     * @param osCode   系统编码
+     * @param roleList 角色列表
+     * @return 菜单列表
+     */
+    List<MenuEntity> getAuthorizedMenu(String osCode, List<String> roleList);
+
 }

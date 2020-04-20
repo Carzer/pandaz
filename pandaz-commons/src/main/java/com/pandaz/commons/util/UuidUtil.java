@@ -38,4 +38,5 @@ public final class UuidUtil {
         UUID uuid = UUID.randomUUID();
         return uuid.toString().replaceAll(".-", "");
     }
+
 }

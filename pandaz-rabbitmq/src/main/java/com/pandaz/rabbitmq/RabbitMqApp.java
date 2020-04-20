@@ -25,4 +25,5 @@ public class RabbitMqApp {
         String repeat = "=".repeat(20);
         log.warn("{} RabbitMqApp 启动成功 {}", repeat, repeat);
     }
+
 }

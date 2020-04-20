@@ -73,4 +73,5 @@ public class OrganizationEntity extends BaseEntity {
      */
     @TableField("locked")
     private Byte locked;
+
 }

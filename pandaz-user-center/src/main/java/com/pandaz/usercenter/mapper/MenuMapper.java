@@ -4,6 +4,7 @@ import com.pandaz.usercenter.entity.MenuEntity;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 菜单mapper
@@ -35,4 +36,12 @@ public interface MenuMapper extends UcBaseMapper<MenuEntity> {
      * @return 菜单编码
      */
     List<String> listMenusWithoutParent();
+
+    /**
+     * 获取已授权的菜单列表
+     *
+     * @param map 查询条件
+     * @return 菜单列表
+     */
+    List<MenuEntity> getAuthorizedMenu(Map<String, Object> map);
 }

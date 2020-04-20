@@ -30,4 +30,5 @@ public interface PermissionMapper extends UcBaseMapper<PermissionEntity> {
      * @return 所有位移数
      */
     List<Byte> selectBitDigits(PermissionEntity entity);
+
 }

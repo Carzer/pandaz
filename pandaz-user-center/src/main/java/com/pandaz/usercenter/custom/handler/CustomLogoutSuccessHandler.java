@@ -36,4 +36,5 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
         // 输出登出提示信息
         PrintWriterUtil.write(response, ExecuteResult.buildSuccess());
     }
+
 }

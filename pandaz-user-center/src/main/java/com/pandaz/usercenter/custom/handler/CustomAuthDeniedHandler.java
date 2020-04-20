@@ -45,4 +45,5 @@ public class CustomAuthDeniedHandler implements AccessDeniedHandler {
             out.flush();
         }
     }
+
 }

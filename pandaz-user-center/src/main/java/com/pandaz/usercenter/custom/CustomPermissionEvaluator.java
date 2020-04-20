@@ -62,4 +62,5 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         return authorities.parallelStream().anyMatch(authority -> authority.getAuthority().equals(permission));
     }
+
 }

@@ -39,4 +39,5 @@ public class SecurityUser extends User {
         super(username, password, true, true, true, true, authorities);
         this.user = user;
     }
+
 }

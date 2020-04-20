@@ -26,4 +26,5 @@ public class UserPwdDTO implements Serializable {
      */
     @NotNull
     private UserDTO userDTO;
+
 }
