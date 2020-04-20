@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.usercenter.BasisUnitTest;
 import com.pandaz.usercenter.entity.DictTypeEntity;
 import org.junit.Test;
@@ -8,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
+import static org.hamcrest.core.IsAnything.anything;
 import static org.junit.Assert.*;
 
 /**
@@ -28,12 +30,14 @@ public class DictTypeServiceTest extends BasisUnitTest {
 
     @Test
     public void findByCode() {
-        dictTypeService.findByCode("dictType_test");
+        DictTypeEntity test = dictTypeService.findByCode("dictType_test");
+        assertThat(test, anything());
     }
 
     @Test
     public void getPage() {
-        dictTypeService.getPage(new DictTypeEntity());
+        IPage<DictTypeEntity> page = dictTypeService.getPage(new DictTypeEntity());
+        assertNotNull(page);
     }
 
     @Test
@@ -41,7 +45,8 @@ public class DictTypeServiceTest extends BasisUnitTest {
         DictTypeEntity dictTypeEntity = new DictTypeEntity();
         dictTypeEntity.setCode("dictType_test");
         dictTypeEntity.setName("dictType_test");
-        dictTypeService.insert(dictTypeEntity);
+        int result = dictTypeService.insert(dictTypeEntity);
+        assertEquals(1, result);
     }
 
     @Test
@@ -49,7 +54,8 @@ public class DictTypeServiceTest extends BasisUnitTest {
         DictTypeEntity dictTypeEntity = new DictTypeEntity();
         dictTypeEntity.setCode("dictType_test");
         dictTypeEntity.setName("dictType_test");
-        dictTypeService.updateByCode(dictTypeEntity);
+        int result = dictTypeService.updateByCode(dictTypeEntity);
+        assertThat(result, anything());
     }
 
     @Test
@@ -58,6 +64,7 @@ public class DictTypeServiceTest extends BasisUnitTest {
         dictTypeEntity.setCode("dictType_test");
         dictTypeEntity.setDeletedBy("admin");
         dictTypeEntity.setDeletedDate(LocalDateTime.now());
-        dictTypeService.deleteByCode(dictTypeEntity);
+        int result = dictTypeService.deleteByCode(dictTypeEntity);
+        assertThat(result, anything());
     }
 }

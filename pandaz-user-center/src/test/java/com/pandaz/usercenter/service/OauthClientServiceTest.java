@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.usercenter.BasisUnitTest;
 import com.pandaz.usercenter.entity.OauthClientEntity;
 import org.junit.Test;
@@ -8,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
+import static org.hamcrest.core.IsAnything.anything;
 import static org.junit.Assert.*;
 
 /**
@@ -32,20 +34,23 @@ public class OauthClientServiceTest extends BasisUnitTest {
         oauthClientEntity.setClientId("test");
         oauthClientEntity.setDeletedBy("admin");
         oauthClientEntity.setDeletedDate(LocalDateTime.now());
-        oauthClientService.deleteByClientId(oauthClientEntity);
+        int result = oauthClientService.deleteByClientId(oauthClientEntity);
+        assertThat(result, anything());
     }
 
     @Test
     public void findByClientId() {
-        oauthClientService.loadClientByClientId("test");
-        oauthClientService.findByClientId("test");
+//        oauthClientService.loadClientByClientId("test");
+        OauthClientEntity test = oauthClientService.findByClientId("test");
+        assertThat(test, anything());
     }
 
     @Test
     public void updateByClientId() {
         OauthClientEntity oauthClientEntity = new OauthClientEntity();
         oauthClientEntity.setClientId("client_test");
-        oauthClientService.updateByClientId(oauthClientEntity);
+        int result = oauthClientService.updateByClientId(oauthClientEntity);
+        assertThat(result, anything());
     }
 
     @Test
@@ -53,13 +58,15 @@ public class OauthClientServiceTest extends BasisUnitTest {
         OauthClientEntity oauthClientEntity = new OauthClientEntity();
         oauthClientEntity.setClientId("client_test");
         oauthClientEntity.setClientName("client_test");
-        oauthClientService.insert(oauthClientEntity);
+        int result = oauthClientService.insert(oauthClientEntity);
+        assertEquals(1, result);
     }
 
     @Test
     public void getPage() {
         OauthClientEntity oauthClientEntity = new OauthClientEntity();
         oauthClientEntity.setClientId("client_test");
-        oauthClientService.getPage(oauthClientEntity);
+        IPage<OauthClientEntity> page = oauthClientService.getPage(oauthClientEntity);
+        assertNotNull(page);
     }
 }

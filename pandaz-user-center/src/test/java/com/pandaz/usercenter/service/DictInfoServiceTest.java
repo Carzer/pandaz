@@ -9,6 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
+import static org.hamcrest.core.IsAnything.anything;
+import static org.junit.Assert.*;
+
 /**
  * 字典信息测试
  *
@@ -27,20 +30,20 @@ public class DictInfoServiceTest extends BasisUnitTest {
 
     @Test
     public void findByCode() {
-        dictInfoService.findByCode("dictInfo_test");
+        DictInfoEntity test = dictInfoService.findByCode("dictInfo_test");
+        assertThat(test, anything());
     }
 
     @Test
     public void getWithTypeName() {
         DictInfoEntity test = dictInfoService.getWithTypeName("test");
-        System.out.println(test);
+        assertThat(test, anything());
     }
 
     @Test
     public void getPage() {
         IPage<DictInfoEntity> page = dictInfoService.getPage(new DictInfoEntity());
-        System.out.println(page);
-//        dictInfoService.getPage(new DictInfoEntity());
+        assertNotNull(page);
     }
 
     @Test
@@ -49,7 +52,8 @@ public class DictInfoServiceTest extends BasisUnitTest {
         dictInfoEntity.setCode("dictInfo_test");
         dictInfoEntity.setTypeCode("dictType_test");
         dictInfoEntity.setName("字典信息测试");
-        dictInfoService.insert(dictInfoEntity);
+        int result = dictInfoService.insert(dictInfoEntity);
+        assertEquals(1, result);
     }
 
     @Test
@@ -57,7 +61,8 @@ public class DictInfoServiceTest extends BasisUnitTest {
         DictInfoEntity dictInfoEntity = new DictInfoEntity();
         dictInfoEntity.setCode("dictInfo_test");
         dictInfoEntity.setName("字典信息测试");
-        dictInfoService.updateByCode(dictInfoEntity);
+        int result = dictInfoService.updateByCode(dictInfoEntity);
+        assertThat(result, anything());
     }
 
     @Test
@@ -66,6 +71,7 @@ public class DictInfoServiceTest extends BasisUnitTest {
         dictInfoEntity.setCode("dictInfo_test");
         dictInfoEntity.setDeletedBy("admin");
         dictInfoEntity.setDeletedDate(LocalDateTime.now());
-        dictInfoService.deleteByCode(dictInfoEntity);
+        int result = dictInfoService.deleteByCode(dictInfoEntity);
+        assertThat(result, anything());
     }
 }

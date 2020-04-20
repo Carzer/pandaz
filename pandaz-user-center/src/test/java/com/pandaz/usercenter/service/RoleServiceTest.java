@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.usercenter.BasisUnitTest;
 import com.pandaz.usercenter.entity.RoleEntity;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+
+import static org.hamcrest.core.IsAnything.anything;
+import static org.junit.Assert.*;
 
 /**
  * 角色服务测试
@@ -21,16 +25,9 @@ public class RoleServiceTest extends BasisUnitTest {
 
     private RoleService roleService;
 
-    private RolePermissionService rolePermissionService;
-
     @Autowired
     public void setRoleService(RoleService roleService) {
         this.roleService = roleService;
-    }
-
-    @Autowired
-    public void setRolePermissionService(RolePermissionService rolePermissionService) {
-        this.rolePermissionService = rolePermissionService;
     }
 
     @Test
@@ -38,22 +35,14 @@ public class RoleServiceTest extends BasisUnitTest {
         RoleEntity roleEntity = new RoleEntity();
         roleEntity.setCode("role_test");
         roleEntity.setName("测试角色");
-        roleService.insert(roleEntity);
-        log.info("插入{}", roleEntity.getId());
-    }
-
-    @Test
-    public void findByUserCode() {
-    }
-
-    @Test
-    public void findBySecurityUser() {
+        int result = roleService.insert(roleEntity);
+        assertEquals(1, result);
     }
 
     @Test
     public void getPage() {
-        RoleEntity roleEntity = new RoleEntity();
-        log.info("分页结果:{}", roleService.getPage(roleEntity));
+        IPage<RoleEntity> page = roleService.getPage(new RoleEntity());
+        assertNotNull(page);
     }
 
     @Test
@@ -61,14 +50,14 @@ public class RoleServiceTest extends BasisUnitTest {
         RoleEntity roleEntity = new RoleEntity();
         roleEntity.setCode("role_test");
         roleEntity.setName("测试角色已变更");
-        roleService.updateByCode(roleEntity);
-        log.info("更新成功");
+        int result = roleService.updateByCode(roleEntity);
+        assertThat(result, anything());
     }
 
     @Test
     public void findByCode() {
         RoleEntity roleEntity = roleService.findByCode("role_test");
-        log.info("找到角色：{}", roleEntity);
+        assertThat(roleEntity, anything());
     }
 
     @Test
@@ -78,7 +67,7 @@ public class RoleServiceTest extends BasisUnitTest {
         roleEntity.setDeletedBy("admin");
         roleEntity.setDeletedDate(LocalDateTime.now());
         int size = roleService.deleteByCode(roleEntity);
-        log.info("成功删除角色：{}个", size);
+        assertThat(size, anything());
     }
 
 }

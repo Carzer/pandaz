@@ -71,8 +71,10 @@
     - [x] MongoDB集群搭建、连接
     - [ ] 文件ftp服务集成
     - [ ] MongoDB、ftp统一服务
+    - [ ] 全文检索
 - [x] **框架集成**
     - [x] Spring Data Mongo
+    - [ ] Lucence
 </code></pre>
 </details> 
 
@@ -96,7 +98,7 @@
 <pre><code>
 - [ ] **功能实现**
     - [ ] 统一消息管理
-    - [ ] 实现简单的分布式事务
+    - [ ] ～～实现简单的分布式事务～～
 - [x] **框架集成**
     - [x] Spring Cloud Stream
 </code></pre>

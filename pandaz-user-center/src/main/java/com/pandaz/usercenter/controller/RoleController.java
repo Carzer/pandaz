@@ -236,7 +236,7 @@ public class RoleController {
         try {
             result.setData(controllerUtil.listMenuByOsCode(osCode));
         } catch (Exception e) {
-            log.error("获取所有菜单异常：", e);
+            log.error("根据系统编码获取所有菜单信息异常：", e);
             result.setError(e.getMessage());
         }
         return result;
@@ -256,7 +256,7 @@ public class RoleController {
         try {
             result.setData(controllerUtil.getPermissionCodes(roleCode, osCode, menuCode));
         } catch (Exception e) {
-            log.error("获取所有菜单异常：", e);
+            log.error("获取所有权限异常：", e);
             result.setError(e.getMessage());
         }
         return result;

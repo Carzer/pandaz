@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.usercenter.BasisUnitTest;
 import com.pandaz.usercenter.entity.PermissionEntity;
 import org.junit.Test;
@@ -7,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+
+import static org.hamcrest.core.IsAnything.anything;
+import static org.junit.Assert.*;
 
 /**
  * 权限测试
@@ -36,17 +40,20 @@ public class PermissionServiceTest extends BasisUnitTest {
         permissionEntity.setRequestType(Byte.valueOf("1"));
         permissionEntity.setBitDigit(Byte.valueOf("1"));
         permissionEntity.setBitResult(1 >> permissionEntity.getBitDigit());
-        permissionService.insert(permissionEntity);
+        int result = permissionService.insert(permissionEntity);
+        assertEquals(1, result);
     }
 
     @Test
     public void findByCode() {
-        permissionService.findByCode("per_test");
+        PermissionEntity test = permissionService.findByCode("per_test");
+        assertThat(test, anything());
     }
 
     @Test
     public void getPage() {
-        permissionService.getPage(new PermissionEntity());
+        IPage<PermissionEntity> page = permissionService.getPage(new PermissionEntity());
+        assertNotNull(page);
     }
 
     @Test
@@ -54,7 +61,8 @@ public class PermissionServiceTest extends BasisUnitTest {
         PermissionEntity permissionEntity = new PermissionEntity();
         permissionEntity.setCode("per_test");
         permissionEntity.setName("测试权限");
-        permissionService.updateByCode(permissionEntity);
+        int result = permissionService.updateByCode(permissionEntity);
+        assertThat(result, anything());
     }
 
     @Test
@@ -63,6 +71,7 @@ public class PermissionServiceTest extends BasisUnitTest {
         permissionEntity.setCode("per_test");
         permissionEntity.setDeletedBy("admin");
         permissionEntity.setDeletedDate(LocalDateTime.now());
-        permissionService.deleteByCode(permissionEntity);
+        int result = permissionService.deleteByCode(permissionEntity);
+        assertThat(result, anything());
     }
 }

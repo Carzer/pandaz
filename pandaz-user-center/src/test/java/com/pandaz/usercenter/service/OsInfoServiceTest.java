@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.usercenter.BasisUnitTest;
 import com.pandaz.usercenter.entity.OsInfoEntity;
 import org.junit.Test;
@@ -7,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+
+import static org.hamcrest.core.IsAnything.anything;
+import static org.junit.Assert.*;
 
 /**
  * 系统信息测试
@@ -29,17 +33,20 @@ public class OsInfoServiceTest extends BasisUnitTest {
         OsInfoEntity osInfoEntity = new OsInfoEntity();
         osInfoEntity.setCode("os_test");
         osInfoEntity.setName("测试系统");
-        osInfoService.insert(osInfoEntity);
+        int result = osInfoService.insert(osInfoEntity);
+        assertEquals(1, result);
     }
 
     @Test
     public void findByCode() {
-        osInfoService.findByCode("os_test");
+        OsInfoEntity test = osInfoService.findByCode("os_test");
+        assertThat(test, anything());
     }
 
     @Test
     public void getPage() {
-        osInfoService.getPage(new OsInfoEntity());
+        IPage<OsInfoEntity> page = osInfoService.getPage(new OsInfoEntity());
+        assertNotNull(page);
     }
 
     @Test
@@ -47,7 +54,8 @@ public class OsInfoServiceTest extends BasisUnitTest {
         OsInfoEntity osInfoEntity = new OsInfoEntity();
         osInfoEntity.setCode("os_test");
         osInfoEntity.setName("测试系统");
-        osInfoService.updateByCode(osInfoEntity);
+        int result = osInfoService.updateByCode(osInfoEntity);
+        assertThat(result, anything());
     }
 
     @Test
@@ -56,6 +64,7 @@ public class OsInfoServiceTest extends BasisUnitTest {
         osInfoEntity.setCode("os_test");
         osInfoEntity.setDeletedBy("admin");
         osInfoEntity.setDeletedDate(LocalDateTime.now());
-        osInfoService.deleteByCode(osInfoEntity);
+        int result = osInfoService.deleteByCode(osInfoEntity);
+        assertThat(result, anything());
     }
 }

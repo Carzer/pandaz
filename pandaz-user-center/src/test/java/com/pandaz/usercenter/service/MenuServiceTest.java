@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.commons.constants.CommonConstants;
 import com.pandaz.commons.dto.usercenter.MenuDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
@@ -12,6 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static org.hamcrest.core.IsAnything.anything;
+import static org.junit.Assert.*;
 
 /**
  * 菜单测试
@@ -34,17 +38,20 @@ public class MenuServiceTest extends BasisUnitTest {
         MenuEntity menuEntity = new MenuEntity();
         menuEntity.setCode("menu_test");
         menuEntity.setName("测试菜单");
-        menuService.insert(menuEntity);
+        int result = menuService.insert(menuEntity);
+        assertEquals(1, result);
     }
 
     @Test
     public void findByCode() {
-        menuService.findByCode("menu_test");
+        MenuEntity test = menuService.findByCode("menu_test");
+        assertThat(test, anything());
     }
 
     @Test
     public void getPage() {
-        menuService.getPage(new MenuEntity());
+        IPage<MenuEntity> page = menuService.getPage(new MenuEntity());
+        assertNotNull(page);
     }
 
     @Test
@@ -52,7 +59,8 @@ public class MenuServiceTest extends BasisUnitTest {
         MenuEntity menuEntity = new MenuEntity();
         menuEntity.setCode("menu_test");
         menuEntity.setName("测试菜单");
-        menuService.updateByCode(menuEntity);
+        int result = menuService.updateByCode(menuEntity);
+        assertThat(result, anything());
     }
 
     @Test
@@ -61,7 +69,8 @@ public class MenuServiceTest extends BasisUnitTest {
         menuEntity.setCode("menu_test");
         menuEntity.setDeletedBy("admin");
         menuEntity.setDeletedDate(LocalDateTime.now());
-        menuService.deleteByCode(menuEntity);
+        int result = menuService.deleteByCode(menuEntity);
+        assertThat(result, anything());
     }
 
     @Test
@@ -73,12 +82,6 @@ public class MenuServiceTest extends BasisUnitTest {
         List<MenuEntity> list = menuService.getAll(menuEntity);
         menuEntity.setChildren(list);
         MenuDTO menuDTO = BeanCopyUtil.copy(menuEntity, MenuDTO.class);
-        System.out.println(menuDTO);
-    }
-
-    @Test
-    public void deleteByCodes() {
-        int size = menuService.deleteByCodes("test", LocalDateTime.now(), List.of("test"));
-        System.out.println("删除结束:" + size);
+        assertThat(menuDTO, anything());
     }
 }

@@ -4,6 +4,9 @@ import com.pandaz.redis.service.RedisHelper;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static org.hamcrest.core.IsAnything.anything;
+import static org.junit.Assert.assertThat;
+
 /**
  * Redis 测试类
  *
@@ -20,9 +23,8 @@ public class RedisTest extends BasisUnitTest {
     }
 
     @Test
-    public void test() {
-//        redisHelper.setObject("test", "test_pandaz");
-
-        System.out.println(redisHelper.getObject("test"));
+    public void getObj() {
+        Object test = redisHelper.getObject("test");
+        assertThat(test, anything());
     }
 }

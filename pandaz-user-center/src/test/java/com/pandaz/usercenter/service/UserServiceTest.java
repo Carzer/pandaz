@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.usercenter.BasisUnitTest;
 import com.pandaz.usercenter.entity.UserEntity;
 import org.junit.Test;
@@ -8,6 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static org.hamcrest.core.IsAnything.anything;
+import static org.junit.Assert.*;
 
 /**
  * 用户测试
@@ -27,12 +31,14 @@ public class UserServiceTest extends BasisUnitTest {
 
     @Test
     public void loadUserByUsername() {
-        userService.loadUserByUsername("admin");
+        UserEntity admin = userService.loadUserByUsername("admin");
+        assertThat(admin, anything());
     }
 
     @Test
     public void findByCode() {
-        userService.findByCode("admin");
+        UserEntity admin = userService.findByCode("admin");
+        assertThat(admin, anything());
     }
 
     @Test
@@ -40,7 +46,8 @@ public class UserServiceTest extends BasisUnitTest {
         UserEntity userEntity = new UserEntity();
         userEntity.setCode("test");
         userEntity.setName("test");
-        userService.updateByCode(userEntity);
+        int result = userService.updateByCode(userEntity);
+        assertThat(result, anything());
     }
 
     @Test
@@ -51,7 +58,8 @@ public class UserServiceTest extends BasisUnitTest {
         userEntity.setLoginName("admin");
         userEntity.setPassword("admin");
         userEntity.setPhone("15000000000");
-        userService.insert(userEntity);
+        int result = userService.insert(userEntity);
+        assertEquals(1, result);
     }
 
     @Test
@@ -60,19 +68,22 @@ public class UserServiceTest extends BasisUnitTest {
         userEntity.setDeletedDate(LocalDateTime.now());
         userEntity.setDeletedBy("admin");
         userEntity.setCode("test17");
-        userService.deleteByCode(userEntity);
+        int result = userService.deleteByCode(userEntity);
+        assertThat(result, anything());
     }
 
     @Test
     public void deleteByCodes() {
         List<String> list = List.of("test17", "test18");
-        userService.deleteByCodes("admin", LocalDateTime.now(), list);
+        int result = userService.deleteByCodes("admin", LocalDateTime.now(), list);
+        assertThat(result, anything());
     }
 
     @Test
     public void getPage() {
         UserEntity userEntity = new UserEntity();
         userEntity.setCode("user_test");
-        userService.getPage(userEntity);
+        IPage<UserEntity> page = userService.getPage(userEntity);
+        assertNotNull(page);
     }
 }

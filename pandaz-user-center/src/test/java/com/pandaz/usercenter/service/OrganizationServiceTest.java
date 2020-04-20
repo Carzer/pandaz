@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.usercenter.BasisUnitTest;
 import com.pandaz.usercenter.entity.OrganizationEntity;
 import org.junit.Test;
@@ -7,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+
+import static org.hamcrest.core.IsAnything.anything;
+import static org.junit.Assert.*;
 
 /**
  * 组织信息测试
@@ -26,12 +30,14 @@ public class OrganizationServiceTest extends BasisUnitTest {
 
     @Test
     public void findByCode() {
-        organizationService.findByCode("org_test");
+        OrganizationEntity test = organizationService.findByCode("org_test");
+        assertThat(test, anything());
     }
 
     @Test
     public void getPage() {
-        organizationService.getPage(new OrganizationEntity());
+        IPage<OrganizationEntity> page = organizationService.getPage(new OrganizationEntity());
+        assertNotNull(page);
     }
 
     @Test
@@ -39,7 +45,8 @@ public class OrganizationServiceTest extends BasisUnitTest {
         OrganizationEntity organizationEntity = new OrganizationEntity();
         organizationEntity.setCode("org_test");
         organizationEntity.setName("测试组织");
-        organizationService.insert(organizationEntity);
+        int result = organizationService.insert(organizationEntity);
+        assertEquals(1, result);
     }
 
     @Test
@@ -47,7 +54,8 @@ public class OrganizationServiceTest extends BasisUnitTest {
         OrganizationEntity organizationEntity = new OrganizationEntity();
         organizationEntity.setCode("org_test");
         organizationEntity.setName("测试组织");
-        organizationService.updateByCode(organizationEntity);
+        int result = organizationService.updateByCode(organizationEntity);
+        assertThat(result, anything());
     }
 
     @Test
@@ -56,6 +64,7 @@ public class OrganizationServiceTest extends BasisUnitTest {
         organizationEntity.setCode("org_test");
         organizationEntity.setDeletedBy("admin");
         organizationEntity.setDeletedDate(LocalDateTime.now());
-        organizationService.deleteByCode(organizationEntity);
+        int result = organizationService.deleteByCode(organizationEntity);
+        assertThat(result, anything());
     }
 }
