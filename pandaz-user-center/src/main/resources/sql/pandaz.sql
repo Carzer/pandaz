@@ -11,7 +11,7 @@
  Target Server Version : 50729
  File Encoding         : utf-8
 
- Date: 04/14/2020 13:14:14 PM
+ Date: 04/21/2020 16:54:30 PM
 */
 
 SET NAMES utf8mb4;
@@ -222,12 +222,9 @@ CREATE TABLE `t_sys_permission` (
                                     `code` varchar(36) NOT NULL COMMENT '权限编码',
                                     `os_code` varchar(50) NOT NULL COMMENT '系统编码',
                                     `menu_code` varchar(50) DEFAULT NULL COMMENT '菜单编码',
-                                    `url` varchar(500) DEFAULT NULL COMMENT '资源URL',
-                                    `request_type` tinyint(4) NOT NULL COMMENT '请求方法(1:get,2:post,3:put,4:delete)',
                                     `bit_digit` tinyint(2) NOT NULL COMMENT '位移数',
                                     `bit_result` int(8) NOT NULL COMMENT '位运算结果',
                                     `level` int(8) DEFAULT NULL COMMENT '权限级别',
-                                    `is_private` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否私有(0:否，1:是)',
                                     `created_by` varchar(50) NOT NULL DEFAULT 'system' COMMENT '创建人',
                                     `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                                     `updated_by` varchar(50) DEFAULT NULL COMMENT '修改人',
@@ -237,7 +234,7 @@ CREATE TABLE `t_sys_permission` (
                                     `deleted_flag` varchar(32) NOT NULL DEFAULT '0' COMMENT '删除标记(0:未删除，其他:已删除)',
                                     `version` int(8) NOT NULL DEFAULT '1' COMMENT '版本号',
                                     PRIMARY KEY (`id`),
-                                    UNIQUE KEY `t_sys_menu_code_key` (`code`,`os_code`,`menu_code`,`deleted_flag`),
+                                    UNIQUE KEY `t_sys_menu_code_key` (`code`,`os_code`,`deleted_flag`),
                                     KEY `t_sys_permission_code_index` (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='权限信息';
 
@@ -280,7 +277,7 @@ CREATE TABLE `t_sys_role_permission` (
                                          `updated_date` datetime DEFAULT NULL COMMENT '更新时间',
                                          `deleted_by` varchar(50) DEFAULT NULL COMMENT '删除人',
                                          `deleted_date` datetime DEFAULT NULL COMMENT '删除时间',
-                                         `deleted_flag` varchar(32) DEFAULT NULL COMMENT '删除标记(0:未删除，其他:已删除)',
+                                         `deleted_flag` varchar(32) DEFAULT '0' COMMENT '删除标记(0:未删除，其他:已删除)',
                                          PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='组-权限关联表';
 
