@@ -37,5 +37,4 @@ public interface RoleMapper extends UcBaseMapper<RoleEntity> {
      * @return java.util.List<com.pandaz.usercenter.entity.RoleEntity>
      */
     List<RoleDetailEntity> getAllRoles(@Value("userCode") String userCode);
-
 }

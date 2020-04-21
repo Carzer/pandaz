@@ -102,7 +102,7 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
         String roleCode = rolePermissionEntity.getRoleCode();
         String osCode = rolePermissionEntity.getOsCode();
         String menuCode = rolePermissionEntity.getMenuCode();
-        List<String> existingCodes = rolePermissionMapper.listCodes(rolePermissionEntity);
+        List<String> existingCodes = rolePermissionMapper.listBindCodes(rolePermissionEntity);
         List<String> newCodes = rolePermissionEntity.getPermissionCodes();
         List<String> codesToRemove = existingCodes.stream().filter(code -> !(newCodes.contains(code))).collect(Collectors.toList());
         List<String> codesToAdd = newCodes.stream().filter(code -> !(existingCodes.contains(code))).collect(Collectors.toList());
@@ -136,8 +136,8 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
      * @return 权限编码
      */
     @Override
-    public List<String> listCodes(RolePermissionEntity rolePermissionEntity) {
-        return rolePermissionMapper.listCodes(rolePermissionEntity);
+    public List<String> listBindCodes(RolePermissionEntity rolePermissionEntity) {
+        return rolePermissionMapper.listBindCodes(rolePermissionEntity);
     }
 
     /**
@@ -158,5 +158,4 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
             rolePermissionMapper.batchLogicDelete(map);
         }
     }
-
 }

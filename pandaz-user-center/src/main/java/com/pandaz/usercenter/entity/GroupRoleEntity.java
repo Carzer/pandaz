@@ -7,6 +7,8 @@ import com.pandaz.commons.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.List;
+
 /**
  * 组-角色关系
  *
@@ -44,7 +46,22 @@ public class GroupRoleEntity extends BaseEntity {
     @TableField("is_private")
     private Byte isPrivate;
 
+    /**
+     * 版本
+     */
     @TableField(exist = false)
     private Integer version;
+
+    /**
+     * 组编码
+     */
+    @TableField(exist = false)
+    private List<String> groupCodes;
+
+    /**
+     * 角色编码
+     */
+    @TableField(exist = false)
+    private List<String> roleCodes;
 
 }

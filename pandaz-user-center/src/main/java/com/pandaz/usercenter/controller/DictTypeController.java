@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -57,7 +57,7 @@ public class DictTypeController {
             result.setData(BeanCopyUtil.copy(dictTypeService.findByCode(dictTypeDTO.getCode()), DictTypeDTO.class));
         } catch (Exception e) {
             log.error("新增字典类型异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "异常"));
         }
         return result;
     }
@@ -69,14 +69,14 @@ public class DictTypeController {
      * @return 分页信息
      */
     @GetMapping(UrlConstants.PAGE)
-    public ExecuteResult<HashMap<String, Object>> getPage(DictTypeDTO dictTypeDTO) {
-        ExecuteResult<HashMap<String, Object>> result = new ExecuteResult<>();
+    public ExecuteResult<Map<String, Object>> getPage(DictTypeDTO dictTypeDTO) {
+        ExecuteResult<Map<String, Object>> result = new ExecuteResult<>();
         try {
             IPage<DictTypeEntity> page = dictTypeService.getPage(BeanCopyUtil.copy(dictTypeDTO, DictTypeEntity.class));
             result.setData(BeanCopyUtil.convertToMap(page, DictTypeDTO.class));
         } catch (Exception e) {
             log.error("分页查询异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "分页查询异常"));
         }
         return result;
     }
@@ -99,7 +99,7 @@ public class DictTypeController {
             result.setData(BeanCopyUtil.copy(dictTypeEntity, DictTypeDTO.class));
         } catch (Exception e) {
             log.error("新增字典类型异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "新增字典类型异常"));
         }
         return result;
     }
@@ -122,7 +122,7 @@ public class DictTypeController {
             result.setData("更新成功");
         } catch (Exception e) {
             log.error("更新字典类型异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "更新字典类型异常"));
         }
         return result;
     }
@@ -146,5 +146,4 @@ public class DictTypeController {
     private void check(DictTypeDTO dictTypeDTO) {
         Assert.hasText(dictTypeDTO.getName(), "字典类型名称不能为空");
     }
-
 }

@@ -38,21 +38,6 @@ public class BaseDTO implements Serializable {
     private LocalDateTime updatedDate;
 
     /**
-     * 删除人
-     */
-    private String deletedBy;
-
-    /**
-     * 删除时间
-     */
-    private LocalDateTime deletedDate;
-
-    /**
-     * 删除标记
-     */
-    private String deletedFlag;
-
-    /**
      * 版本号
      */
     private Integer version;
@@ -102,5 +87,4 @@ public class BaseDTO implements Serializable {
         }
         return pageSize;
     }
-
 }

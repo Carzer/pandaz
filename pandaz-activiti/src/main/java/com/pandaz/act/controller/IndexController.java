@@ -14,10 +14,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 默认controller
@@ -54,12 +51,12 @@ public class IndexController {
      * @return 执行结果
      */
     @GetMapping("/getAllUrl")
-    public ExecuteResult<ArrayList<Map<String, String>>> getAllUrl() {
-        ExecuteResult<ArrayList<Map<String, String>>> result = new ExecuteResult<>();
+    public ExecuteResult<List<Map<String, String>>> getAllUrl() {
+        ExecuteResult<List<Map<String, String>>> result = new ExecuteResult<>();
         RequestMappingHandlerMapping mapping = applicationContext.getBean(RequestMappingHandlerMapping.class);
         // 获取url与类和方法的对应信息
         Map<RequestMappingInfo, HandlerMethod> map = mapping.getHandlerMethods();
-        ArrayList<Map<String, String>> list = new ArrayList<>();
+        List<Map<String, String>> list = new ArrayList<>();
         map.forEach((info, method) -> {
             Set<String> patterns = info.getPatternsCondition().getPatterns();
             Set<RequestMethod> methods = info.getMethodsCondition().getMethods();
@@ -77,5 +74,4 @@ public class IndexController {
         result.setData(list);
         return result;
     }
-
 }

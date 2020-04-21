@@ -110,30 +110,6 @@
             )
         </foreach>
     </insert>
-    <!-- 逻辑删除 -->
-    <update id="logicDelete">
-        update t_sys_role_permission
-        <set>
-            <if test="deletedBy != null">
-                deleted_by = #{deletedBy,jdbcType=VARCHAR},
-            </if>
-            <if test="deletedDate != null">
-                deleted_date = #{deletedDate,jdbcType=TIMESTAMP},
-            </if>
-            deleted_flag = id
-        </set>
-        <where>
-            deleted_flag='0'
-            <choose>
-                <when test="code != null and code != ''">
-                    and code = #{code,jdbcType=VARCHAR}
-                </when>
-                <otherwise>
-                    and 1 = 2
-                </otherwise>
-            </choose>
-        </where>
-    </update>
     <!-- 批量逻辑删除 -->
     <update id="batchLogicDelete" parameterType="java.util.HashMap">
         update t_sys_role_permission
@@ -213,7 +189,7 @@
         </where>
     </update>
     <!-- 查询已绑定的权限编码 -->
-    <select id="listCodes" resultType="java.lang.String"
+    <select id="listBindCodes" resultType="java.lang.String"
             parameterType="com.pandaz.usercenter.entity.RolePermissionEntity">
         select permission_code
         from t_sys_role_permission

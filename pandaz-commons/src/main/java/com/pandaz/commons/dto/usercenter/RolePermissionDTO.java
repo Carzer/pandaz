@@ -35,5 +35,4 @@ public class RolePermissionDTO implements Serializable {
      * 权限
      */
     private List<String> permissionCodes;
-
 }

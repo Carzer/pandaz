@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * oauth2客户端信息
@@ -57,7 +57,7 @@ public class OauthClientController {
             result.setData(BeanCopyUtil.copy(oauthClientService.findByClientId(oauthClientDTO.getClientId()), OauthClientDTO.class));
         } catch (Exception e) {
             log.error("查询方法异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "查询方法异常"));
         }
         return result;
     }
@@ -69,14 +69,14 @@ public class OauthClientController {
      * @return 分页信息
      */
     @GetMapping(UrlConstants.PAGE)
-    public ExecuteResult<HashMap<String, Object>> getPage(OauthClientDTO oauthClientDTO) {
-        ExecuteResult<HashMap<String, Object>> result = new ExecuteResult<>();
+    public ExecuteResult<Map<String, Object>> getPage(OauthClientDTO oauthClientDTO) {
+        ExecuteResult<Map<String, Object>> result = new ExecuteResult<>();
         try {
             IPage<OauthClientEntity> page = oauthClientService.getPage(BeanCopyUtil.copy(oauthClientDTO, OauthClientEntity.class));
             result.setData(BeanCopyUtil.convertToMap(page, OauthClientDTO.class));
         } catch (Exception e) {
             log.error("分页查询异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "分页查询异常"));
         }
         return result;
     }
@@ -100,7 +100,7 @@ public class OauthClientController {
             result.setData(BeanCopyUtil.copy(oauthClientEntity, oauthClientDTO));
         } catch (Exception e) {
             log.error("插入方法异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "插入方法异常"));
         }
         return result;
     }
@@ -123,7 +123,7 @@ public class OauthClientController {
             result.setData("更新成功");
         } catch (Exception e) {
             log.error("更新方法异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "更新方法异常"));
         }
         return result;
     }
@@ -147,5 +147,4 @@ public class OauthClientController {
     private void check(OauthClientDTO oauthClientDTO) {
         Assert.hasText(oauthClientDTO.getClientId(), "clientId不能为空");
     }
-
 }

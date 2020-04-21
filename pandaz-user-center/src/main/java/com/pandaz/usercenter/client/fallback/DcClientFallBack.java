@@ -18,5 +18,4 @@ public class DcClientFallBack implements DcClient {
         log.info("fallback");
         return "fallback";
     }
-
 }

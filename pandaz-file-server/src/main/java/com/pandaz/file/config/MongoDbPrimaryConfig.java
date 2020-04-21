@@ -62,5 +62,4 @@ public class MongoDbPrimaryConfig {
     public GridFsTemplate gridFsPrimaryTemplate(@Qualifier("mongoDbPrimaryFactory") MongoDbFactory mongoDbPrimaryFactory, @Qualifier("mongoPrimaryTemplate") MongoTemplate mongoPrimaryTemplate) {
         return new GridFsTemplate(mongoDbPrimaryFactory, mongoPrimaryTemplate.getConverter());
     }
-
 }

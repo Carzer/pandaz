@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 组织
@@ -56,7 +56,7 @@ public class OrganizationController {
             result.setData(BeanCopyUtil.copy(organizationService.findByCode(organizationDTO.getCode()), OrganizationDTO.class));
         } catch (Exception e) {
             log.error("查询方法异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "查询方法异常"));
         }
         return result;
     }
@@ -68,14 +68,14 @@ public class OrganizationController {
      * @return 分页信息
      */
     @GetMapping(UrlConstants.PAGE)
-    public ExecuteResult<HashMap<String, Object>> getPage(OrganizationDTO organizationDTO) {
-        ExecuteResult<HashMap<String, Object>> result = new ExecuteResult<>();
+    public ExecuteResult<Map<String, Object>> getPage(OrganizationDTO organizationDTO) {
+        ExecuteResult<Map<String, Object>> result = new ExecuteResult<>();
         try {
             IPage<OrganizationEntity> page = organizationService.getPage(BeanCopyUtil.copy(organizationDTO, OrganizationEntity.class));
             result.setData(BeanCopyUtil.convertToMap(page, OrganizationDTO.class));
         } catch (Exception e) {
             log.error("分页查询异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "分页查询异常"));
         }
         return result;
     }
@@ -99,7 +99,7 @@ public class OrganizationController {
             result.setData(BeanCopyUtil.copy(organizationEntity, organizationDTO));
         } catch (Exception e) {
             log.error("插入方法异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "插入方法异常"));
         }
         return result;
     }
@@ -122,7 +122,7 @@ public class OrganizationController {
             result.setData("更新成功");
         } catch (Exception e) {
             log.error("更新方法异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "更新方法异常"));
         }
         return result;
     }
@@ -146,5 +146,4 @@ public class OrganizationController {
     private void check(OrganizationDTO organizationDTO) {
         Assert.hasText(organizationDTO.getName(), "组织名称不能为空");
     }
-
 }

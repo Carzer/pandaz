@@ -18,6 +18,8 @@ import com.pandaz.usercenter.util.SpringBeanUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,9 +27,11 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 菜单服务
@@ -35,6 +39,7 @@ import java.util.Map;
  * @author Carzer
  * @since 2019-11-01
  */
+@CacheConfig(cacheManager = "secondaryCacheManager", cacheNames = {"user-center:menu"})
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Slf4j
@@ -220,11 +225,32 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
      * @return 菜单列表
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    @Cacheable(key = "#osCode+':'+ #roleList.toArray()")
     public List<MenuEntity> getAuthorizedMenu(String osCode, List<String> roleList) {
         Map<String, Object> map = new HashMap<>(2);
+        List<MenuEntity> toRootList = new ArrayList<>();
+        List<String> parentCodes = new ArrayList<>();
         map.put("osCode", osCode);
         map.put("list", roleList);
-        return menuMapper.getAuthorizedMenu(map);
+        List<MenuEntity> menuList = menuMapper.getAuthorizedMenu(map);
+        List<String> allCodes = menuList.stream().map(MenuEntity::getCode).collect(Collectors.toList());
+        // 计算位运算和值，并查找缺失的父级菜单
+        menuList.forEach(menuEntity -> {
+            int bitResult = 1;
+            String parentCode = menuEntity.getParentCode();
+            List<Integer> bitResults = menuEntity.getBitResults();
+            for (Integer br : bitResults) {
+                bitResult |= br;
+            }
+            menuEntity.setBitResult(bitResult);
+            if (!CommonConstants.ROOT_MENU_CODE.equals(parentCode) && !allCodes.contains(parentCode)) {
+                parentCodes.add(parentCode);
+            }
+        });
+        findToRoot(allCodes, parentCodes, toRootList);
+        menuList.addAll(toRootList);
+        return menuList;
     }
 
     /**
@@ -266,4 +292,28 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
         }
     }
 
+    /**
+     * 找到root以下的父级菜单
+     *
+     * @param allCodes   所有已查询过的菜单
+     * @param codes      将要查询的菜单
+     * @param toRootList 所有菜单列表
+     */
+    private void findToRoot(List<String> allCodes, List<String> codes, List<MenuEntity> toRootList) {
+        List<MenuEntity> menuList = menuMapper.selectByCodes(codes);
+        List<String> parentCodes = new ArrayList<>();
+        toRootList.addAll(menuList);
+        for (MenuEntity menuEntity : menuList) {
+            allCodes.add(menuEntity.getCode());
+        }
+        for (MenuEntity menuEntity : menuList) {
+            String parentCode = menuEntity.getParentCode();
+            if (!CommonConstants.ROOT_MENU_CODE.equals(parentCode) && !allCodes.contains(parentCode)) {
+                parentCodes.add(parentCode);
+            }
+        }
+        if (!CollectionUtils.isEmpty(parentCodes)) {
+            findToRoot(allCodes, parentCodes, toRootList);
+        }
+    }
 }

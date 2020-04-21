@@ -89,5 +89,4 @@ public class OauthClientDTO extends BaseDTO {
      * 是否锁定
      */
     private Byte locked;
-
 }

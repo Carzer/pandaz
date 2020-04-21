@@ -37,5 +37,4 @@ public class SecurityExceptionHandler {
         result.setError(msg);
         return result;
     }
-
 }

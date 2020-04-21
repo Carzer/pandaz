@@ -200,5 +200,4 @@ public class RedisHelper {
         redisTemplate.execute(sessionCallback);
         return true;
     }
-
 }

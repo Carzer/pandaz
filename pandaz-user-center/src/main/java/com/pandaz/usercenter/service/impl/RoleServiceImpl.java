@@ -29,6 +29,7 @@ import org.springframework.util.StringUtils;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -114,13 +115,17 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
     @Override
     public Set<GrantedAuthority> findBySecurityUser(SecurityUser securityUser) {
         List<RoleDetailEntity> roleDetailEntities = findByUserCode(securityUser.getUser().getCode());
-        if (CollectionUtils.isEmpty(roleDetailEntities)) {
-            return new HashSet<>();
-        } else {
-            return roleDetailEntities.stream().map(
-                    role -> new SimpleGrantedAuthority(role.getCode())
-            ).collect(Collectors.toSet());
+        Set<GrantedAuthority> authoritySet = new HashSet<>();
+        if (!CollectionUtils.isEmpty(roleDetailEntities)) {
+            // 转换为map，简单去重
+            Map<String, String> authorityMap = roleDetailEntities.stream()
+                    .collect(Collectors.toMap(RoleDetailEntity::getCode, RoleDetailEntity::getCode,
+                            // 如果key值重复，可能会报重复错误
+                            // 增加判断方法，如果重复，则保留第一个
+                            (k1, k2) -> k1));
+            authorityMap.forEach((key, value) -> authoritySet.add(new SimpleGrantedAuthority(value)));
         }
+        return authoritySet;
     }
 
     /**
@@ -216,5 +221,4 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
         });
         return codes.size();
     }
-
 }

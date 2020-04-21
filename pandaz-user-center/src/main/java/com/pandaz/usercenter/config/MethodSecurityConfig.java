@@ -42,5 +42,4 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
         expressionHandler.setPermissionEvaluator(customPermissionEvaluator);
         return expressionHandler;
     }
-
 }

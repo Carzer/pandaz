@@ -42,5 +42,4 @@ public interface OrganizationService extends UcBaseService<OrganizationEntity> {
      * @return 执行结果
      */
     int deleteByCode(OrganizationEntity organizationEntity);
-
 }

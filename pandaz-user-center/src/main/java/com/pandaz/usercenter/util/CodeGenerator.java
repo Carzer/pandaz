@@ -1,4 +1,4 @@
-package com.pandaz.usercenter;
+package com.pandaz.usercenter.util;
 
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
@@ -92,5 +92,4 @@ public class CodeGenerator {
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();
     }
-
 }

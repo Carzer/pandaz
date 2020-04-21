@@ -25,5 +25,4 @@ public class TaskApp {
         String repeat = "=".repeat(20);
         log.warn("{} TaskApp 启动成功 {}",repeat,repeat);
     }
-
 }

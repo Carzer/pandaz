@@ -69,5 +69,4 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
             return haveOauth2Token || haveAccessToken;
         };
     }
-
 }

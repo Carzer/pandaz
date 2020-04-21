@@ -54,5 +54,4 @@ public class FeignOauth2RequestInterceptor implements RequestInterceptor {
             }
         }
     }
-
 }

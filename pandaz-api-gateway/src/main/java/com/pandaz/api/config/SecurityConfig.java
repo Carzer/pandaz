@@ -96,5 +96,4 @@ public class SecurityConfig {
             "/health",
             "/api/socket/**"
     };
-
 }

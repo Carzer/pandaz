@@ -50,5 +50,4 @@ public interface UserService extends UcBaseService<UserEntity> {
      * @return 分页结果
      */
     IPage<UserEntity> getPage(UserEntity userEntity);
-
 }

@@ -42,5 +42,4 @@ public interface GroupService extends UcBaseService<GroupEntity> {
      * @return 执行结果
      */
     int updateByCode(GroupEntity groupEntity);
-
 }

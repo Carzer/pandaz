@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 @Setter
 @Getter
-public final class ExecuteResult<T extends Serializable> {
+public final class ExecuteResult<T> {
 
     /**
      * build 方法

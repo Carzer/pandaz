@@ -39,5 +39,4 @@ public class DictTypeDTO extends BaseDTO {
      * 是否锁定
      */
     private Byte locked;
-
 }

@@ -43,5 +43,4 @@ public class OsInfoDTO extends BaseDTO {
      * 是否锁定
      */
     private Byte locked;
-
 }

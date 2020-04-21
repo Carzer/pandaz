@@ -20,5 +20,4 @@ public class JwtPublicKey {
      * public key
      */
     private String value;
-
 }

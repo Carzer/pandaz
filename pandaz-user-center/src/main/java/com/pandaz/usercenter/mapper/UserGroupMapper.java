@@ -2,6 +2,8 @@ package com.pandaz.usercenter.mapper;
 
 import com.pandaz.usercenter.entity.UserGroupEntity;
 
+import java.util.List;
+
 /**
  * 用户-组关系mapper
  *
@@ -25,4 +27,27 @@ public interface UserGroupMapper extends UcBaseMapper<UserGroupEntity> {
      */
     int logicDeleteByGroupCode(UserGroupEntity userGroupEntity);
 
+    /**
+     * 列出组内成员
+     *
+     * @param userGroupEntity 查询条件
+     * @return 执行结果
+     */
+    List<String> listBindGroupMembers(UserGroupEntity userGroupEntity);
+
+    /**
+     * 列出用户所有的组
+     *
+     * @param userGroupEntity 查询条件
+     * @return 执行结果
+     */
+    List<String> listBindUserGroups(UserGroupEntity userGroupEntity);
+
+    /**
+     * 批量插入
+     *
+     * @param list 成员关系
+     * @return 执行结果
+     */
+    int batchInsert(List<UserGroupEntity> list);
 }

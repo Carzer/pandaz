@@ -1,6 +1,5 @@
 package com.pandaz.usercenter.controller;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.commons.dto.usercenter.*;
 import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.ExecuteResult;
@@ -22,9 +21,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 角色
@@ -66,7 +64,7 @@ public class RoleController {
             result.setData(BeanCopyUtil.copy(roleService.findByCode(roleDTO.getCode()), RoleDTO.class));
         } catch (Exception e) {
             log.error("查询方法异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "查询方法异常"));
         }
         return result;
     }
@@ -78,14 +76,13 @@ public class RoleController {
      * @return 分页信息
      */
     @GetMapping(UrlConstants.PAGE)
-    public ExecuteResult<HashMap<String, Object>> getPage(RoleDTO roleDTO) {
-        ExecuteResult<HashMap<String, Object>> result = new ExecuteResult<>();
+    public ExecuteResult<Map<String, Object>> getPage(RoleDTO roleDTO) {
+        ExecuteResult<Map<String, Object>> result = new ExecuteResult<>();
         try {
-            IPage<RoleEntity> page = roleService.getPage(BeanCopyUtil.copy(roleDTO, RoleEntity.class));
-            result.setData(BeanCopyUtil.convertToMap(page, RoleDTO.class));
+            result.setData(controllerUtil.getRolePage(roleDTO));
         } catch (Exception e) {
             log.error("分页查询异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "分页查询异常"));
         }
         return result;
     }
@@ -112,7 +109,7 @@ public class RoleController {
             result.setData(BeanCopyUtil.copy(roleEntity, roleDTO));
         } catch (Exception e) {
             log.error("插入方法异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "插入方法异常"));
         }
         return result;
     }
@@ -135,7 +132,7 @@ public class RoleController {
             result.setData("更新成功");
         } catch (Exception e) {
             log.error("更新方法异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "更新方法异常"));
         }
         return result;
     }
@@ -158,7 +155,7 @@ public class RoleController {
      * @param principal         当前用户
      * @return 执行结果
      */
-    @PostMapping("/bindPermissions")
+    @PutMapping("/bindPermissions")
     public ExecuteResult<String> bindPermissions(@RequestBody RolePermissionDTO rolePermissionDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
         try {
@@ -167,7 +164,7 @@ public class RoleController {
             result.setData("绑定成功");
         } catch (Exception e) {
             log.error("绑定权限异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "绑定权限异常"));
         }
         return result;
     }
@@ -178,13 +175,13 @@ public class RoleController {
      * @return 系统信息
      */
     @GetMapping("/listAllOs")
-    public ExecuteResult<ArrayList<OsInfoDTO>> listAllOs() {
-        ExecuteResult<ArrayList<OsInfoDTO>> result = new ExecuteResult<>();
+    public ExecuteResult<List<OsInfoDTO>> listAllOs() {
+        ExecuteResult<List<OsInfoDTO>> result = new ExecuteResult<>();
         try {
             result.setData(controllerUtil.listAllOs());
         } catch (Exception e) {
             log.error("获取全部系统信息异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "获取全部系统信息异常"));
         }
         return result;
     }
@@ -198,10 +195,10 @@ public class RoleController {
     public ExecuteResult<MenuDTO> getAllMenu(MenuDTO menuDTO) {
         ExecuteResult<MenuDTO> result = new ExecuteResult<>();
         try {
-            result.setData(controllerUtil.getAllMenu(menuDTO));
+            result.setData(controllerUtil.getAllMenu(menuDTO,false));
         } catch (Exception e) {
             log.error("获取所有菜单异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "获取所有菜单异常"));
         }
         return result;
     }
@@ -213,13 +210,13 @@ public class RoleController {
      * @return 分页信息
      */
     @GetMapping("/getPermissionPage")
-    public ExecuteResult<HashMap<String, Object>> getPermissionPage(PermissionDTO permissionDTO) {
-        ExecuteResult<HashMap<String, Object>> result = new ExecuteResult<>();
+    public ExecuteResult<Map<String, Object>> getPermissionPage(PermissionDTO permissionDTO) {
+        ExecuteResult<Map<String, Object>> result = new ExecuteResult<>();
         try {
             result.setData(controllerUtil.getPermissionPage(permissionDTO));
         } catch (Exception e) {
             log.error("权限分页查询异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "权限分页查询异常"));
         }
         return result;
     }
@@ -231,13 +228,13 @@ public class RoleController {
      * @return 所有菜单
      */
     @GetMapping("/listMenuByOsCode")
-    public ExecuteResult<ArrayList<MenuDTO>> listByOsCode(String osCode) {
-        ExecuteResult<ArrayList<MenuDTO>> result = new ExecuteResult<>();
+    public ExecuteResult<List<MenuDTO>> listByOsCode(String osCode) {
+        ExecuteResult<List<MenuDTO>> result = new ExecuteResult<>();
         try {
             result.setData(controllerUtil.listMenuByOsCode(osCode));
         } catch (Exception e) {
             log.error("根据系统编码获取所有菜单信息异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "根据系统编码获取所有菜单信息异常"));
         }
         return result;
     }
@@ -251,13 +248,13 @@ public class RoleController {
      * @return 权限编码
      */
     @GetMapping("/getPermissionCodes")
-    public ExecuteResult<ArrayList<String>> getPermissionCodes(String roleCode, String osCode, String menuCode) {
-        ExecuteResult<ArrayList<String>> result = new ExecuteResult<>();
+    public ExecuteResult<List<String>> getPermissionCodes(String roleCode, String osCode, String menuCode) {
+        ExecuteResult<List<String>> result = new ExecuteResult<>();
         try {
             result.setData(controllerUtil.getPermissionCodes(roleCode, osCode, menuCode));
         } catch (Exception e) {
             log.error("获取所有权限异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "获取所有权限异常"));
         }
         return result;
     }
@@ -270,5 +267,4 @@ public class RoleController {
     private void check(RoleDTO roleDTO) {
         Assert.hasText(roleDTO.getName(), "角色名不能为空");
     }
-
 }

@@ -65,5 +65,4 @@ public class CustomProperties {
          */
         private Integer secondaryEntryTtl;
     }
-
 }

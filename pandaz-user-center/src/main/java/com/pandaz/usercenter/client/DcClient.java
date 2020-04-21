@@ -20,5 +20,4 @@ public interface DcClient {
      */
     @GetMapping("/dc")
     String consumer();
-
 }

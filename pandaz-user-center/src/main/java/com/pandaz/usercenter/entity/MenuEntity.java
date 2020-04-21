@@ -100,4 +100,15 @@ public class MenuEntity extends BaseEntity {
     @TableField(exist = false)
     private List<MenuEntity> children;
 
+    /**
+     * 位运算结果
+     */
+    @TableField(exist = false)
+    private List<Integer> bitResults;
+
+    /**
+     * 位运算结果
+     */
+    @TableField(exist = false)
+    private Integer bitResult;
 }

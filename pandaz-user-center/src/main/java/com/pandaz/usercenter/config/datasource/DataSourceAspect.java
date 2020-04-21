@@ -65,5 +65,4 @@ public class DataSourceAspect {
         DynamicDataSourceHolder.removeDataSource();
         log.debug("Thread: {}, remove dataSourceKey:[{}] from thread-local success", threadName, dataSourceName);
     }
-
 }

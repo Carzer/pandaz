@@ -2,6 +2,8 @@ package com.pandaz.usercenter.mapper;
 
 import com.pandaz.usercenter.entity.GroupRoleEntity;
 
+import java.util.List;
+
 /**
  * 组-角色关系mapper
  *
@@ -26,4 +28,27 @@ public interface GroupRoleMapper extends UcBaseMapper<GroupRoleEntity> {
      */
     int logicDeleteByRoleCode(GroupRoleEntity groupRoleEntity);
 
+    /**
+     * 列出绑定的角色
+     *
+     * @param groupRoleEntity 条件
+     * @return 角色
+     */
+    List<String> listBindGroupRoles(GroupRoleEntity groupRoleEntity);
+
+    /**
+     * 列出绑定的组
+     *
+     * @param groupRoleEntity 条件
+     * @return 组
+     */
+    List<String> listBindRoleGroups(GroupRoleEntity groupRoleEntity);
+
+    /**
+     * 批量插入
+     *
+     * @param list list
+     * @return 执行结果
+     */
+    int batchInsert(List<GroupRoleEntity> list);
 }

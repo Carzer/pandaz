@@ -23,5 +23,4 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
         // 从共享线程中获取数据源名称
         return DynamicDataSourceHolder.getDataSource();
     }
-
 }

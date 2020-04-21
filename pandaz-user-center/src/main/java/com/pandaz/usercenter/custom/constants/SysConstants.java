@@ -61,6 +61,11 @@ public final class SysConstants {
     public static final Byte LOCKED = 1;
 
     /**
+     * 二进制权限之和
+     */
+    public static final Integer TOTAL_DIGIT_RESULT = 67108863;
+
+    /**
      * 最大位移数
      */
     public static final Byte MAX_DIGIT = 25;
@@ -84,5 +89,4 @@ public final class SysConstants {
      * 默认session、token过期时间为60分钟
      */
     public static final int DEFAULT_EXPIRE_SECONDS = 60 * 60;
-
 }

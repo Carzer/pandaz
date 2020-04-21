@@ -1,6 +1,5 @@
 package com.pandaz.usercenter.controller;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.commons.dto.usercenter.UserDTO;
 import com.pandaz.commons.dto.usercenter.UserPwdDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
@@ -20,8 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用户
@@ -59,7 +58,7 @@ public class UserController {
             result.setData(dto);
         } catch (Exception e) {
             log.error("查询方法异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "查询方法异常"));
         }
         return result;
     }
@@ -71,14 +70,13 @@ public class UserController {
      * @return 执行结果
      */
     @GetMapping(UrlConstants.PAGE)
-    public ExecuteResult<HashMap<String, Object>> getPage(UserDTO userDTO) {
-        ExecuteResult<HashMap<String, Object>> result = new ExecuteResult<>();
+    public ExecuteResult<Map<String, Object>> getPage(UserDTO userDTO) {
+        ExecuteResult<Map<String, Object>> result = new ExecuteResult<>();
         try {
-            IPage<UserEntity> page = userService.getPage(BeanCopyUtil.copy(userDTO, UserEntity.class));
-            result.setData(BeanCopyUtil.convertToMap(page, UserDTO.class));
+            result.setData(controllerUtil.getUserPage(userDTO));
         } catch (Exception e) {
             log.error("分页查询异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "分页查询异常"));
         }
         return result;
     }
@@ -110,7 +108,7 @@ public class UserController {
             result.setData(BeanCopyUtil.copy(user, UserDTO.class));
         } catch (Exception e) {
             log.error("插入方法异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "插入方法异常"));
         }
         return result;
     }
@@ -133,7 +131,7 @@ public class UserController {
             result.setData("更新成功。");
         } catch (Exception e) {
             log.error("更新方法异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "更新方法异常"));
         }
         return result;
     }
@@ -161,5 +159,4 @@ public class UserController {
         Assert.hasText(userDTO.getName(), "用户名不能为空");
         Assert.hasText(userDTO.getPhone(), "电话号码不能为空");
     }
-
 }

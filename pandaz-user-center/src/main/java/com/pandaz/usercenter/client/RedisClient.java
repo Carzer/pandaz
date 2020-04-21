@@ -36,5 +36,4 @@ public interface RedisClient {
      */
     @PostMapping("/setValue")
     ExecuteResult<String> setRedisValue(@RequestParam String value);
-
 }

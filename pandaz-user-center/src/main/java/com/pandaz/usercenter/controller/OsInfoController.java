@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 系统信息
@@ -56,7 +56,7 @@ public class OsInfoController {
             result.setData(BeanCopyUtil.copy(osInfoService.findByCode(osInfoDTO.getCode()), OsInfoDTO.class));
         } catch (Exception e) {
             log.error("查询方法异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "查询方法异常"));
         }
         return result;
     }
@@ -68,14 +68,14 @@ public class OsInfoController {
      * @return 分页信息
      */
     @GetMapping(UrlConstants.PAGE)
-    public ExecuteResult<HashMap<String, Object>> getPage(OsInfoDTO osInfoDTO) {
-        ExecuteResult<HashMap<String, Object>> result = new ExecuteResult<>();
+    public ExecuteResult<Map<String, Object>> getPage(OsInfoDTO osInfoDTO) {
+        ExecuteResult<Map<String, Object>> result = new ExecuteResult<>();
         try {
             IPage<OsInfoEntity> page = osInfoService.getPage(BeanCopyUtil.copy(osInfoDTO, OsInfoEntity.class));
             result.setData(BeanCopyUtil.convertToMap(page, OsInfoDTO.class));
         } catch (Exception e) {
             log.error("分页查询异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "分页查询异常"));
         }
         return result;
     }
@@ -99,7 +99,7 @@ public class OsInfoController {
             result.setData(BeanCopyUtil.copy(osInfoEntity, osInfoDTO));
         } catch (Exception e) {
             log.error("插入方法异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "插入方法异常"));
         }
         return result;
     }
@@ -122,7 +122,7 @@ public class OsInfoController {
             result.setData("更新成功");
         } catch (Exception e) {
             log.error("更新方法异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "更新方法异常"));
         }
         return result;
     }
@@ -146,5 +146,4 @@ public class OsInfoController {
     private void check(OsInfoDTO osInfoDTO) {
         Assert.hasText(osInfoDTO.getName(), "系统名称不能为空");
     }
-
 }

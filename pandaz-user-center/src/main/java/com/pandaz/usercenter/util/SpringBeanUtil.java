@@ -62,5 +62,4 @@ public class SpringBeanUtil implements ApplicationContextAware {
     public static <T> T getBean(String name) {
         return (T) getApplicationContext().getBean(name);
     }
-
 }

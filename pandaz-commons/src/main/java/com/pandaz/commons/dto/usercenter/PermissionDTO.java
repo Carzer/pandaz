@@ -55,11 +55,6 @@ public class PermissionDTO extends BaseDTO {
     private String menuName;
 
     /**
-     * 请求类型get\post\put\delete
-     */
-    private Byte requestType;
-
-    /**
      * 位移数
      */
     private Byte bitDigit;
@@ -73,15 +68,4 @@ public class PermissionDTO extends BaseDTO {
      * 权限级别，只有组织级别小于等于权限级别，才可使用该权限
      */
     private Integer level;
-
-    /**
-     * 是否私有(0:否，1:是)
-     */
-    private Byte isPrivate;
-
-    /**
-     * 倒序排列
-     */
-    private String orderDesc;
-
 }

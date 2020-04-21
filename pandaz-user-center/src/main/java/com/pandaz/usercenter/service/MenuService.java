@@ -76,5 +76,4 @@ public interface MenuService extends UcBaseService<MenuEntity> {
      * @return 菜单列表
      */
     List<MenuEntity> getAuthorizedMenu(String osCode, List<String> roleList);
-
 }

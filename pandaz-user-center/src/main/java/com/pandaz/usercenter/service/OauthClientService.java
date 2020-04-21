@@ -53,5 +53,4 @@ public interface OauthClientService extends UcBaseService<OauthClientEntity> {
      * @return 分页
      */
     IPage<OauthClientEntity> getPage(OauthClientEntity oauthClientEntity);
-
 }

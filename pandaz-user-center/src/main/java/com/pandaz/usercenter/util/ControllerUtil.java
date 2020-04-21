@@ -2,19 +2,16 @@ package com.pandaz.usercenter.util;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.commons.constants.CommonConstants;
-import com.pandaz.commons.dto.usercenter.DictTypeDTO;
-import com.pandaz.commons.dto.usercenter.MenuDTO;
-import com.pandaz.commons.dto.usercenter.OsInfoDTO;
-import com.pandaz.commons.dto.usercenter.PermissionDTO;
+import com.pandaz.commons.dto.usercenter.*;
 import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.ExecuteResult;
-import com.pandaz.usercenter.entity.MenuEntity;
-import com.pandaz.usercenter.entity.PermissionEntity;
-import com.pandaz.usercenter.entity.RolePermissionEntity;
+import com.pandaz.usercenter.custom.constants.SysConstants;
+import com.pandaz.usercenter.entity.*;
 import com.pandaz.usercenter.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -36,6 +33,12 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ControllerUtil<S extends UcBaseService> {
+
+    /**
+     * 是否简化错误的返回信息
+     */
+    @Value("${custom.simpleErrorMessage}")
+    private boolean simpleErrorMessage;
 
     /**
      * 系统信息服务
@@ -63,6 +66,16 @@ public class ControllerUtil<S extends UcBaseService> {
     private final RolePermissionService rolePermissionService;
 
     /**
+     * 用户服务
+     */
+    private final UserService userService;
+
+    /**
+     * 角色服务
+     */
+    private final RoleService roleService;
+
+    /**
      * 执行删除方法并获取结果
      *
      * @param service     调用服务
@@ -79,7 +92,7 @@ public class ControllerUtil<S extends UcBaseService> {
             result.setData("删除成功");
         } catch (Exception e) {
             log.error("删除方法异常：", e);
-            result.setError(e.getMessage());
+            result.setError(errorMsg(e, "删除方法异常"));
         }
         return result;
     }
@@ -89,8 +102,8 @@ public class ControllerUtil<S extends UcBaseService> {
      *
      * @return 系统信息
      */
-    public ArrayList<OsInfoDTO> listAllOs() {
-        return (ArrayList<OsInfoDTO>) BeanCopyUtil.copyList(osInfoService.list(), OsInfoDTO.class);
+    public List<OsInfoDTO> listAllOs() {
+        return BeanCopyUtil.copyList(osInfoService.list(), OsInfoDTO.class);
     }
 
     /**
@@ -98,8 +111,8 @@ public class ControllerUtil<S extends UcBaseService> {
      *
      * @return 字典类型
      */
-    public ArrayList<DictTypeDTO> listAllTypes() {
-        return (ArrayList<DictTypeDTO>) BeanCopyUtil.copyList(dictTypeService.list(), DictTypeDTO.class);
+    public List<DictTypeDTO> listAllTypes() {
+        return BeanCopyUtil.copyList(dictTypeService.list(), DictTypeDTO.class);
     }
 
     /**
@@ -107,12 +120,12 @@ public class ControllerUtil<S extends UcBaseService> {
      *
      * @return 菜单信息
      */
-    public MenuDTO getAllMenu(MenuDTO menuDTO) {
+    public MenuDTO getAllMenu(MenuDTO menuDTO, Boolean superAdmin) {
         MenuEntity menuEntity = BeanCopyUtil.copy(menuDTO, MenuEntity.class);
         menuEntity.setParentCode(CommonConstants.ROOT_MENU_CODE);
         List<MenuEntity> list = menuService.getAll(menuEntity);
         menuEntity.setChildren(list);
-        return transferToDTO(menuEntity);
+        return transferToDTO(menuEntity, superAdmin);
     }
 
     /**
@@ -121,7 +134,7 @@ public class ControllerUtil<S extends UcBaseService> {
      * @param permissionDTO 查询条件
      * @return 分页结果
      */
-    public HashMap<String, Object> getPermissionPage(PermissionDTO permissionDTO) {
+    public Map<String, Object> getPermissionPage(PermissionDTO permissionDTO) {
         IPage<PermissionEntity> page = permissionService.getPage(BeanCopyUtil.copy(permissionDTO, PermissionEntity.class));
         return BeanCopyUtil.convertToMap(page, PermissionDTO.class);
     }
@@ -132,11 +145,11 @@ public class ControllerUtil<S extends UcBaseService> {
      * @param osCode 系统编码
      * @return 菜单信息
      */
-    public ArrayList<MenuDTO> listMenuByOsCode(String osCode) {
+    public List<MenuDTO> listMenuByOsCode(String osCode) {
         Map<String, Object> map = new HashMap<>(1);
         map.put("os_code", osCode);
         List<MenuEntity> list = menuService.listByMap(map);
-        return (ArrayList<MenuDTO>) BeanCopyUtil.copyList(list, MenuDTO.class);
+        return BeanCopyUtil.copyList(list, MenuDTO.class);
     }
 
     /**
@@ -145,12 +158,12 @@ public class ControllerUtil<S extends UcBaseService> {
      * @param menuEntity entity
      * @return dto
      */
-    private MenuDTO transferToDTO(MenuEntity menuEntity) {
+    private MenuDTO transferToDTO(MenuEntity menuEntity, Boolean superAdmin) {
         MenuDTO menuDTO = new MenuDTO();
         List<MenuEntity> entityList = menuEntity.getChildren();
         if (!CollectionUtils.isEmpty(entityList)) {
             List<MenuDTO> dtoList = new ArrayList<>();
-            entityList.forEach(menu -> dtoList.add(transferToDTO(menu)));
+            entityList.forEach(menu -> dtoList.add(transferToDTO(menu, superAdmin)));
             menuDTO.setChildren(dtoList);
         }
         menuDTO.setId(menuEntity.getId());
@@ -164,6 +177,9 @@ public class ControllerUtil<S extends UcBaseService> {
         menuDTO.setLocked(menuEntity.getLocked());
         menuDTO.setSorting(menuEntity.getSorting());
         menuDTO.setIsLeafNode(menuEntity.getIsLeafNode());
+        if (superAdmin) {
+            menuDTO.setBitResult(SysConstants.TOTAL_DIGIT_RESULT);
+        }
         return menuDTO;
     }
 
@@ -175,15 +191,50 @@ public class ControllerUtil<S extends UcBaseService> {
      * @param menuCode 菜单编码
      * @return 权限编码
      */
-    public ArrayList<String> getPermissionCodes(String roleCode, String osCode, String menuCode) {
+    public List<String> getPermissionCodes(String roleCode, String osCode, String menuCode) {
         if (StringUtils.hasText(roleCode) && StringUtils.hasText(osCode) && StringUtils.hasText(menuCode)) {
             RolePermissionEntity rolePermissionEntity = new RolePermissionEntity();
             rolePermissionEntity.setRoleCode(roleCode);
             rolePermissionEntity.setOsCode(osCode);
             rolePermissionEntity.setMenuCode(menuCode);
-            return (ArrayList<String>) rolePermissionService.listCodes(rolePermissionEntity);
+            return rolePermissionService.listBindCodes(rolePermissionEntity);
         }
         return new ArrayList<>();
     }
 
+    /**
+     * 获取用户分页
+     *
+     * @param userDTO 分页信息
+     * @return 分页结果
+     */
+    public Map<String, Object> getUserPage(UserDTO userDTO) {
+        IPage<UserEntity> page = userService.getPage(BeanCopyUtil.copy(userDTO, UserEntity.class));
+        return BeanCopyUtil.convertToMap(page, UserDTO.class);
+    }
+
+    /**
+     * 获取角色分页
+     *
+     * @param roleDTO 分页信息
+     * @return 分页结果
+     */
+    public Map<String, Object> getRolePage(RoleDTO roleDTO) {
+        IPage<RoleEntity> page = roleService.getPage(BeanCopyUtil.copy(roleDTO, RoleEntity.class));
+        return BeanCopyUtil.convertToMap(page, RoleDTO.class);
+    }
+
+    /**
+     * 根据环境获取错误信息
+     *
+     * @param e          错误信息
+     * @param simpleText 简化的说明信息
+     * @return 错误信息
+     */
+    public String errorMsg(Exception e, String simpleText) {
+        if (simpleErrorMessage) {
+            return simpleText;
+        }
+        return e.getMessage();
+    }
 }

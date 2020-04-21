@@ -144,5 +144,4 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictTypeEnt
         map.put("list", codes);
         return dictTypeMapper.batchLogicDelete(map);
     }
-
 }

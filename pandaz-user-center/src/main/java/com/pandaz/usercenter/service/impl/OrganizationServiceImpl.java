@@ -142,5 +142,4 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
         map.put("list", codes);
         return organizationMapper.batchLogicDelete(map);
     }
-
 }

@@ -44,5 +44,4 @@ public interface DictTypeService extends UcBaseService<DictTypeEntity> {
      * @return 执行结果
      */
     int deleteByCode(DictTypeEntity dictTypeEntity);
-
 }

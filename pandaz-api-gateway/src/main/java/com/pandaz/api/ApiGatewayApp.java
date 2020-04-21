@@ -25,5 +25,4 @@ public class ApiGatewayApp {
         String repeat = "=".repeat(20);
         log.warn("{} ApiGatewayApp 启动成功 {}", repeat, repeat);
     }
-
 }

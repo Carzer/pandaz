@@ -34,5 +34,4 @@ public class MqReceiver {
     public void process(String message) {
         LOGGER.info("Received: {}", message);
     }
-
 }

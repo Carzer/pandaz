@@ -25,5 +25,4 @@ public class FileServerApp {
         String repeat = "=".repeat(20);
         log.warn("{} FileServerApp 启动成功 {}", repeat, repeat);
     }
-
 }

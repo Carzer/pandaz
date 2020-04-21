@@ -50,5 +50,4 @@ public interface PermissionService extends UcBaseService<PermissionEntity> {
      * @return 执行结果
      */
     int deleteByMenuCode(PermissionEntity permissionEntity);
-
 }

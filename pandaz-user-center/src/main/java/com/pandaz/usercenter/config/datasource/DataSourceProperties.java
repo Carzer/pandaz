@@ -28,5 +28,4 @@ public class DataSourceProperties {
      */
     @NestedConfigurationProperty
     private HikariDataSource ds1;
-
 }

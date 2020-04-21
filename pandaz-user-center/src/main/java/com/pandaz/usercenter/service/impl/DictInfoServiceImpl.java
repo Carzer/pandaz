@@ -137,5 +137,4 @@ public class DictInfoServiceImpl extends ServiceImpl<DictInfoMapper, DictInfoEnt
     public DictInfoEntity getWithTypeName(String code) {
         return dictInfoMapper.getWithTypeName(code);
     }
-
 }

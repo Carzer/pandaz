@@ -37,7 +37,6 @@ public class PermissionServiceTest extends BasisUnitTest {
         permissionEntity.setCode("per_test");
         permissionEntity.setName("测试权限");
         permissionEntity.setOsCode("portal");
-        permissionEntity.setRequestType(Byte.valueOf("1"));
         permissionEntity.setBitDigit(Byte.valueOf("1"));
         permissionEntity.setBitResult(1 >> permissionEntity.getBitDigit());
         int result = permissionService.insert(permissionEntity);

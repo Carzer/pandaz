@@ -88,5 +88,4 @@ public class CustomDaoAuthenticationProvider extends DaoAuthenticationProvider {
                                                   UsernamePasswordAuthenticationToken authentication) {
         super.additionalAuthenticationChecks(userDetails, authentication);
     }
-
 }

@@ -11,13 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
+import static org.junit.Assert.fail;
+
 /**
  * 初始化
  *
  * @author Carzer
  * @since 2020-03-30
  */
-@Transactional
 public class InitTest extends BasisUnitTest {
 
     private OauthClientService oauthClientService;
@@ -49,11 +50,16 @@ public class InitTest extends BasisUnitTest {
     }
 
     @Test
+    @Transactional(rollbackFor = Exception.class)
     public void insert() {
-        insertUser();
-        insertClient();
-        insertRole();
-        bindUserAndRole();
+        try {
+            insertUser();
+            insertClient();
+            insertRole();
+            bindUserAndRole();
+        } catch (Exception e) {
+            fail();
+        }
     }
 
     private void insertUser() {

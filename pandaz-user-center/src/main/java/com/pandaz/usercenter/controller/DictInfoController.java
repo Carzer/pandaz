@@ -19,9 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -60,7 +59,7 @@ public class DictInfoController {
             result.setData(BeanCopyUtil.copy(dictInfoService.getWithTypeName(dictInfoDTO.getCode()), DictInfoDTO.class));
         } catch (Exception e) {
             log.error("查询方法异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "查询方法异常"));
         }
         return result;
     }
@@ -72,14 +71,14 @@ public class DictInfoController {
      * @return 分页信息
      */
     @GetMapping(UrlConstants.PAGE)
-    public ExecuteResult<HashMap<String, Object>> getPage(DictInfoDTO dictInfoDTO) {
-        ExecuteResult<HashMap<String, Object>> result = new ExecuteResult<>();
+    public ExecuteResult<Map<String, Object>> getPage(DictInfoDTO dictInfoDTO) {
+        ExecuteResult<Map<String, Object>> result = new ExecuteResult<>();
         try {
             IPage<DictInfoEntity> page = dictInfoService.getPage(BeanCopyUtil.copy(dictInfoDTO, DictInfoEntity.class));
             result.setData(BeanCopyUtil.convertToMap(page, DictInfoDTO.class));
         } catch (Exception e) {
             log.error("分页查询异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "分页查询异常"));
         }
         return result;
     }
@@ -102,7 +101,7 @@ public class DictInfoController {
             result.setData(BeanCopyUtil.copy(dictInfoEntity, dictInfoDTO));
         } catch (Exception e) {
             log.error("插入方法异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "插入方法异常"));
         }
         return result;
     }
@@ -125,7 +124,7 @@ public class DictInfoController {
             result.setData("更新成功");
         } catch (Exception e) {
             log.error("更新方法异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "更新方法异常"));
         }
         return result;
     }
@@ -147,13 +146,13 @@ public class DictInfoController {
      * @return 字典类型
      */
     @GetMapping("/listAllTypes")
-    public ExecuteResult<ArrayList<DictTypeDTO>> listAllTypes() {
-        ExecuteResult<ArrayList<DictTypeDTO>> result = new ExecuteResult<>();
+    public ExecuteResult<List<DictTypeDTO>> listAllTypes() {
+        ExecuteResult<List<DictTypeDTO>> result = new ExecuteResult<>();
         try {
             result.setData(controllerUtil.listAllTypes());
         } catch (Exception e) {
             log.error("获取全部字典类型异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "获取全部字典类型异常"));
         }
         return result;
     }
@@ -167,5 +166,4 @@ public class DictInfoController {
         Assert.hasText(dictInfoDTO.getName(), "字典信息名称不能为空");
         Assert.hasText(dictInfoDTO.getTypeCode(), "请关联字典类型");
     }
-
 }

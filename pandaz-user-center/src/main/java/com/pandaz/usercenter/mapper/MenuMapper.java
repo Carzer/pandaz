@@ -44,4 +44,12 @@ public interface MenuMapper extends UcBaseMapper<MenuEntity> {
      * @return 菜单列表
      */
     List<MenuEntity> getAuthorizedMenu(Map<String, Object> map);
+
+    /**
+     * 查询所有符合编码的菜单
+     *
+     * @param codes 编码
+     * @return 菜单
+     */
+    List<MenuEntity> selectByCodes(List<String> codes);
 }

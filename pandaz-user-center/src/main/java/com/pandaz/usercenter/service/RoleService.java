@@ -73,5 +73,4 @@ public interface RoleService extends UcBaseService<RoleEntity> {
      * @return 执行结果
      */
     int updateByCode(RoleEntity roleEntity);
-
 }

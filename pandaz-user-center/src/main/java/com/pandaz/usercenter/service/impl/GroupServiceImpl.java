@@ -209,5 +209,4 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupEntity> impl
         });
         return codes.size();
     }
-
 }

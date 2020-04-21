@@ -259,5 +259,4 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         });
         return codes.size();
     }
-
 }

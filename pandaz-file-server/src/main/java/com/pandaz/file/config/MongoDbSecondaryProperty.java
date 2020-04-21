@@ -34,5 +34,4 @@ public class MongoDbSecondaryProperty {
      * 数据库密码
      */
     private String pwd;
-
 }

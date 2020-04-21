@@ -41,5 +41,4 @@ public class RedisClientFallBackFactory implements FallbackFactory<RedisClient> 
             }
         };
     }
-
 }

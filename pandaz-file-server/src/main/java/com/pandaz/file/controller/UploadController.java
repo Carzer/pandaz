@@ -19,5 +19,4 @@ public class UploadController {
     public String handleFileUpload(@RequestPart(value = "file") MultipartFile file) {
         return file.getOriginalFilename();
     }
-
 }

@@ -20,5 +20,4 @@ public class UploadClientFallBackFactory implements FallbackFactory<UploadClient
         UploadClientFallBackFactory.log.error("fallback; reason was: ", cause);
         return file -> "fallback";
     }
-
 }

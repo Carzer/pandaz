@@ -24,5 +24,4 @@ public @interface SysLog {
 
     // 是否从返回值中获取内容
     int getFromReturning() default 0;
-
 }

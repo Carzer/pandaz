@@ -52,5 +52,4 @@ public interface DictInfoService extends UcBaseService<DictInfoEntity> {
      * @return 结果
      */
     DictInfoEntity getWithTypeName(String code);
-
 }

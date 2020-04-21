@@ -85,4 +85,8 @@ public class MenuDTO extends BaseDTO {
      */
     private List<MenuDTO> children;
 
+    /**
+     * 位运算结果
+     */
+    private Integer bitResult;
 }

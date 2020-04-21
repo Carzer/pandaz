@@ -43,5 +43,4 @@ public interface UploadClient {
             return new SpringFormEncoder();
         }
     }
-
 }

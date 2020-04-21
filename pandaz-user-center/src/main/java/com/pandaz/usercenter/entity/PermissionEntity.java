@@ -63,13 +63,6 @@ public class PermissionEntity extends BaseEntity {
     private String menuName;
 
     /**
-     * 请求类型get\post\put\delete
-     * {@link com.pandaz.usercenter.custom.constants.PermissionConstants}
-     */
-    @TableField("request_type")
-    private Byte requestType;
-
-    /**
      * 位移数
      */
     @TableField("bit_digit")
@@ -86,17 +79,4 @@ public class PermissionEntity extends BaseEntity {
      */
     @TableField("level")
     private Integer level;
-
-    /**
-     * 是否私有(0:否，1:是)
-     */
-    @TableField("is_private")
-    private Byte isPrivate;
-
-    /**
-     * 倒序排列
-     */
-    @TableField(exist = false)
-    private String orderDesc;
-
 }

@@ -5,6 +5,8 @@ import com.pandaz.commons.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.List;
+
 /**
  * 用户-组关系
  *
@@ -44,5 +46,17 @@ public class UserGroupEntity extends BaseEntity {
 
     @TableField(exist = false)
     private Integer version;
+
+    /**
+     * 用户编码列表
+     */
+    @TableField(exist = false)
+    private List<String> userCodes;
+
+    /**
+     * 组编码列表
+     */
+    @TableField(exist = false)
+    private List<String> groupCodes;
 
 }

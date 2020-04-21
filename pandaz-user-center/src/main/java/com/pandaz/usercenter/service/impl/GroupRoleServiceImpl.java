@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 组-角色服务
@@ -92,6 +93,100 @@ public class GroupRoleServiceImpl extends ServiceImpl<GroupRoleMapper, GroupRole
     }
 
     /**
+     * 列出绑定的角色
+     *
+     * @param groupRoleEntity 条件
+     * @return 角色
+     */
+    @Override
+    public List<String> listBindGroupRoles(GroupRoleEntity groupRoleEntity) {
+        return groupRoleMapper.listBindGroupRoles(groupRoleEntity);
+    }
+
+    /**
+     * 列出绑定的组
+     *
+     * @param groupRoleEntity 条件
+     * @return 组
+     */
+    @Override
+    public List<String> listBindRoleGroups(GroupRoleEntity groupRoleEntity) {
+        return groupRoleMapper.listBindRoleGroups(groupRoleEntity);
+    }
+
+    /**
+     * 绑定组-角色关系
+     *
+     * @param operator        操作者
+     * @param currentDate     当前时间
+     * @param groupRoleEntity 组-角色关系
+     * @return 执行结果
+     */
+    @Override
+    public int bindGroupRole(String operator, LocalDateTime currentDate, GroupRoleEntity groupRoleEntity) {
+        String groupCode = groupRoleEntity.getGroupCode();
+        groupRoleEntity.setRoleCode(null);
+        List<String> existingCodes = groupRoleMapper.listBindGroupRoles(groupRoleEntity);
+        List<String> newCodes = groupRoleEntity.getRoleCodes();
+        List<String> codesToRemove = existingCodes.stream().filter(code -> !(newCodes.contains(code))).collect(Collectors.toList());
+        List<String> codesToAdd = newCodes.stream().filter(code -> !(existingCodes.contains(code))).collect(Collectors.toList());
+        // 清理之前的关系
+        groupRoleEntity.setDeletedBy(operator);
+        groupRoleEntity.setDeletedDate(currentDate);
+        deleteByCodes(groupRoleEntity, codesToRemove);
+        // 保存关系
+        List<GroupRoleEntity> list = codesToAdd.stream().map(code -> {
+            GroupRoleEntity groupRole = new GroupRoleEntity();
+            groupRole.setId(UuidUtil.getId());
+            groupRole.setGroupCode(groupCode);
+            groupRole.setRoleCode(code);
+            groupRole.setCreatedBy(operator);
+            groupRole.setCreatedDate(currentDate);
+            return groupRole;
+        }).collect(Collectors.toList());
+        if (!CollectionUtils.isEmpty(list)) {
+            return groupRoleMapper.batchInsert(list);
+        }
+        return 0;
+    }
+
+    /**
+     * 绑定角色-组关系
+     *
+     * @param operator        操作者
+     * @param currentDate     当前时间
+     * @param groupRoleEntity 组-角色关系
+     * @return 执行结果
+     */
+    @Override
+    public int bindRoleGroup(String operator, LocalDateTime currentDate, GroupRoleEntity groupRoleEntity) {
+        String roleCode = groupRoleEntity.getRoleCode();
+        groupRoleEntity.setGroupCode(null);
+        List<String> existingCodes = groupRoleMapper.listBindRoleGroups(groupRoleEntity);
+        List<String> newCodes = groupRoleEntity.getGroupCodes();
+        List<String> codesToRemove = existingCodes.stream().filter(code -> !(newCodes.contains(code))).collect(Collectors.toList());
+        List<String> codesToAdd = newCodes.stream().filter(code -> !(existingCodes.contains(code))).collect(Collectors.toList());
+        // 清理之前的关系
+        groupRoleEntity.setDeletedBy(operator);
+        groupRoleEntity.setDeletedDate(currentDate);
+        deleteByCodes(groupRoleEntity, codesToRemove);
+        // 保存关系
+        List<GroupRoleEntity> list = codesToAdd.stream().map(code -> {
+            GroupRoleEntity groupRole = new GroupRoleEntity();
+            groupRole.setId(UuidUtil.getId());
+            groupRole.setGroupCode(code);
+            groupRole.setRoleCode(roleCode);
+            groupRole.setCreatedBy(operator);
+            groupRole.setCreatedDate(currentDate);
+            return groupRole;
+        }).collect(Collectors.toList());
+        if (!CollectionUtils.isEmpty(list)) {
+            return groupRoleMapper.batchInsert(list);
+        }
+        return 0;
+    }
+
+    /**
      * 批量删除
      *
      * @param deletedBy   删除人
@@ -101,14 +196,24 @@ public class GroupRoleServiceImpl extends ServiceImpl<GroupRoleMapper, GroupRole
      */
     @Override
     public int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
-        if (CollectionUtils.isEmpty(codes)) {
-            return 0;
-        }
-        Map<String, Object> map = new HashMap<>(3);
-        map.put("deletedBy", deletedBy);
-        map.put("deletedDate", deletedDate);
-        map.put("list", codes);
-        return groupRoleMapper.batchLogicDelete(map);
+        return 0;
     }
 
+    /**
+     * 删除绑定权限
+     *
+     * @param groupRoleEntity groupRoleEntity
+     * @param codes           codes
+     */
+    private void deleteByCodes(GroupRoleEntity groupRoleEntity, List<String> codes) {
+        if (!CollectionUtils.isEmpty(codes)) {
+            Map<String, Object> map = new HashMap<>(5);
+            map.put("deletedBy", groupRoleEntity.getDeletedBy());
+            map.put("deletedDate", groupRoleEntity.getDeletedDate());
+            map.put("roleCode", groupRoleEntity.getRoleCode());
+            map.put("groupCode", groupRoleEntity.getGroupCode());
+            map.put("list", codes);
+            groupRoleMapper.batchLogicDelete(map);
+        }
+    }
 }

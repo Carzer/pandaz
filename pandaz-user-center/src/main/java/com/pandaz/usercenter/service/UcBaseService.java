@@ -31,5 +31,4 @@ public interface UcBaseService<T extends BaseEntity> extends IService<T> {
      * @return 执行结果
      */
     int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes);
-
 }

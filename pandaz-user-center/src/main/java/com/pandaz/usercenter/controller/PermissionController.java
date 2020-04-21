@@ -7,11 +7,8 @@ import com.pandaz.commons.dto.usercenter.PermissionDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.ExecuteResult;
 import com.pandaz.commons.util.UuidUtil;
-import com.pandaz.usercenter.custom.constants.SysConstants;
 import com.pandaz.usercenter.custom.constants.UrlConstants;
-import com.pandaz.usercenter.entity.MenuEntity;
 import com.pandaz.usercenter.entity.PermissionEntity;
-import com.pandaz.usercenter.service.MenuService;
 import com.pandaz.usercenter.service.PermissionService;
 import com.pandaz.usercenter.util.ControllerUtil;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +20,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 权限
@@ -45,11 +41,6 @@ public class PermissionController {
     private final PermissionService permissionService;
 
     /**
-     * 菜单服务
-     */
-    private final MenuService menuService;
-
-    /**
      * 工具类
      */
     private final ControllerUtil<PermissionService> controllerUtil;
@@ -67,7 +58,7 @@ public class PermissionController {
             result.setData(BeanCopyUtil.copy(permissionService.findByCode(permissionDTO.getCode()), PermissionDTO.class));
         } catch (Exception e) {
             log.error("查询方法异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "查询方法异常"));
         }
         return result;
     }
@@ -79,14 +70,14 @@ public class PermissionController {
      * @return 分页信息
      */
     @GetMapping(UrlConstants.PAGE)
-    public ExecuteResult<HashMap<String, Object>> getPage(PermissionDTO permissionDTO) {
-        ExecuteResult<HashMap<String, Object>> result = new ExecuteResult<>();
+    public ExecuteResult<Map<String, Object>> getPage(PermissionDTO permissionDTO) {
+        ExecuteResult<Map<String, Object>> result = new ExecuteResult<>();
         try {
             IPage<PermissionEntity> page = permissionService.getPage(BeanCopyUtil.copy(permissionDTO, PermissionEntity.class));
             result.setData(BeanCopyUtil.convertToMap(page, PermissionDTO.class));
         } catch (Exception e) {
             log.error("分页查询异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "分页查询异常"));
         }
         return result;
     }
@@ -106,12 +97,11 @@ public class PermissionController {
             permissionEntity.setId(UuidUtil.getId());
             permissionEntity.setCreatedBy(principal.getName());
             permissionEntity.setCreatedDate(LocalDateTime.now());
-            setMenuInfo(permissionEntity);
             permissionService.insert(permissionEntity);
             result.setData(BeanCopyUtil.copy(permissionEntity, permissionDTO));
         } catch (Exception e) {
             log.error("插入方法异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "插入方法异常"));
         }
         return result;
     }
@@ -130,12 +120,11 @@ public class PermissionController {
             PermissionEntity permissionEntity = BeanCopyUtil.copy(permissionDTO, PermissionEntity.class);
             permissionEntity.setUpdatedBy(principal.getName());
             permissionEntity.setUpdatedDate(LocalDateTime.now());
-            setMenuInfo(permissionEntity);
             permissionService.updateByCode(permissionEntity);
             result.setData("更新成功");
         } catch (Exception e) {
             log.error("更新方法异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "更新方法异常"));
         }
         return result;
     }
@@ -157,13 +146,13 @@ public class PermissionController {
      * @return 系统信息
      */
     @GetMapping("/listAllOs")
-    public ExecuteResult<ArrayList<OsInfoDTO>> listAll() {
-        ExecuteResult<ArrayList<OsInfoDTO>> result = new ExecuteResult<>();
+    public ExecuteResult<List<OsInfoDTO>> listAll() {
+        ExecuteResult<List<OsInfoDTO>> result = new ExecuteResult<>();
         try {
             result.setData(controllerUtil.listAllOs());
         } catch (Exception e) {
             log.error("获取全部系统信息异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "获取全部系统信息异常"));
         }
         return result;
     }
@@ -175,13 +164,13 @@ public class PermissionController {
      * @return 所有菜单
      */
     @GetMapping("/listMenuByOsCode")
-    public ExecuteResult<ArrayList<MenuDTO>> listByOsCode(String osCode) {
-        ExecuteResult<ArrayList<MenuDTO>> result = new ExecuteResult<>();
+    public ExecuteResult<List<MenuDTO>> listByOsCode(String osCode) {
+        ExecuteResult<List<MenuDTO>> result = new ExecuteResult<>();
         try {
             result.setData(controllerUtil.listMenuByOsCode(osCode));
         } catch (Exception e) {
             log.error("获取所有菜单异常：", e);
-            result.setError(e.getMessage());
+            result.setError(controllerUtil.errorMsg(e, "获取所有菜单异常"));
         }
         return result;
     }
@@ -193,22 +182,5 @@ public class PermissionController {
      */
     private void check(PermissionDTO permissionDTO) {
         Assert.hasText(permissionDTO.getName(), "权限名称不能为空");
-        Assert.notNull(permissionDTO.getRequestType(), "请求类型不能为空");
     }
-
-    /**
-     * 设置菜单信息
-     *
-     * @param permissionEntity 权限信息
-     */
-    private void setMenuInfo(PermissionEntity permissionEntity) {
-        if (SysConstants.PRIVATE.equals(permissionEntity.getIsPrivate())) {
-            MenuEntity menuEntity = menuService.findByCode(permissionEntity.getMenuCode());
-            Assert.notNull(menuEntity, "菜单不存在");
-            permissionEntity.setOsCode(menuEntity.getOsCode());
-        } else {
-            permissionEntity.setMenuCode("");
-        }
-    }
-
 }

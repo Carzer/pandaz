@@ -34,5 +34,4 @@ public final class CommonConstants {
      * token开头
      */
     public static final String ACCESS_TOKEN = "access_token";
-
 }

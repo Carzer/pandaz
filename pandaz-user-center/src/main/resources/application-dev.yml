@@ -71,6 +71,12 @@ mybatis-plus:
 
 # 自定义属性
 custom:
+  # 是否显示简略错误信息
+  simpleErrorMessage: false
+  # 超级管理员角色名称
+  super-admin:
+    enable: true
+    name: ROLE_SUPER_ADMIN
   # 项目基础包
   projectPackage: com.pandaz
   # 调用服务名称

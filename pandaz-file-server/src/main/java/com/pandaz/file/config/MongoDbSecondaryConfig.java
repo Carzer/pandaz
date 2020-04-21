@@ -58,5 +58,4 @@ public class MongoDbSecondaryConfig {
     public GridFsTemplate gridFsSecondaryTemplate(@Qualifier("mongoDbSecondaryFactory") MongoDbFactory mongoDbSecondaryFactory, @Qualifier("mongoSecondaryTemplate") MongoTemplate mongoSecondaryTemplate) {
         return new GridFsTemplate(mongoDbSecondaryFactory, mongoSecondaryTemplate.getConverter());
     }
-
 }

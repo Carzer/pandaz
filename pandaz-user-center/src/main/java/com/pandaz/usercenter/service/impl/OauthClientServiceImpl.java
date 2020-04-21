@@ -230,5 +230,4 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Oauth
         map.put("list", codes);
         return oauthClientMapper.batchLogicDelete(map);
     }
-
 }

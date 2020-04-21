@@ -55,7 +55,6 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         QueryWrapper<PermissionEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("os_code", permissionEntity.getOsCode());
         queryWrapper.eq("code", permissionEntity.getCode());
-        queryWrapper.eq("menu_code", permissionEntity.getMenuCode());
         int count = permissionMapper.selectCount(queryWrapper);
         if (count > 0) {
             throw new IllegalArgumentException("权限编码重复");
@@ -155,7 +154,6 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     public int deleteByMenuCode(PermissionEntity permissionEntity) {
         QueryWrapper<PermissionEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("menu_code", permissionEntity.getMenuCode());
-        queryWrapper.eq("is_private", permissionEntity.getIsPrivate());
         List<PermissionEntity> list = permissionMapper.selectList(queryWrapper);
         if (!CollectionUtils.isEmpty(list)) {
             list.forEach(this::deleteByCode);
@@ -188,5 +186,4 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         permissionEntity.setBitDigit(bitDigit);
         permissionEntity.setBitResult(bitResult);
     }
-
 }

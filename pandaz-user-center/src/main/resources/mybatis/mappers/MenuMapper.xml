@@ -46,6 +46,20 @@
         <result column="version" jdbcType="INTEGER" property="version"/>
         <association property="children" column="code" select="selectByParentCode"/>
     </resultMap>
+    <resultMap id="AuthResultMap" type="com.pandaz.usercenter.entity.MenuEntity">
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="os_code" jdbcType="VARCHAR" property="osCode"/>
+        <result column="parent_code" jdbcType="VARCHAR" property="parentCode"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="router" jdbcType="VARCHAR" property="router"/>
+        <result column="sorting" jdbcType="INTEGER" property="sorting"/>
+        <result column="icon" jdbcType="VARCHAR" property="icon"/>
+        <result column="is_leaf_node" jdbcType="TINYINT" property="isLeafNode"/>
+        <collection property="bitResults" ofType="java.lang.Integer" column="code">
+            <result column="bit_result" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
     <sql id="Base_Column_List">
         id, name, code, os_code,
         parent_code, icon, url, router,
@@ -264,23 +278,28 @@
           and child.deleted_flag = '0'
           and child.parent_code != 'root'
     </select>
-    <select id="getAuthorizedMenu" resultType="com.pandaz.usercenter.entity.MenuEntity"
-            parameterType="java.util.HashMap">
-        select tsrp.menu_code,
-        tsm.name as menu_name,
+    <!--获取已授权的菜单编码-->
+    <select id="getAuthorizedMenu" resultMap="AuthResultMap" parameterType="java.util.HashMap">
+        select
+        tsrp.menu_code as code,
+        tsm.name as name,
+        tsm.os_code as os_code,
+        tsm.parent_code as parent_code,
         tsm.url as url,
         tsm.router as router,
-        tsrp.permission_code,
-        tsp.bit_digit,
-        tsp.bit_result
+        tsm.sorting as sorting,
+        tsm.is_leaf_node as is_leaf_node,
+        tsm.icon as icon,
+        tsp.bit_result as bit_result
         FROM t_sys_role_permission tsrp
-        inner join t_sys_permission tsp on tsrp.permission_code = tsp.code
-        and tsp.deleted_flag = '0'
-        inner join t_sys_menu tsm on tsrp.menu_code = tsm.code and tsm.deleted_flag = '0'
+        INNER JOIN t_sys_permission tsp
+        ON tsrp.permission_code = tsp.code and tsp.deleted_flag = '0'
+        INNER JOIN t_sys_menu tsm
+        ON tsrp.menu_code = tsm.code and tsm.deleted_flag = '0' and tsm.locked = 0
         <where>
             tsrp.deleted_flag = '0'
             <choose>
-                <when test="list != null and list.size >0 ">
+                <when test="list != null and list.size() >0 ">
                     and tsrp.role_code in
                     <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
                         #{item,jdbcType=VARCHAR}
@@ -288,6 +307,25 @@
                     <if test="osCode != null and osCode != ''">
                         and tsrp.os_code = #{osCode,jdbcType=VARCHAR}
                     </if>
+                </when>
+                <otherwise>
+                    and 1 = 2
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+    <select id="selectByCodes" parameterType="java.lang.String" resultType="com.pandaz.usercenter.entity.MenuEntity">
+        select code,name,os_code,parent_code,url,
+        router,sorting,is_leaf_node,icon
+        from t_sys_menu
+        <where>
+            deleted_flag = '0'
+            <choose>
+                <when test="list != null and list.size()>0">
+                    and code in
+                    <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+                        #{item,jdbcType=VARCHAR}
+                    </foreach>
                 </when>
                 <otherwise>
                     and 1 = 2
