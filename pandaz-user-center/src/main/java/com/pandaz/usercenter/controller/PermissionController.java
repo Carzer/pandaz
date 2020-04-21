@@ -91,8 +91,8 @@ public class PermissionController {
     @PostMapping(UrlConstants.INSERT)
     public ExecuteResult<PermissionDTO> insert(@RequestBody PermissionDTO permissionDTO, Principal principal) {
         ExecuteResult<PermissionDTO> result = new ExecuteResult<>();
+        check(permissionDTO);
         try {
-            check(permissionDTO);
             PermissionEntity permissionEntity = BeanCopyUtil.copy(permissionDTO, PermissionEntity.class);
             permissionEntity.setId(UuidUtil.getId());
             permissionEntity.setCreatedBy(principal.getName());
@@ -115,8 +115,8 @@ public class PermissionController {
     @PutMapping(UrlConstants.UPDATE)
     public ExecuteResult<String> update(@Valid @RequestBody PermissionDTO permissionDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
+        check(permissionDTO);
         try {
-            check(permissionDTO);
             PermissionEntity permissionEntity = BeanCopyUtil.copy(permissionDTO, PermissionEntity.class);
             permissionEntity.setUpdatedBy(principal.getName());
             permissionEntity.setUpdatedDate(LocalDateTime.now());

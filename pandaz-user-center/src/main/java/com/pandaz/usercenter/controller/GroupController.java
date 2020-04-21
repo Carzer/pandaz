@@ -105,8 +105,8 @@ public class GroupController {
     @PostMapping(UrlConstants.INSERT)
     public ExecuteResult<GroupDTO> insert(@RequestBody GroupDTO groupDTO, Principal principal) {
         ExecuteResult<GroupDTO> result = new ExecuteResult<>();
+        check(groupDTO);
         try {
-            check(groupDTO);
             GroupEntity groupEntity = BeanCopyUtil.copy(groupDTO, GroupEntity.class);
             groupEntity.setId(UuidUtil.getId());
             if (StringUtils.hasText(groupEntity.getCode())) {
@@ -132,8 +132,8 @@ public class GroupController {
     @PutMapping(UrlConstants.UPDATE)
     public ExecuteResult<String> update(@Valid @RequestBody GroupDTO groupDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
+        check(groupDTO);
         try {
-            check(groupDTO);
             GroupEntity groupEntity = BeanCopyUtil.copy(groupDTO, GroupEntity.class);
             groupEntity.setUpdatedBy(principal.getName());
             groupEntity.setUpdatedDate(LocalDateTime.now());

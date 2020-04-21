@@ -52,7 +52,6 @@ public class TokenController {
     public ExecuteResult<HashMap<String, Object>> refreshToken(@RequestParam("refresh_token") String refreshTokenStr, Principal principal) {
         ExecuteResult<HashMap<String, Object>> result = new ExecuteResult<>();
         try {
-
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             if (authentication != null) {
                 OAuth2RefreshToken refreshToken = jwtTokenStore.readRefreshToken(refreshTokenStr);

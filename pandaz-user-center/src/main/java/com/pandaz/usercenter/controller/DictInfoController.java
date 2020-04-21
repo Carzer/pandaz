@@ -92,8 +92,8 @@ public class DictInfoController {
     @PostMapping(UrlConstants.INSERT)
     public ExecuteResult<DictInfoDTO> insert(@RequestBody DictInfoDTO dictInfoDTO, Principal principal) {
         ExecuteResult<DictInfoDTO> result = new ExecuteResult<>();
+        check(dictInfoDTO);
         try {
-            check(dictInfoDTO);
             DictInfoEntity dictInfoEntity = BeanCopyUtil.copy(dictInfoDTO, DictInfoEntity.class);
             dictInfoEntity.setCreatedBy(principal.getName());
             dictInfoEntity.setCreatedDate(LocalDateTime.now());
@@ -115,8 +115,8 @@ public class DictInfoController {
     @PutMapping(UrlConstants.UPDATE)
     public ExecuteResult<String> update(@Valid @RequestBody DictInfoDTO dictInfoDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
+        check(dictInfoDTO);
         try {
-            check(dictInfoDTO);
             DictInfoEntity dictInfoEntity = BeanCopyUtil.copy(dictInfoDTO, DictInfoEntity.class);
             dictInfoEntity.setUpdatedBy(principal.getName());
             dictInfoEntity.setUpdatedDate(LocalDateTime.now());

@@ -96,8 +96,8 @@ public class RoleController {
     @PostMapping(UrlConstants.INSERT)
     public ExecuteResult<RoleDTO> insert(@RequestBody RoleDTO roleDTO, Principal principal) {
         ExecuteResult<RoleDTO> result = new ExecuteResult<>();
+        check(roleDTO);
         try {
-            check(roleDTO);
             RoleEntity roleEntity = BeanCopyUtil.copy(roleDTO, RoleEntity.class);
             roleEntity.setId(UuidUtil.getId());
             if (StringUtils.hasText(roleEntity.getCode())) {
@@ -123,8 +123,8 @@ public class RoleController {
     @PutMapping(UrlConstants.UPDATE)
     public ExecuteResult<String> update(@Valid @RequestBody RoleDTO roleDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
+        check(roleDTO);
         try {
-            check(roleDTO);
             RoleEntity roleEntity = BeanCopyUtil.copy(roleDTO, RoleEntity.class);
             roleEntity.setUpdatedBy(principal.getName());
             roleEntity.setUpdatedDate(LocalDateTime.now());
@@ -195,7 +195,7 @@ public class RoleController {
     public ExecuteResult<MenuDTO> getAllMenu(MenuDTO menuDTO) {
         ExecuteResult<MenuDTO> result = new ExecuteResult<>();
         try {
-            result.setData(controllerUtil.getAllMenu(menuDTO,false));
+            result.setData(controllerUtil.getAllMenu(menuDTO, false));
         } catch (Exception e) {
             log.error("获取所有菜单异常：", e);
             result.setError(controllerUtil.errorMsg(e, "获取所有菜单异常"));

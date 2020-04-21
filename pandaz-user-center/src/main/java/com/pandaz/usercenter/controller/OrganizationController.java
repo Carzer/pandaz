@@ -89,8 +89,8 @@ public class OrganizationController {
     @PostMapping(UrlConstants.INSERT)
     public ExecuteResult<OrganizationDTO> insert(@RequestBody OrganizationDTO organizationDTO, Principal principal) {
         ExecuteResult<OrganizationDTO> result = new ExecuteResult<>();
+        check(organizationDTO);
         try {
-            check(organizationDTO);
             OrganizationEntity organizationEntity = BeanCopyUtil.copy(organizationDTO, OrganizationEntity.class);
             organizationEntity.setId(UuidUtil.getId());
             organizationEntity.setCreatedBy(principal.getName());
@@ -113,8 +113,8 @@ public class OrganizationController {
     @PutMapping(UrlConstants.UPDATE)
     public ExecuteResult<String> update(@Valid @RequestBody OrganizationDTO organizationDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
+        check(organizationDTO);
         try {
-            check(organizationDTO);
             OrganizationEntity organizationEntity = BeanCopyUtil.copy(organizationDTO, OrganizationEntity.class);
             organizationEntity.setUpdatedBy(principal.getName());
             organizationEntity.setUpdatedDate(LocalDateTime.now());

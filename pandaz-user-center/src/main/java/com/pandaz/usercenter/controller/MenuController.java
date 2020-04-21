@@ -110,8 +110,8 @@ public class MenuController {
     @PostMapping(UrlConstants.INSERT)
     public ExecuteResult<MenuDTO> insert(@RequestBody MenuDTO menuDTO, Principal principal) {
         ExecuteResult<MenuDTO> result = new ExecuteResult<>();
+        check(menuDTO);
         try {
-            check(menuDTO);
             MenuEntity menuEntity = BeanCopyUtil.copy(menuDTO, MenuEntity.class);
             menuEntity.setId(UuidUtil.getId());
             menuEntity.setCreatedBy(principal.getName());
@@ -135,8 +135,8 @@ public class MenuController {
     @PutMapping(UrlConstants.UPDATE)
     public ExecuteResult<String> update(@Valid @RequestBody MenuDTO menuDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
+        check(menuDTO);
         try {
-            check(menuDTO);
             MenuEntity menuEntity = BeanCopyUtil.copy(menuDTO, MenuEntity.class);
             menuEntity.setUpdatedBy(principal.getName());
             menuEntity.setUpdatedDate(LocalDateTime.now());
@@ -203,15 +203,15 @@ public class MenuController {
     @GetMapping("/getAuthorizedMenu")
     public ExecuteResult<MenuDTO> getAuthorizedMenu(String osCode, Principal principal) {
         ExecuteResult<MenuDTO> result = new ExecuteResult<>();
+        List<String> roleList = new ArrayList<>();
+        MenuDTO menuDTO = new MenuDTO();
+        menuDTO.setCode("root");
         try {
-            List<String> roleList = new ArrayList<>();
             if (principal instanceof UsernamePasswordAuthenticationToken) {
                 roleList = ((UsernamePasswordAuthenticationToken) principal).getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
             } else if (principal instanceof OAuth2Authentication) {
                 roleList = ((OAuth2Authentication) principal).getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
             }
-            MenuDTO menuDTO = new MenuDTO();
-            menuDTO.setCode("root");
             if (enableSuperAdmin && roleList.contains(superAdminName)) {
                 result.setData(controllerUtil.getAllMenu(menuDTO, true));
             } else {

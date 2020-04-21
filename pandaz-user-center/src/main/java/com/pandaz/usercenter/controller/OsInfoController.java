@@ -89,8 +89,8 @@ public class OsInfoController {
     @PostMapping(UrlConstants.INSERT)
     public ExecuteResult<OsInfoDTO> insert(@RequestBody OsInfoDTO osInfoDTO, Principal principal) {
         ExecuteResult<OsInfoDTO> result = new ExecuteResult<>();
+        check(osInfoDTO);
         try {
-            check(osInfoDTO);
             OsInfoEntity osInfoEntity = BeanCopyUtil.copy(osInfoDTO, OsInfoEntity.class);
             osInfoEntity.setId(UuidUtil.getId());
             osInfoEntity.setCreatedBy(principal.getName());
@@ -113,8 +113,8 @@ public class OsInfoController {
     @PutMapping(UrlConstants.UPDATE)
     public ExecuteResult<String> update(@Valid @RequestBody OsInfoDTO osInfoDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
+        check(osInfoDTO);
         try {
-            check(osInfoDTO);
             OsInfoEntity osInfoEntity = BeanCopyUtil.copy(osInfoDTO, OsInfoEntity.class);
             osInfoEntity.setUpdatedBy(principal.getName());
             osInfoEntity.setUpdatedDate(LocalDateTime.now());

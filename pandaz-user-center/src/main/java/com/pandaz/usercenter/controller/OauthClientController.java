@@ -90,8 +90,8 @@ public class OauthClientController {
     @PostMapping(UrlConstants.INSERT)
     public ExecuteResult<OauthClientDTO> insert(@RequestBody OauthClientDTO oauthClientDTO, Principal principal) {
         ExecuteResult<OauthClientDTO> result = new ExecuteResult<>();
+        check(oauthClientDTO);
         try {
-            check(oauthClientDTO);
             OauthClientEntity oauthClientEntity = BeanCopyUtil.copy(oauthClientDTO, OauthClientEntity.class);
             oauthClientEntity.setId(UuidUtil.getId());
             oauthClientEntity.setCreatedBy(principal.getName());
@@ -114,8 +114,8 @@ public class OauthClientController {
     @PutMapping(UrlConstants.UPDATE)
     public ExecuteResult<String> update(@Valid @RequestBody OauthClientDTO oauthClientDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
+        check(oauthClientDTO);
         try {
-            check(oauthClientDTO);
             OauthClientEntity oauthClientEntity = BeanCopyUtil.copy(oauthClientDTO, OauthClientEntity.class);
             oauthClientEntity.setUpdatedBy(principal.getName());
             oauthClientEntity.setUpdatedDate(LocalDateTime.now());

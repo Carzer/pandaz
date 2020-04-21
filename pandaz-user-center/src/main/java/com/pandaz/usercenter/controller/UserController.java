@@ -90,10 +90,10 @@ public class UserController {
     @PostMapping(UrlConstants.INSERT)
     public ExecuteResult<UserDTO> insert(@Valid @RequestBody UserPwdDTO userPwdDTO, Principal principal) {
         ExecuteResult<UserDTO> result = new ExecuteResult<>();
+        UserDTO userDTO = userPwdDTO.getUserDTO();
+        check(userDTO);
+        String password = userPwdDTO.getPassword();
         try {
-            UserDTO userDTO = userPwdDTO.getUserDTO();
-            check(userDTO);
-            String password = userPwdDTO.getPassword();
             UserEntity user = BeanCopyUtil.copy(userDTO, UserEntity.class);
             if (StringUtils.hasText(password)) {
                 user.setPassword(password);
@@ -122,8 +122,8 @@ public class UserController {
     @PutMapping(UrlConstants.UPDATE)
     public ExecuteResult<String> update(@Valid @RequestBody UserDTO userDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
+        check(userDTO);
         try {
-            check(userDTO);
             UserEntity userEntity = BeanCopyUtil.copy(userDTO, UserEntity.class);
             userEntity.setUpdatedBy(principal.getName());
             userEntity.setUpdatedDate(LocalDateTime.now());

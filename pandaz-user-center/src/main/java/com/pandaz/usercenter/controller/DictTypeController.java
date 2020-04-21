@@ -90,8 +90,8 @@ public class DictTypeController {
     @PostMapping(UrlConstants.INSERT)
     public ExecuteResult<DictTypeDTO> insert(@Valid @RequestBody DictTypeDTO dictTypeDTO, Principal principal) {
         ExecuteResult<DictTypeDTO> result = new ExecuteResult<>();
+        check(dictTypeDTO);
         try {
-            check(dictTypeDTO);
             DictTypeEntity dictTypeEntity = BeanCopyUtil.copy(dictTypeDTO, DictTypeEntity.class);
             dictTypeEntity.setCreatedBy(principal.getName());
             dictTypeEntity.setCreatedDate(LocalDateTime.now());
@@ -113,8 +113,8 @@ public class DictTypeController {
     @PutMapping(UrlConstants.UPDATE)
     public ExecuteResult<String> update(@Valid @RequestBody DictTypeDTO dictTypeDTO, Principal principal) {
         ExecuteResult<String> result = new ExecuteResult<>();
+        check(dictTypeDTO);
         try {
-            check(dictTypeDTO);
             DictTypeEntity dictTypeEntity = BeanCopyUtil.copy(dictTypeDTO, DictTypeEntity.class);
             dictTypeEntity.setUpdatedBy(principal.getName());
             dictTypeEntity.setUpdatedDate(LocalDateTime.now());
