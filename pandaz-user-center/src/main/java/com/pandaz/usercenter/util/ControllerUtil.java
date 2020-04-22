@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.commons.constants.CommonConstants;
 import com.pandaz.commons.dto.usercenter.*;
 import com.pandaz.commons.util.BeanCopyUtil;
-import com.pandaz.commons.util.ExecuteResult;
+import com.pandaz.commons.util.Result;
 import com.pandaz.usercenter.custom.constants.SysConstants;
 import com.pandaz.usercenter.entity.*;
 import com.pandaz.usercenter.service.*;
@@ -18,7 +18,6 @@ import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -84,9 +83,9 @@ public class ControllerUtil<S extends UcBaseService> {
      * @param codes       删除编码
      * @return 执行结果
      */
-    public ExecuteResult<String> getDeleteResult(
+    public Result<String> getDeleteResult(
             S service, String deletedBy, LocalDateTime deletedDate, List<String> codes) {
-        ExecuteResult<String> result = new ExecuteResult<>();
+        Result<String> result = new Result<>();
         try {
             service.deleteByCodes(deletedBy, deletedDate, codes);
             result.setData("删除成功");
@@ -146,9 +145,7 @@ public class ControllerUtil<S extends UcBaseService> {
      * @return 菜单信息
      */
     public List<MenuDTO> listMenuByOsCode(String osCode) {
-        Map<String, Object> map = new HashMap<>(1);
-        map.put("os_code", osCode);
-        List<MenuEntity> list = menuService.listByMap(map);
+        List<MenuEntity> list = menuService.listLeafNode(osCode);
         return BeanCopyUtil.copyList(list, MenuDTO.class);
     }
 

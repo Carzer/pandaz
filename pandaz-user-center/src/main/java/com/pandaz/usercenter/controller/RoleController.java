@@ -2,7 +2,7 @@ package com.pandaz.usercenter.controller;
 
 import com.pandaz.commons.dto.usercenter.*;
 import com.pandaz.commons.util.BeanCopyUtil;
-import com.pandaz.commons.util.ExecuteResult;
+import com.pandaz.commons.util.Result;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.custom.constants.SysConstants;
 import com.pandaz.usercenter.custom.constants.UrlConstants;
@@ -58,8 +58,8 @@ public class RoleController {
      * @return 角色信息
      */
     @GetMapping(UrlConstants.GET)
-    public ExecuteResult<RoleDTO> get(@Valid RoleDTO roleDTO) {
-        ExecuteResult<RoleDTO> result = new ExecuteResult<>();
+    public Result<RoleDTO> get(@Valid RoleDTO roleDTO) {
+        Result<RoleDTO> result = new Result<>();
         try {
             result.setData(BeanCopyUtil.copy(roleService.findByCode(roleDTO.getCode()), RoleDTO.class));
         } catch (Exception e) {
@@ -76,8 +76,8 @@ public class RoleController {
      * @return 分页信息
      */
     @GetMapping(UrlConstants.PAGE)
-    public ExecuteResult<Map<String, Object>> getPage(RoleDTO roleDTO) {
-        ExecuteResult<Map<String, Object>> result = new ExecuteResult<>();
+    public Result<Map<String, Object>> getPage(RoleDTO roleDTO) {
+        Result<Map<String, Object>> result = new Result<>();
         try {
             result.setData(controllerUtil.getRolePage(roleDTO));
         } catch (Exception e) {
@@ -94,8 +94,8 @@ public class RoleController {
      * @return 角色信息
      */
     @PostMapping(UrlConstants.INSERT)
-    public ExecuteResult<RoleDTO> insert(@RequestBody RoleDTO roleDTO, Principal principal) {
-        ExecuteResult<RoleDTO> result = new ExecuteResult<>();
+    public Result<RoleDTO> insert(@RequestBody RoleDTO roleDTO, Principal principal) {
+        Result<RoleDTO> result = new Result<>();
         check(roleDTO);
         try {
             RoleEntity roleEntity = BeanCopyUtil.copy(roleDTO, RoleEntity.class);
@@ -121,8 +121,8 @@ public class RoleController {
      * @return 执行结果
      */
     @PutMapping(UrlConstants.UPDATE)
-    public ExecuteResult<String> update(@Valid @RequestBody RoleDTO roleDTO, Principal principal) {
-        ExecuteResult<String> result = new ExecuteResult<>();
+    public Result<String> update(@Valid @RequestBody RoleDTO roleDTO, Principal principal) {
+        Result<String> result = new Result<>();
         check(roleDTO);
         try {
             RoleEntity roleEntity = BeanCopyUtil.copy(roleDTO, RoleEntity.class);
@@ -144,7 +144,7 @@ public class RoleController {
      * @return 执行结果
      */
     @DeleteMapping(UrlConstants.DELETE)
-    public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
+    public Result<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(roleService, principal.getName(), LocalDateTime.now(), codes);
     }
 
@@ -156,8 +156,8 @@ public class RoleController {
      * @return 执行结果
      */
     @PutMapping("/bindPermissions")
-    public ExecuteResult<String> bindPermissions(@RequestBody RolePermissionDTO rolePermissionDTO, Principal principal) {
-        ExecuteResult<String> result = new ExecuteResult<>();
+    public Result<String> bindPermissions(@RequestBody RolePermissionDTO rolePermissionDTO, Principal principal) {
+        Result<String> result = new Result<>();
         try {
             RolePermissionEntity rolePermissionEntity = BeanCopyUtil.copy(rolePermissionDTO, RolePermissionEntity.class);
             rolePermissionService.bindPermissions(principal.getName(), LocalDateTime.now(), rolePermissionEntity);
@@ -175,8 +175,8 @@ public class RoleController {
      * @return 系统信息
      */
     @GetMapping("/listAllOs")
-    public ExecuteResult<List<OsInfoDTO>> listAllOs() {
-        ExecuteResult<List<OsInfoDTO>> result = new ExecuteResult<>();
+    public Result<List<OsInfoDTO>> listAllOs() {
+        Result<List<OsInfoDTO>> result = new Result<>();
         try {
             result.setData(controllerUtil.listAllOs());
         } catch (Exception e) {
@@ -192,8 +192,8 @@ public class RoleController {
      * @return 所有菜单
      */
     @GetMapping("/getAllMenu")
-    public ExecuteResult<MenuDTO> getAllMenu(MenuDTO menuDTO) {
-        ExecuteResult<MenuDTO> result = new ExecuteResult<>();
+    public Result<MenuDTO> getAllMenu(MenuDTO menuDTO) {
+        Result<MenuDTO> result = new Result<>();
         try {
             result.setData(controllerUtil.getAllMenu(menuDTO, false));
         } catch (Exception e) {
@@ -210,8 +210,8 @@ public class RoleController {
      * @return 分页信息
      */
     @GetMapping("/getPermissionPage")
-    public ExecuteResult<Map<String, Object>> getPermissionPage(PermissionDTO permissionDTO) {
-        ExecuteResult<Map<String, Object>> result = new ExecuteResult<>();
+    public Result<Map<String, Object>> getPermissionPage(PermissionDTO permissionDTO) {
+        Result<Map<String, Object>> result = new Result<>();
         try {
             result.setData(controllerUtil.getPermissionPage(permissionDTO));
         } catch (Exception e) {
@@ -228,8 +228,8 @@ public class RoleController {
      * @return 所有菜单
      */
     @GetMapping("/listMenuByOsCode")
-    public ExecuteResult<List<MenuDTO>> listByOsCode(String osCode) {
-        ExecuteResult<List<MenuDTO>> result = new ExecuteResult<>();
+    public Result<List<MenuDTO>> listByOsCode(String osCode) {
+        Result<List<MenuDTO>> result = new Result<>();
         try {
             result.setData(controllerUtil.listMenuByOsCode(osCode));
         } catch (Exception e) {
@@ -248,8 +248,8 @@ public class RoleController {
      * @return 权限编码
      */
     @GetMapping("/getPermissionCodes")
-    public ExecuteResult<List<String>> getPermissionCodes(String roleCode, String osCode, String menuCode) {
-        ExecuteResult<List<String>> result = new ExecuteResult<>();
+    public Result<List<String>> getPermissionCodes(String roleCode, String osCode, String menuCode) {
+        Result<List<String>> result = new Result<>();
         try {
             result.setData(controllerUtil.getPermissionCodes(roleCode, osCode, menuCode));
         } catch (Exception e) {

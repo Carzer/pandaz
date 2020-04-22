@@ -3,7 +3,7 @@ package com.pandaz.usercenter.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.commons.dto.usercenter.OrganizationDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
-import com.pandaz.commons.util.ExecuteResult;
+import com.pandaz.commons.util.Result;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.custom.constants.UrlConstants;
 import com.pandaz.usercenter.entity.OrganizationEntity;
@@ -50,8 +50,8 @@ public class OrganizationController {
      * @return 组织信息
      */
     @GetMapping(UrlConstants.GET)
-    public ExecuteResult<OrganizationDTO> get(@Valid OrganizationDTO organizationDTO) {
-        ExecuteResult<OrganizationDTO> result = new ExecuteResult<>();
+    public Result<OrganizationDTO> get(@Valid OrganizationDTO organizationDTO) {
+        Result<OrganizationDTO> result = new Result<>();
         try {
             result.setData(BeanCopyUtil.copy(organizationService.findByCode(organizationDTO.getCode()), OrganizationDTO.class));
         } catch (Exception e) {
@@ -68,8 +68,8 @@ public class OrganizationController {
      * @return 分页信息
      */
     @GetMapping(UrlConstants.PAGE)
-    public ExecuteResult<Map<String, Object>> getPage(OrganizationDTO organizationDTO) {
-        ExecuteResult<Map<String, Object>> result = new ExecuteResult<>();
+    public Result<Map<String, Object>> getPage(OrganizationDTO organizationDTO) {
+        Result<Map<String, Object>> result = new Result<>();
         try {
             IPage<OrganizationEntity> page = organizationService.getPage(BeanCopyUtil.copy(organizationDTO, OrganizationEntity.class));
             result.setData(BeanCopyUtil.convertToMap(page, OrganizationDTO.class));
@@ -87,8 +87,8 @@ public class OrganizationController {
      * @return 组织信息
      */
     @PostMapping(UrlConstants.INSERT)
-    public ExecuteResult<OrganizationDTO> insert(@RequestBody OrganizationDTO organizationDTO, Principal principal) {
-        ExecuteResult<OrganizationDTO> result = new ExecuteResult<>();
+    public Result<OrganizationDTO> insert(@RequestBody OrganizationDTO organizationDTO, Principal principal) {
+        Result<OrganizationDTO> result = new Result<>();
         check(organizationDTO);
         try {
             OrganizationEntity organizationEntity = BeanCopyUtil.copy(organizationDTO, OrganizationEntity.class);
@@ -111,8 +111,8 @@ public class OrganizationController {
      * @return 执行结果
      */
     @PutMapping(UrlConstants.UPDATE)
-    public ExecuteResult<String> update(@Valid @RequestBody OrganizationDTO organizationDTO, Principal principal) {
-        ExecuteResult<String> result = new ExecuteResult<>();
+    public Result<String> update(@Valid @RequestBody OrganizationDTO organizationDTO, Principal principal) {
+        Result<String> result = new Result<>();
         check(organizationDTO);
         try {
             OrganizationEntity organizationEntity = BeanCopyUtil.copy(organizationDTO, OrganizationEntity.class);
@@ -134,7 +134,7 @@ public class OrganizationController {
      * @return 执行结果
      */
     @DeleteMapping(UrlConstants.DELETE)
-    public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
+    public Result<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(organizationService, principal.getName(), LocalDateTime.now(), codes);
     }
 

@@ -5,7 +5,7 @@ import com.pandaz.commons.dto.usercenter.MenuDTO;
 import com.pandaz.commons.dto.usercenter.OsInfoDTO;
 import com.pandaz.commons.dto.usercenter.PermissionDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
-import com.pandaz.commons.util.ExecuteResult;
+import com.pandaz.commons.util.Result;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.custom.constants.UrlConstants;
 import com.pandaz.usercenter.entity.PermissionEntity;
@@ -52,8 +52,8 @@ public class PermissionController {
      * @return 权限信息
      */
     @GetMapping(UrlConstants.GET)
-    public ExecuteResult<PermissionDTO> get(@Valid PermissionDTO permissionDTO) {
-        ExecuteResult<PermissionDTO> result = new ExecuteResult<>();
+    public Result<PermissionDTO> get(@Valid PermissionDTO permissionDTO) {
+        Result<PermissionDTO> result = new Result<>();
         try {
             result.setData(BeanCopyUtil.copy(permissionService.findByCode(permissionDTO.getCode()), PermissionDTO.class));
         } catch (Exception e) {
@@ -70,8 +70,8 @@ public class PermissionController {
      * @return 分页信息
      */
     @GetMapping(UrlConstants.PAGE)
-    public ExecuteResult<Map<String, Object>> getPage(PermissionDTO permissionDTO) {
-        ExecuteResult<Map<String, Object>> result = new ExecuteResult<>();
+    public Result<Map<String, Object>> getPage(PermissionDTO permissionDTO) {
+        Result<Map<String, Object>> result = new Result<>();
         try {
             IPage<PermissionEntity> page = permissionService.getPage(BeanCopyUtil.copy(permissionDTO, PermissionEntity.class));
             result.setData(BeanCopyUtil.convertToMap(page, PermissionDTO.class));
@@ -89,8 +89,8 @@ public class PermissionController {
      * @return 权限信息
      */
     @PostMapping(UrlConstants.INSERT)
-    public ExecuteResult<PermissionDTO> insert(@RequestBody PermissionDTO permissionDTO, Principal principal) {
-        ExecuteResult<PermissionDTO> result = new ExecuteResult<>();
+    public Result<PermissionDTO> insert(@RequestBody PermissionDTO permissionDTO, Principal principal) {
+        Result<PermissionDTO> result = new Result<>();
         check(permissionDTO);
         try {
             PermissionEntity permissionEntity = BeanCopyUtil.copy(permissionDTO, PermissionEntity.class);
@@ -113,8 +113,8 @@ public class PermissionController {
      * @return 执行结果
      */
     @PutMapping(UrlConstants.UPDATE)
-    public ExecuteResult<String> update(@Valid @RequestBody PermissionDTO permissionDTO, Principal principal) {
-        ExecuteResult<String> result = new ExecuteResult<>();
+    public Result<String> update(@Valid @RequestBody PermissionDTO permissionDTO, Principal principal) {
+        Result<String> result = new Result<>();
         check(permissionDTO);
         try {
             PermissionEntity permissionEntity = BeanCopyUtil.copy(permissionDTO, PermissionEntity.class);
@@ -136,7 +136,7 @@ public class PermissionController {
      * @return 执行结果
      */
     @DeleteMapping(UrlConstants.DELETE)
-    public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
+    public Result<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(permissionService, principal.getName(), LocalDateTime.now(), codes);
     }
 
@@ -146,8 +146,8 @@ public class PermissionController {
      * @return 系统信息
      */
     @GetMapping("/listAllOs")
-    public ExecuteResult<List<OsInfoDTO>> listAll() {
-        ExecuteResult<List<OsInfoDTO>> result = new ExecuteResult<>();
+    public Result<List<OsInfoDTO>> listAll() {
+        Result<List<OsInfoDTO>> result = new Result<>();
         try {
             result.setData(controllerUtil.listAllOs());
         } catch (Exception e) {
@@ -157,15 +157,14 @@ public class PermissionController {
         return result;
     }
 
-
     /**
      * 根据系统编码获取所有菜单信息
      *
      * @return 所有菜单
      */
     @GetMapping("/listMenuByOsCode")
-    public ExecuteResult<List<MenuDTO>> listByOsCode(String osCode) {
-        ExecuteResult<List<MenuDTO>> result = new ExecuteResult<>();
+    public Result<List<MenuDTO>> listByOsCode(String osCode) {
+        Result<List<MenuDTO>> result = new Result<>();
         try {
             result.setData(controllerUtil.listMenuByOsCode(osCode));
         } catch (Exception e) {

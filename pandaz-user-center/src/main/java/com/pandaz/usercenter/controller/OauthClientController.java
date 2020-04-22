@@ -4,7 +4,7 @@ package com.pandaz.usercenter.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.commons.dto.usercenter.OauthClientDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
-import com.pandaz.commons.util.ExecuteResult;
+import com.pandaz.commons.util.Result;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.custom.constants.UrlConstants;
 import com.pandaz.usercenter.entity.OauthClientEntity;
@@ -51,8 +51,8 @@ public class OauthClientController {
      * @return 客户端信息
      */
     @GetMapping(UrlConstants.GET)
-    public ExecuteResult<OauthClientDTO> get(@Valid OauthClientDTO oauthClientDTO) {
-        ExecuteResult<OauthClientDTO> result = new ExecuteResult<>();
+    public Result<OauthClientDTO> get(@Valid OauthClientDTO oauthClientDTO) {
+        Result<OauthClientDTO> result = new Result<>();
         try {
             result.setData(BeanCopyUtil.copy(oauthClientService.findByClientId(oauthClientDTO.getClientId()), OauthClientDTO.class));
         } catch (Exception e) {
@@ -69,8 +69,8 @@ public class OauthClientController {
      * @return 分页信息
      */
     @GetMapping(UrlConstants.PAGE)
-    public ExecuteResult<Map<String, Object>> getPage(OauthClientDTO oauthClientDTO) {
-        ExecuteResult<Map<String, Object>> result = new ExecuteResult<>();
+    public Result<Map<String, Object>> getPage(OauthClientDTO oauthClientDTO) {
+        Result<Map<String, Object>> result = new Result<>();
         try {
             IPage<OauthClientEntity> page = oauthClientService.getPage(BeanCopyUtil.copy(oauthClientDTO, OauthClientEntity.class));
             result.setData(BeanCopyUtil.convertToMap(page, OauthClientDTO.class));
@@ -88,8 +88,8 @@ public class OauthClientController {
      * @return 客户端信息
      */
     @PostMapping(UrlConstants.INSERT)
-    public ExecuteResult<OauthClientDTO> insert(@RequestBody OauthClientDTO oauthClientDTO, Principal principal) {
-        ExecuteResult<OauthClientDTO> result = new ExecuteResult<>();
+    public Result<OauthClientDTO> insert(@RequestBody OauthClientDTO oauthClientDTO, Principal principal) {
+        Result<OauthClientDTO> result = new Result<>();
         check(oauthClientDTO);
         try {
             OauthClientEntity oauthClientEntity = BeanCopyUtil.copy(oauthClientDTO, OauthClientEntity.class);
@@ -112,8 +112,8 @@ public class OauthClientController {
      * @return 执行结果
      */
     @PutMapping(UrlConstants.UPDATE)
-    public ExecuteResult<String> update(@Valid @RequestBody OauthClientDTO oauthClientDTO, Principal principal) {
-        ExecuteResult<String> result = new ExecuteResult<>();
+    public Result<String> update(@Valid @RequestBody OauthClientDTO oauthClientDTO, Principal principal) {
+        Result<String> result = new Result<>();
         check(oauthClientDTO);
         try {
             OauthClientEntity oauthClientEntity = BeanCopyUtil.copy(oauthClientDTO, OauthClientEntity.class);
@@ -135,7 +135,7 @@ public class OauthClientController {
      * @return 执行结果
      */
     @DeleteMapping(UrlConstants.DELETE)
-    public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
+    public Result<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(oauthClientService, principal.getName(), LocalDateTime.now(), codes);
     }
 

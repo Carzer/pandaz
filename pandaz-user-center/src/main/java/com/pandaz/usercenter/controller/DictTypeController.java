@@ -4,7 +4,7 @@ package com.pandaz.usercenter.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.commons.dto.usercenter.DictTypeDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
-import com.pandaz.commons.util.ExecuteResult;
+import com.pandaz.commons.util.Result;
 import com.pandaz.usercenter.custom.constants.UrlConstants;
 import com.pandaz.usercenter.entity.DictTypeEntity;
 import com.pandaz.usercenter.service.DictTypeService;
@@ -51,8 +51,8 @@ public class DictTypeController {
      * @param dictTypeDTO 字典类型
      * @return 字典类型
      */
-    public ExecuteResult<DictTypeDTO> get(DictTypeDTO dictTypeDTO) {
-        ExecuteResult<DictTypeDTO> result = new ExecuteResult<>();
+    public Result<DictTypeDTO> get(DictTypeDTO dictTypeDTO) {
+        Result<DictTypeDTO> result = new Result<>();
         try {
             result.setData(BeanCopyUtil.copy(dictTypeService.findByCode(dictTypeDTO.getCode()), DictTypeDTO.class));
         } catch (Exception e) {
@@ -69,8 +69,8 @@ public class DictTypeController {
      * @return 分页信息
      */
     @GetMapping(UrlConstants.PAGE)
-    public ExecuteResult<Map<String, Object>> getPage(DictTypeDTO dictTypeDTO) {
-        ExecuteResult<Map<String, Object>> result = new ExecuteResult<>();
+    public Result<Map<String, Object>> getPage(DictTypeDTO dictTypeDTO) {
+        Result<Map<String, Object>> result = new Result<>();
         try {
             IPage<DictTypeEntity> page = dictTypeService.getPage(BeanCopyUtil.copy(dictTypeDTO, DictTypeEntity.class));
             result.setData(BeanCopyUtil.convertToMap(page, DictTypeDTO.class));
@@ -88,8 +88,8 @@ public class DictTypeController {
      * @return 执行结果
      */
     @PostMapping(UrlConstants.INSERT)
-    public ExecuteResult<DictTypeDTO> insert(@Valid @RequestBody DictTypeDTO dictTypeDTO, Principal principal) {
-        ExecuteResult<DictTypeDTO> result = new ExecuteResult<>();
+    public Result<DictTypeDTO> insert(@Valid @RequestBody DictTypeDTO dictTypeDTO, Principal principal) {
+        Result<DictTypeDTO> result = new Result<>();
         check(dictTypeDTO);
         try {
             DictTypeEntity dictTypeEntity = BeanCopyUtil.copy(dictTypeDTO, DictTypeEntity.class);
@@ -111,8 +111,8 @@ public class DictTypeController {
      * @return 执行结果
      */
     @PutMapping(UrlConstants.UPDATE)
-    public ExecuteResult<String> update(@Valid @RequestBody DictTypeDTO dictTypeDTO, Principal principal) {
-        ExecuteResult<String> result = new ExecuteResult<>();
+    public Result<String> update(@Valid @RequestBody DictTypeDTO dictTypeDTO, Principal principal) {
+        Result<String> result = new Result<>();
         check(dictTypeDTO);
         try {
             DictTypeEntity dictTypeEntity = BeanCopyUtil.copy(dictTypeDTO, DictTypeEntity.class);
@@ -134,7 +134,7 @@ public class DictTypeController {
      * @return 执行结果
      */
     @DeleteMapping(UrlConstants.DELETE)
-    public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
+    public Result<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(dictTypeService, principal.getName(), LocalDateTime.now(), codes);
     }
 

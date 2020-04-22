@@ -3,7 +3,7 @@ package com.pandaz.usercenter.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.commons.dto.usercenter.*;
 import com.pandaz.commons.util.BeanCopyUtil;
-import com.pandaz.commons.util.ExecuteResult;
+import com.pandaz.commons.util.Result;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.custom.constants.SysConstants;
 import com.pandaz.usercenter.custom.constants.UrlConstants;
@@ -66,8 +66,8 @@ public class GroupController {
      * @return 组信息
      */
     @GetMapping(UrlConstants.GET)
-    public ExecuteResult<GroupDTO> get(@Valid GroupDTO groupDTO) {
-        ExecuteResult<GroupDTO> result = new ExecuteResult<>();
+    public Result<GroupDTO> get(@Valid GroupDTO groupDTO) {
+        Result<GroupDTO> result = new Result<>();
         try {
             result.setData(BeanCopyUtil.copy(groupService.findByCode(groupDTO.getCode()), GroupDTO.class));
         } catch (Exception e) {
@@ -84,8 +84,8 @@ public class GroupController {
      * @return 分页信息
      */
     @GetMapping(UrlConstants.PAGE)
-    public ExecuteResult<Map<String, Object>> getPage(GroupDTO groupDTO) {
-        ExecuteResult<Map<String, Object>> result = new ExecuteResult<>();
+    public Result<Map<String, Object>> getPage(GroupDTO groupDTO) {
+        Result<Map<String, Object>> result = new Result<>();
         try {
             IPage<GroupEntity> page = groupService.getPage(BeanCopyUtil.copy(groupDTO, GroupEntity.class));
             result.setData(BeanCopyUtil.convertToMap(page, GroupDTO.class));
@@ -103,8 +103,8 @@ public class GroupController {
      * @return 组信息
      */
     @PostMapping(UrlConstants.INSERT)
-    public ExecuteResult<GroupDTO> insert(@RequestBody GroupDTO groupDTO, Principal principal) {
-        ExecuteResult<GroupDTO> result = new ExecuteResult<>();
+    public Result<GroupDTO> insert(@RequestBody GroupDTO groupDTO, Principal principal) {
+        Result<GroupDTO> result = new Result<>();
         check(groupDTO);
         try {
             GroupEntity groupEntity = BeanCopyUtil.copy(groupDTO, GroupEntity.class);
@@ -130,8 +130,8 @@ public class GroupController {
      * @return 执行结果
      */
     @PutMapping(UrlConstants.UPDATE)
-    public ExecuteResult<String> update(@Valid @RequestBody GroupDTO groupDTO, Principal principal) {
-        ExecuteResult<String> result = new ExecuteResult<>();
+    public Result<String> update(@Valid @RequestBody GroupDTO groupDTO, Principal principal) {
+        Result<String> result = new Result<>();
         check(groupDTO);
         try {
             GroupEntity groupEntity = BeanCopyUtil.copy(groupDTO, GroupEntity.class);
@@ -153,7 +153,7 @@ public class GroupController {
      * @return 执行结果
      */
     @DeleteMapping(UrlConstants.DELETE)
-    public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
+    public Result<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(groupService, principal.getName(), LocalDateTime.now(), codes);
     }
 
@@ -164,8 +164,8 @@ public class GroupController {
      * @return 执行结果
      */
     @GetMapping("/getUserPage")
-    public ExecuteResult<Map<String, Object>> getUserPage(UserDTO userDTO) {
-        ExecuteResult<Map<String, Object>> result = new ExecuteResult<>();
+    public Result<Map<String, Object>> getUserPage(UserDTO userDTO) {
+        Result<Map<String, Object>> result = new Result<>();
         try {
             result.setData(controllerUtil.getUserPage(userDTO));
         } catch (Exception e) {
@@ -182,8 +182,8 @@ public class GroupController {
      * @return 执行结果
      */
     @PutMapping("/bindGroupMember")
-    public ExecuteResult<String> bindGroupMember(@Valid @RequestBody UserGroupDTO userGroupDTO, Principal principal) {
-        ExecuteResult<String> result = new ExecuteResult<>();
+    public Result<String> bindGroupMember(@Valid @RequestBody UserGroupDTO userGroupDTO, Principal principal) {
+        Result<String> result = new Result<>();
         try {
             userGroupService.bindGroupMember(principal.getName(), LocalDateTime.now(), BeanCopyUtil.copy(userGroupDTO, UserGroupEntity.class));
             result.setData("绑定成功");
@@ -201,8 +201,8 @@ public class GroupController {
      * @return 执行结果
      */
     @GetMapping("/listBindGroupMembers")
-    public ExecuteResult<List<String>> listBindGroupMembers(UserGroupDTO userGroupDTO) {
-        ExecuteResult<List<String>> result = new ExecuteResult<>();
+    public Result<List<String>> listBindGroupMembers(UserGroupDTO userGroupDTO) {
+        Result<List<String>> result = new Result<>();
         try {
             List<String> list = userGroupService.listBindGroupMembers(BeanCopyUtil.copy(userGroupDTO, UserGroupEntity.class));
             result.setData(list);
@@ -220,8 +220,8 @@ public class GroupController {
      * @return 分页信息
      */
     @GetMapping("/getRolePage")
-    public ExecuteResult<Map<String, Object>> getRolePage(RoleDTO roleDTO) {
-        ExecuteResult<Map<String, Object>> result = new ExecuteResult<>();
+    public Result<Map<String, Object>> getRolePage(RoleDTO roleDTO) {
+        Result<Map<String, Object>> result = new Result<>();
         try {
             result.setData(controllerUtil.getRolePage(roleDTO));
         } catch (Exception e) {
@@ -238,8 +238,8 @@ public class GroupController {
      * @return 执行结果
      */
     @PutMapping("/bindRole")
-    public ExecuteResult<String> bindRole(@RequestBody GroupRoleDTO groupRoleDTO, Principal principal) {
-        ExecuteResult<String> result = new ExecuteResult<>();
+    public Result<String> bindRole(@RequestBody GroupRoleDTO groupRoleDTO, Principal principal) {
+        Result<String> result = new Result<>();
         try {
             groupRoleService.bindGroupRole(principal.getName(), LocalDateTime.now(), BeanCopyUtil.copy(groupRoleDTO, GroupRoleEntity.class));
             result.setData("绑定成功");
@@ -257,8 +257,8 @@ public class GroupController {
      * @return 执行结果
      */
     @GetMapping("/listBindRoles")
-    public ExecuteResult<List<String>> listBindRoles(GroupRoleDTO groupRoleDTO) {
-        ExecuteResult<List<String>> result = new ExecuteResult<>();
+    public Result<List<String>> listBindRoles(GroupRoleDTO groupRoleDTO) {
+        Result<List<String>> result = new Result<>();
         try {
             List<String> list = groupRoleService.listBindGroupRoles(BeanCopyUtil.copy(groupRoleDTO, GroupRoleEntity.class));
             result.setData(list);

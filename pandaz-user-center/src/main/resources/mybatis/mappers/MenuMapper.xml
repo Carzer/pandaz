@@ -333,4 +333,12 @@
             </choose>
         </where>
     </select>
+    <select id="listLeafNode" resultType="com.pandaz.usercenter.entity.MenuEntity" parameterType="java.lang.String">
+        select menu.code, menu.name, menu.os_code, menu.icon, menu.locked
+        from t_sys_menu menu
+        where menu.deleted_flag = '0'
+          and menu.os_code = #{osCode,jdbcType=VARCHAR}
+          and not exists(select m.code from t_sys_menu m where m.deleted_flag = '0' and m.parent_code = menu.code)
+        order by sorting, created_date;
+    </select>
 </mapper>

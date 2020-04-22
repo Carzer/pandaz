@@ -13,15 +13,15 @@ import java.io.Serializable;
  */
 @Setter
 @Getter
-public final class ExecuteResult<T> {
+public final class Result<T> {
 
     /**
      * build 方法
      *
      * @return 返回成功
      */
-    public static <T extends Serializable> ExecuteResult<T> buildSuccess() {
-        ExecuteResult<T> result = new ExecuteResult<>();
+    public static <T extends Serializable> Result<T> buildSuccess() {
+        Result<T> result = new Result<>();
         result.setSuccess(true);
         return result;
     }

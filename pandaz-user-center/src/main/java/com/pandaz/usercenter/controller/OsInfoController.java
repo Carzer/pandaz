@@ -3,7 +3,7 @@ package com.pandaz.usercenter.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.commons.dto.usercenter.OsInfoDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
-import com.pandaz.commons.util.ExecuteResult;
+import com.pandaz.commons.util.Result;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.custom.constants.UrlConstants;
 import com.pandaz.usercenter.entity.OsInfoEntity;
@@ -50,8 +50,8 @@ public class OsInfoController {
      * @return 系统信息
      */
     @GetMapping(UrlConstants.GET)
-    public ExecuteResult<OsInfoDTO> get(@Valid OsInfoDTO osInfoDTO) {
-        ExecuteResult<OsInfoDTO> result = new ExecuteResult<>();
+    public Result<OsInfoDTO> get(@Valid OsInfoDTO osInfoDTO) {
+        Result<OsInfoDTO> result = new Result<>();
         try {
             result.setData(BeanCopyUtil.copy(osInfoService.findByCode(osInfoDTO.getCode()), OsInfoDTO.class));
         } catch (Exception e) {
@@ -68,8 +68,8 @@ public class OsInfoController {
      * @return 分页信息
      */
     @GetMapping(UrlConstants.PAGE)
-    public ExecuteResult<Map<String, Object>> getPage(OsInfoDTO osInfoDTO) {
-        ExecuteResult<Map<String, Object>> result = new ExecuteResult<>();
+    public Result<Map<String, Object>> getPage(OsInfoDTO osInfoDTO) {
+        Result<Map<String, Object>> result = new Result<>();
         try {
             IPage<OsInfoEntity> page = osInfoService.getPage(BeanCopyUtil.copy(osInfoDTO, OsInfoEntity.class));
             result.setData(BeanCopyUtil.convertToMap(page, OsInfoDTO.class));
@@ -87,8 +87,8 @@ public class OsInfoController {
      * @return 系统信息
      */
     @PostMapping(UrlConstants.INSERT)
-    public ExecuteResult<OsInfoDTO> insert(@RequestBody OsInfoDTO osInfoDTO, Principal principal) {
-        ExecuteResult<OsInfoDTO> result = new ExecuteResult<>();
+    public Result<OsInfoDTO> insert(@RequestBody OsInfoDTO osInfoDTO, Principal principal) {
+        Result<OsInfoDTO> result = new Result<>();
         check(osInfoDTO);
         try {
             OsInfoEntity osInfoEntity = BeanCopyUtil.copy(osInfoDTO, OsInfoEntity.class);
@@ -111,8 +111,8 @@ public class OsInfoController {
      * @return 执行结果
      */
     @PutMapping(UrlConstants.UPDATE)
-    public ExecuteResult<String> update(@Valid @RequestBody OsInfoDTO osInfoDTO, Principal principal) {
-        ExecuteResult<String> result = new ExecuteResult<>();
+    public Result<String> update(@Valid @RequestBody OsInfoDTO osInfoDTO, Principal principal) {
+        Result<String> result = new Result<>();
         check(osInfoDTO);
         try {
             OsInfoEntity osInfoEntity = BeanCopyUtil.copy(osInfoDTO, OsInfoEntity.class);
@@ -134,7 +134,7 @@ public class OsInfoController {
      * @return 执行结果
      */
     @DeleteMapping(UrlConstants.DELETE)
-    public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
+    public Result<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(osInfoService, principal.getName(), LocalDateTime.now(), codes);
     }
 

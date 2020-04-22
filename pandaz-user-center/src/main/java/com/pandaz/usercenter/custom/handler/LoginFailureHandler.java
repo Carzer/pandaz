@@ -1,6 +1,6 @@
 package com.pandaz.usercenter.custom.handler;
 
-import com.pandaz.commons.util.ExecuteResult;
+import com.pandaz.commons.util.Result;
 import com.pandaz.commons.util.PrintWriterUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -34,7 +34,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
                                         HttpServletResponse httpServletResponse, AuthenticationException e)
             throws IOException {
         String errorMsg = e.getMessage();
-        ExecuteResult<String> result = new ExecuteResult<>();
+        Result<String> result = new Result<>();
         if (e instanceof BadCredentialsException) {
             errorMsg = "密码错误。";
         }

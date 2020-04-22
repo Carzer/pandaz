@@ -1,6 +1,6 @@
 package com.pandaz.redis.controller;
 
-import com.pandaz.commons.util.ExecuteResult;
+import com.pandaz.commons.util.Result;
 import com.pandaz.redis.service.RedisHelper;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -39,8 +39,8 @@ public class OperationController {
      * @return 执行结果
      */
     @GetMapping("/getValue")
-    public ExecuteResult<String> getValue(String key) {
-        ExecuteResult<String> result = new ExecuteResult<>();
+    public Result<String> getValue(String key) {
+        Result<String> result = new Result<>();
         try {
             Object object = redisHelper.getObject(key);
             if (object != null) {
@@ -62,8 +62,8 @@ public class OperationController {
      * @return 执行结果
      */
     @PostMapping("/setValue")
-    public ExecuteResult<String> setValue(String value) {
-        ExecuteResult<String> result = new ExecuteResult<>();
+    public Result<String> setValue(String value) {
+        Result<String> result = new Result<>();
         try {
             redisHelper.setObject("test", value);
             result.setData("test");

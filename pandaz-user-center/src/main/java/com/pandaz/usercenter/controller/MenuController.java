@@ -5,7 +5,7 @@ import com.pandaz.commons.dto.usercenter.MenuDTO;
 import com.pandaz.commons.dto.usercenter.OsInfoDTO;
 import com.pandaz.commons.dto.usercenter.PermissionDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
-import com.pandaz.commons.util.ExecuteResult;
+import com.pandaz.commons.util.Result;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.custom.constants.UrlConstants;
 import com.pandaz.usercenter.entity.MenuEntity;
@@ -71,8 +71,8 @@ public class MenuController {
      * @return 菜单信息
      */
     @GetMapping(UrlConstants.GET)
-    public ExecuteResult<MenuDTO> get(@Valid MenuDTO menuDTO) {
-        ExecuteResult<MenuDTO> result = new ExecuteResult<>();
+    public Result<MenuDTO> get(@Valid MenuDTO menuDTO) {
+        Result<MenuDTO> result = new Result<>();
         try {
             result.setData(BeanCopyUtil.copy(menuService.findByCode(menuDTO.getCode()), MenuDTO.class));
         } catch (Exception e) {
@@ -89,8 +89,8 @@ public class MenuController {
      * @return 分页信息
      */
     @GetMapping(UrlConstants.PAGE)
-    public ExecuteResult<Map<String, Object>> getPage(MenuDTO menuDTO) {
-        ExecuteResult<Map<String, Object>> result = new ExecuteResult<>();
+    public Result<Map<String, Object>> getPage(MenuDTO menuDTO) {
+        Result<Map<String, Object>> result = new Result<>();
         try {
             IPage<MenuEntity> page = menuService.getPage(BeanCopyUtil.copy(menuDTO, MenuEntity.class));
             result.setData(BeanCopyUtil.convertToMap(page, MenuDTO.class));
@@ -108,8 +108,8 @@ public class MenuController {
      * @return 菜单信息
      */
     @PostMapping(UrlConstants.INSERT)
-    public ExecuteResult<MenuDTO> insert(@RequestBody MenuDTO menuDTO, Principal principal) {
-        ExecuteResult<MenuDTO> result = new ExecuteResult<>();
+    public Result<MenuDTO> insert(@RequestBody MenuDTO menuDTO, Principal principal) {
+        Result<MenuDTO> result = new Result<>();
         check(menuDTO);
         try {
             MenuEntity menuEntity = BeanCopyUtil.copy(menuDTO, MenuEntity.class);
@@ -133,8 +133,8 @@ public class MenuController {
      * @return 执行结果
      */
     @PutMapping(UrlConstants.UPDATE)
-    public ExecuteResult<String> update(@Valid @RequestBody MenuDTO menuDTO, Principal principal) {
-        ExecuteResult<String> result = new ExecuteResult<>();
+    public Result<String> update(@Valid @RequestBody MenuDTO menuDTO, Principal principal) {
+        Result<String> result = new Result<>();
         check(menuDTO);
         try {
             MenuEntity menuEntity = BeanCopyUtil.copy(menuDTO, MenuEntity.class);
@@ -156,7 +156,7 @@ public class MenuController {
      * @return 执行结果
      */
     @DeleteMapping(UrlConstants.DELETE)
-    public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
+    public Result<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(menuService, principal.getName(), LocalDateTime.now(), codes);
     }
 
@@ -167,8 +167,8 @@ public class MenuController {
      * @return 分页信息
      */
     @GetMapping("/getPermissionPage")
-    public ExecuteResult<Map<String, Object>> getPermissionPage(PermissionDTO permissionDTO) {
-        ExecuteResult<Map<String, Object>> result = new ExecuteResult<>();
+    public Result<Map<String, Object>> getPermissionPage(PermissionDTO permissionDTO) {
+        Result<Map<String, Object>> result = new Result<>();
         try {
             result.setData(controllerUtil.getPermissionPage(permissionDTO));
         } catch (Exception e) {
@@ -184,8 +184,8 @@ public class MenuController {
      * @return 所有菜单
      */
     @GetMapping("/getAll")
-    public ExecuteResult<MenuDTO> getAll(MenuDTO menuDTO) {
-        ExecuteResult<MenuDTO> result = new ExecuteResult<>();
+    public Result<MenuDTO> getAll(MenuDTO menuDTO) {
+        Result<MenuDTO> result = new Result<>();
         try {
             result.setData(controllerUtil.getAllMenu(menuDTO, false));
         } catch (Exception e) {
@@ -201,8 +201,8 @@ public class MenuController {
      * @return 所有菜单
      */
     @GetMapping("/getAuthorizedMenu")
-    public ExecuteResult<MenuDTO> getAuthorizedMenu(String osCode, Principal principal) {
-        ExecuteResult<MenuDTO> result = new ExecuteResult<>();
+    public Result<MenuDTO> getAuthorizedMenu(String osCode, Principal principal) {
+        Result<MenuDTO> result = new Result<>();
         List<String> roleList = new ArrayList<>();
         MenuDTO menuDTO = new MenuDTO();
         menuDTO.setCode("root");
@@ -232,8 +232,8 @@ public class MenuController {
      * @return 系统信息
      */
     @GetMapping("/listAllOs")
-    public ExecuteResult<List<OsInfoDTO>> listAllOs() {
-        ExecuteResult<List<OsInfoDTO>> result = new ExecuteResult<>();
+    public Result<List<OsInfoDTO>> listAllOs() {
+        Result<List<OsInfoDTO>> result = new Result<>();
         try {
             result.setData(controllerUtil.listAllOs());
         } catch (Exception e) {

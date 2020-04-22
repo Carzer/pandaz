@@ -2,7 +2,7 @@ package com.pandaz.usercenter.util;
 
 import com.pandaz.commons.custom.SecurityUser;
 import com.pandaz.commons.dto.usercenter.UserDTO;
-import com.pandaz.commons.util.ExecuteResult;
+import com.pandaz.commons.util.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
@@ -32,8 +32,8 @@ public final class UserUtil {
      * @param principal principal
      * @return 当前用户
      */
-    public static ExecuteResult<UserDTO> getUserFromPrincipal(Principal principal) {
-        ExecuteResult<UserDTO> result = new ExecuteResult<>();
+    public static Result<UserDTO> getUserFromPrincipal(Principal principal) {
+        Result<UserDTO> result = new Result<>();
         try {
             if (principal == null) {
                 result.setError("用户未登陆！");

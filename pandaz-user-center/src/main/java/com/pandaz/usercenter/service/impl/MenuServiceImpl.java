@@ -254,6 +254,17 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
     }
 
     /**
+     * 只列出叶子节点
+     *
+     * @param osCode 系统编码
+     * @return 菜单列表
+     */
+    @Override
+    public List<MenuEntity> listLeafNode(String osCode) {
+        return menuMapper.listLeafNode(osCode);
+    }
+
+    /**
      * 清理子菜单
      *
      * @param deletedBy   删除人

@@ -2,7 +2,7 @@ package com.pandaz.usercenter.controller;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.LoggerContext;
-import com.pandaz.commons.util.ExecuteResult;
+import com.pandaz.commons.util.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -34,8 +34,8 @@ public class LogController {
      * @return java.lang.String
      */
     @PutMapping(value = "/logLevel")
-    public ExecuteResult<String> changeLogLevel(@RequestBody Map<String, String> map) {
-        ExecuteResult<String> result = new ExecuteResult<>();
+    public Result<String> changeLogLevel(@RequestBody Map<String, String> map) {
+        Result<String> result = new Result<>();
         try {
             LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
             map.forEach((loggerName, logLevel) -> loggerContext.getLogger(loggerName).setLevel(Level.valueOf(logLevel)));

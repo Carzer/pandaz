@@ -1,6 +1,6 @@
 package com.pandaz.usercenter.custom.handler;
 
-import com.pandaz.commons.util.ExecuteResult;
+import com.pandaz.commons.util.Result;
 import com.pandaz.commons.util.IpUtil;
 import com.pandaz.commons.util.PrintWriterUtil;
 import com.pandaz.usercenter.util.TokenUtil;
@@ -61,7 +61,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
         resultMap.put("user", authentication.getPrincipal());
         // 登陆成功后，返回用户信息的同时返回token
         resultMap.putAll(tokenUtil.generateToken(authentication));
-        ExecuteResult<HashMap<String, Object>> result = new ExecuteResult<>();
+        Result<HashMap<String, Object>> result = new Result<>();
         result.setData(resultMap);
         PrintWriterUtil.write(httpServletResponse, result);
     }

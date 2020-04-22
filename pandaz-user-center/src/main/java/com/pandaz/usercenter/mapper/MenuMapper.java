@@ -52,4 +52,12 @@ public interface MenuMapper extends UcBaseMapper<MenuEntity> {
      * @return 菜单
      */
     List<MenuEntity> selectByCodes(List<String> codes);
+
+    /**
+     * 只列出叶子节点
+     *
+     * @param osCode 系统编码
+     * @return 菜单列表
+     */
+    List<MenuEntity> listLeafNode(String osCode);
 }

@@ -1,6 +1,6 @@
 package com.pandaz.usercenter.controller;
 
-import com.pandaz.commons.util.ExecuteResult;
+import com.pandaz.commons.util.Result;
 import com.pandaz.usercenter.client.RedisClient;
 import com.pandaz.usercenter.client.UploadClient;
 import lombok.RequiredArgsConstructor;
@@ -52,8 +52,8 @@ public class IndexController {
      */
     @GetMapping("userInfo")
     @PreAuthorize("hasRole('ADMIN')")
-    public ExecuteResult<HashMap<String, Principal>> home(Principal principal) {
-        ExecuteResult<HashMap<String, Principal>> result = new ExecuteResult<>();
+    public Result<HashMap<String, Principal>> home(Principal principal) {
+        Result<HashMap<String, Principal>> result = new Result<>();
         HashMap<String, Principal> map = new HashMap<>(1);
         map.put("user", principal);
         result.setData(map);
@@ -68,16 +68,11 @@ public class IndexController {
      */
     @GetMapping("testRedis")
     @PreAuthorize("hasRole('ADMIN')")
-    public ExecuteResult<String> testRedis(String value) {
-        ExecuteResult<String> result = new ExecuteResult<>();
+    public Result<String> testRedis(String value) {
+        Result<String> result = new Result<>();
         try {
             String key = redisClient.setRedisValue(value).getData();
-            ExecuteResult<String> executeResult = redisClient.getRedisValue(key);
-            if (executeResult.isSuccess()) {
-                result.setData(executeResult.getData());
-            } else {
-                result.setError(executeResult.getError());
-            }
+            result = redisClient.getRedisValue(key);
         } catch (Exception e) {
             log.error("测试异常", e);
             result.setError(e.getMessage());
@@ -92,8 +87,8 @@ public class IndexController {
      */
     @GetMapping("getAllUrl")
     @PreAuthorize("hasRole('ADMIN')")
-    public ExecuteResult<List<Map<String, String>>> getAllUrl() {
-        ExecuteResult<List<Map<String, String>>> result = new ExecuteResult<>();
+    public Result<List<Map<String, String>>> getAllUrl() {
+        Result<List<Map<String, String>>> result = new Result<>();
         RequestMappingHandlerMapping mapping = applicationContext.getBean(RequestMappingHandlerMapping.class);
         // 获取url与类和方法的对应信息
         Map<RequestMappingInfo, HandlerMethod> map = mapping.getHandlerMethods();

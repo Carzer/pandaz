@@ -1,6 +1,6 @@
 package com.pandaz.usercenter.custom.handler;
 
-import com.pandaz.commons.util.ExecuteResult;
+import com.pandaz.commons.util.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
@@ -30,8 +30,8 @@ public class SecurityExceptionHandler {
      */
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(AuthenticationException.class)
-    public ExecuteResult<String> authFailed(AuthenticationException e) {
-        ExecuteResult<String> result = new ExecuteResult<>();
+    public Result<String> authFailed(AuthenticationException e) {
+        Result<String> result = new Result<>();
         String msg = e.getMessage();
         log.warn("错误信息：{}", msg);
         result.setError(msg);

@@ -3,7 +3,7 @@ package com.pandaz.usercenter.controller;
 import com.pandaz.commons.dto.usercenter.UserDTO;
 import com.pandaz.commons.dto.usercenter.UserPwdDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
-import com.pandaz.commons.util.ExecuteResult;
+import com.pandaz.commons.util.Result;
 import com.pandaz.usercenter.custom.constants.UrlConstants;
 import com.pandaz.usercenter.entity.UserEntity;
 import com.pandaz.usercenter.service.UserService;
@@ -51,8 +51,8 @@ public class UserController {
      * @return 执行结果
      */
     @GetMapping(UrlConstants.GET)
-    public ExecuteResult<UserDTO> get(@Valid UserDTO userDTO) {
-        ExecuteResult<UserDTO> result = new ExecuteResult<>();
+    public Result<UserDTO> get(@Valid UserDTO userDTO) {
+        Result<UserDTO> result = new Result<>();
         try {
             UserDTO dto = BeanCopyUtil.copy(userService.findByCode(userDTO.getCode()), UserDTO.class);
             result.setData(dto);
@@ -70,8 +70,8 @@ public class UserController {
      * @return 执行结果
      */
     @GetMapping(UrlConstants.PAGE)
-    public ExecuteResult<Map<String, Object>> getPage(UserDTO userDTO) {
-        ExecuteResult<Map<String, Object>> result = new ExecuteResult<>();
+    public Result<Map<String, Object>> getPage(UserDTO userDTO) {
+        Result<Map<String, Object>> result = new Result<>();
         try {
             result.setData(controllerUtil.getUserPage(userDTO));
         } catch (Exception e) {
@@ -88,8 +88,8 @@ public class UserController {
      * @return 执行结果
      */
     @PostMapping(UrlConstants.INSERT)
-    public ExecuteResult<UserDTO> insert(@Valid @RequestBody UserPwdDTO userPwdDTO, Principal principal) {
-        ExecuteResult<UserDTO> result = new ExecuteResult<>();
+    public Result<UserDTO> insert(@Valid @RequestBody UserPwdDTO userPwdDTO, Principal principal) {
+        Result<UserDTO> result = new Result<>();
         UserDTO userDTO = userPwdDTO.getUserDTO();
         check(userDTO);
         String password = userPwdDTO.getPassword();
@@ -120,8 +120,8 @@ public class UserController {
      * @return 执行结果
      */
     @PutMapping(UrlConstants.UPDATE)
-    public ExecuteResult<String> update(@Valid @RequestBody UserDTO userDTO, Principal principal) {
-        ExecuteResult<String> result = new ExecuteResult<>();
+    public Result<String> update(@Valid @RequestBody UserDTO userDTO, Principal principal) {
+        Result<String> result = new Result<>();
         check(userDTO);
         try {
             UserEntity userEntity = BeanCopyUtil.copy(userDTO, UserEntity.class);
@@ -145,7 +145,7 @@ public class UserController {
      */
     @PreAuthorize("!#codes.contains('admin')")
     @DeleteMapping(UrlConstants.DELETE)
-    public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
+    public Result<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(userService, principal.getName(), LocalDateTime.now(), codes);
     }
 

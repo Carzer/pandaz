@@ -90,6 +90,10 @@ public class InitTest extends BasisUnitTest {
         roleEntity.setCode("ROLE_ADMIN");
         roleEntity.setName("系统管理员");
         roleService.insert(roleEntity);
+        RoleEntity role = new RoleEntity();
+        role.setCode("ROLE_SUPER_ADMIN");
+        role.setName("超级管理员");
+        roleService.insert(roleEntity);
     }
 
     private void bindUserAndRole() {

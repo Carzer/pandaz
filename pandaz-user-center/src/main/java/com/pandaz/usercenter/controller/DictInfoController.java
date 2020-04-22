@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.commons.dto.usercenter.DictInfoDTO;
 import com.pandaz.commons.dto.usercenter.DictTypeDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
-import com.pandaz.commons.util.ExecuteResult;
+import com.pandaz.commons.util.Result;
 import com.pandaz.usercenter.custom.constants.UrlConstants;
 import com.pandaz.usercenter.entity.DictInfoEntity;
 import com.pandaz.usercenter.service.DictInfoService;
@@ -53,8 +53,8 @@ public class DictInfoController {
      * @return 组信息
      */
     @GetMapping(UrlConstants.GET)
-    public ExecuteResult<DictInfoDTO> get(@Valid DictInfoDTO dictInfoDTO) {
-        ExecuteResult<DictInfoDTO> result = new ExecuteResult<>();
+    public Result<DictInfoDTO> get(@Valid DictInfoDTO dictInfoDTO) {
+        Result<DictInfoDTO> result = new Result<>();
         try {
             result.setData(BeanCopyUtil.copy(dictInfoService.getWithTypeName(dictInfoDTO.getCode()), DictInfoDTO.class));
         } catch (Exception e) {
@@ -71,8 +71,8 @@ public class DictInfoController {
      * @return 分页信息
      */
     @GetMapping(UrlConstants.PAGE)
-    public ExecuteResult<Map<String, Object>> getPage(DictInfoDTO dictInfoDTO) {
-        ExecuteResult<Map<String, Object>> result = new ExecuteResult<>();
+    public Result<Map<String, Object>> getPage(DictInfoDTO dictInfoDTO) {
+        Result<Map<String, Object>> result = new Result<>();
         try {
             IPage<DictInfoEntity> page = dictInfoService.getPage(BeanCopyUtil.copy(dictInfoDTO, DictInfoEntity.class));
             result.setData(BeanCopyUtil.convertToMap(page, DictInfoDTO.class));
@@ -90,8 +90,8 @@ public class DictInfoController {
      * @return 字典信息
      */
     @PostMapping(UrlConstants.INSERT)
-    public ExecuteResult<DictInfoDTO> insert(@RequestBody DictInfoDTO dictInfoDTO, Principal principal) {
-        ExecuteResult<DictInfoDTO> result = new ExecuteResult<>();
+    public Result<DictInfoDTO> insert(@RequestBody DictInfoDTO dictInfoDTO, Principal principal) {
+        Result<DictInfoDTO> result = new Result<>();
         check(dictInfoDTO);
         try {
             DictInfoEntity dictInfoEntity = BeanCopyUtil.copy(dictInfoDTO, DictInfoEntity.class);
@@ -113,8 +113,8 @@ public class DictInfoController {
      * @return 执行结果
      */
     @PutMapping(UrlConstants.UPDATE)
-    public ExecuteResult<String> update(@Valid @RequestBody DictInfoDTO dictInfoDTO, Principal principal) {
-        ExecuteResult<String> result = new ExecuteResult<>();
+    public Result<String> update(@Valid @RequestBody DictInfoDTO dictInfoDTO, Principal principal) {
+        Result<String> result = new Result<>();
         check(dictInfoDTO);
         try {
             DictInfoEntity dictInfoEntity = BeanCopyUtil.copy(dictInfoDTO, DictInfoEntity.class);
@@ -136,7 +136,7 @@ public class DictInfoController {
      * @return 执行结果
      */
     @DeleteMapping(UrlConstants.DELETE)
-    public ExecuteResult<String> delete(@RequestBody List<String> codes, Principal principal) {
+    public Result<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(dictInfoService, principal.getName(), LocalDateTime.now(), codes);
     }
 
@@ -146,8 +146,8 @@ public class DictInfoController {
      * @return 字典类型
      */
     @GetMapping("/listAllTypes")
-    public ExecuteResult<List<DictTypeDTO>> listAllTypes() {
-        ExecuteResult<List<DictTypeDTO>> result = new ExecuteResult<>();
+    public Result<List<DictTypeDTO>> listAllTypes() {
+        Result<List<DictTypeDTO>> result = new Result<>();
         try {
             result.setData(controllerUtil.listAllTypes());
         } catch (Exception e) {
