@@ -6,6 +6,7 @@ import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.CustomPasswordEncoder;
 import com.pandaz.usercenter.custom.CustomDaoAuthenticationProvider;
 import com.pandaz.usercenter.custom.constants.SysConstants;
+import com.pandaz.usercenter.custom.filter.CustomFilterSecurityInterceptor;
 import com.pandaz.usercenter.custom.handler.CustomAuthDeniedHandler;
 import com.pandaz.usercenter.custom.handler.CustomLogoutSuccessHandler;
 import com.pandaz.usercenter.custom.handler.LoginFailureHandler;
@@ -30,6 +31,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 import java.time.LocalDateTime;
@@ -69,6 +71,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomLogoutSuccessHandler logoutSuccessHandler;
 
     /**
+     * 权限filter
+     */
+    private final CustomFilterSecurityInterceptor filterSecurityInterceptor;
+
+    /**
      * 获取登录用户的相关信息
      *
      * @param auth 权限管理器
@@ -90,8 +97,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                // 匹配/oauth
-                .antMatchers("/oauth/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyRequest()
                 .authenticated().and()
@@ -113,6 +118,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .and().sessionManagement().maximumSessions(1)
 //                .maxSessionsPreventsLogin(true)
         ;
+        http.addFilterBefore(filterSecurityInterceptor, FilterSecurityInterceptor.class);
     }
 
     /**

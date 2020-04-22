@@ -17,7 +17,6 @@ import java.util.Collection;
 @Component
 public class CustomPermissionEvaluator implements PermissionEvaluator {
 
-
     /**
      * 判断是否有权限
      *
@@ -29,12 +28,8 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
     @Override
     public boolean hasPermission(Authentication authentication,
                                  Object targetDomainObject, Object permission) {
-        if ("user".equals(targetDomainObject)) {
-            return this.hasPermission(authentication, permission);
-        }
-        return false;
+        return this.hasPermission(authentication, permission);
     }
-
 
     /**
      * 判断是否有权限

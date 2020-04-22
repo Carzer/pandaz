@@ -51,7 +51,6 @@ public class IndexController {
      * @return 执行结果
      */
     @GetMapping("userInfo")
-    @PreAuthorize("hasRole('ADMIN')")
     public Result<HashMap<String, Principal>> home(Principal principal) {
         Result<HashMap<String, Principal>> result = new Result<>();
         HashMap<String, Principal> map = new HashMap<>(1);

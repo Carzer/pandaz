@@ -73,6 +73,8 @@ mybatis-plus:
 custom:
   # 是否显示简略错误信息
   simpleErrorMessage: false
+  # 排除路径
+  excludedPaths: "/oauth/**,/login,/userInfo,/css/**,/fonts/**,/js/**,/scss/**,/img/**"
   # 超级管理员角色名称
   super-admin:
     enable: true

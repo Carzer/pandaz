@@ -119,7 +119,7 @@ public class ControllerUtil<S extends UcBaseService> {
      *
      * @return 菜单信息
      */
-    public MenuDTO getAllMenu(MenuDTO menuDTO, Boolean superAdmin) {
+    public MenuDTO getAllMenu(MenuDTO menuDTO, boolean superAdmin) {
         MenuEntity menuEntity = BeanCopyUtil.copy(menuDTO, MenuEntity.class);
         menuEntity.setParentCode(CommonConstants.ROOT_MENU_CODE);
         List<MenuEntity> list = menuService.getAll(menuEntity);
@@ -155,7 +155,7 @@ public class ControllerUtil<S extends UcBaseService> {
      * @param menuEntity entity
      * @return dto
      */
-    private MenuDTO transferToDTO(MenuEntity menuEntity, Boolean superAdmin) {
+    private MenuDTO transferToDTO(MenuEntity menuEntity, boolean superAdmin) {
         MenuDTO menuDTO = new MenuDTO();
         List<MenuEntity> entityList = menuEntity.getChildren();
         if (!CollectionUtils.isEmpty(entityList)) {
