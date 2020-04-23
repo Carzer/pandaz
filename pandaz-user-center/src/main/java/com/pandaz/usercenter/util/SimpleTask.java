@@ -33,7 +33,7 @@ public class SimpleTask {
      * <p>
      * 暂定6小时
      */
-    @Scheduled(fixedRate = 1000 * 60 * 60 * 6, fixedDelay = 1000 * 60 * 10)
+    @Scheduled(fixedDelay = 1000 * 60 * 60 * 6)
     public void clear() {
         // 清理菜单脏数据
         clearMenus();
@@ -42,7 +42,7 @@ public class SimpleTask {
     /**
      * 拉取权限信息
      */
-    @Scheduled(fixedRate = 1000 * 60 * 60)
+    @Scheduled(fixedDelay = 1000 * 60 * 60)
     public void loadResourceDefineMap() {
         AuthUtil.loadResourceDefineMap();
     }
