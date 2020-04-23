@@ -19,7 +19,7 @@ public enum ExpireStateEnum {
      * 值
      */
     @Getter
-    private String val;
+    private final String val;
 
     /**
      * 构造方法

@@ -12,9 +12,8 @@ import com.pandaz.usercenter.entity.PermissionEntity;
 import com.pandaz.usercenter.mapper.MenuMapper;
 import com.pandaz.usercenter.service.MenuService;
 import com.pandaz.usercenter.service.PermissionService;
-import com.pandaz.usercenter.util.SimpleTask;
 import com.pandaz.usercenter.util.CheckUtil;
-import com.pandaz.usercenter.util.SpringBeanUtil;
+import com.pandaz.usercenter.util.SimpleTask;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -185,7 +184,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
         });
         // 由于Spring的异步方法，实际上是异步调用实例方法（以类的实例为单位），this.clearChildren()无法异步进行
         // 所以在使用@Async注解时，应当使用实例进行调用
-        SpringBeanUtil.getBean(this.getClass()).clearMenuChildren(deletedBy, deletedDate, codes);
+        // 这里暂时注释掉，直接同步执行 SpringBeanUtil.getBean(this.getClass()).clearMenuChildren(deletedBy, deletedDate, codes);
+        clearMenuChildren(deletedBy, deletedDate, codes);
         return codes.size();
     }
 
@@ -274,7 +274,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
     @Async
     public void clearMenuChildren(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
         try {
-            log.debug("异步清理菜单开始");
+            log.debug("清理菜单开始");
             codes.forEach(code -> {
                 MenuEntity menuEntity = new MenuEntity();
                 menuEntity.setDeletedBy(deletedBy);
@@ -282,9 +282,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
                 menuEntity.setCode(code);
                 clearChildren(menuEntity);
             });
-            log.debug("异步清理菜单结束");
+            log.debug("清理菜单结束");
         } catch (Exception e) {
-            log.error("异步清理子菜单异常：", e);
+            log.error("清理子菜单异常：", e);
         }
     }
 

@@ -1,13 +1,17 @@
 package com.pandaz.usercenter.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.BasisUnitTest;
+import com.pandaz.usercenter.custom.constants.UrlEnum;
+import com.pandaz.usercenter.entity.MenuEntity;
 import com.pandaz.usercenter.entity.PermissionEntity;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.hamcrest.core.IsAnything.anything;
 import static org.junit.Assert.*;
@@ -18,7 +22,6 @@ import static org.junit.Assert.*;
  * @author Carzer
  * @since 2020-02-27
  */
-@Transactional
 public class PermissionServiceTest extends BasisUnitTest {
 
     /**
@@ -26,9 +29,19 @@ public class PermissionServiceTest extends BasisUnitTest {
      */
     private PermissionService permissionService;
 
+    /**
+     * 菜单服务
+     */
+    private MenuService menuService;
+
     @Autowired
     public void setPermissionService(PermissionService permissionService) {
         this.permissionService = permissionService;
+    }
+
+    @Autowired
+    public void setMenuService(MenuService menuService) {
+        this.menuService = menuService;
     }
 
     @Test
@@ -72,5 +85,23 @@ public class PermissionServiceTest extends BasisUnitTest {
         permissionEntity.setDeletedDate(LocalDateTime.now());
         int result = permissionService.deleteByCode(permissionEntity);
         assertThat(result, anything());
+    }
+
+    @Test
+    public void initPermissions() {
+        List<MenuEntity> list = menuService.listLeafNode("portal");
+        list.forEach(menuEntity -> {
+            for (UrlEnum value : UrlEnum.values()) {
+                PermissionEntity permissionEntity = new PermissionEntity();
+                permissionEntity.setId(UuidUtil.getId());
+                permissionEntity.setCreatedBy("system");
+                permissionEntity.setCreatedDate(LocalDateTime.now());
+                permissionEntity.setOsCode("portal");
+                permissionEntity.setMenuCode(menuEntity.getCode());
+                permissionEntity.setName(menuEntity.getName() + ":" + value.getName());
+                permissionEntity.setCode(menuEntity.getCode() + value.getUrl());
+                permissionService.insert(permissionEntity);
+            }
+        });
     }
 }

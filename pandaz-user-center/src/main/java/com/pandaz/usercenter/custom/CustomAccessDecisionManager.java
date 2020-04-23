@@ -35,7 +35,7 @@ public class CustomAccessDecisionManager implements AccessDecisionManager {
         // 如果请求的资源为系统中配置的资源，进行角色匹配
         if (!CollectionUtils.isEmpty(configAttributes)) {
             List<String> roleList = authentication.getAuthorities().stream()
-                    .map((grantedAuthority) -> grantedAuthority.getAuthority().toLowerCase())
+                    .map(grantedAuthority -> grantedAuthority.getAuthority().toLowerCase())
                     .collect(Collectors.toList());
             for (ConfigAttribute configAttribute : configAttributes) {
                 if (roleList.contains(configAttribute.getAttribute().toLowerCase())) {

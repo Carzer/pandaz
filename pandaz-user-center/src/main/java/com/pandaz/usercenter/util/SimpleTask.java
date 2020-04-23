@@ -32,8 +32,8 @@ public class SimpleTask {
      * 定时清理脏数据
      * <p>
      * 暂定6小时
+     * '@Scheduled(fixedDelay = 1000 * 60 * 60 * 6)'
      */
-    @Scheduled(fixedDelay = 1000 * 60 * 60 * 6)
     public void clear() {
         // 清理菜单脏数据
         clearMenus();

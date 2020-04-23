@@ -63,7 +63,7 @@ public class CustomInvocationSecurityMetadataSourceService implements FilterInvo
         if (enableSuperAdmin) {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             List<String> roleList = authentication.getAuthorities().stream()
-                    .map((grantedAuthority) -> grantedAuthority.getAuthority().toLowerCase())
+                    .map(grantedAuthority -> grantedAuthority.getAuthority().toLowerCase())
                     .collect(Collectors.toList());
             if (roleList.contains(superAdminName.toLowerCase())) {
                 return new ArrayList<>();

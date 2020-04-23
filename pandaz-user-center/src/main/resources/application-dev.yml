@@ -10,6 +10,7 @@ spring:
         dashboard: localhost:8787
       log:
         dir: logs/user-center/sentinel
+
   # 数据库配置
   datasource:
     ds0:
@@ -74,11 +75,11 @@ custom:
   # 是否显示简略错误信息
   simpleErrorMessage: false
   # 排除路径
-  excludedPaths: "/oauth/**,/token/**,/login,/userInfo,/css/**,/fonts/**,/js/**,/scss/**,/img/**"
+  excludedPaths: "/oauth/**,/token/**,/menu/getAuthorizedMenu,/login,/userInfo,/css/**,/fonts/**,/js/**,/scss/**,/img/**"
   # 超级管理员角色名称
   super-admin:
-    enable: true
-    name: ROLE_ADMIN
+    enable: false
+    name: ROLE_SUPER_ADMIN
   # 项目基础包
   projectPackage: com.pandaz
   # 调用服务名称

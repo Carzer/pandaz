@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -159,8 +160,10 @@ public class RoleController {
     public Result<String> bindPermissions(@RequestBody RolePermissionDTO rolePermissionDTO, Principal principal) {
         Result<String> result = new Result<>();
         try {
-            RolePermissionEntity rolePermissionEntity = BeanCopyUtil.copy(rolePermissionDTO, RolePermissionEntity.class);
-            rolePermissionService.bindPermissions(principal.getName(), LocalDateTime.now(), rolePermissionEntity);
+            if (!CollectionUtils.isEmpty(rolePermissionDTO.getPermissionCodes())) {
+                RolePermissionEntity rolePermissionEntity = BeanCopyUtil.copy(rolePermissionDTO, RolePermissionEntity.class);
+                rolePermissionService.bindPermissions(principal.getName(), LocalDateTime.now(), rolePermissionEntity);
+            }
             result.setData("绑定成功");
         } catch (Exception e) {
             log.error("绑定权限异常：", e);
