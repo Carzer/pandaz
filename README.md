@@ -27,24 +27,24 @@
     使用时，根据pandaz.sql更新数据库信息.使用InitTest初始化数据。
     默认用户：admin，密码：admin。测试oauth2客户端：test，密码：test。
     所有数据默认逻辑删除。
-<details>
-<summary>进行中...</summary>
-<pre><code>
-- [ ] **功能实现**
+- [x] **功能实现**
     - [x] 完成会话管理
     - [x] 完成多数据源动态切换功能（手动或注解）
     - [x] 基于Oauth2的单点功能
     - [x] feign调用服务时，传递token、sessionId
     - [x] UI集成（vue-admin-template）
     - [x] 功能权限
-    - [ ] 数据权限
-    - [ ] 微服务统一权限控制
 - [x] **框架集成**
     - [x] Spring Security
     - [x] Spring Session
     - [x] Spring Data Redis
     - [x] Spring Security Oauth2 
     - [x] Spring Security JWT
+<details>
+<summary>进行中...</summary>
+<pre><code>
+- [ ] 数据权限
+- [ ] 微服务统一权限控制
 </code></pre>
 </details>   
 
