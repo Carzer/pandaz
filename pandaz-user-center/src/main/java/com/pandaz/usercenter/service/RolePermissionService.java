@@ -48,4 +48,12 @@ public interface RolePermissionService extends UcBaseService<RolePermissionEntit
      * @return 权限编码
      */
     List<String> listBindCodes(RolePermissionEntity rolePermissionEntity);
+
+    /**
+     * 根据系统编码查询
+     *
+     * @param osCode 系统编码
+     * @return 权限列表
+     */
+    List<RolePermissionEntity> listByOsCode(String osCode);
 }

@@ -6,7 +6,6 @@ import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -48,16 +47,20 @@ public class CustomAccessDecisionManager implements AccessDecisionManager {
     public void decide(Authentication authentication, Object o, Collection<ConfigAttribute> configAttributes) {
         // 如果开启超级管理员，则通过所有请求
         if (enableSuperAdmin) {
-            List<String> roleList = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
-            if (roleList.contains(superAdminName)) {
+            List<String> roleList = authentication.getAuthorities().stream()
+                    .map((grantedAuthority) -> grantedAuthority.getAuthority().toLowerCase())
+                    .collect(Collectors.toList());
+            if (roleList.contains(superAdminName.toLowerCase())) {
                 return;
             }
         }
         // 如果请求的资源为系统中配置的资源，进行角色匹配
         if (!CollectionUtils.isEmpty(configAttributes)) {
-            List<String> roleList = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
+            List<String> roleList = authentication.getAuthorities().stream()
+                    .map((grantedAuthority) -> grantedAuthority.getAuthority().toLowerCase())
+                    .collect(Collectors.toList());
             for (ConfigAttribute configAttribute : configAttributes) {
-                if (roleList.contains(configAttribute.getAttribute())) {
+                if (roleList.contains(configAttribute.getAttribute().toLowerCase())) {
                     return;
                 }
             }

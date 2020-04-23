@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.entity.PermissionEntity;
@@ -9,6 +10,8 @@ import com.pandaz.usercenter.mapper.RolePermissionMapper;
 import com.pandaz.usercenter.service.RolePermissionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -27,6 +30,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@CacheConfig(cacheManager = "secondaryCacheManager", cacheNames = {"user-center:rolePermission"})
 public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper, RolePermissionEntity> implements RolePermissionService {
 
     /**
@@ -138,6 +142,20 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
     @Override
     public List<String> listBindCodes(RolePermissionEntity rolePermissionEntity) {
         return rolePermissionMapper.listBindCodes(rolePermissionEntity);
+    }
+
+    /**
+     * 根据系统编码查询
+     *
+     * @param osCode 系统编码
+     * @return 权限列表
+     */
+    @Override
+    @Cacheable(key = "#osCode")
+    public List<RolePermissionEntity> listByOsCode(String osCode) {
+        QueryWrapper<RolePermissionEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("os_code", osCode);
+        return rolePermissionMapper.selectList(queryWrapper);
     }
 
     /**

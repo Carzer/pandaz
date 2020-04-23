@@ -1,4 +1,4 @@
-package com.pandaz.usercenter.task;
+package com.pandaz.usercenter.util;
 
 import com.pandaz.usercenter.service.MenuService;
 import lombok.RequiredArgsConstructor;
@@ -30,13 +30,21 @@ public class SimpleTask {
 
     /**
      * 定时清理脏数据
-     *
+     * <p>
      * 暂定6小时
      */
-    @Scheduled(fixedRate = 1000 * 60 * 60 * 6)
+    @Scheduled(fixedRate = 1000 * 60 * 60 * 6, fixedDelay = 1000 * 60 * 10)
     public void clear() {
         // 清理菜单脏数据
         clearMenus();
+    }
+
+    /**
+     * 拉取权限信息
+     */
+    @Scheduled(fixedRate = 1000 * 60 * 60)
+    public void loadResourceDefineMap() {
+        AuthUtil.loadResourceDefineMap();
     }
 
     /**

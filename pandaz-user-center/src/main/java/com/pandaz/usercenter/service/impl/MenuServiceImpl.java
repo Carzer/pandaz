@@ -12,7 +12,7 @@ import com.pandaz.usercenter.entity.PermissionEntity;
 import com.pandaz.usercenter.mapper.MenuMapper;
 import com.pandaz.usercenter.service.MenuService;
 import com.pandaz.usercenter.service.PermissionService;
-import com.pandaz.usercenter.task.SimpleTask;
+import com.pandaz.usercenter.util.SimpleTask;
 import com.pandaz.usercenter.util.CheckUtil;
 import com.pandaz.usercenter.util.SpringBeanUtil;
 import lombok.RequiredArgsConstructor;

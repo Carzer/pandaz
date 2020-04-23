@@ -36,7 +36,7 @@
     - [x] 基于Oauth2的单点功能
     - [x] feign调用服务时，传递token、sessionId
     - [x] UI集成（vue-admin-template）
-    - [ ] 功能权限
+    - [x] 功能权限
     - [ ] 数据权限
     - [ ] 微服务统一权限控制
 - [x] **框架集成**

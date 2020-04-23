@@ -70,6 +70,24 @@ public final class AuthUtil {
     }
 
     /**
+     * 拉取权限信息
+     */
+    protected static void loadResourceDefineMap() {
+        // todo 多系统权限控制
+        List<RolePermissionEntity> permissions = getRolePermissionService().listByOsCode("portal");
+        if (!CollectionUtils.isEmpty(permissions)) {
+            ConcurrentHashMap<String, Collection<ConfigAttribute>> resultMap = new ConcurrentHashMap<>(permissions.size());
+            Map<String, List<RolePermissionEntity>> permissionMap = permissions.stream().collect(Collectors.groupingBy(RolePermissionEntity::getPermissionCode));
+            permissionMap.forEach((key, value) -> {
+                Collection<ConfigAttribute> configAttributes = value.stream().map(permission -> new SecurityConfig(permission.getRoleCode()))
+                        .collect(Collectors.toList());
+                resultMap.put("/" + key, configAttributes);
+            });
+            map = resultMap;
+        }
+    }
+
+    /**
      * 由security上下文环境中获取用户信息
      *
      * @param principal principal
@@ -96,16 +114,7 @@ public final class AuthUtil {
      */
     private static ConcurrentMap<String, Collection<ConfigAttribute>> getResourceDefineMap() {
         if (CollectionUtils.isEmpty(map)) {
-            List<RolePermissionEntity> permissions = getRolePermissionService().list();
-            if (!CollectionUtils.isEmpty(permissions)) {
-                map = new ConcurrentHashMap<>(permissions.size());
-                Map<String, List<RolePermissionEntity>> permissionMap = permissions.stream().collect(Collectors.groupingBy(RolePermissionEntity::getPermissionCode));
-                permissionMap.forEach((key, value) -> {
-                    Collection<ConfigAttribute> configAttributes = value.stream().map(permission -> new SecurityConfig(permission.getRoleCode()))
-                            .collect(Collectors.toList());
-                    map.put("/" + key, configAttributes);
-                });
-            }
+            loadResourceDefineMap();
         }
         return map;
     }
