@@ -78,7 +78,7 @@ custom:
   # 超级管理员角色名称
   super-admin:
     enable: true
-    name: ROLE_SUPER_ADMIN
+    name: ROLE_ADMIN
   # 项目基础包
   projectPackage: com.pandaz
   # 调用服务名称

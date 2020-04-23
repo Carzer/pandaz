@@ -7,6 +7,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityMetadataSource;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -16,6 +17,8 @@ import org.springframework.util.CollectionUtils;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * SecurityMetadataSource
@@ -26,6 +29,18 @@ import java.util.Collection;
 @Component
 @Slf4j
 public class CustomInvocationSecurityMetadataSourceService implements FilterInvocationSecurityMetadataSource {
+
+    /**
+     * 是否启用超级管理员角色
+     */
+    @Value("${custom.super-admin.enable}")
+    private boolean enableSuperAdmin;
+
+    /**
+     * 超级管理员角色名称
+     */
+    @Value("${custom.super-admin.name}")
+    private String superAdminName;
 
     /**
      * 鉴权排除的url列表
@@ -44,6 +59,16 @@ public class CustomInvocationSecurityMetadataSourceService implements FilterInvo
     public Collection<ConfigAttribute> getAttributes(Object object) {
         Collection<ConfigAttribute> configAttributes;
         HttpServletRequest request = ((FilterInvocation) object).getRequest();
+        // 如果开启超级管理员，并拥有符合的角色，则通过所有请求
+        if (enableSuperAdmin) {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            List<String> roleList = authentication.getAuthorities().stream()
+                    .map((grantedAuthority) -> grantedAuthority.getAuthority().toLowerCase())
+                    .collect(Collectors.toList());
+            if (roleList.contains(superAdminName.toLowerCase())) {
+                return new ArrayList<>();
+            }
+        }
         // 过滤排除URL
         for (String excludedPath : excludedPaths) {
             AntPathRequestMatcher matcher = new AntPathRequestMatcher(excludedPath);
@@ -51,6 +76,7 @@ public class CustomInvocationSecurityMetadataSourceService implements FilterInvo
                 return new ArrayList<>();
             }
         }
+        // 查找匹配的权限信息
         try {
             configAttributes = AuthUtil.getResourceDefineValue(request.getRequestURI());
         } catch (Exception e) {

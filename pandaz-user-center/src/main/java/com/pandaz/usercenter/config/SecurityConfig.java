@@ -6,7 +6,7 @@ import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.CustomPasswordEncoder;
 import com.pandaz.usercenter.custom.CustomDaoAuthenticationProvider;
 import com.pandaz.usercenter.custom.constants.SysConstants;
-import com.pandaz.usercenter.custom.filter.CustomFilterSecurityInterceptor;
+import com.pandaz.usercenter.custom.interceptor.CustomFilterSecurityInterceptor;
 import com.pandaz.usercenter.custom.handler.CustomAuthDeniedHandler;
 import com.pandaz.usercenter.custom.handler.CustomLogoutSuccessHandler;
 import com.pandaz.usercenter.custom.handler.LoginFailureHandler;

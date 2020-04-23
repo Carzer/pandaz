@@ -1,4 +1,4 @@
-package com.pandaz.usercenter.custom.filter;
+package com.pandaz.usercenter.custom.interceptor;
 
 import com.pandaz.usercenter.custom.CustomAccessDecisionManager;
 import com.pandaz.usercenter.custom.CustomInvocationSecurityMetadataSourceService;
