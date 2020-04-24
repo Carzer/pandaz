@@ -7,6 +7,7 @@ import com.pandaz.usercenter.custom.constants.UrlEnum;
 import com.pandaz.usercenter.entity.MenuEntity;
 import com.pandaz.usercenter.entity.PermissionEntity;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,13 @@ public class PermissionServiceTest {
      * 权限服务
      */
     private PermissionService permissionService;
+
+    @BeforeClass
+    public static void setUp() {
+        // 设置nacos日志及缓存路径
+        System.setProperty("nacos.logging.path", "logs/api-gateway/nacos");
+        System.setProperty("com.alibaba.nacos.naming.cache.dir", "logs/api-gateway/nacos/naming");
+    }
 
     /**
      * 菜单服务
