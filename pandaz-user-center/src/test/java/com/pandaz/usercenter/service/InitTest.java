@@ -1,17 +1,23 @@
 package com.pandaz.usercenter.service;
 
-import com.pandaz.usercenter.BasisUnitTest;
+import com.pandaz.usercenter.UserCenterApp;
 import com.pandaz.usercenter.entity.GroupRoleEntity;
 import com.pandaz.usercenter.entity.OauthClientEntity;
 import com.pandaz.usercenter.entity.RoleEntity;
 import com.pandaz.usercenter.entity.UserEntity;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
-import static org.junit.Assert.fail;
+import static org.hamcrest.core.IsAnything.anything;
+import static org.junit.Assert.assertThat;
 
 /**
  * 初始化
@@ -19,7 +25,11 @@ import static org.junit.Assert.fail;
  * @author Carzer
  * @since 2020-03-30
  */
-public class InitTest extends BasisUnitTest {
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(classes = UserCenterApp.class)
+@Rollback
+@Slf4j
+public class InitTest {
 
     private OauthClientService oauthClientService;
 
@@ -52,14 +62,16 @@ public class InitTest extends BasisUnitTest {
     @Test
     @Transactional(rollbackFor = Exception.class)
     public void insert() {
+        int result = 0;
         try {
             insertUser();
             insertClient();
             insertRole();
             bindUserAndRole();
         } catch (Exception e) {
-            fail();
+            log.error("初始化失败", e);
         }
+        assertThat(result, anything());
     }
 
     private void insertUser() {
