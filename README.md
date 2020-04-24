@@ -12,6 +12,7 @@
 - 使用[Sentinel](https://github.com/alibaba/Sentinel/releases)进行流量控制、熔断降级
 - 使用[Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway)作为网关
 
+[java8分支](https://github.com/Carzer/pandaz/tree/java8)
 
 ## 二、 容器、数据库、中间件虚拟环境
   

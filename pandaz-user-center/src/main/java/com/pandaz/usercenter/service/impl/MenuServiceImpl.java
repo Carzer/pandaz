@@ -163,6 +163,10 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
      * 删除的同时，异步删除子菜单
      * 由定时任务进行脏数据的清理
      * {@link SimpleTask#clear()}
+     * <p>
+     * 由于Spring的异步方法，实际上是异步调用实例方法（以类的实例为单位），{@link this#clearMenuChildren(String, LocalDateTime, List)}无法异步进行
+     * 所以在使用@Async注解时，应当使用实例进行调用
+     * 这里暂时注释掉，直接同步执行,代码留存备用： SpringBeanUtil.getBean(this.getClass()).clearMenuChildren(deletedBy, deletedDate, codes)
      *
      * @param deletedBy   删除人
      * @param deletedDate 删除时间
@@ -182,9 +186,6 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
             menuEntity.setDeletedDate(deletedDate);
             deleteByCode(menuEntity);
         });
-        // 由于Spring的异步方法，实际上是异步调用实例方法（以类的实例为单位），this.clearChildren()无法异步进行
-        // 所以在使用@Async注解时，应当使用实例进行调用
-        // 这里暂时注释掉，直接同步执行 SpringBeanUtil.getBean(this.getClass()).clearMenuChildren(deletedBy, deletedDate, codes);
         clearMenuChildren(deletedBy, deletedDate, codes);
         return codes.size();
     }
