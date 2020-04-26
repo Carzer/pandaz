@@ -1,4 +1,4 @@
-package com.pandaz.rabbitmq.controller;
+package com.pandaz.im.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.EnableBinding;

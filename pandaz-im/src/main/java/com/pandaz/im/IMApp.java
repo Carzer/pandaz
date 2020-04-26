@@ -1,4 +1,4 @@
-package com.pandaz.rabbitmq;
+package com.pandaz.im;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
@@ -14,15 +14,15 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @SpringBootApplication
 @EnableDiscoveryClient
 @Slf4j
-public class RabbitMqApp {
+public class IMApp {
 
     public static void main(String[] args) {
         // 设置nacos日志及缓存路径
-        System.setProperty("nacos.logging.path", "logs/rabbitmq/nacos");
-        System.setProperty("com.alibaba.nacos.naming.cache.dir", "logs/rabbitmq/nacos/naming");
+        System.setProperty("nacos.logging.path", "logs/im/nacos");
+        System.setProperty("com.alibaba.nacos.naming.cache.dir", "logs/im/nacos/naming");
         // 启动项目
-        SpringApplication.run(RabbitMqApp.class, args);
+        SpringApplication.run(IMApp.class, args);
         String repeat = "=".repeat(20);
-        log.warn("{} RabbitMqApp 启动成功 {}", repeat, repeat);
+        log.warn("{} IMApp 启动成功 {}", repeat, repeat);
     }
 }

@@ -65,8 +65,8 @@
         <module>pandaz-user-center</module>
         <!--Redis服务-->
         <module>pandaz-redis</module>
-        <!--Rabbitmq服务-->
-        <module>pandaz-rabbitmq</module>
+        <!--消息服务-->
+        <module>pandaz-im</module>
         <!--文件服务-->
         <module>pandaz-file-server</module>
         <!--activiti审批流-->

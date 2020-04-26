@@ -1,4 +1,4 @@
-package com.pandaz.rabbitmq.controller;
+package com.pandaz.im.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
