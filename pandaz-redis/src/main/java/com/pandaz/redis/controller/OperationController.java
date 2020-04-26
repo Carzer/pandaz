@@ -1,10 +1,8 @@
 package com.pandaz.redis.controller;
 
-import com.pandaz.commons.util.Result;
+import com.pandaz.commons.util.R;
 import com.pandaz.redis.service.RedisHelper;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,11 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class OperationController {
 
     /**
-     * slf4j
-     */
-    private static final Logger LOGGER = LoggerFactory.getLogger(OperationController.class);
-
-    /**
      * redis操作
      */
     private final RedisHelper redisHelper;
@@ -39,20 +32,8 @@ public class OperationController {
      * @return 执行结果
      */
     @GetMapping("/getValue")
-    public Result<String> getValue(String key) {
-        Result<String> result = new Result<>();
-        try {
-            Object object = redisHelper.getObject(key);
-            if (object != null) {
-                result.setData(object.toString());
-            } else {
-                result.setError("nothing from redis");
-            }
-        } catch (Exception e) {
-            LOGGER.error("获取Redis value异常:", e);
-            result.setError(e.getMessage());
-        }
-        return result;
+    public R<Object> getValue(String key) {
+        return new R<>(redisHelper.getObject(key));
     }
 
     /**
@@ -62,15 +43,8 @@ public class OperationController {
      * @return 执行结果
      */
     @PostMapping("/setValue")
-    public Result<String> setValue(String value) {
-        Result<String> result = new Result<>();
-        try {
-            redisHelper.setObject("test", value);
-            result.setData("test");
-        } catch (Exception e) {
-            LOGGER.error("设置Redis value异常:", e);
-            result.setError(e.getMessage());
-        }
-        return result;
+    public R<String> setValue(String value) {
+        redisHelper.setObject("test", value);
+        return R.success();
     }
 }

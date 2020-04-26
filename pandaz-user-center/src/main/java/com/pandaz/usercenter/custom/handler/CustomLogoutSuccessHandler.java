@@ -1,6 +1,6 @@
 package com.pandaz.usercenter.custom.handler;
 
-import com.pandaz.commons.util.Result;
+import com.pandaz.commons.util.R;
 import com.pandaz.commons.util.PrintWriterUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -34,6 +34,6 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         // 输出登出提示信息
-        PrintWriterUtil.write(response, Result.buildSuccess());
+        PrintWriterUtil.write(response, R.success());
     }
 }

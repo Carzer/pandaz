@@ -4,7 +4,7 @@ package com.pandaz.usercenter.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.commons.dto.usercenter.OauthClientDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
-import com.pandaz.commons.util.Result;
+import com.pandaz.commons.util.R;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.custom.constants.UrlConstants;
 import com.pandaz.usercenter.entity.OauthClientEntity;
@@ -51,15 +51,9 @@ public class OauthClientController {
      * @return 客户端信息
      */
     @GetMapping(UrlConstants.GET)
-    public Result<OauthClientDTO> get(@Valid OauthClientDTO oauthClientDTO) {
-        Result<OauthClientDTO> result = new Result<>();
-        try {
-            result.setData(BeanCopyUtil.copy(oauthClientService.findByClientId(oauthClientDTO.getClientId()), OauthClientDTO.class));
-        } catch (Exception e) {
-            log.error("查询方法异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "查询方法异常"));
-        }
-        return result;
+    public R<OauthClientDTO> get(@Valid OauthClientDTO oauthClientDTO) {
+        OauthClientDTO result = BeanCopyUtil.copy(oauthClientService.findByClientId(oauthClientDTO.getClientId()), OauthClientDTO.class);
+        return new R<>(result);
     }
 
     /**
@@ -69,16 +63,9 @@ public class OauthClientController {
      * @return 分页信息
      */
     @GetMapping(UrlConstants.PAGE)
-    public Result<Map<String, Object>> getPage(OauthClientDTO oauthClientDTO) {
-        Result<Map<String, Object>> result = new Result<>();
-        try {
-            IPage<OauthClientEntity> page = oauthClientService.getPage(BeanCopyUtil.copy(oauthClientDTO, OauthClientEntity.class));
-            result.setData(BeanCopyUtil.convertToMap(page, OauthClientDTO.class));
-        } catch (Exception e) {
-            log.error("分页查询异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "分页查询异常"));
-        }
-        return result;
+    public R<Map<String, Object>> getPage(OauthClientDTO oauthClientDTO) {
+        IPage<OauthClientEntity> page = oauthClientService.getPage(BeanCopyUtil.copy(oauthClientDTO, OauthClientEntity.class));
+        return new R<>(BeanCopyUtil.convertToMap(page, OauthClientDTO.class));
     }
 
     /**
@@ -88,21 +75,14 @@ public class OauthClientController {
      * @return 客户端信息
      */
     @PostMapping(UrlConstants.INSERT)
-    public Result<OauthClientDTO> insert(@RequestBody OauthClientDTO oauthClientDTO, Principal principal) {
-        Result<OauthClientDTO> result = new Result<>();
+    public R<OauthClientDTO> insert(@RequestBody OauthClientDTO oauthClientDTO, Principal principal) {
         check(oauthClientDTO);
-        try {
-            OauthClientEntity oauthClientEntity = BeanCopyUtil.copy(oauthClientDTO, OauthClientEntity.class);
-            oauthClientEntity.setId(UuidUtil.getId());
-            oauthClientEntity.setCreatedBy(principal.getName());
-            oauthClientEntity.setCreatedDate(LocalDateTime.now());
-            oauthClientService.insert(oauthClientEntity);
-            result.setData(BeanCopyUtil.copy(oauthClientEntity, oauthClientDTO));
-        } catch (Exception e) {
-            log.error("插入方法异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "插入方法异常"));
-        }
-        return result;
+        OauthClientEntity oauthClientEntity = BeanCopyUtil.copy(oauthClientDTO, OauthClientEntity.class);
+        oauthClientEntity.setId(UuidUtil.getId());
+        oauthClientEntity.setCreatedBy(principal.getName());
+        oauthClientEntity.setCreatedDate(LocalDateTime.now());
+        oauthClientService.insert(oauthClientEntity);
+        return R.success();
     }
 
     /**
@@ -112,20 +92,13 @@ public class OauthClientController {
      * @return 执行结果
      */
     @PutMapping(UrlConstants.UPDATE)
-    public Result<String> update(@Valid @RequestBody OauthClientDTO oauthClientDTO, Principal principal) {
-        Result<String> result = new Result<>();
+    public R<String> update(@Valid @RequestBody OauthClientDTO oauthClientDTO, Principal principal) {
         check(oauthClientDTO);
-        try {
-            OauthClientEntity oauthClientEntity = BeanCopyUtil.copy(oauthClientDTO, OauthClientEntity.class);
-            oauthClientEntity.setUpdatedBy(principal.getName());
-            oauthClientEntity.setUpdatedDate(LocalDateTime.now());
-            oauthClientService.updateByClientId(oauthClientEntity);
-            result.setData("更新成功");
-        } catch (Exception e) {
-            log.error("更新方法异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "更新方法异常"));
-        }
-        return result;
+        OauthClientEntity oauthClientEntity = BeanCopyUtil.copy(oauthClientDTO, OauthClientEntity.class);
+        oauthClientEntity.setUpdatedBy(principal.getName());
+        oauthClientEntity.setUpdatedDate(LocalDateTime.now());
+        oauthClientService.updateByClientId(oauthClientEntity);
+        return R.success();
     }
 
     /**
@@ -135,7 +108,7 @@ public class OauthClientController {
      * @return 执行结果
      */
     @DeleteMapping(UrlConstants.DELETE)
-    public Result<String> delete(@RequestBody List<String> codes, Principal principal) {
+    public R<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(oauthClientService, principal.getName(), LocalDateTime.now(), codes);
     }
 

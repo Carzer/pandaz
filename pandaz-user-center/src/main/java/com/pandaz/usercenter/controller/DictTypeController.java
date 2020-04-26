@@ -4,7 +4,7 @@ package com.pandaz.usercenter.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.commons.dto.usercenter.DictTypeDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
-import com.pandaz.commons.util.Result;
+import com.pandaz.commons.util.R;
 import com.pandaz.usercenter.custom.constants.UrlConstants;
 import com.pandaz.usercenter.entity.DictTypeEntity;
 import com.pandaz.usercenter.service.DictTypeService;
@@ -51,15 +51,9 @@ public class DictTypeController {
      * @param dictTypeDTO 字典类型
      * @return 字典类型
      */
-    public Result<DictTypeDTO> get(DictTypeDTO dictTypeDTO) {
-        Result<DictTypeDTO> result = new Result<>();
-        try {
-            result.setData(BeanCopyUtil.copy(dictTypeService.findByCode(dictTypeDTO.getCode()), DictTypeDTO.class));
-        } catch (Exception e) {
-            log.error("新增字典类型异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "异常"));
-        }
-        return result;
+    public R<DictTypeDTO> get(DictTypeDTO dictTypeDTO) {
+        DictTypeDTO result = BeanCopyUtil.copy(dictTypeService.findByCode(dictTypeDTO.getCode()), DictTypeDTO.class);
+        return new R<>(result);
     }
 
     /**
@@ -69,16 +63,9 @@ public class DictTypeController {
      * @return 分页信息
      */
     @GetMapping(UrlConstants.PAGE)
-    public Result<Map<String, Object>> getPage(DictTypeDTO dictTypeDTO) {
-        Result<Map<String, Object>> result = new Result<>();
-        try {
-            IPage<DictTypeEntity> page = dictTypeService.getPage(BeanCopyUtil.copy(dictTypeDTO, DictTypeEntity.class));
-            result.setData(BeanCopyUtil.convertToMap(page, DictTypeDTO.class));
-        } catch (Exception e) {
-            log.error("分页查询异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "分页查询异常"));
-        }
-        return result;
+    public R<Map<String, Object>> getPage(DictTypeDTO dictTypeDTO) {
+        IPage<DictTypeEntity> page = dictTypeService.getPage(BeanCopyUtil.copy(dictTypeDTO, DictTypeEntity.class));
+        return new R<>(BeanCopyUtil.convertToMap(page, DictTypeDTO.class));
     }
 
     /**
@@ -88,20 +75,13 @@ public class DictTypeController {
      * @return 执行结果
      */
     @PostMapping(UrlConstants.INSERT)
-    public Result<DictTypeDTO> insert(@Valid @RequestBody DictTypeDTO dictTypeDTO, Principal principal) {
-        Result<DictTypeDTO> result = new Result<>();
+    public R<String> insert(@Valid @RequestBody DictTypeDTO dictTypeDTO, Principal principal) {
         check(dictTypeDTO);
-        try {
-            DictTypeEntity dictTypeEntity = BeanCopyUtil.copy(dictTypeDTO, DictTypeEntity.class);
-            dictTypeEntity.setCreatedBy(principal.getName());
-            dictTypeEntity.setCreatedDate(LocalDateTime.now());
-            dictTypeService.insert(dictTypeEntity);
-            result.setData(BeanCopyUtil.copy(dictTypeEntity, DictTypeDTO.class));
-        } catch (Exception e) {
-            log.error("新增字典类型异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "新增字典类型异常"));
-        }
-        return result;
+        DictTypeEntity dictTypeEntity = BeanCopyUtil.copy(dictTypeDTO, DictTypeEntity.class);
+        dictTypeEntity.setCreatedBy(principal.getName());
+        dictTypeEntity.setCreatedDate(LocalDateTime.now());
+        dictTypeService.insert(dictTypeEntity);
+        return R.success();
     }
 
     /**
@@ -111,20 +91,13 @@ public class DictTypeController {
      * @return 执行结果
      */
     @PutMapping(UrlConstants.UPDATE)
-    public Result<String> update(@Valid @RequestBody DictTypeDTO dictTypeDTO, Principal principal) {
-        Result<String> result = new Result<>();
+    public R<String> update(@Valid @RequestBody DictTypeDTO dictTypeDTO, Principal principal) {
         check(dictTypeDTO);
-        try {
-            DictTypeEntity dictTypeEntity = BeanCopyUtil.copy(dictTypeDTO, DictTypeEntity.class);
-            dictTypeEntity.setUpdatedBy(principal.getName());
-            dictTypeEntity.setUpdatedDate(LocalDateTime.now());
-            dictTypeService.updateByCode(dictTypeEntity);
-            result.setData("更新成功");
-        } catch (Exception e) {
-            log.error("更新字典类型异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "更新字典类型异常"));
-        }
-        return result;
+        DictTypeEntity dictTypeEntity = BeanCopyUtil.copy(dictTypeDTO, DictTypeEntity.class);
+        dictTypeEntity.setUpdatedBy(principal.getName());
+        dictTypeEntity.setUpdatedDate(LocalDateTime.now());
+        dictTypeService.updateByCode(dictTypeEntity);
+        return R.success();
     }
 
     /**
@@ -134,7 +107,7 @@ public class DictTypeController {
      * @return 执行结果
      */
     @DeleteMapping(UrlConstants.DELETE)
-    public Result<String> delete(@RequestBody List<String> codes, Principal principal) {
+    public R<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(dictTypeService, principal.getName(), LocalDateTime.now(), codes);
     }
 

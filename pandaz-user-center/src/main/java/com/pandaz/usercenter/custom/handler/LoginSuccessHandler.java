@@ -1,8 +1,8 @@
 package com.pandaz.usercenter.custom.handler;
 
-import com.pandaz.commons.util.Result;
 import com.pandaz.commons.util.IpUtil;
 import com.pandaz.commons.util.PrintWriterUtil;
+import com.pandaz.commons.util.R;
 import com.pandaz.usercenter.util.TokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,8 +61,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
         resultMap.put("user", authentication.getPrincipal());
         // 登陆成功后，返回用户信息的同时返回token
         resultMap.putAll(tokenUtil.generateToken(authentication));
-        Result<HashMap<String, Object>> result = new Result<>();
-        result.setData(resultMap);
-        PrintWriterUtil.write(httpServletResponse, result);
+        R<HashMap<String, Object>> r = new R<>(resultMap);
+        PrintWriterUtil.write(httpServletResponse, r);
     }
 }

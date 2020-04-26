@@ -1,6 +1,6 @@
 package com.pandaz.usercenter.config;
 
-import com.pandaz.commons.custom.SecurityUser;
+import com.pandaz.commons.SecurityUser;
 import com.pandaz.commons.dto.usercenter.UserDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.CustomPasswordEncoder;

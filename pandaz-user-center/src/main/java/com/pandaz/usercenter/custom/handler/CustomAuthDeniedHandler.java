@@ -1,7 +1,7 @@
 package com.pandaz.usercenter.custom.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pandaz.commons.util.Result;
+import com.pandaz.commons.util.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -35,11 +35,8 @@ public class CustomAuthDeniedHandler implements AccessDeniedHandler {
         log.warn(e.getMessage());
         httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
         httpServletResponse.setContentType("application/json;charset=utf-8");
-        Result<String> result = new Result<>();
-        String error = "权限不足，请联系管理员!";
-        result.setError(error);
         ObjectMapper objectMapper = new ObjectMapper();
-        String s = objectMapper.writeValueAsString(result);
+        String s = objectMapper.writeValueAsString(R.fail("权限不足，请联系管理员!"));
         try (PrintWriter out = httpServletResponse.getWriter()) {
             out.write(s);
             out.flush();

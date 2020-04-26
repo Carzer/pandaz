@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.commons.constants.CommonConstants;
 import com.pandaz.commons.dto.usercenter.*;
 import com.pandaz.commons.util.BeanCopyUtil;
-import com.pandaz.commons.util.Result;
+import com.pandaz.commons.util.R;
 import com.pandaz.usercenter.custom.constants.SysConstants;
 import com.pandaz.usercenter.entity.*;
 import com.pandaz.usercenter.service.*;
@@ -83,17 +83,10 @@ public class ControllerUtil<S extends UcBaseService> {
      * @param codes       删除编码
      * @return 执行结果
      */
-    public Result<String> getDeleteResult(
+    public R<String> getDeleteResult(
             S service, String deletedBy, LocalDateTime deletedDate, List<String> codes) {
-        Result<String> result = new Result<>();
-        try {
-            service.deleteByCodes(deletedBy, deletedDate, codes);
-            result.setData("删除成功");
-        } catch (Exception e) {
-            log.error("删除方法异常：", e);
-            result.setError(errorMsg(e, "删除方法异常"));
-        }
-        return result;
+        service.deleteByCodes(deletedBy, deletedDate, codes);
+        return R.success();
     }
 
     /**

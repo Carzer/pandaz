@@ -1,6 +1,6 @@
 package com.pandaz.usercenter.config;
 
-import com.pandaz.commons.custom.SecurityUser;
+import com.pandaz.commons.SecurityUser;
 import com.pandaz.usercenter.custom.CustomDaoAuthenticationProvider;
 import com.pandaz.usercenter.custom.CustomTokenEnhancer;
 import com.pandaz.usercenter.service.OauthClientService;

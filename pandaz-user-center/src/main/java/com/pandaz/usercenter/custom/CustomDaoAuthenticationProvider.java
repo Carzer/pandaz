@@ -1,6 +1,6 @@
 package com.pandaz.usercenter.custom;
 
-import com.pandaz.commons.custom.SecurityUser;
+import com.pandaz.commons.SecurityUser;
 import com.pandaz.usercenter.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

@@ -2,7 +2,7 @@ package com.pandaz.usercenter.controller;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.LoggerContext;
-import com.pandaz.commons.util.Result;
+import com.pandaz.commons.util.R;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -34,16 +34,9 @@ public class LogController {
      * @return java.lang.String
      */
     @PutMapping(value = "/logLevel")
-    public Result<String> changeLogLevel(@RequestBody Map<String, String> map) {
-        Result<String> result = new Result<>();
-        try {
-            LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
-            map.forEach((loggerName, logLevel) -> loggerContext.getLogger(loggerName).setLevel(Level.valueOf(logLevel)));
-            result.setData("修改成功！");
-        } catch (Exception e) {
-            log.error("动态修改日志级别出错", e);
-            result.setError(String.format("修改失败：%s", e.getMessage()));
-        }
-        return result;
+    public R<String> changeLogLevel(@RequestBody Map<String, String> map) {
+        LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
+        map.forEach((loggerName, logLevel) -> loggerContext.getLogger(loggerName).setLevel(Level.valueOf(logLevel)));
+        return R.success();
     }
 }

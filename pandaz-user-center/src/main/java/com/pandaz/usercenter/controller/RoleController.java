@@ -2,7 +2,7 @@ package com.pandaz.usercenter.controller;
 
 import com.pandaz.commons.dto.usercenter.*;
 import com.pandaz.commons.util.BeanCopyUtil;
-import com.pandaz.commons.util.Result;
+import com.pandaz.commons.util.R;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.custom.constants.SysConstants;
 import com.pandaz.usercenter.custom.constants.UrlConstants;
@@ -59,15 +59,9 @@ public class RoleController {
      * @return 角色信息
      */
     @GetMapping(UrlConstants.GET)
-    public Result<RoleDTO> get(@Valid RoleDTO roleDTO) {
-        Result<RoleDTO> result = new Result<>();
-        try {
-            result.setData(BeanCopyUtil.copy(roleService.findByCode(roleDTO.getCode()), RoleDTO.class));
-        } catch (Exception e) {
-            log.error("查询方法异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "查询方法异常"));
-        }
-        return result;
+    public R<RoleDTO> get(@Valid RoleDTO roleDTO) {
+        RoleDTO result = BeanCopyUtil.copy(roleService.findByCode(roleDTO.getCode()), RoleDTO.class);
+        return new R<>(result);
     }
 
     /**
@@ -77,15 +71,8 @@ public class RoleController {
      * @return 分页信息
      */
     @GetMapping(UrlConstants.PAGE)
-    public Result<Map<String, Object>> getPage(RoleDTO roleDTO) {
-        Result<Map<String, Object>> result = new Result<>();
-        try {
-            result.setData(controllerUtil.getRolePage(roleDTO));
-        } catch (Exception e) {
-            log.error("分页查询异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "分页查询异常"));
-        }
-        return result;
+    public R<Map<String, Object>> getPage(RoleDTO roleDTO) {
+        return new R<>(controllerUtil.getRolePage(roleDTO));
     }
 
     /**
@@ -95,24 +82,17 @@ public class RoleController {
      * @return 角色信息
      */
     @PostMapping(UrlConstants.INSERT)
-    public Result<RoleDTO> insert(@RequestBody RoleDTO roleDTO, Principal principal) {
-        Result<RoleDTO> result = new Result<>();
+    public R<String> insert(@RequestBody RoleDTO roleDTO, Principal principal) {
         check(roleDTO);
-        try {
-            RoleEntity roleEntity = BeanCopyUtil.copy(roleDTO, RoleEntity.class);
-            roleEntity.setId(UuidUtil.getId());
-            if (StringUtils.hasText(roleEntity.getCode())) {
-                roleEntity.setCode(String.format("%s%s", SysConstants.ROLE_PREFIX, roleEntity.getCode()));
-            }
-            roleEntity.setCreatedBy(principal.getName());
-            roleEntity.setCreatedDate(LocalDateTime.now());
-            roleService.insert(roleEntity);
-            result.setData(BeanCopyUtil.copy(roleEntity, roleDTO));
-        } catch (Exception e) {
-            log.error("插入方法异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "插入方法异常"));
+        RoleEntity roleEntity = BeanCopyUtil.copy(roleDTO, RoleEntity.class);
+        roleEntity.setId(UuidUtil.getId());
+        if (StringUtils.hasText(roleEntity.getCode())) {
+            roleEntity.setCode(String.format("%s%s", SysConstants.ROLE_PREFIX, roleEntity.getCode()));
         }
-        return result;
+        roleEntity.setCreatedBy(principal.getName());
+        roleEntity.setCreatedDate(LocalDateTime.now());
+        roleService.insert(roleEntity);
+        return R.success();
     }
 
     /**
@@ -122,20 +102,13 @@ public class RoleController {
      * @return 执行结果
      */
     @PutMapping(UrlConstants.UPDATE)
-    public Result<String> update(@Valid @RequestBody RoleDTO roleDTO, Principal principal) {
-        Result<String> result = new Result<>();
+    public R<String> update(@Valid @RequestBody RoleDTO roleDTO, Principal principal) {
         check(roleDTO);
-        try {
-            RoleEntity roleEntity = BeanCopyUtil.copy(roleDTO, RoleEntity.class);
-            roleEntity.setUpdatedBy(principal.getName());
-            roleEntity.setUpdatedDate(LocalDateTime.now());
-            roleService.updateByCode(roleEntity);
-            result.setData("更新成功");
-        } catch (Exception e) {
-            log.error("更新方法异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "更新方法异常"));
-        }
-        return result;
+        RoleEntity roleEntity = BeanCopyUtil.copy(roleDTO, RoleEntity.class);
+        roleEntity.setUpdatedBy(principal.getName());
+        roleEntity.setUpdatedDate(LocalDateTime.now());
+        roleService.updateByCode(roleEntity);
+        return R.success();
     }
 
     /**
@@ -145,7 +118,7 @@ public class RoleController {
      * @return 执行结果
      */
     @DeleteMapping(UrlConstants.DELETE)
-    public Result<String> delete(@RequestBody List<String> codes, Principal principal) {
+    public R<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(roleService, principal.getName(), LocalDateTime.now(), codes);
     }
 
@@ -157,19 +130,12 @@ public class RoleController {
      * @return 执行结果
      */
     @PutMapping("/bindPermissions")
-    public Result<String> bindPermissions(@RequestBody RolePermissionDTO rolePermissionDTO, Principal principal) {
-        Result<String> result = new Result<>();
-        try {
-            if (!CollectionUtils.isEmpty(rolePermissionDTO.getPermissionCodes())) {
-                RolePermissionEntity rolePermissionEntity = BeanCopyUtil.copy(rolePermissionDTO, RolePermissionEntity.class);
-                rolePermissionService.bindPermissions(principal.getName(), LocalDateTime.now(), rolePermissionEntity);
-            }
-            result.setData("绑定成功");
-        } catch (Exception e) {
-            log.error("绑定权限异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "绑定权限异常"));
+    public R<String> bindPermissions(@RequestBody RolePermissionDTO rolePermissionDTO, Principal principal) {
+        if (!CollectionUtils.isEmpty(rolePermissionDTO.getPermissionCodes())) {
+            RolePermissionEntity rolePermissionEntity = BeanCopyUtil.copy(rolePermissionDTO, RolePermissionEntity.class);
+            rolePermissionService.bindPermissions(principal.getName(), LocalDateTime.now(), rolePermissionEntity);
         }
-        return result;
+        return R.success();
     }
 
     /**
@@ -178,15 +144,8 @@ public class RoleController {
      * @return 系统信息
      */
     @GetMapping("/listAllOs")
-    public Result<List<OsInfoDTO>> listAllOs() {
-        Result<List<OsInfoDTO>> result = new Result<>();
-        try {
-            result.setData(controllerUtil.listAllOs());
-        } catch (Exception e) {
-            log.error("获取全部系统信息异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "获取全部系统信息异常"));
-        }
-        return result;
+    public R<List<OsInfoDTO>> listAllOs() {
+        return new R<>(controllerUtil.listAllOs());
     }
 
     /**
@@ -195,15 +154,8 @@ public class RoleController {
      * @return 所有菜单
      */
     @GetMapping("/getAllMenu")
-    public Result<MenuDTO> getAllMenu(MenuDTO menuDTO) {
-        Result<MenuDTO> result = new Result<>();
-        try {
-            result.setData(controllerUtil.getAllMenu(menuDTO, false));
-        } catch (Exception e) {
-            log.error("获取所有菜单异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "获取所有菜单异常"));
-        }
-        return result;
+    public R<MenuDTO> getAllMenu(MenuDTO menuDTO) {
+        return new R<>(controllerUtil.getAllMenu(menuDTO, false));
     }
 
     /**
@@ -213,15 +165,8 @@ public class RoleController {
      * @return 分页信息
      */
     @GetMapping("/getPermissionPage")
-    public Result<Map<String, Object>> getPermissionPage(PermissionDTO permissionDTO) {
-        Result<Map<String, Object>> result = new Result<>();
-        try {
-            result.setData(controllerUtil.getPermissionPage(permissionDTO));
-        } catch (Exception e) {
-            log.error("权限分页查询异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "权限分页查询异常"));
-        }
-        return result;
+    public R<Map<String, Object>> getPermissionPage(PermissionDTO permissionDTO) {
+        return new R<>(controllerUtil.getPermissionPage(permissionDTO));
     }
 
     /**
@@ -231,15 +176,8 @@ public class RoleController {
      * @return 所有菜单
      */
     @GetMapping("/listMenuByOsCode")
-    public Result<List<MenuDTO>> listByOsCode(String osCode) {
-        Result<List<MenuDTO>> result = new Result<>();
-        try {
-            result.setData(controllerUtil.listMenuByOsCode(osCode));
-        } catch (Exception e) {
-            log.error("根据系统编码获取所有菜单信息异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "根据系统编码获取所有菜单信息异常"));
-        }
-        return result;
+    public R<List<MenuDTO>> listByOsCode(String osCode) {
+        return new R<>(controllerUtil.listMenuByOsCode(osCode));
     }
 
     /**
@@ -251,15 +189,8 @@ public class RoleController {
      * @return 权限编码
      */
     @GetMapping("/getPermissionCodes")
-    public Result<List<String>> getPermissionCodes(String roleCode, String osCode, String menuCode) {
-        Result<List<String>> result = new Result<>();
-        try {
-            result.setData(controllerUtil.getPermissionCodes(roleCode, osCode, menuCode));
-        } catch (Exception e) {
-            log.error("获取所有权限异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "获取所有权限异常"));
-        }
-        return result;
+    public R<List<String>> getPermissionCodes(String roleCode, String osCode, String menuCode) {
+        return new R<>(controllerUtil.getPermissionCodes(roleCode, osCode, menuCode));
     }
 
     /**

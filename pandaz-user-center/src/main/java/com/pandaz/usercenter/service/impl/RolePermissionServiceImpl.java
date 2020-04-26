@@ -1,6 +1,5 @@
 package com.pandaz.usercenter.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.entity.PermissionEntity;
@@ -153,9 +152,7 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
     @Override
     @Cacheable(key = "#osCode")
     public List<RolePermissionEntity> listByOsCode(String osCode) {
-        QueryWrapper<RolePermissionEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("os_code", osCode);
-        return rolePermissionMapper.selectList(queryWrapper);
+        return rolePermissionMapper.listByOsCode(osCode);
     }
 
     /**

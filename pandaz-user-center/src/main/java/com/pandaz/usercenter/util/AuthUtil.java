@@ -1,8 +1,9 @@
 package com.pandaz.usercenter.util;
 
-import com.pandaz.commons.custom.SecurityUser;
+import com.pandaz.commons.SecurityUser;
+import com.pandaz.commons.code.RCode;
 import com.pandaz.commons.dto.usercenter.UserDTO;
-import com.pandaz.commons.util.Result;
+import com.pandaz.commons.util.R;
 import com.pandaz.usercenter.entity.RolePermissionEntity;
 import com.pandaz.usercenter.service.RolePermissionService;
 import lombok.extern.slf4j.Slf4j;
@@ -93,20 +94,12 @@ public final class AuthUtil {
      * @param principal principal
      * @return 当前用户
      */
-    public static Result<UserDTO> getUserFromPrincipal(Principal principal) {
-        Result<UserDTO> result = new Result<>();
-        try {
-            if (principal == null) {
-                result.setError("用户未登陆！");
-                return result;
-            }
-            UserDTO user = ((SecurityUser) ((UsernamePasswordAuthenticationToken) principal).getPrincipal()).getUser();
-            result.setData(user);
-        } catch (Exception e) {
-            log.error("获取用户失败:", e);
-            result.setError(e.getMessage());
+    public static R<UserDTO> getUserFromPrincipal(Principal principal) {
+        if (principal == null) {
+            return new R<>(RCode.UNAUTHORIZED);
         }
-        return result;
+        UserDTO user = ((SecurityUser) ((UsernamePasswordAuthenticationToken) principal).getPrincipal()).getUser();
+        return new R<>(user);
     }
 
     /**

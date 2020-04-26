@@ -1,6 +1,7 @@
 package com.pandaz.usercenter.controller;
 
-import com.pandaz.commons.util.Result;
+import com.pandaz.commons.code.RCode;
+import com.pandaz.commons.util.R;
 import com.pandaz.usercenter.util.TokenUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,27 +50,17 @@ public class TokenController {
      * @return token
      */
     @GetMapping("/refresh")
-    public Result<HashMap<String, Object>> refreshToken(@RequestParam("refresh_token") String refreshTokenStr, Principal principal) {
-        Result<HashMap<String, Object>> result = new Result<>();
-        try {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            if (authentication != null) {
-                OAuth2RefreshToken refreshToken = jwtTokenStore.readRefreshToken(refreshTokenStr);
-                if (refreshToken instanceof ExpiringOAuth2RefreshToken) {
-                    ExpiringOAuth2RefreshToken expiring = (ExpiringOAuth2RefreshToken) refreshToken;
-                    if (System.currentTimeMillis() > expiring.getExpiration().getTime()) {
-                        result.setError("token已过期");
-                        return result;
-                    }
-                }
-                HashMap<String, Object> resultMap = new HashMap<>(2);
-                resultMap.putAll(tokenUtil.generateToken(authentication));
-                result.setData(resultMap);
+    public R<HashMap<String, Object>> refreshToken(@RequestParam("refresh_token") String refreshTokenStr, Principal principal) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        OAuth2RefreshToken refreshToken = jwtTokenStore.readRefreshToken(refreshTokenStr);
+        if (refreshToken instanceof ExpiringOAuth2RefreshToken) {
+            ExpiringOAuth2RefreshToken expiring = (ExpiringOAuth2RefreshToken) refreshToken;
+            if (System.currentTimeMillis() > expiring.getExpiration().getTime()) {
+                return new R<>(RCode.TOKEN_EXPIRED);
             }
-        } catch (Exception e) {
-            log.error("刷新token异常：{}", e.getMessage());
-            result.setError(e.getMessage());
         }
-        return result;
+        HashMap<String, Object> resultMap = new HashMap<>(2);
+        resultMap.putAll(tokenUtil.generateToken(authentication));
+        return new R<>(resultMap);
     }
 }

@@ -1,7 +1,7 @@
 package com.pandaz.usercenter.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.pandaz.commons.custom.SecurityUser;
+import com.pandaz.commons.SecurityUser;
 import com.pandaz.usercenter.entity.RoleDetailEntity;
 import com.pandaz.usercenter.entity.RoleEntity;
 import org.springframework.security.core.GrantedAuthority;

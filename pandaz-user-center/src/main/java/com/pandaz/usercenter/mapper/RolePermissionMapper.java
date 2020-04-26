@@ -43,4 +43,12 @@ public interface RolePermissionMapper extends UcBaseMapper<RolePermissionEntity>
      * @return 权限编码
      */
     List<String> listBindCodes(RolePermissionEntity rolePermissionEntity);
+
+    /**
+     * 根据系统编码查询权限表
+     *
+     * @param osCode 系统编码
+     * @return 权限表
+     */
+    List<RolePermissionEntity> listByOsCode(String osCode);
 }

@@ -1,4 +1,4 @@
-package com.pandaz.commons.custom;
+package com.pandaz.commons;
 
 import com.pandaz.commons.dto.usercenter.UserDTO;
 import lombok.EqualsAndHashCode;

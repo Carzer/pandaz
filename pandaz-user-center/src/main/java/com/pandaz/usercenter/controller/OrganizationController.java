@@ -3,7 +3,7 @@ package com.pandaz.usercenter.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.commons.dto.usercenter.OrganizationDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
-import com.pandaz.commons.util.Result;
+import com.pandaz.commons.util.R;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.custom.constants.UrlConstants;
 import com.pandaz.usercenter.entity.OrganizationEntity;
@@ -50,15 +50,9 @@ public class OrganizationController {
      * @return 组织信息
      */
     @GetMapping(UrlConstants.GET)
-    public Result<OrganizationDTO> get(@Valid OrganizationDTO organizationDTO) {
-        Result<OrganizationDTO> result = new Result<>();
-        try {
-            result.setData(BeanCopyUtil.copy(organizationService.findByCode(organizationDTO.getCode()), OrganizationDTO.class));
-        } catch (Exception e) {
-            log.error("查询方法异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "查询方法异常"));
-        }
-        return result;
+    public R<OrganizationDTO> get(@Valid OrganizationDTO organizationDTO) {
+        OrganizationDTO result = BeanCopyUtil.copy(organizationService.findByCode(organizationDTO.getCode()), OrganizationDTO.class);
+        return new R<>(result);
     }
 
     /**
@@ -68,16 +62,9 @@ public class OrganizationController {
      * @return 分页信息
      */
     @GetMapping(UrlConstants.PAGE)
-    public Result<Map<String, Object>> getPage(OrganizationDTO organizationDTO) {
-        Result<Map<String, Object>> result = new Result<>();
-        try {
-            IPage<OrganizationEntity> page = organizationService.getPage(BeanCopyUtil.copy(organizationDTO, OrganizationEntity.class));
-            result.setData(BeanCopyUtil.convertToMap(page, OrganizationDTO.class));
-        } catch (Exception e) {
-            log.error("分页查询异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "分页查询异常"));
-        }
-        return result;
+    public R<Map<String, Object>> getPage(OrganizationDTO organizationDTO) {
+        IPage<OrganizationEntity> page = organizationService.getPage(BeanCopyUtil.copy(organizationDTO, OrganizationEntity.class));
+        return new R<>(BeanCopyUtil.convertToMap(page, OrganizationDTO.class));
     }
 
     /**
@@ -87,21 +74,14 @@ public class OrganizationController {
      * @return 组织信息
      */
     @PostMapping(UrlConstants.INSERT)
-    public Result<OrganizationDTO> insert(@RequestBody OrganizationDTO organizationDTO, Principal principal) {
-        Result<OrganizationDTO> result = new Result<>();
+    public R<String> insert(@RequestBody OrganizationDTO organizationDTO, Principal principal) {
         check(organizationDTO);
-        try {
-            OrganizationEntity organizationEntity = BeanCopyUtil.copy(organizationDTO, OrganizationEntity.class);
-            organizationEntity.setId(UuidUtil.getId());
-            organizationEntity.setCreatedBy(principal.getName());
-            organizationEntity.setCreatedDate(LocalDateTime.now());
-            organizationService.insert(organizationEntity);
-            result.setData(BeanCopyUtil.copy(organizationEntity, organizationDTO));
-        } catch (Exception e) {
-            log.error("插入方法异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "插入方法异常"));
-        }
-        return result;
+        OrganizationEntity organizationEntity = BeanCopyUtil.copy(organizationDTO, OrganizationEntity.class);
+        organizationEntity.setId(UuidUtil.getId());
+        organizationEntity.setCreatedBy(principal.getName());
+        organizationEntity.setCreatedDate(LocalDateTime.now());
+        organizationService.insert(organizationEntity);
+        return R.success();
     }
 
     /**
@@ -111,20 +91,13 @@ public class OrganizationController {
      * @return 执行结果
      */
     @PutMapping(UrlConstants.UPDATE)
-    public Result<String> update(@Valid @RequestBody OrganizationDTO organizationDTO, Principal principal) {
-        Result<String> result = new Result<>();
+    public R<String> update(@Valid @RequestBody OrganizationDTO organizationDTO, Principal principal) {
         check(organizationDTO);
-        try {
-            OrganizationEntity organizationEntity = BeanCopyUtil.copy(organizationDTO, OrganizationEntity.class);
-            organizationEntity.setUpdatedBy(principal.getName());
-            organizationEntity.setUpdatedDate(LocalDateTime.now());
-            organizationService.updateByCode(organizationEntity);
-            result.setData("更新成功");
-        } catch (Exception e) {
-            log.error("更新方法异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "更新方法异常"));
-        }
-        return result;
+        OrganizationEntity organizationEntity = BeanCopyUtil.copy(organizationDTO, OrganizationEntity.class);
+        organizationEntity.setUpdatedBy(principal.getName());
+        organizationEntity.setUpdatedDate(LocalDateTime.now());
+        organizationService.updateByCode(organizationEntity);
+        return R.success();
     }
 
     /**
@@ -134,7 +107,7 @@ public class OrganizationController {
      * @return 执行结果
      */
     @DeleteMapping(UrlConstants.DELETE)
-    public Result<String> delete(@RequestBody List<String> codes, Principal principal) {
+    public R<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(organizationService, principal.getName(), LocalDateTime.now(), codes);
     }
 

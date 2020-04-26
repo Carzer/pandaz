@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.commons.dto.usercenter.DictInfoDTO;
 import com.pandaz.commons.dto.usercenter.DictTypeDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
-import com.pandaz.commons.util.Result;
+import com.pandaz.commons.util.R;
 import com.pandaz.usercenter.custom.constants.UrlConstants;
 import com.pandaz.usercenter.entity.DictInfoEntity;
 import com.pandaz.usercenter.service.DictInfoService;
@@ -53,15 +53,9 @@ public class DictInfoController {
      * @return 组信息
      */
     @GetMapping(UrlConstants.GET)
-    public Result<DictInfoDTO> get(@Valid DictInfoDTO dictInfoDTO) {
-        Result<DictInfoDTO> result = new Result<>();
-        try {
-            result.setData(BeanCopyUtil.copy(dictInfoService.getWithTypeName(dictInfoDTO.getCode()), DictInfoDTO.class));
-        } catch (Exception e) {
-            log.error("查询方法异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "查询方法异常"));
-        }
-        return result;
+    public R<DictInfoDTO> get(@Valid DictInfoDTO dictInfoDTO) {
+        DictInfoDTO result = BeanCopyUtil.copy(dictInfoService.getWithTypeName(dictInfoDTO.getCode()), DictInfoDTO.class);
+        return new R<>(result);
     }
 
     /**
@@ -71,16 +65,9 @@ public class DictInfoController {
      * @return 分页信息
      */
     @GetMapping(UrlConstants.PAGE)
-    public Result<Map<String, Object>> getPage(DictInfoDTO dictInfoDTO) {
-        Result<Map<String, Object>> result = new Result<>();
-        try {
-            IPage<DictInfoEntity> page = dictInfoService.getPage(BeanCopyUtil.copy(dictInfoDTO, DictInfoEntity.class));
-            result.setData(BeanCopyUtil.convertToMap(page, DictInfoDTO.class));
-        } catch (Exception e) {
-            log.error("分页查询异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "分页查询异常"));
-        }
-        return result;
+    public R<Map<String, Object>> getPage(DictInfoDTO dictInfoDTO) {
+        IPage<DictInfoEntity> page = dictInfoService.getPage(BeanCopyUtil.copy(dictInfoDTO, DictInfoEntity.class));
+        return new R<>(BeanCopyUtil.convertToMap(page, DictInfoDTO.class));
     }
 
     /**
@@ -90,20 +77,13 @@ public class DictInfoController {
      * @return 字典信息
      */
     @PostMapping(UrlConstants.INSERT)
-    public Result<DictInfoDTO> insert(@RequestBody DictInfoDTO dictInfoDTO, Principal principal) {
-        Result<DictInfoDTO> result = new Result<>();
+    public R<String> insert(@RequestBody DictInfoDTO dictInfoDTO, Principal principal) {
         check(dictInfoDTO);
-        try {
-            DictInfoEntity dictInfoEntity = BeanCopyUtil.copy(dictInfoDTO, DictInfoEntity.class);
-            dictInfoEntity.setCreatedBy(principal.getName());
-            dictInfoEntity.setCreatedDate(LocalDateTime.now());
-            dictInfoService.insert(dictInfoEntity);
-            result.setData(BeanCopyUtil.copy(dictInfoEntity, dictInfoDTO));
-        } catch (Exception e) {
-            log.error("插入方法异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "插入方法异常"));
-        }
-        return result;
+        DictInfoEntity dictInfoEntity = BeanCopyUtil.copy(dictInfoDTO, DictInfoEntity.class);
+        dictInfoEntity.setCreatedBy(principal.getName());
+        dictInfoEntity.setCreatedDate(LocalDateTime.now());
+        dictInfoService.insert(dictInfoEntity);
+        return R.success();
     }
 
     /**
@@ -113,20 +93,13 @@ public class DictInfoController {
      * @return 执行结果
      */
     @PutMapping(UrlConstants.UPDATE)
-    public Result<String> update(@Valid @RequestBody DictInfoDTO dictInfoDTO, Principal principal) {
-        Result<String> result = new Result<>();
+    public R<String> update(@Valid @RequestBody DictInfoDTO dictInfoDTO, Principal principal) {
         check(dictInfoDTO);
-        try {
-            DictInfoEntity dictInfoEntity = BeanCopyUtil.copy(dictInfoDTO, DictInfoEntity.class);
-            dictInfoEntity.setUpdatedBy(principal.getName());
-            dictInfoEntity.setUpdatedDate(LocalDateTime.now());
-            dictInfoService.updateByCode(dictInfoEntity);
-            result.setData("更新成功");
-        } catch (Exception e) {
-            log.error("更新方法异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "更新方法异常"));
-        }
-        return result;
+        DictInfoEntity dictInfoEntity = BeanCopyUtil.copy(dictInfoDTO, DictInfoEntity.class);
+        dictInfoEntity.setUpdatedBy(principal.getName());
+        dictInfoEntity.setUpdatedDate(LocalDateTime.now());
+        dictInfoService.updateByCode(dictInfoEntity);
+        return R.success();
     }
 
     /**
@@ -136,7 +109,7 @@ public class DictInfoController {
      * @return 执行结果
      */
     @DeleteMapping(UrlConstants.DELETE)
-    public Result<String> delete(@RequestBody List<String> codes, Principal principal) {
+    public R<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(dictInfoService, principal.getName(), LocalDateTime.now(), codes);
     }
 
@@ -146,15 +119,8 @@ public class DictInfoController {
      * @return 字典类型
      */
     @GetMapping("/listAllTypes")
-    public Result<List<DictTypeDTO>> listAllTypes() {
-        Result<List<DictTypeDTO>> result = new Result<>();
-        try {
-            result.setData(controllerUtil.listAllTypes());
-        } catch (Exception e) {
-            log.error("获取全部字典类型异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "获取全部字典类型异常"));
-        }
-        return result;
+    public R<List<DictTypeDTO>> listAllTypes() {
+        return new R<>(controllerUtil.listAllTypes());
     }
 
     /**

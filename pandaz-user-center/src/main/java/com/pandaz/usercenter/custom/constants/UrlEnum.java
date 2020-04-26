@@ -8,6 +8,7 @@ import lombok.Getter;
  * @author Carzer
  * @since 2020-04-23
  */
+@Getter
 public enum UrlEnum {
 
     /**
@@ -24,13 +25,11 @@ public enum UrlEnum {
     /**
      * url
      */
-    @Getter
     private final String url;
 
     /**
      * name
      */
-    @Getter
     private final String name;
 
     /**

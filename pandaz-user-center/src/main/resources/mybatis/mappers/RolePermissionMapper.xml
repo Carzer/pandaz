@@ -200,4 +200,16 @@
             and menu_code = #{menuCode,jdbcType=VARCHAR}
         </where>
     </select>
+    <select id="listByOsCode" resultType="com.pandaz.usercenter.entity.RolePermissionEntity"
+            parameterType="java.lang.String">
+        select tsrp.os_code, tsrp.role_code, tsrp.menu_code, tsrp.permission_code
+        from t_sys_role_permission tsrp
+                 inner join t_sys_os_info os on tsrp.os_code = os.code and os.deleted_flag = '0' and os.locked = '0'
+                 inner join t_sys_role role
+                            on tsrp.role_code = role.code and role.deleted_flag = '0' and role.locked = '0'
+                 inner join t_sys_menu menu
+                            on tsrp.menu_code = menu.code and menu.deleted_flag = '0' and menu.locked = '0'
+        where tsrp.deleted_flag = '0'
+          and tsrp.os_code = #{osCode,jdbcType=VARCHAR}
+    </select>
 </mapper>

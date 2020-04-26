@@ -1,7 +1,6 @@
 package com.pandaz.rabbitmq.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.cloud.stream.messaging.Processor;
@@ -16,12 +15,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @EnableBinding(Processor.class)
+@Slf4j
 public class MqReceiver {
-
-    /**
-     * slf4j
-     */
-    private static final Logger LOGGER = LoggerFactory.getLogger(MqReceiver.class);
 
     /**
      * 接收方法
@@ -32,6 +27,6 @@ public class MqReceiver {
      */
     @StreamListener(value = Sink.INPUT, condition = "'hi'.equals(new String(payload))")
     public void process(String message) {
-        LOGGER.info("Received: {}", message);
+        log.info("Received: {}", message);
     }
 }

@@ -4,6 +4,7 @@ import com.pandaz.commons.dto.BaseDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
@@ -53,6 +54,7 @@ public class UserDTO extends BaseDTO {
     /**
      * 邮箱
      */
+    @Email
     private String email;
 
     /**

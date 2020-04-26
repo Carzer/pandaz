@@ -90,7 +90,7 @@ public class SecurityConfig {
     /**
      * security的鉴权排除的url列表
      */
-    private String[] excludedAuthPages = {
+    private final String[] excludedAuthPages = {
             "/auth/login",
             "/auth/logout",
             "/health",

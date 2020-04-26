@@ -1,6 +1,6 @@
 package com.pandaz.usercenter.client.fallback;
 
-import com.pandaz.commons.util.Result;
+import com.pandaz.commons.util.R;
 import com.pandaz.usercenter.client.RedisClient;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -27,17 +27,13 @@ public class RedisClientFallBackFactory implements FallbackFactory<RedisClient> 
         RedisClientFallBackFactory.log.error("fallback; reason was: ", cause);
         return new RedisClient() {
             @Override
-            public Result<String> getRedisValue(String key) {
-                Result<String> result = new Result<>();
-                result.setData("fallback from client");
-                return result;
+            public R<String> getRedisValue(String key) {
+                return R.fail("fallback from client");
             }
 
             @Override
-            public Result<String> setRedisValue(String value) {
-                Result<String> result = new Result<>();
-                result.setData("nothing from client");
-                return result;
+            public R<String> setRedisValue(String value) {
+                return R.fail("nothing from client");
             }
         };
     }

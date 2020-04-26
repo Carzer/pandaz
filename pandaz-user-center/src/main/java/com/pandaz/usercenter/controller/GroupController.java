@@ -3,7 +3,7 @@ package com.pandaz.usercenter.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.commons.dto.usercenter.*;
 import com.pandaz.commons.util.BeanCopyUtil;
-import com.pandaz.commons.util.Result;
+import com.pandaz.commons.util.R;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.custom.constants.SysConstants;
 import com.pandaz.usercenter.custom.constants.UrlConstants;
@@ -66,15 +66,9 @@ public class GroupController {
      * @return 组信息
      */
     @GetMapping(UrlConstants.GET)
-    public Result<GroupDTO> get(@Valid GroupDTO groupDTO) {
-        Result<GroupDTO> result = new Result<>();
-        try {
-            result.setData(BeanCopyUtil.copy(groupService.findByCode(groupDTO.getCode()), GroupDTO.class));
-        } catch (Exception e) {
-            log.error("查询方法异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "查询方法异常"));
-        }
-        return result;
+    public R<GroupDTO> get(@Valid GroupDTO groupDTO) {
+        GroupDTO result = BeanCopyUtil.copy(groupService.findByCode(groupDTO.getCode()), GroupDTO.class);
+        return new R<>(result);
     }
 
     /**
@@ -84,16 +78,9 @@ public class GroupController {
      * @return 分页信息
      */
     @GetMapping(UrlConstants.PAGE)
-    public Result<Map<String, Object>> getPage(GroupDTO groupDTO) {
-        Result<Map<String, Object>> result = new Result<>();
-        try {
-            IPage<GroupEntity> page = groupService.getPage(BeanCopyUtil.copy(groupDTO, GroupEntity.class));
-            result.setData(BeanCopyUtil.convertToMap(page, GroupDTO.class));
-        } catch (Exception e) {
-            log.error("分页查询异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "分页查询异常"));
-        }
-        return result;
+    public R<Map<String, Object>> getPage(GroupDTO groupDTO) {
+        IPage<GroupEntity> page = groupService.getPage(BeanCopyUtil.copy(groupDTO, GroupEntity.class));
+        return new R<>(BeanCopyUtil.convertToMap(page, GroupDTO.class));
     }
 
     /**
@@ -103,24 +90,17 @@ public class GroupController {
      * @return 组信息
      */
     @PostMapping(UrlConstants.INSERT)
-    public Result<GroupDTO> insert(@RequestBody GroupDTO groupDTO, Principal principal) {
-        Result<GroupDTO> result = new Result<>();
+    public R<GroupDTO> insert(@RequestBody GroupDTO groupDTO, Principal principal) {
         check(groupDTO);
-        try {
-            GroupEntity groupEntity = BeanCopyUtil.copy(groupDTO, GroupEntity.class);
-            groupEntity.setId(UuidUtil.getId());
-            if (StringUtils.hasText(groupEntity.getCode())) {
-                groupEntity.setCode(String.format("%s%s", SysConstants.GROUP_PREFIX, groupEntity.getCode()));
-            }
-            groupEntity.setCreatedBy(principal.getName());
-            groupEntity.setCreatedDate(LocalDateTime.now());
-            groupService.insert(groupEntity);
-            result.setData(BeanCopyUtil.copy(groupEntity, groupDTO));
-        } catch (Exception e) {
-            log.error("插入方法异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "插入方法异常"));
+        GroupEntity groupEntity = BeanCopyUtil.copy(groupDTO, GroupEntity.class);
+        groupEntity.setId(UuidUtil.getId());
+        if (StringUtils.hasText(groupEntity.getCode())) {
+            groupEntity.setCode(String.format("%s%s", SysConstants.GROUP_PREFIX, groupEntity.getCode()));
         }
-        return result;
+        groupEntity.setCreatedBy(principal.getName());
+        groupEntity.setCreatedDate(LocalDateTime.now());
+        groupService.insert(groupEntity);
+        return R.success();
     }
 
     /**
@@ -130,20 +110,13 @@ public class GroupController {
      * @return 执行结果
      */
     @PutMapping(UrlConstants.UPDATE)
-    public Result<String> update(@Valid @RequestBody GroupDTO groupDTO, Principal principal) {
-        Result<String> result = new Result<>();
+    public R<String> update(@Valid @RequestBody GroupDTO groupDTO, Principal principal) {
         check(groupDTO);
-        try {
-            GroupEntity groupEntity = BeanCopyUtil.copy(groupDTO, GroupEntity.class);
-            groupEntity.setUpdatedBy(principal.getName());
-            groupEntity.setUpdatedDate(LocalDateTime.now());
-            groupService.updateByCode(groupEntity);
-            result.setData("更新成功");
-        } catch (Exception e) {
-            log.error("更新方法异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "更新方法异常"));
-        }
-        return result;
+        GroupEntity groupEntity = BeanCopyUtil.copy(groupDTO, GroupEntity.class);
+        groupEntity.setUpdatedBy(principal.getName());
+        groupEntity.setUpdatedDate(LocalDateTime.now());
+        groupService.updateByCode(groupEntity);
+        return R.success();
     }
 
     /**
@@ -153,7 +126,7 @@ public class GroupController {
      * @return 执行结果
      */
     @DeleteMapping(UrlConstants.DELETE)
-    public Result<String> delete(@RequestBody List<String> codes, Principal principal) {
+    public R<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(groupService, principal.getName(), LocalDateTime.now(), codes);
     }
 
@@ -164,15 +137,8 @@ public class GroupController {
      * @return 执行结果
      */
     @GetMapping("/getUserPage")
-    public Result<Map<String, Object>> getUserPage(UserDTO userDTO) {
-        Result<Map<String, Object>> result = new Result<>();
-        try {
-            result.setData(controllerUtil.getUserPage(userDTO));
-        } catch (Exception e) {
-            log.error("分页查询异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "分页查询异常"));
-        }
-        return result;
+    public R<Map<String, Object>> getUserPage(UserDTO userDTO) {
+        return new R<>(controllerUtil.getUserPage(userDTO));
     }
 
     /**
@@ -182,16 +148,9 @@ public class GroupController {
      * @return 执行结果
      */
     @PutMapping("/bindGroupMember")
-    public Result<String> bindGroupMember(@Valid @RequestBody UserGroupDTO userGroupDTO, Principal principal) {
-        Result<String> result = new Result<>();
-        try {
-            userGroupService.bindGroupMember(principal.getName(), LocalDateTime.now(), BeanCopyUtil.copy(userGroupDTO, UserGroupEntity.class));
-            result.setData("绑定成功");
-        } catch (Exception e) {
-            log.error("绑定及用户组异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "绑定及用户组异常"));
-        }
-        return result;
+    public R<String> bindGroupMember(@Valid @RequestBody UserGroupDTO userGroupDTO, Principal principal) {
+        userGroupService.bindGroupMember(principal.getName(), LocalDateTime.now(), BeanCopyUtil.copy(userGroupDTO, UserGroupEntity.class));
+        return R.success();
     }
 
     /**
@@ -201,16 +160,9 @@ public class GroupController {
      * @return 执行结果
      */
     @GetMapping("/listBindGroupMembers")
-    public Result<List<String>> listBindGroupMembers(UserGroupDTO userGroupDTO) {
-        Result<List<String>> result = new Result<>();
-        try {
-            List<String> list = userGroupService.listBindGroupMembers(BeanCopyUtil.copy(userGroupDTO, UserGroupEntity.class));
-            result.setData(list);
-        } catch (Exception e) {
-            log.error("列出组内成员异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "列出组内成员异常"));
-        }
-        return result;
+    public R<List<String>> listBindGroupMembers(UserGroupDTO userGroupDTO) {
+        List<String> list = userGroupService.listBindGroupMembers(BeanCopyUtil.copy(userGroupDTO, UserGroupEntity.class));
+        return new R<>(list);
     }
 
     /**
@@ -220,15 +172,8 @@ public class GroupController {
      * @return 分页信息
      */
     @GetMapping("/getRolePage")
-    public Result<Map<String, Object>> getRolePage(RoleDTO roleDTO) {
-        Result<Map<String, Object>> result = new Result<>();
-        try {
-            result.setData(controllerUtil.getRolePage(roleDTO));
-        } catch (Exception e) {
-            log.error("获取角色分页异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "获取角色分页异常"));
-        }
-        return result;
+    public R<Map<String, Object>> getRolePage(RoleDTO roleDTO) {
+        return new R<>(controllerUtil.getRolePage(roleDTO));
     }
 
     /**
@@ -238,16 +183,9 @@ public class GroupController {
      * @return 执行结果
      */
     @PutMapping("/bindRole")
-    public Result<String> bindRole(@RequestBody GroupRoleDTO groupRoleDTO, Principal principal) {
-        Result<String> result = new Result<>();
-        try {
-            groupRoleService.bindGroupRole(principal.getName(), LocalDateTime.now(), BeanCopyUtil.copy(groupRoleDTO, GroupRoleEntity.class));
-            result.setData("绑定成功");
-        } catch (Exception e) {
-            log.error("绑定角色异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "绑定角色异常"));
-        }
-        return result;
+    public R<String> bindRole(@RequestBody GroupRoleDTO groupRoleDTO, Principal principal) {
+        groupRoleService.bindGroupRole(principal.getName(), LocalDateTime.now(), BeanCopyUtil.copy(groupRoleDTO, GroupRoleEntity.class));
+        return R.success();
     }
 
     /**
@@ -257,16 +195,9 @@ public class GroupController {
      * @return 执行结果
      */
     @GetMapping("/listBindRoles")
-    public Result<List<String>> listBindRoles(GroupRoleDTO groupRoleDTO) {
-        Result<List<String>> result = new Result<>();
-        try {
-            List<String> list = groupRoleService.listBindGroupRoles(BeanCopyUtil.copy(groupRoleDTO, GroupRoleEntity.class));
-            result.setData(list);
-        } catch (Exception e) {
-            log.error("列出绑定角色异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "列出绑定角色异常"));
-        }
-        return result;
+    public R<List<String>> listBindRoles(GroupRoleDTO groupRoleDTO) {
+        List<String> list = groupRoleService.listBindGroupRoles(BeanCopyUtil.copy(groupRoleDTO, GroupRoleEntity.class));
+        return new R<>(list);
     }
 
     /**

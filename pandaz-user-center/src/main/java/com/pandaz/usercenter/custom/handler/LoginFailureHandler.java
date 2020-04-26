@@ -1,7 +1,7 @@
 package com.pandaz.usercenter.custom.handler;
 
-import com.pandaz.commons.util.Result;
 import com.pandaz.commons.util.PrintWriterUtil;
+import com.pandaz.commons.util.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
@@ -34,12 +34,11 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
                                         HttpServletResponse httpServletResponse, AuthenticationException e)
             throws IOException {
         String errorMsg = e.getMessage();
-        Result<String> result = new Result<>();
         if (e instanceof BadCredentialsException) {
             errorMsg = "密码错误。";
         }
+        httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         log.warn(errorMsg);
-        result.setError(errorMsg);
-        PrintWriterUtil.write(httpServletResponse, result);
+        PrintWriterUtil.write(httpServletResponse, R.fail(errorMsg));
     }
 }

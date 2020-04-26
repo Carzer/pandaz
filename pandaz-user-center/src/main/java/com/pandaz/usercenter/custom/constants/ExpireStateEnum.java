@@ -8,6 +8,7 @@ import lombok.Getter;
  * @author Carzer
  * @since 2020-03-18
  */
+@Getter
 public enum ExpireStateEnum {
 
     /**
@@ -18,7 +19,6 @@ public enum ExpireStateEnum {
     /**
      * 值
      */
-    @Getter
     private final String val;
 
     /**

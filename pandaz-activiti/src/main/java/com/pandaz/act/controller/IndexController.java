@@ -1,6 +1,6 @@
 package com.pandaz.act.controller;
 
-import com.pandaz.commons.util.Result;
+import com.pandaz.commons.util.R;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +51,7 @@ public class IndexController {
      * @return 执行结果
      */
     @GetMapping("/getAllUrl")
-    public Result<List<Map<String, String>>> getAllUrl() {
-        Result<List<Map<String, String>>> result = new Result<>();
+    public R<List<Map<String, String>>> getAllUrl() {
         RequestMappingHandlerMapping mapping = applicationContext.getBean(RequestMappingHandlerMapping.class);
         // 获取url与类和方法的对应信息
         Map<RequestMappingInfo, HandlerMethod> map = mapping.getHandlerMethods();
@@ -71,7 +70,6 @@ public class IndexController {
             methods.forEach(requestMethod -> singleMapping.put("type", requestMethod.toString()));
             list.add(singleMapping);
         });
-        result.setData(list);
-        return result;
+        return new R<>(list);
     }
 }

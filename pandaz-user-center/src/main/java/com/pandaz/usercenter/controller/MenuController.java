@@ -5,7 +5,7 @@ import com.pandaz.commons.dto.usercenter.MenuDTO;
 import com.pandaz.commons.dto.usercenter.OsInfoDTO;
 import com.pandaz.commons.dto.usercenter.PermissionDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
-import com.pandaz.commons.util.Result;
+import com.pandaz.commons.util.R;
 import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.custom.constants.UrlConstants;
 import com.pandaz.usercenter.entity.MenuEntity;
@@ -71,15 +71,9 @@ public class MenuController {
      * @return 菜单信息
      */
     @GetMapping(UrlConstants.GET)
-    public Result<MenuDTO> get(@Valid MenuDTO menuDTO) {
-        Result<MenuDTO> result = new Result<>();
-        try {
-            result.setData(BeanCopyUtil.copy(menuService.findByCode(menuDTO.getCode()), MenuDTO.class));
-        } catch (Exception e) {
-            log.error("查询方法异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "查询方法异常"));
-        }
-        return result;
+    public R<MenuDTO> get(@Valid MenuDTO menuDTO) {
+        MenuDTO result = BeanCopyUtil.copy(menuService.findByCode(menuDTO.getCode()), MenuDTO.class);
+        return new R<>(result);
     }
 
     /**
@@ -89,16 +83,9 @@ public class MenuController {
      * @return 分页信息
      */
     @GetMapping(UrlConstants.PAGE)
-    public Result<Map<String, Object>> getPage(MenuDTO menuDTO) {
-        Result<Map<String, Object>> result = new Result<>();
-        try {
-            IPage<MenuEntity> page = menuService.getPage(BeanCopyUtil.copy(menuDTO, MenuEntity.class));
-            result.setData(BeanCopyUtil.convertToMap(page, MenuDTO.class));
-        } catch (Exception e) {
-            log.error("分页查询异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "分页查询异常"));
-        }
-        return result;
+    public R<Map<String, Object>> getPage(MenuDTO menuDTO) {
+        IPage<MenuEntity> page = menuService.getPage(BeanCopyUtil.copy(menuDTO, MenuEntity.class));
+        return new R<>(BeanCopyUtil.convertToMap(page, MenuDTO.class));
     }
 
     /**
@@ -108,22 +95,15 @@ public class MenuController {
      * @return 菜单信息
      */
     @PostMapping(UrlConstants.INSERT)
-    public Result<MenuDTO> insert(@RequestBody MenuDTO menuDTO, Principal principal) {
-        Result<MenuDTO> result = new Result<>();
+    public R<String> insert(@RequestBody MenuDTO menuDTO, Principal principal) {
         check(menuDTO);
-        try {
-            MenuEntity menuEntity = BeanCopyUtil.copy(menuDTO, MenuEntity.class);
-            menuEntity.setId(UuidUtil.getId());
-            menuEntity.setCreatedBy(principal.getName());
-            menuEntity.setCreatedDate(LocalDateTime.now());
-            menuEntity.setIsLeafNode(Byte.valueOf("1"));
-            menuService.insert(menuEntity);
-            result.setData(BeanCopyUtil.copy(menuEntity, menuDTO));
-        } catch (Exception e) {
-            log.error("插入方法异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "插入方法异常"));
-        }
-        return result;
+        MenuEntity menuEntity = BeanCopyUtil.copy(menuDTO, MenuEntity.class);
+        menuEntity.setId(UuidUtil.getId());
+        menuEntity.setCreatedBy(principal.getName());
+        menuEntity.setCreatedDate(LocalDateTime.now());
+        menuEntity.setIsLeafNode(Byte.valueOf("1"));
+        menuService.insert(menuEntity);
+        return R.success();
     }
 
     /**
@@ -133,20 +113,13 @@ public class MenuController {
      * @return 执行结果
      */
     @PutMapping(UrlConstants.UPDATE)
-    public Result<String> update(@Valid @RequestBody MenuDTO menuDTO, Principal principal) {
-        Result<String> result = new Result<>();
+    public R<String> update(@Valid @RequestBody MenuDTO menuDTO, Principal principal) {
         check(menuDTO);
-        try {
-            MenuEntity menuEntity = BeanCopyUtil.copy(menuDTO, MenuEntity.class);
-            menuEntity.setUpdatedBy(principal.getName());
-            menuEntity.setUpdatedDate(LocalDateTime.now());
-            menuService.updateByCode(menuEntity);
-            result.setData("更新成功");
-        } catch (Exception e) {
-            log.error("更新方法异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "更新方法异常"));
-        }
-        return result;
+        MenuEntity menuEntity = BeanCopyUtil.copy(menuDTO, MenuEntity.class);
+        menuEntity.setUpdatedBy(principal.getName());
+        menuEntity.setUpdatedDate(LocalDateTime.now());
+        menuService.updateByCode(menuEntity);
+        return R.success();
     }
 
     /**
@@ -156,7 +129,7 @@ public class MenuController {
      * @return 执行结果
      */
     @DeleteMapping(UrlConstants.DELETE)
-    public Result<String> delete(@RequestBody List<String> codes, Principal principal) {
+    public R<String> delete(@RequestBody List<String> codes, Principal principal) {
         return controllerUtil.getDeleteResult(menuService, principal.getName(), LocalDateTime.now(), codes);
     }
 
@@ -167,15 +140,8 @@ public class MenuController {
      * @return 分页信息
      */
     @GetMapping("/getPermissionPage")
-    public Result<Map<String, Object>> getPermissionPage(PermissionDTO permissionDTO) {
-        Result<Map<String, Object>> result = new Result<>();
-        try {
-            result.setData(controllerUtil.getPermissionPage(permissionDTO));
-        } catch (Exception e) {
-            log.error("权限分页查询异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "权限分页查询异常"));
-        }
-        return result;
+    public R<Map<String, Object>> getPermissionPage(PermissionDTO permissionDTO) {
+        return new R<>(controllerUtil.getPermissionPage(permissionDTO));
     }
 
     /**
@@ -184,15 +150,8 @@ public class MenuController {
      * @return 所有菜单
      */
     @GetMapping("/getAll")
-    public Result<MenuDTO> getAll(MenuDTO menuDTO) {
-        Result<MenuDTO> result = new Result<>();
-        try {
-            result.setData(controllerUtil.getAllMenu(menuDTO, false));
-        } catch (Exception e) {
-            log.error("获取所有菜单异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "获取所有菜单异常"));
-        }
-        return result;
+    public R<MenuDTO> getAll(MenuDTO menuDTO) {
+        return new R<>(controllerUtil.getAllMenu(menuDTO, false));
     }
 
     /**
@@ -201,29 +160,22 @@ public class MenuController {
      * @return 所有菜单
      */
     @GetMapping("/getAuthorizedMenu")
-    public Result<MenuDTO> getAuthorizedMenu(String osCode, Principal principal) {
-        Result<MenuDTO> result = new Result<>();
+    public R<MenuDTO> getAuthorizedMenu(String osCode, Principal principal) {
         List<String> roleList = new ArrayList<>();
         MenuDTO menuDTO = new MenuDTO();
         menuDTO.setCode("root");
-        try {
-            if (principal instanceof UsernamePasswordAuthenticationToken) {
-                roleList = ((UsernamePasswordAuthenticationToken) principal).getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
-            } else if (principal instanceof OAuth2Authentication) {
-                roleList = ((OAuth2Authentication) principal).getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
-            }
-            if (enableSuperAdmin && roleList.contains(superAdminName)) {
-                result.setData(controllerUtil.getAllMenu(menuDTO, true));
-            } else {
-                List<MenuEntity> menuList = menuService.getAuthorizedMenu(osCode, roleList);
-                Map<String, List<MenuEntity>> menuMap = menuList.stream().collect(Collectors.groupingBy(MenuEntity::getParentCode));
-                result.setData(transferToTree(menuDTO, menuMap));
-            }
-        } catch (Exception e) {
-            log.error("获取所有菜单异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "获取所有菜单异常"));
+        if (principal instanceof UsernamePasswordAuthenticationToken) {
+            roleList = ((UsernamePasswordAuthenticationToken) principal).getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
+        } else if (principal instanceof OAuth2Authentication) {
+            roleList = ((OAuth2Authentication) principal).getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
         }
-        return result;
+        if (enableSuperAdmin && roleList.contains(superAdminName)) {
+            return new R<>(controllerUtil.getAllMenu(menuDTO, true));
+        } else {
+            List<MenuEntity> menuList = menuService.getAuthorizedMenu(osCode, roleList);
+            Map<String, List<MenuEntity>> menuMap = menuList.stream().collect(Collectors.groupingBy(MenuEntity::getParentCode));
+            return new R<>(transferToTree(menuDTO, menuMap));
+        }
     }
 
     /**
@@ -232,15 +184,8 @@ public class MenuController {
      * @return 系统信息
      */
     @GetMapping("/listAllOs")
-    public Result<List<OsInfoDTO>> listAllOs() {
-        Result<List<OsInfoDTO>> result = new Result<>();
-        try {
-            result.setData(controllerUtil.listAllOs());
-        } catch (Exception e) {
-            log.error("获取全部系统信息异常：", e);
-            result.setError(controllerUtil.errorMsg(e, "获取全部系统信息异常"));
-        }
-        return result;
+    public R<List<OsInfoDTO>> listAllOs() {
+        return new R<>(controllerUtil.listAllOs());
     }
 
     /**

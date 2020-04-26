@@ -1,6 +1,6 @@
 package com.pandaz.usercenter.controller;
 
-import com.pandaz.commons.util.Result;
+import com.pandaz.commons.util.R;
 import com.pandaz.usercenter.client.RedisClient;
 import com.pandaz.usercenter.client.UploadClient;
 import lombok.RequiredArgsConstructor;
@@ -51,12 +51,10 @@ public class IndexController {
      * @return 执行结果
      */
     @GetMapping("userInfo")
-    public Result<HashMap<String, Principal>> home(Principal principal) {
-        Result<HashMap<String, Principal>> result = new Result<>();
+    public R<HashMap<String, Principal>> home(Principal principal) {
         HashMap<String, Principal> map = new HashMap<>(1);
         map.put("user", principal);
-        result.setData(map);
-        return result;
+        return new R<>(map);
     }
 
     /**
@@ -67,16 +65,9 @@ public class IndexController {
      */
     @GetMapping("testRedis")
     @PreAuthorize("hasRole('ADMIN')")
-    public Result<String> testRedis(String value) {
-        Result<String> result = new Result<>();
-        try {
-            String key = redisClient.setRedisValue(value).getData();
-            result = redisClient.getRedisValue(key);
-        } catch (Exception e) {
-            log.error("测试异常", e);
-            result.setError(e.getMessage());
-        }
-        return result;
+    public R<String> testRedis(String value) {
+        String key = redisClient.setRedisValue(value).getData();
+        return redisClient.getRedisValue(key);
     }
 
     /**
@@ -86,8 +77,7 @@ public class IndexController {
      */
     @GetMapping("getAllUrl")
     @PreAuthorize("hasRole('ADMIN')")
-    public Result<List<Map<String, String>>> getAllUrl() {
-        Result<List<Map<String, String>>> result = new Result<>();
+    public R<List<Map<String, String>>> getAllUrl() {
         RequestMappingHandlerMapping mapping = applicationContext.getBean(RequestMappingHandlerMapping.class);
         // 获取url与类和方法的对应信息
         Map<RequestMappingInfo, HandlerMethod> map = mapping.getHandlerMethods();
@@ -106,8 +96,7 @@ public class IndexController {
             methods.forEach(requestMethod -> singleMapping.put("type", requestMethod.toString()));
             list.add(singleMapping);
         });
-        result.setData(list);
-        return result;
+        return new R<>(list);
     }
 
 
