@@ -8,7 +8,6 @@ import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.custom.constants.UrlConstants;
 import com.pandaz.usercenter.entity.OrganizationEntity;
 import com.pandaz.usercenter.service.OrganizationService;
-import com.pandaz.usercenter.util.ControllerUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,11 +36,6 @@ public class OrganizationController {
      * 组织服务
      */
     private final OrganizationService organizationService;
-
-    /**
-     * 工具类
-     */
-    private final ControllerUtil<OrganizationService> controllerUtil;
 
     /**
      * 查询方法
@@ -108,7 +102,8 @@ public class OrganizationController {
      */
     @DeleteMapping(UrlConstants.DELETE)
     public R<String> delete(@RequestBody List<String> codes, Principal principal) {
-        return controllerUtil.getDeleteResult(organizationService, principal.getName(), LocalDateTime.now(), codes);
+        organizationService.deleteByCodes(principal.getName(), LocalDateTime.now(), codes);
+        return R.success();
     }
 
     /**

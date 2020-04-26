@@ -42,7 +42,7 @@ public class UserController {
     /**
      * 工具类
      */
-    private final ControllerUtil<UserService> controllerUtil;
+    private final ControllerUtil controllerUtil;
 
     /**
      * 根据用户编码获取用户信息
@@ -118,7 +118,8 @@ public class UserController {
     @PreAuthorize("!#codes.contains('admin')")
     @DeleteMapping(UrlConstants.DELETE)
     public R<String> delete(@RequestBody List<String> codes, Principal principal) {
-        return controllerUtil.getDeleteResult(userService, principal.getName(), LocalDateTime.now(), codes);
+        userService.deleteByCodes(principal.getName(), LocalDateTime.now(), codes);
+        return R.success();
     }
 
     /**

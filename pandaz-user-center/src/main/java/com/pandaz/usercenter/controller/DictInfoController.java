@@ -44,7 +44,7 @@ public class DictInfoController {
     /**
      * 工具类
      */
-    private final ControllerUtil<DictInfoService> controllerUtil;
+    private final ControllerUtil controllerUtil;
 
     /**
      * 查询方法
@@ -110,7 +110,8 @@ public class DictInfoController {
      */
     @DeleteMapping(UrlConstants.DELETE)
     public R<String> delete(@RequestBody List<String> codes, Principal principal) {
-        return controllerUtil.getDeleteResult(dictInfoService, principal.getName(), LocalDateTime.now(), codes);
+        dictInfoService.deleteByCodes(principal.getName(), LocalDateTime.now(), codes);
+        return R.success();
     }
 
     /**

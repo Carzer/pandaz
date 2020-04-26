@@ -9,7 +9,6 @@ import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.custom.constants.UrlConstants;
 import com.pandaz.usercenter.entity.OauthClientEntity;
 import com.pandaz.usercenter.service.OauthClientService;
-import com.pandaz.usercenter.util.ControllerUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,11 +37,6 @@ public class OauthClientController {
      * 客户端服务
      */
     private final OauthClientService oauthClientService;
-
-    /**
-     * 工具类
-     */
-    private final ControllerUtil<OauthClientService> controllerUtil;
 
     /**
      * 查询方法
@@ -109,7 +103,8 @@ public class OauthClientController {
      */
     @DeleteMapping(UrlConstants.DELETE)
     public R<String> delete(@RequestBody List<String> codes, Principal principal) {
-        return controllerUtil.getDeleteResult(oauthClientService, principal.getName(), LocalDateTime.now(), codes);
+        oauthClientService.deleteByCodes(principal.getName(), LocalDateTime.now(), codes);
+        return R.success();
     }
 
     /**

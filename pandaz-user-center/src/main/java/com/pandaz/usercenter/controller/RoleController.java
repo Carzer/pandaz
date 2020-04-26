@@ -50,7 +50,7 @@ public class RoleController {
     /**
      * 工具类
      */
-    private final ControllerUtil<RoleService> controllerUtil;
+    private final ControllerUtil controllerUtil;
 
     /**
      * 查询方法
@@ -119,7 +119,8 @@ public class RoleController {
      */
     @DeleteMapping(UrlConstants.DELETE)
     public R<String> delete(@RequestBody List<String> codes, Principal principal) {
-        return controllerUtil.getDeleteResult(roleService, principal.getName(), LocalDateTime.now(), codes);
+        roleService.deleteByCodes(principal.getName(), LocalDateTime.now(), codes);
+        return R.success();
     }
 
     /**

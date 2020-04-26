@@ -8,7 +8,6 @@ import com.pandaz.commons.util.UuidUtil;
 import com.pandaz.usercenter.custom.constants.UrlConstants;
 import com.pandaz.usercenter.entity.OsInfoEntity;
 import com.pandaz.usercenter.service.OsInfoService;
-import com.pandaz.usercenter.util.ControllerUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,11 +36,6 @@ public class OsInfoController {
      * 系统信息服务
      */
     private final OsInfoService osInfoService;
-
-    /**
-     * 工具类
-     */
-    private final ControllerUtil<OsInfoService> controllerUtil;
 
     /**
      * 查询方法
@@ -108,7 +102,8 @@ public class OsInfoController {
      */
     @DeleteMapping(UrlConstants.DELETE)
     public R<String> delete(@RequestBody List<String> codes, Principal principal) {
-        return controllerUtil.getDeleteResult(osInfoService, principal.getName(), LocalDateTime.now(), codes);
+        osInfoService.deleteByCodes(principal.getName(), LocalDateTime.now(), codes);
+        return R.success();
     }
 
     /**

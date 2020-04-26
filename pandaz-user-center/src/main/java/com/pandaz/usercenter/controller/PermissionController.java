@@ -43,7 +43,7 @@ public class PermissionController {
     /**
      * 工具类
      */
-    private final ControllerUtil<PermissionService> controllerUtil;
+    private final ControllerUtil controllerUtil;
 
     /**
      * 查询方法
@@ -110,7 +110,8 @@ public class PermissionController {
      */
     @DeleteMapping(UrlConstants.DELETE)
     public R<String> delete(@RequestBody List<String> codes, Principal principal) {
-        return controllerUtil.getDeleteResult(permissionService, principal.getName(), LocalDateTime.now(), codes);
+        permissionService.deleteByCodes(principal.getName(), LocalDateTime.now(), codes);
+        return R.success();
     }
 
     /**

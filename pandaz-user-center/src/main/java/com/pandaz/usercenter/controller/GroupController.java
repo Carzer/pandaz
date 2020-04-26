@@ -57,7 +57,7 @@ public class GroupController {
     /**
      * 工具类
      */
-    private final ControllerUtil<GroupService> controllerUtil;
+    private final ControllerUtil controllerUtil;
 
     /**
      * 查询方法
@@ -127,7 +127,8 @@ public class GroupController {
      */
     @DeleteMapping(UrlConstants.DELETE)
     public R<String> delete(@RequestBody List<String> codes, Principal principal) {
-        return controllerUtil.getDeleteResult(groupService, principal.getName(), LocalDateTime.now(), codes);
+        groupService.deleteByCodes(principal.getName(), LocalDateTime.now(), codes);
+        return R.success();
     }
 
     /**

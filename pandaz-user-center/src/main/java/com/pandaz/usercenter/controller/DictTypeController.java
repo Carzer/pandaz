@@ -8,7 +8,6 @@ import com.pandaz.commons.util.R;
 import com.pandaz.usercenter.custom.constants.UrlConstants;
 import com.pandaz.usercenter.entity.DictTypeEntity;
 import com.pandaz.usercenter.service.DictTypeService;
-import com.pandaz.usercenter.util.ControllerUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +38,6 @@ public class DictTypeController {
      * 字典类型服务
      */
     private final DictTypeService dictTypeService;
-
-    /**
-     * 工具类
-     */
-    private final ControllerUtil<DictTypeService> controllerUtil;
 
     /**
      * 查询方法
@@ -108,7 +102,8 @@ public class DictTypeController {
      */
     @DeleteMapping(UrlConstants.DELETE)
     public R<String> delete(@RequestBody List<String> codes, Principal principal) {
-        return controllerUtil.getDeleteResult(dictTypeService, principal.getName(), LocalDateTime.now(), codes);
+        dictTypeService.deleteByCodes(principal.getName(), LocalDateTime.now(), codes);
+        return R.success();
     }
 
     /**

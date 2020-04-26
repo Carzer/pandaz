@@ -4,19 +4,16 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.commons.constants.CommonConstants;
 import com.pandaz.commons.dto.usercenter.*;
 import com.pandaz.commons.util.BeanCopyUtil;
-import com.pandaz.commons.util.R;
 import com.pandaz.usercenter.custom.constants.SysConstants;
 import com.pandaz.usercenter.entity.*;
 import com.pandaz.usercenter.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,17 +24,10 @@ import java.util.Map;
  * @author Carzer
  * @since 2020-03-26
  */
-@SuppressWarnings("rawtypes")
 @Component
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ControllerUtil<S extends UcBaseService> {
-
-    /**
-     * 是否简化错误的返回信息
-     */
-    @Value("${custom.simpleErrorMessage}")
-    private boolean simpleErrorMessage;
+public class ControllerUtil {
 
     /**
      * 系统信息服务
@@ -73,21 +63,6 @@ public class ControllerUtil<S extends UcBaseService> {
      * 角色服务
      */
     private final RoleService roleService;
-
-    /**
-     * 执行删除方法并获取结果
-     *
-     * @param service     调用服务
-     * @param deletedBy   删除人
-     * @param deletedDate 删除时间
-     * @param codes       删除编码
-     * @return 执行结果
-     */
-    public R<String> getDeleteResult(
-            S service, String deletedBy, LocalDateTime deletedDate, List<String> codes) {
-        service.deleteByCodes(deletedBy, deletedDate, codes);
-        return R.success();
-    }
 
     /**
      * 获取所有系统信息
@@ -212,19 +187,5 @@ public class ControllerUtil<S extends UcBaseService> {
     public Map<String, Object> getRolePage(RoleDTO roleDTO) {
         IPage<RoleEntity> page = roleService.getPage(BeanCopyUtil.copy(roleDTO, RoleEntity.class));
         return BeanCopyUtil.convertToMap(page, RoleDTO.class);
-    }
-
-    /**
-     * 根据环境获取错误信息
-     *
-     * @param e          错误信息
-     * @param simpleText 简化的说明信息
-     * @return 错误信息
-     */
-    public String errorMsg(Exception e, String simpleText) {
-        if (simpleErrorMessage) {
-            return simpleText;
-        }
-        return e.getMessage();
     }
 }
