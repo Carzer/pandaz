@@ -73,7 +73,7 @@ mybatis-plus:
 # 自定义属性
 custom:
   # 排除路径
-  excludedPaths: "/oauth/**,/token/**,/menu/getAuthorizedMenu,/login,/userInfo,/css/**,/fonts/**,/js/**,/scss/**,/img/**"
+  excludedPaths: "/oauth/**,/token/**,/menu/getAuthorizedMenu,/login,/userInfo,/css/**,/fonts/**,/js/**,/scss/**,/img/**,/ws/**"
   # 超级管理员角色名称
   super-admin:
     enable: false
@@ -84,6 +84,7 @@ custom:
   client:
     redis-server: pandaz-redis
     file-server: pandaz-file-server
+    im: pandaz-im
   cache:
     # 缓存过期时间，单位：分钟
     masterEntryTtlUnit: minutes

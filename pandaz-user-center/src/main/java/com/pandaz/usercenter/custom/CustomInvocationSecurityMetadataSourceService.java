@@ -1,7 +1,9 @@
 package com.pandaz.usercenter.custom;
 
 import com.pandaz.usercenter.util.AuthUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
@@ -28,7 +30,13 @@ import java.util.stream.Collectors;
  */
 @Component
 @Slf4j
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CustomInvocationSecurityMetadataSourceService implements FilterInvocationSecurityMetadataSource {
+
+    /**
+     * 通用配置
+     */
+    private final CustomProperties customProperties;
 
     /**
      * 是否启用超级管理员角色
@@ -41,12 +49,6 @@ public class CustomInvocationSecurityMetadataSourceService implements FilterInvo
      */
     @Value("${custom.super-admin.name}")
     private String superAdminName;
-
-    /**
-     * 鉴权排除的url列表
-     */
-    @Value("#{'${custom.excludedPaths}'.split(',')}")
-    private String[] excludedPaths;
 
     /**
      * 判定用户请求的url 是否在权限表中
@@ -66,14 +68,14 @@ public class CustomInvocationSecurityMetadataSourceService implements FilterInvo
                     .map(grantedAuthority -> grantedAuthority.getAuthority().toLowerCase())
                     .collect(Collectors.toList());
             if (roleList.contains(superAdminName.toLowerCase())) {
-                return new ArrayList<>();
+                return new ArrayList<>(0);
             }
         }
         // 过滤排除URL
-        for (String excludedPath : excludedPaths) {
+        for (String excludedPath : customProperties.getExcludedPaths()) {
             AntPathRequestMatcher matcher = new AntPathRequestMatcher(excludedPath);
             if (matcher.matches(request)) {
-                return new ArrayList<>();
+                return new ArrayList<>(0);
             }
         }
         // 查找匹配的权限信息
@@ -95,7 +97,7 @@ public class CustomInvocationSecurityMetadataSourceService implements FilterInvo
      */
     @Override
     public Collection<ConfigAttribute> getAllConfigAttributes() {
-        return new ArrayList<>();
+        return new ArrayList<>(0);
     }
 
     /**

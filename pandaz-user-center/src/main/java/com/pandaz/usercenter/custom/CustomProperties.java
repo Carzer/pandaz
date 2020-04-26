@@ -2,6 +2,7 @@ package com.pandaz.usercenter.custom;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +32,12 @@ public class CustomProperties {
      * 缓存参数
      */
     private Cache cache;
+
+    /**
+     * 鉴权排除的url列表
+     */
+    @Value("#{'${custom.excludedPaths}'.split(',')}")
+    private String[] excludedPaths;
 
     /**
      * 调用客户端

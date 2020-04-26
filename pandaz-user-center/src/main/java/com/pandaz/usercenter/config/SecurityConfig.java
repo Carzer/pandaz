@@ -5,12 +5,13 @@ import com.pandaz.commons.dto.usercenter.UserDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.CustomPasswordEncoder;
 import com.pandaz.usercenter.custom.CustomDaoAuthenticationProvider;
+import com.pandaz.usercenter.custom.CustomProperties;
 import com.pandaz.usercenter.custom.constants.SysConstants;
-import com.pandaz.usercenter.custom.interceptor.CustomFilterSecurityInterceptor;
 import com.pandaz.usercenter.custom.handler.CustomAuthDeniedHandler;
 import com.pandaz.usercenter.custom.handler.CustomLogoutSuccessHandler;
 import com.pandaz.usercenter.custom.handler.LoginFailureHandler;
 import com.pandaz.usercenter.custom.handler.LoginSuccessHandler;
+import com.pandaz.usercenter.custom.interceptor.CustomFilterSecurityInterceptor;
 import com.pandaz.usercenter.entity.UserEntity;
 import com.pandaz.usercenter.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -49,6 +50,11 @@ import java.util.List;
 @EnableRedisHttpSession(maxInactiveIntervalInSeconds = SysConstants.DEFAULT_EXPIRE_SECONDS)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    /**
+     * 通用配置
+     */
+    private final CustomProperties customProperties;
 
     /**
      * 获取用户信息服务
@@ -97,6 +103,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                .antMatchers(customProperties.getExcludedPaths()).permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyRequest()
                 .authenticated().and()

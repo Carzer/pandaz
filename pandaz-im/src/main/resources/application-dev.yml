@@ -9,7 +9,7 @@ spring:
       transport:
         dashboard: localhost:8787
       log:
-        dir: logs/rabbitmq/sentinel
+        dir: logs/im/sentinel
     stream:
       bindings:
         input:

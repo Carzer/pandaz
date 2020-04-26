@@ -2,7 +2,7 @@ server:
   port: 9004
 spring:
   application:
-    name: pandaz-rabbitmq
+    name: pandaz-im
   # 允许多个bean调用同一个服务
   main:
     allow-bean-definition-overriding: true

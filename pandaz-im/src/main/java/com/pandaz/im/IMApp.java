@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
- * rabbitmq相关服务
+ * 消息相关服务
  *
  * @author Carzer
  * @since 2019-07-22
