@@ -6,7 +6,6 @@ import com.pandaz.usercenter.custom.interceptor.FeignOauth2RequestInterceptor;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  * Redis调用服务
@@ -31,6 +30,6 @@ public interface WsClient {
      * @param userName userName
      * @return 内容
      */
-    @PostMapping("/sendOneWebSocket/{userName}")
+    @GetMapping("/sendOneWebSocket/{userName}")
     R<String> sendOneWebSocket(@PathVariable("userName") String userName);
 }
