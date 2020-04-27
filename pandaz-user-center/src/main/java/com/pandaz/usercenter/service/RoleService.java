@@ -22,7 +22,7 @@ public interface RoleService extends UcBaseService<RoleEntity> {
      *
      * @param userCode  userCode用户编码
      * @param isPrivate 是否私有
-     * @return java.util.List<com.pandaz.usercenter.entity.RoleEntity>
+     * @return 执行结果
      */
     List<RoleDetailEntity> findByUserCode(String userCode, Byte isPrivate);
 
@@ -30,7 +30,7 @@ public interface RoleService extends UcBaseService<RoleEntity> {
      * 根据用户编码查询角色信息
      *
      * @param userCode userCode用户编码
-     * @return java.util.List<com.pandaz.usercenter.entity.RoleEntity>
+     * @return 执行结果
      */
     List<RoleDetailEntity> findByUserCode(String userCode);
 

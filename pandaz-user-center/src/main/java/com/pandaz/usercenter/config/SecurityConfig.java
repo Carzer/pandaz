@@ -4,6 +4,7 @@ import com.pandaz.commons.SecurityUser;
 import com.pandaz.commons.dto.usercenter.UserDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.CustomPasswordEncoder;
+import com.pandaz.usercenter.custom.filter.CaptchaAuthenticationFilter;
 import com.pandaz.usercenter.custom.CustomDaoAuthenticationProvider;
 import com.pandaz.usercenter.custom.CustomProperties;
 import com.pandaz.usercenter.custom.constants.SysConstants;
@@ -33,6 +34,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 import java.time.LocalDateTime;
@@ -82,6 +84,91 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomFilterSecurityInterceptor filterSecurityInterceptor;
 
     /**
+     * 验证码filter
+     */
+    private final CaptchaAuthenticationFilter captchaAuthenticationFilter;
+
+    /**
+     * 加密类
+     *
+     * @return org.springframework.security.crypto.password.PasswordEncoder
+     */
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new CustomPasswordEncoder();
+    }
+
+    /**
+     * 登录成功后执行的方法
+     * 创建Bean而不是直接注入，是因为会造成循环依赖
+     *
+     * @return LoginSuccessHandler
+     */
+    @Bean
+    public LoginSuccessHandler loginSuccessHandler() {
+        return new LoginSuccessHandler();
+    }
+
+    /**
+     * 自定义授权管理器
+     *
+     * @return CustomDaoAuthenticationProvider
+     */
+    @Bean
+    public CustomDaoAuthenticationProvider customDaoAuthenticationProvider() {
+        return new CustomDaoAuthenticationProvider(userDetailsService(), passwordEncoder());
+    }
+
+    /**
+     * AuthenticationManager
+     * <p>
+     * 如果不声明，会导致授权服务器无AuthenticationManager，而password方式无法获取token
+     * {@link AuthorizationServerConfig#configure(AuthorizationServerEndpointsConfigurer endpoints)}
+     * {@link AuthorizationServerEndpointsConfigurer} #getDefaultTokenGranters
+     *
+     * @return AuthenticationManager
+     * @throws Exception e
+     */
+    @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    /**
+     * 返回一个实现UserDetailsService接口的类
+     *
+     * @return org.springframework.security.core.userdetails.UserDetailsService
+     */
+    @Bean
+    @Override
+    public UserDetailsService userDetailsService() {
+        return loginName -> {
+            UserEntity user = userService.loadUserByUsername(loginName);
+            // 用户不存在
+            if (user == null) {
+                String notFoundMsg = String.format("账号[%s]不存在。", loginName);
+                throw new UsernameNotFoundException(notFoundMsg);
+            }
+            Byte locked = user.getLocked();
+            // 用户已锁定
+            if (SysConstants.LOCKED.equals(locked)) {
+                throw new LockedException(String.format("用户[%s]已锁定，请联系管理员。", loginName));
+            }
+            LocalDateTime expireAt = user.getExpireAt();
+            // 用户已过期
+            if (expireAt == null || LocalDateTime.now().isAfter(expireAt)) {
+                String expireTime = expireAt == null ? "" : String.format("于%s", expireAt.toString());
+                String accountExpiredMsg = String.format("用户[%s]已%s过期。", loginName, expireTime);
+                throw new AccountExpiredException(accountExpiredMsg);
+            }
+            UserDTO userDTO = BeanCopyUtil.copy(user, UserDTO.class);
+            List<GrantedAuthority> authorities = new ArrayList<>();
+            return new SecurityUser(loginName, user.getPassword(), authorities, userDTO);
+        };
+    }
+
+    /**
      * 获取登录用户的相关信息
      *
      * @param auth 权限管理器
@@ -126,85 +213,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .maxSessionsPreventsLogin(true)
         ;
         http.addFilterBefore(filterSecurityInterceptor, FilterSecurityInterceptor.class);
-    }
-
-    /**
-     * 加密类
-     *
-     * @return org.springframework.security.crypto.password.PasswordEncoder
-     */
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new CustomPasswordEncoder();
-    }
-
-    /**
-     * 登录成功后执行的方法
-     * 创建Bean而不是直接注入，是因为会造成循环依赖
-     *
-     * @return LoginSuccessHandler
-     */
-    @Bean
-    public LoginSuccessHandler loginSuccessHandler() {
-        return new LoginSuccessHandler();
-    }
-
-    /**
-     * 返回一个实现UserDetailsService接口的类
-     *
-     * @return org.springframework.security.core.userdetails.UserDetailsService
-     */
-    @Bean
-    @Override
-    public UserDetailsService userDetailsService() {
-        return loginName -> {
-            UserEntity user = userService.loadUserByUsername(loginName);
-            // 用户不存在
-            if (user == null) {
-                String notFoundMsg = String.format("账号[%s]不存在。", loginName);
-                throw new UsernameNotFoundException(notFoundMsg);
-            }
-            Byte locked = user.getLocked();
-            // 用户已锁定
-            if (SysConstants.LOCKED.equals(locked)) {
-                throw new LockedException(String.format("用户[%s]已锁定，请联系管理员。", loginName));
-            }
-            LocalDateTime expireAt = user.getExpireAt();
-            // 用户已过期
-            if (expireAt == null || LocalDateTime.now().isAfter(expireAt)) {
-                String expireTime = expireAt == null ? "" : String.format("于%s", expireAt.toString());
-                String accountExpiredMsg = String.format("用户[%s]已%s过期。", loginName, expireTime);
-                throw new AccountExpiredException(accountExpiredMsg);
-            }
-            UserDTO userDTO = BeanCopyUtil.copy(user, UserDTO.class);
-            List<GrantedAuthority> authorities = new ArrayList<>();
-            return new SecurityUser(loginName, user.getPassword(), authorities, userDTO);
-        };
-    }
-
-    /**
-     * 自定义授权管理器
-     *
-     * @return CustomDaoAuthenticationProvider
-     */
-    @Bean
-    public CustomDaoAuthenticationProvider customDaoAuthenticationProvider() {
-        return new CustomDaoAuthenticationProvider(userDetailsService(), passwordEncoder());
-    }
-
-    /**
-     * AuthenticationManager
-     * <p>
-     * 如果不声明，会导致授权服务器无AuthenticationManager，而password方式无法获取token
-     * {@link AuthorizationServerConfig#configure(AuthorizationServerEndpointsConfigurer endpoints)}
-     * {@link AuthorizationServerEndpointsConfigurer} #getDefaultTokenGranters
-     *
-     * @return AuthenticationManager
-     * @throws Exception e
-     */
-    @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
+        http.addFilterBefore(captchaAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }

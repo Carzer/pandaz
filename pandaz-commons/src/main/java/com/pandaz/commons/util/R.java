@@ -13,6 +13,7 @@ import java.io.Serializable;
  * @author Carzer
  * @since 2019-09-03
  */
+@SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 @Setter
 @Getter
 public final class R<T> {
@@ -34,7 +35,7 @@ public final class R<T> {
 
     /**
      * 私有构造方法
-     *
+     * <p>
      * 猜测由于fegin的调用，产生的option请求
      * 如果没有空的构造方法，会因ICode而报空指针错误
      */
@@ -74,6 +75,7 @@ public final class R<T> {
     /**
      * success 方法
      *
+     * @param <T> t
      * @return 返回成功
      */
     public static <T extends Serializable> R<T> success() {
@@ -83,6 +85,7 @@ public final class R<T> {
     /**
      * fail 方法
      *
+     * @param <T> t
      * @return 返回失败
      */
     public static <T extends Serializable> R<T> fail() {
@@ -92,6 +95,7 @@ public final class R<T> {
     /**
      * fail 方法
      *
+     * @param message message
      * @return 返回失败
      */
     public static R<String> fail(String message) {

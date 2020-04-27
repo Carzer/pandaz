@@ -201,7 +201,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
      * 获取用户信息页
      *
      * @param userEntity 查询条件
-     * @return java.util.List<com.pandaz.usercenter.entity.UserEntity>
+     * @return 执行结果
      */
     @Override
     @SentinelResource("user-getPage")

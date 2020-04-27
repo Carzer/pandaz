@@ -119,7 +119,29 @@ db.auth("admin","123456")
 db.grantRolesToUser("admin",[{role:"dbOwner", db:"admin"}])
 ```
 
-## 5.nginx
+## 5.postgres
+
+```shell
+docker pull postgres
+```
+
+```shell
+docker run -d --name postgres -p 5432:5432 -v [docker统一目录]/postgres/data:/var/lib/postgresql/data -e POSTGRES_USER=sonar -e POSTGRES_PASSWORD=sonar postgres
+```
+
+## 6.sonarqube
+
+sonarqube7.9以后，不再对mysql提供支持，所以搭配了postgres使用
+```shell
+docker pull sonarqube
+```
+
+```shell
+docker run -d --name sonar -p 9000:9000 -p 9092:9092 -v [docker统一目录]/sonarqube/conf:/opt/sonarqube/conf -v [docker统一目录]/sonarqube/data:/opt/sonarqube/data -v [docker统一目录]/sonarqube/extensions:/opt/sonarqube/extensions -v [docker统一目录]/sonarqube/bundled-plugins:/opt/sonarqube/lib/bundled-plugins -e SONARQUBE_JDBC_USERNAME=sonar -e SONARQUBE_JDBC_PASSWORD=sonar -e SONARQUBE_JDBC_URL=jdbc:postgresql://172.17.0.1:5432/sonar sonarqube
+```
+
+
+## 7.nginx
 
 ```shell
 docker pull nginx
@@ -129,7 +151,7 @@ docker pull nginx
 docker run --name nginx -p 8090:8090 -v [docker统一目录]/nginx/nginx.conf:/etc/nginx/nginx.conf -v [docker统一目录]/nginx/ext:/etc/nginx/ext -v [docker统一目录]/logs/nginx:/var/log/nginx -v [docker统一目录]/nginx/html:/etc/nginx/html -d nginx
 ```
 
-## 6.nacos&sentinel
+## 8.nacos&sentinel
 
 ```shell
 git clone --depth 1 https://github.com/nacos-group/nacos-docker.git

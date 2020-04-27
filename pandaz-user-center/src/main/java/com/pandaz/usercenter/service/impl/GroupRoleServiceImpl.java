@@ -53,7 +53,7 @@ public class GroupRoleServiceImpl extends ServiceImpl<GroupRoleMapper, GroupRole
      * 根据组编码查询
      *
      * @param groupRole groupRole
-     * @return java.util.List<com.pandaz.usercenter.entity.GroupRoleEntity>
+     * @return 执行结果
      */
     @Override
     public List<GroupRoleEntity> findByGroupCode(GroupRoleEntity groupRole) {

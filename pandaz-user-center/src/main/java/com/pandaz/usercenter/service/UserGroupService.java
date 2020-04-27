@@ -19,7 +19,7 @@ public interface UserGroupService extends UcBaseService<UserGroupEntity> {
      * 根据用户编码查询
      *
      * @param userGroup userGroup
-     * @return java.util.List<com.pandaz.usercenter.entity.UserGroupEntity>
+     * @return 执行结果
      */
     List<UserGroupEntity> findByUserCode(UserGroupEntity userGroup);
 

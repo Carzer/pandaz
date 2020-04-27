@@ -14,7 +14,11 @@ public enum BizCode implements ICode {
     /**
      * 操作码
      */
-    TEST(10000, "测试用");
+    VALID_CODE_EMPTY(10001, "验证码为空"),
+    VALID_CODE_EXPIRED(10002, "验证码过期"),
+    VALID_CODE_ERROR(10003, "验证码错误"),
+    AUTH_TYPE_NOT_SUPPORT(10005, "不支持的授权方式")
+    ;
 
     /**
      * 编码

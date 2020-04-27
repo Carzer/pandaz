@@ -45,10 +45,12 @@
         <spring.security.jwt.version>1.0.11.RELEASE</spring.security.jwt.version>
         <nacos.dependency.version>0.9.0.RELEASE</nacos.dependency.version>
         <sentinel.dependency.version>0.9.0.RELEASE</sentinel.dependency.version>
+        <easy-captcha.version>1.6.2</easy-captcha.version>
         <pandaz.commons.version>0.0.1-SNAPSHOT</pandaz.commons.version>
+        <maven-javadoc.version>3.2.0</maven-javadoc.version>
+        <maven-delombok.version>1.18.12.0</maven-delombok.version>
         <sonar-maven-plugin.version>3.6.0.1398</sonar-maven-plugin.version>
         <jacoco-maven-plugin.version>0.8.4</jacoco-maven-plugin.version>
-        <aggregate.report.dir>tests/target/site/jacoco-aggregate/jacoco.xml</aggregate.report.dir>
         <sonar.jdbc.username>pandaz</sonar.jdbc.username>
         <sonar.jdbc.password>pandaz</sonar.jdbc.password>
         <sonar.host.url>http://localhost:9000</sonar.host.url>
@@ -156,6 +158,12 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
                 <version>${nacos.dependency.version}</version>
+            </dependency>
+            <!--captcha-->
+            <dependency>
+                <groupId>com.github.whvcse</groupId>
+                <artifactId>easy-captcha</artifactId>
+                <version>${easy-captcha.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -271,40 +279,45 @@
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>${jacoco-maven-plugin.version}</version>
                 </plugin>
+                <!-- Javadoc -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${maven-javadoc.version}</version>
+                    <configuration>
+                        <sourcepath>target/generated-sources/delombok</sourcepath>
+                    </configuration>
+                </plugin>
+                <!-- 为使Javadoc插件可以正常识别lombok而使用的插件 -->
+                <plugin>
+                    <groupId>org.projectlombok</groupId>
+                    <artifactId>lombok-maven-plugin</artifactId>
+                    <version>${maven-delombok.version}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok-maven-plugin</artifactId>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <sourceDirectory>src/main/java</sourceDirectory>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
-
-    <profiles>
-        <profile>
-            <id>coverage</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.jacoco</groupId>
-                        <artifactId>jacoco-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>prepare-agent</id>
-                                <goals>
-                                    <goal>prepare-agent</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>report</id>
-                                <goals>
-                                    <goal>report-aggregate</goal>
-                                </goals>
-                                <phase>verify</phase>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 
 </project>

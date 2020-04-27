@@ -98,7 +98,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
      * 根据用户编码查询角色信息
      *
      * @param userCode userCode用户编码
-     * @return java.util.List<com.pandaz.usercenter.entity.RoleEntity>
+     * @return 执行结果
      */
     @Cacheable(key = "#userCode+':all'")
     @Override

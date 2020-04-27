@@ -18,7 +18,7 @@ public interface RoleMapper extends UcBaseMapper<RoleEntity> {
      * 根据用户编码获取非私有角色信息
      *
      * @param userCode 用户编码
-     * @return java.util.List<com.pandaz.usercenter.entity.RoleEntity>
+     * @return 执行结果
      */
     List<RoleDetailEntity> getPublicRoles(@Value("userCode") String userCode);
 
@@ -26,7 +26,7 @@ public interface RoleMapper extends UcBaseMapper<RoleEntity> {
      * 根据用户编码获取私有角色信息
      *
      * @param userCode 用户编码
-     * @return java.util.List<com.pandaz.usercenter.entity.RoleEntity>
+     * @return 执行结果
      */
     List<RoleDetailEntity> getPrivateRoles(@Value("userCode") String userCode);
 
@@ -34,7 +34,7 @@ public interface RoleMapper extends UcBaseMapper<RoleEntity> {
      * 根据用户编码获取所有角色信息
      *
      * @param userCode 用户编码
-     * @return java.util.List<com.pandaz.usercenter.entity.RoleEntity>
+     * @return 执行结果
      */
     List<RoleDetailEntity> getAllRoles(@Value("userCode") String userCode);
 }

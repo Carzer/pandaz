@@ -38,7 +38,7 @@ public class UserGroupServiceImpl extends ServiceImpl<UserGroupMapper, UserGroup
      * 根据用户编码查询
      *
      * @param userGroup userGroup
-     * @return java.util.List<com.pandaz.usercenter.entity.UserGroupEntity>
+     * @return执行结果
      */
     @Override
     public List<UserGroupEntity> findByUserCode(UserGroupEntity userGroup) {

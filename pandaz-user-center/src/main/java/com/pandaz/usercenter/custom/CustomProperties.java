@@ -40,6 +40,18 @@ public class CustomProperties {
     private String[] excludedPaths;
 
     /**
+     * 是否启用超级管理员角色
+     */
+    @Value("${custom.super-admin.enable}")
+    private boolean enableSuperAdmin;
+
+    /**
+     * 超级管理员角色名称
+     */
+    @Value("${custom.super-admin.name}")
+    private String superAdminName;
+
+    /**
      * 调用客户端
      */
     @Getter
