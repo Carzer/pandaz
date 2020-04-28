@@ -2,6 +2,7 @@ package com.pandaz.redis.config;
 
 import com.pandaz.commons.constants.CommonConstants;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -20,6 +21,7 @@ import org.springframework.util.StringUtils;
  */
 @Configuration
 @EnableResourceServer
+@ConditionalOnProperty(prefix = "custom", name = "enableAuth", havingValue = "true")
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     /**

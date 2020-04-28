@@ -31,20 +31,26 @@ public class OperationController {
      * @param key key
      * @return 执行结果
      */
-    @GetMapping("/getValue")
-    public R<Object> getValue(String key) {
+    @GetMapping("/getObject")
+    public R<Object> getObject(String key) {
         return new R<>(redisHelper.getObject(key));
     }
 
     /**
-     * 获取Redis value
+     * 设置Redis value
      *
+     * @param key   key
      * @param value value
+     * @param ttl   存活时间
      * @return 执行结果
      */
-    @PostMapping("/setValue")
-    public R<String> setValue(String value) {
-        redisHelper.setObject("test", value);
+    @PostMapping("/setObject")
+    public R<String> setObject(String key, String value, long ttl) {
+        if (0 == ttl) {
+            redisHelper.setObject(key, value);
+        } else {
+            redisHelper.setObject(key, value, ttl);
+        }
         return R.success();
     }
 }

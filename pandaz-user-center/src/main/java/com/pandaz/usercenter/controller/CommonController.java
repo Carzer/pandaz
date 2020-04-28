@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.Principal;
@@ -71,8 +70,8 @@ public class CommonController {
      * @throws IOException IOException
      */
     @GetMapping(value = "/captcha", produces = "image/png")
-    public void captcha(@RequestParam(value = "key") String key, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        captchaService.create(request, response, key);
+    public void captcha(@RequestParam(value = "key") String key, HttpServletResponse response) throws IOException {
+        captchaService.create(response, key);
     }
 
     /**

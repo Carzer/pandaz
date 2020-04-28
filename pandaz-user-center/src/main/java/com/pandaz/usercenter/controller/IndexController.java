@@ -65,9 +65,9 @@ public class IndexController {
      */
     @GetMapping("testRedis")
     @PreAuthorize("hasRole('ADMIN')")
-    public R<String> testRedis(String value) {
-        String key = redisClient.setRedisValue(value).getData();
-        return redisClient.getRedisValue(key);
+    public R<Object> testRedis(String value) {
+        String key = redisClient.setObject("test", value, 0).getData();
+        return redisClient.getObject(key);
     }
 
     /**

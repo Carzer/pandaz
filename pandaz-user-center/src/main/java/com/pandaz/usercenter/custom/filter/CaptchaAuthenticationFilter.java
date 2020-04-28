@@ -2,6 +2,7 @@ package com.pandaz.usercenter.custom.filter;
 
 import com.pandaz.commons.util.PrintWriterUtil;
 import com.pandaz.commons.util.R;
+import com.pandaz.usercenter.custom.CustomProperties;
 import com.pandaz.usercenter.service.CaptchaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,11 @@ import java.io.IOException;
 public class CaptchaAuthenticationFilter extends OncePerRequestFilter {
 
     /**
+     * 是否开启验证码
+     */
+    private final CustomProperties customProperties;
+
+    /**
      * 验证码服务
      */
     private final CaptchaService captchaService;
@@ -47,10 +53,10 @@ public class CaptchaAuthenticationFilter extends OncePerRequestFilter {
      */
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
-        if (requestMatcher.matches(request)) {
+        if (customProperties.isEnableCaptcha() && requestMatcher.matches(request)) {
             String randomId = this.obtainGeneratedCaptcha(request);
             String captcha = this.obtainCaptcha(request);
-            R<Boolean> r = captchaService.check(request, randomId, captcha);
+            R<Boolean> r = captchaService.check(randomId, captcha);
             if (Boolean.FALSE.equals(r.getData())) {
                 PrintWriterUtil.write(response, r);
                 return;

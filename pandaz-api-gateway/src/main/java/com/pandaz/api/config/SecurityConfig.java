@@ -93,6 +93,10 @@ public class SecurityConfig {
     private final String[] excludedAuthPages = {
             "/auth/login",
             "/auth/logout",
+            "/auth/common/**",
+            "/auth/oauth/**",
+            "/auth/token/**",
+            "/auth/userInfo",
             "/health",
             "/api/socket/**"
     };

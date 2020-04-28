@@ -289,6 +289,7 @@
                     </configuration>
                 </plugin>
                 <!-- 为使Javadoc插件可以正常识别lombok而使用的插件 -->
+                <!-- 先执行执行 lombok:delombok，再执行javadoc:javadoc即可获得正常的javadoc-->
                 <plugin>
                     <groupId>org.projectlombok</groupId>
                     <artifactId>lombok-maven-plugin</artifactId>

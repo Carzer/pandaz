@@ -23,17 +23,19 @@ public interface RedisClient {
      * 获取Redis value
      *
      * @param key key
-     * @return redis值
+     * @return 执行结果
      */
-    @GetMapping("/getValue")
-    R<String> getRedisValue(@RequestParam String key);
+    @GetMapping("/getObject")
+    R<Object> getObject(@RequestParam String key);
 
     /**
      * 设置Redis value
      *
+     * @param key   key
      * @param value value
+     * @param ttl   存活时间
      * @return 执行结果
      */
-    @PostMapping("/setValue")
-    R<String> setRedisValue(@RequestParam String value);
+    @PostMapping("/setObject")
+    R<String> setObject(@RequestParam String key, @RequestParam String value, @RequestParam long ttl);
 }

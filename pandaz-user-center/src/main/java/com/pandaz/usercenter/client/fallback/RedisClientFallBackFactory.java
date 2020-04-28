@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.client.fallback;
 
+import com.pandaz.commons.code.RCode;
 import com.pandaz.commons.util.R;
 import com.pandaz.usercenter.client.RedisClient;
 import feign.hystrix.FallbackFactory;
@@ -7,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
- * Redis熔断
+ * Redis fallback
  *
  * @author Carzer
  * @since 2019-10-28 10:23
@@ -27,13 +28,13 @@ public class RedisClientFallBackFactory implements FallbackFactory<RedisClient> 
         RedisClientFallBackFactory.log.error("fallback; reason was: ", cause);
         return new RedisClient() {
             @Override
-            public R<String> getRedisValue(String key) {
-                return R.fail("fallback from client");
+            public R<Object> getObject(String key) {
+                return new R<>(RCode.FAILED);
             }
 
             @Override
-            public R<String> setRedisValue(String value) {
-                return R.fail("nothing from client");
+            public R<String> setObject(String key, String value, long ttl) {
+                return R.fail();
             }
         };
     }

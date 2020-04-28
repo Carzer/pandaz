@@ -52,6 +52,12 @@ public class CustomProperties {
     private String superAdminName;
 
     /**
+     * 是否启用验证码
+     */
+    @Value("${custom.captcha.enable}")
+    private boolean enableCaptcha;
+
+    /**
      * 调用客户端
      */
     @Getter

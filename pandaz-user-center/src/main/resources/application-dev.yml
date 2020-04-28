@@ -73,7 +73,10 @@ mybatis-plus:
 # 自定义属性
 custom:
   # 排除路径
-  excludedPaths: "/oauth/**,/token/**,/login,/userInfo,/css/**,/fonts/**,/js/**,/scss/**,/img/**,/ws/**,/common/**"
+  excludedPaths: "/oauth/**,/token/**,/login,/userInfo,/ws/**,/common/**"
+  # 开启验证码校验
+  captcha:
+    enable: true
   # 超级管理员角色名称
   super-admin:
     enable: false

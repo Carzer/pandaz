@@ -42,3 +42,5 @@ security:
 custom:
   # 项目基础包
   projectPackage: com.pandaz
+  # 权限控制
+  enableAuth: false
