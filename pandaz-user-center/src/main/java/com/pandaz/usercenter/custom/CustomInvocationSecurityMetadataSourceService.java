@@ -59,7 +59,8 @@ public class CustomInvocationSecurityMetadataSourceService implements FilterInvo
             }
         }
         // 过滤排除URL
-        for (String excludedPath : customProperties.getExcludedPaths()) {
+        String[] excludedPaths = customProperties.getExcludedPaths();
+        for (String excludedPath : excludedPaths) {
             AntPathRequestMatcher matcher = new AntPathRequestMatcher(excludedPath);
             if (matcher.matches(request)) {
                 return new ArrayList<>(0);

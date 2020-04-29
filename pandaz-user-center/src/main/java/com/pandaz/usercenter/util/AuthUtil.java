@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -61,6 +63,41 @@ public final class AuthUtil {
     }
 
     /**
+     * 由security上下文环境中获取用户信息
+     *
+     * @param principal principal
+     * @return 当前用户
+     */
+    public static R<UserDTO> getUserFromPrincipal(Principal principal) {
+        if (principal == null) {
+            return new R<>(RCode.UNAUTHORIZED);
+        }
+        UserDTO user = ((SecurityUser) ((UsernamePasswordAuthenticationToken) principal).getPrincipal()).getUser();
+        return new R<>(user);
+    }
+
+    /**
+     * 由security上下文环境中获取角色列表
+     *
+     * @param principal principal
+     * @return 当前用户角色列表
+     */
+    public static R<List<String>> getRoleListFromPrincipal(Principal principal) {
+        List<String> roleList;
+        if (principal instanceof UsernamePasswordAuthenticationToken) {
+            roleList = ((UsernamePasswordAuthenticationToken) principal).getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
+        } else if (principal instanceof OAuth2Authentication) {
+            roleList = ((OAuth2Authentication) principal).getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
+        } else {
+            return new R<>(RCode.AUTH_TYPE_NOT_SUPPORT);
+        }
+        if (CollectionUtils.isEmpty(roleList)) {
+            return new R<>(RCode.ROLE_EMPTY);
+        }
+        return new R<>(roleList);
+    }
+
+    /**
      * 获取路径权限
      *
      * @param url url
@@ -86,20 +123,6 @@ public final class AuthUtil {
             });
             map = resultMap;
         }
-    }
-
-    /**
-     * 由security上下文环境中获取用户信息
-     *
-     * @param principal principal
-     * @return 当前用户
-     */
-    public static R<UserDTO> getUserFromPrincipal(Principal principal) {
-        if (principal == null) {
-            return new R<>(RCode.UNAUTHORIZED);
-        }
-        UserDTO user = ((SecurityUser) ((UsernamePasswordAuthenticationToken) principal).getPrincipal()).getUser();
-        return new R<>(user);
     }
 
     /**

@@ -66,6 +66,12 @@ public final class SysConstants {
     public static final Integer TOTAL_DIGIT_RESULT = 67108863;
 
     /**
+     * 基础权限
+     * 菜单有任一权限，都会在查询后附上基础权限，供前端固定使用
+     */
+    public static final Integer BASIC_DIGIT_RESULT = 1;
+
+    /**
      * 最大位移数
      */
     public static final Byte MAX_DIGIT = 25;
@@ -74,11 +80,6 @@ public final class SysConstants {
      * 最小位移数
      */
     public static final Byte MIN_DIGIT = 1;
-
-    /**
-     * 图片验证码存于session中的key
-     */
-    public static final String SESSION_KEY_IMAGE_CODE = "SESSION_KEY_IMAGE_CODE";
 
     /**
      * 默认系统编码os_code

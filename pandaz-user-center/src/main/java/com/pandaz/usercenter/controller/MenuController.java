@@ -133,7 +133,7 @@ public class MenuController {
      */
     @GetMapping("/getAll")
     public R<MenuDTO> getAll(MenuDTO menuDTO) {
-        return new R<>(controllerUtil.getAllMenu(menuDTO, false));
+        return new R<>(controllerUtil.getAllMenu(menuDTO));
     }
 
     /**

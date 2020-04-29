@@ -312,12 +312,16 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
      * @param toRootList 所有菜单列表
      */
     private void findToRoot(List<String> allCodes, List<String> codes, List<MenuEntity> toRootList) {
+        // 根据缺失的父级菜单编码进行查询
         List<MenuEntity> menuList = menuMapper.selectByCodes(codes);
         List<String> parentCodes = new ArrayList<>();
+        // 将结果放入list备用
         toRootList.addAll(menuList);
+        // 将所有查询出的菜单编码放入all菜单编码中
         for (MenuEntity menuEntity : menuList) {
             allCodes.add(menuEntity.getCode());
         }
+        // 如果当前查出的菜单，父级编码也未在all编码中存在，则继续查询
         for (MenuEntity menuEntity : menuList) {
             String parentCode = menuEntity.getParentCode();
             if (!CommonConstants.ROOT_MENU_CODE.equals(parentCode) && !allCodes.contains(parentCode)) {

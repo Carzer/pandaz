@@ -1,7 +1,6 @@
 package com.pandaz.usercenter.service.impl;
 
-import com.pandaz.commons.code.BizCode;
-import com.pandaz.commons.exception.BizException;
+import com.pandaz.commons.code.RCode;
 import com.pandaz.commons.util.R;
 import com.pandaz.usercenter.client.RedisClient;
 import com.pandaz.usercenter.service.CaptchaService;
@@ -47,11 +46,11 @@ public class CaptchaServiceImpl implements CaptchaService {
     @Override
     public void create(HttpServletResponse response, String key) throws IOException {
         if (!StringUtils.hasText(key)) {
-            throw new BizException(BizCode.VALID_CODE_EMPTY);
+            return;
         }
         setHeader(response);
         Captcha captcha = createCaptcha();
-        redisClient.setObject(CAPTCHA_KEY + key, captcha.text(), 600);
+        redisClient.setObject(CAPTCHA_KEY + key, captcha.text(), 180);
         captcha.out(response.getOutputStream());
     }
 
@@ -65,14 +64,14 @@ public class CaptchaServiceImpl implements CaptchaService {
     @Override
     public R<Boolean> check(String key, String value) {
         if (!StringUtils.hasText(value)) {
-            return new R<>(BizCode.VALID_CODE_EMPTY, false);
+            return new R<>(RCode.VALID_CODE_EMPTY, false);
         }
         R<Object> result = redisClient.getObject(CAPTCHA_KEY + key);
         if (result.getData() == null) {
-            return new R<>(BizCode.VALID_CODE_EXPIRED, false);
+            return new R<>(RCode.VALID_CODE_EXPIRED, false);
         }
         if (!value.equalsIgnoreCase(result.getData().toString())) {
-            return new R<>(BizCode.VALID_CODE_ERROR, false);
+            return new R<>(RCode.VALID_CODE_ERROR, false);
         }
         return new R<>(true);
     }

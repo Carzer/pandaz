@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pandaz.commons.constants.CommonConstants;
 import com.pandaz.commons.dto.usercenter.*;
 import com.pandaz.commons.util.BeanCopyUtil;
-import com.pandaz.usercenter.custom.constants.SysConstants;
 import com.pandaz.usercenter.entity.*;
 import com.pandaz.usercenter.service.*;
 import lombok.RequiredArgsConstructor;
@@ -87,12 +86,12 @@ public class ControllerUtil {
      *
      * @return 菜单信息
      */
-    public MenuDTO getAllMenu(MenuDTO menuDTO, boolean superAdmin) {
+    public MenuDTO getAllMenu(MenuDTO menuDTO) {
         MenuEntity menuEntity = BeanCopyUtil.copy(menuDTO, MenuEntity.class);
         menuEntity.setParentCode(CommonConstants.ROOT_MENU_CODE);
         List<MenuEntity> list = menuService.getAll(menuEntity);
         menuEntity.setChildren(list);
-        return transferToDTO(menuEntity, superAdmin);
+        return transferToDTO(menuEntity);
     }
 
     /**
@@ -123,12 +122,12 @@ public class ControllerUtil {
      * @param menuEntity entity
      * @return dto
      */
-    private MenuDTO transferToDTO(MenuEntity menuEntity, boolean superAdmin) {
+    private MenuDTO transferToDTO(MenuEntity menuEntity) {
         MenuDTO menuDTO = new MenuDTO();
         List<MenuEntity> entityList = menuEntity.getChildren();
         if (!CollectionUtils.isEmpty(entityList)) {
             List<MenuDTO> dtoList = new ArrayList<>();
-            entityList.forEach(menu -> dtoList.add(transferToDTO(menu, superAdmin)));
+            entityList.forEach(menu -> dtoList.add(transferToDTO(menu)));
             menuDTO.setChildren(dtoList);
         }
         menuDTO.setId(menuEntity.getId());
@@ -142,9 +141,6 @@ public class ControllerUtil {
         menuDTO.setLocked(menuEntity.getLocked());
         menuDTO.setSorting(menuEntity.getSorting());
         menuDTO.setIsLeafNode(menuEntity.getIsLeafNode());
-        if (superAdmin) {
-            menuDTO.setBitResult(SysConstants.TOTAL_DIGIT_RESULT);
-        }
         return menuDTO;
     }
 

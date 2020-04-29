@@ -156,7 +156,7 @@ public class RoleController {
      */
     @GetMapping("/getAllMenu")
     public R<MenuDTO> getAllMenu(MenuDTO menuDTO) {
-        return new R<>(controllerUtil.getAllMenu(menuDTO, false));
+        return new R<>(controllerUtil.getAllMenu(menuDTO));
     }
 
     /**
