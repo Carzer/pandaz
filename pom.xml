@@ -11,7 +11,7 @@
 
     <groupId>com.pandaz</groupId>
     <artifactId>pandaz</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>PandaZ</name>
 
@@ -46,7 +46,7 @@
         <nacos.dependency.version>0.9.0.RELEASE</nacos.dependency.version>
         <sentinel.dependency.version>0.9.0.RELEASE</sentinel.dependency.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
-        <pandaz.commons.version>0.0.1-SNAPSHOT</pandaz.commons.version>
+        <pandaz.commons.version>0.0.2-SNAPSHOT</pandaz.commons.version>
         <maven-javadoc.version>3.2.0</maven-javadoc.version>
         <maven-delombok.version>1.18.12.0</maven-delombok.version>
         <sonar-maven-plugin.version>3.6.0.1398</sonar-maven-plugin.version>
