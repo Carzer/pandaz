@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.service;
 
+import com.pandaz.commons.service.BaseService;
 import com.pandaz.usercenter.entity.GroupEntity;
 import com.pandaz.usercenter.entity.GroupRoleEntity;
 import com.pandaz.usercenter.entity.RoleEntity;
@@ -13,7 +14,7 @@ import java.util.List;
  * @author Carzer
  * @since 2019-11-05 17:33
  */
-public interface GroupRoleService extends UcBaseService<GroupRoleEntity> {
+public interface GroupRoleService extends BaseService<GroupRoleEntity> {
 
     /**
      * 根据组编码查询

@@ -70,6 +70,9 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupEntity> impl
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insert(GroupEntity groupEntity) {
+        if (StringUtils.hasText(groupEntity.getCode())) {
+            groupEntity.setCode(String.format("%s%s", SysConstants.GROUP_PREFIX, groupEntity.getCode()));
+        }
         // 组信息补充
         String groupCode = checkUtil.checkOrSetCode(groupEntity, groupMapper, "组编码重复", SysConstants.GROUP_PREFIX, null);
         if (!StringUtils.hasText(groupEntity.getId())) {
@@ -132,14 +135,14 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupEntity> impl
     }
 
     /**
-     * 根据编码删除
+     * 根据编码查询
      *
-     * @param code 组编码
+     * @param groupEntity 组编码
      */
     @Override
-    public GroupEntity findByCode(String code) {
+    public GroupEntity findByCode(GroupEntity groupEntity) {
         QueryWrapper<GroupEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("code", code);
+        queryWrapper.eq("code", groupEntity.getCode());
         return groupMapper.selectOne(queryWrapper);
     }
 

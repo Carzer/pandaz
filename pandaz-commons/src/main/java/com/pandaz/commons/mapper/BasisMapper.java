@@ -1,4 +1,4 @@
-package com.pandaz.usercenter.mapper;
+package com.pandaz.commons.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pandaz.commons.entity.BaseEntity;
@@ -11,7 +11,7 @@ import java.util.Map;
  * @author Carzer
  * @since 2020-03-24
  */
-public interface UcBaseMapper<T extends BaseEntity> extends BaseMapper<T> {
+public interface BasisMapper<T extends BaseEntity> extends BaseMapper<T> {
 
     /**
      * 插入方法

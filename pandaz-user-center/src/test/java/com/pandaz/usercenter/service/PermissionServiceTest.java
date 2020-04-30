@@ -43,8 +43,8 @@ public class PermissionServiceTest {
     @BeforeClass
     public static void setUp() {
         // 设置nacos日志及缓存路径
-        System.setProperty("nacos.logging.path", "logs/api-gateway/nacos");
-        System.setProperty("com.alibaba.nacos.naming.cache.dir", "logs/api-gateway/nacos/naming");
+        System.setProperty("nacos.logging.path", "../logs/user-center-test/nacos");
+        System.setProperty("com.alibaba.nacos.naming.cache.dir", "../logs/user-center-test/nacos/naming");
     }
 
     /**
@@ -76,7 +76,9 @@ public class PermissionServiceTest {
 
     @Test
     public void findByCode() {
-        PermissionEntity test = permissionService.findByCode("per_test");
+        PermissionEntity permissionEntity = new PermissionEntity();
+        permissionEntity.setCode("per_test");
+        PermissionEntity test = permissionService.findByCode(permissionEntity);
         assertThat(test, anything());
     }
 

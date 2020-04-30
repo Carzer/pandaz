@@ -38,7 +38,7 @@ public class UserGroupServiceImpl extends ServiceImpl<UserGroupMapper, UserGroup
      * 根据用户编码查询
      *
      * @param userGroup userGroup
-     * @return执行结果
+     * @return 执行结果
      */
     @Override
     public List<UserGroupEntity> findByUserCode(UserGroupEntity userGroup) {
@@ -85,19 +85,6 @@ public class UserGroupServiceImpl extends ServiceImpl<UserGroupMapper, UserGroup
     @Override
     public int insert(UserGroupEntity userGroup) {
         return userGroupMapper.insertSelective(userGroup);
-    }
-
-    /**
-     * 批量删除
-     *
-     * @param deletedBy   删除人
-     * @param deletedDate 删除时间
-     * @param codes       编码
-     * @return 执行结果
-     */
-    @Override
-    public int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
-        return 0;
     }
 
     /**

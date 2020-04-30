@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.mapper;
 
+import com.pandaz.commons.mapper.BasisMapper;
 import com.pandaz.usercenter.entity.MenuEntity;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -12,7 +13,7 @@ import java.util.Map;
  * @author Carzer
  * @since 2019-11-01
  */
-public interface MenuMapper extends UcBaseMapper<MenuEntity> {
+public interface MenuMapper extends BasisMapper<MenuEntity> {
 
     /**
      * 获取菜单树

@@ -72,6 +72,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
      */
     @Override
     public int insert(RoleEntity roleEntity) {
+        if (StringUtils.hasText(roleEntity.getCode())) {
+            roleEntity.setCode(String.format("%s%s", SysConstants.ROLE_PREFIX, roleEntity.getCode()));
+        }
         checkUtil.checkOrSetCode(roleEntity, roleMapper, "角色编码重复", SysConstants.ROLE_PREFIX, null);
         roleEntity.setId(UuidUtil.getId());
         return roleMapper.insertSelective(roleEntity);
@@ -145,11 +148,11 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
     /**
      * 根据编码查询
      *
-     * @param code 角色编码
+     * @param roleEntity 角色编码
      * @return 角色信息
      */
     @Override
-    public RoleEntity findByCode(String code) {
+    public RoleEntity findByCode(RoleEntity roleEntity) {
         QueryWrapper<RoleEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("code", queryWrapper);
         return roleMapper.selectOne(queryWrapper);

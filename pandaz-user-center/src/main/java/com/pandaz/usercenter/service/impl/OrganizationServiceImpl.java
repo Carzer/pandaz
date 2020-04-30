@@ -45,13 +45,13 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
     /**
      * 根据编码查询
      *
-     * @param code 组织编码
+     * @param organizationEntity 组织编码
      * @return 组织信息
      */
     @Override
-    public OrganizationEntity findByCode(String code) {
+    public OrganizationEntity findByCode(OrganizationEntity organizationEntity) {
         QueryWrapper<OrganizationEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("code", code);
+        queryWrapper.eq("code", organizationEntity.getCode());
         return organizationMapper.selectOne(queryWrapper);
     }
 

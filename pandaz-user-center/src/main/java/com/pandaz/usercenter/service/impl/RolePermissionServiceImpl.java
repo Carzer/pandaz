@@ -79,19 +79,6 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
     }
 
     /**
-     * 批量删除
-     *
-     * @param deletedBy   删除人
-     * @param deletedDate 删除时间
-     * @param codes       编码
-     * @return 执行结果
-     */
-    @Override
-    public int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
-        return 0;
-    }
-
-    /**
      * 绑定权限
      *
      * @param operator             操作人

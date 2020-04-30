@@ -37,8 +37,8 @@ public class OsInfoServiceTest {
     @BeforeClass
     public static void setUp() {
         // 设置nacos日志及缓存路径
-        System.setProperty("nacos.logging.path", "logs/api-gateway/nacos");
-        System.setProperty("com.alibaba.nacos.naming.cache.dir", "logs/api-gateway/nacos/naming");
+        System.setProperty("nacos.logging.path", "../logs/user-center-test/nacos");
+        System.setProperty("com.alibaba.nacos.naming.cache.dir", "../logs/user-center-test/nacos/naming");
     }
 
     @Autowired
@@ -62,7 +62,9 @@ public class OsInfoServiceTest {
 
     @Test
     public void findByCode() {
-        OsInfoEntity test = osInfoService.findByCode("os_test");
+        OsInfoEntity osInfoEntity = new OsInfoEntity();
+        osInfoEntity.setCode("os_test");
+        OsInfoEntity test = osInfoService.findByCode(osInfoEntity);
         assertThat(test, anything());
     }
 

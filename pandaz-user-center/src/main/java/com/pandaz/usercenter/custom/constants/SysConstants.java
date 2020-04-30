@@ -61,7 +61,7 @@ public final class SysConstants {
     public static final Byte LOCKED = 1;
 
     /**
-     * 二进制权限之和
+     * 二进制权限之和(1<<0 + 1<<1 + ... + 1<<25)
      */
     public static final Integer TOTAL_DIGIT_RESULT = 67108863;
 

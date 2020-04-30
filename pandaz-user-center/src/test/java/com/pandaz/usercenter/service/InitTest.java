@@ -43,8 +43,8 @@ public class InitTest {
     @BeforeClass
     public static void setUp() {
         // 设置nacos日志及缓存路径
-        System.setProperty("nacos.logging.path", "logs/api-gateway/nacos");
-        System.setProperty("com.alibaba.nacos.naming.cache.dir", "logs/api-gateway/nacos/naming");
+        System.setProperty("nacos.logging.path", "logs/user-center-test/nacos");
+        System.setProperty("com.alibaba.nacos.naming.cache.dir", "logs/user-center-test/nacos/naming");
     }
 
     @Autowired

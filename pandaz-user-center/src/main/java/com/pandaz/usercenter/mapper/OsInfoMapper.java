@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.mapper;
 
+import com.pandaz.commons.mapper.BasisMapper;
 import com.pandaz.usercenter.entity.OsInfoEntity;
 
 /**
@@ -8,6 +9,6 @@ import com.pandaz.usercenter.entity.OsInfoEntity;
  * @author Carzer
  * @since 2019-11-01
  */
-public interface OsInfoMapper extends UcBaseMapper<OsInfoEntity> {
+public interface OsInfoMapper extends BasisMapper<OsInfoEntity> {
 
 }

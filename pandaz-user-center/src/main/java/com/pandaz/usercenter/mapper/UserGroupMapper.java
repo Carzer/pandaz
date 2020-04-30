@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.mapper;
 
+import com.pandaz.commons.mapper.BasisMapper;
 import com.pandaz.usercenter.entity.UserGroupEntity;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  * @author Carzer
  * @since 2019-10-23
  */
-public interface UserGroupMapper extends UcBaseMapper<UserGroupEntity> {
+public interface UserGroupMapper extends BasisMapper<UserGroupEntity> {
     /**
      * 逻辑删除
      *

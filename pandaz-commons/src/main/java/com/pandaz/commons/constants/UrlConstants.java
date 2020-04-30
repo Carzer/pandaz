@@ -1,4 +1,4 @@
-package com.pandaz.usercenter.custom.constants;
+package com.pandaz.commons.constants;
 
 /**
  * 通用URL

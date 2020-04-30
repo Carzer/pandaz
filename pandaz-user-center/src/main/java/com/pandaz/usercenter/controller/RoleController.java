@@ -1,11 +1,11 @@
 package com.pandaz.usercenter.controller;
 
+import com.pandaz.commons.constants.UrlConstants;
+import com.pandaz.commons.controller.BaseController;
 import com.pandaz.commons.dto.usercenter.*;
+import com.pandaz.commons.service.BaseService;
 import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.R;
-import com.pandaz.commons.util.UuidUtil;
-import com.pandaz.usercenter.custom.constants.SysConstants;
-import com.pandaz.usercenter.custom.constants.UrlConstants;
 import com.pandaz.usercenter.entity.RoleEntity;
 import com.pandaz.usercenter.entity.RolePermissionEntity;
 import com.pandaz.usercenter.service.RolePermissionService;
@@ -16,10 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -35,7 +33,7 @@ import java.util.Map;
 @RequestMapping("/role")
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class RoleController {
+public class RoleController extends BaseController<RoleDTO, RoleEntity> {
 
     /**
      * 角色服务
@@ -53,15 +51,13 @@ public class RoleController {
     private final ControllerUtil controllerUtil;
 
     /**
-     * 查询方法
+     * 获取服务方法
      *
-     * @param roleDTO 查询条件
-     * @return 角色信息
+     * @return 获取服务
      */
-    @GetMapping(UrlConstants.GET)
-    public R<RoleDTO> get(@Valid RoleDTO roleDTO) {
-        RoleDTO result = BeanCopyUtil.copy(roleService.findByCode(roleDTO.getCode()), RoleDTO.class);
-        return new R<>(result);
+    @Override
+    protected BaseService<RoleEntity> getBaseService() {
+        return this.roleService;
     }
 
     /**
@@ -71,56 +67,9 @@ public class RoleController {
      * @return 分页信息
      */
     @GetMapping(UrlConstants.PAGE)
+    @Override
     public R<Map<String, Object>> getPage(RoleDTO roleDTO) {
         return new R<>(controllerUtil.getRolePage(roleDTO));
-    }
-
-    /**
-     * 新增方法
-     *
-     * @param roleDTO 角色信息
-     * @return 角色信息
-     */
-    @PostMapping(UrlConstants.INSERT)
-    public R<String> insert(@RequestBody RoleDTO roleDTO, Principal principal) {
-        check(roleDTO);
-        RoleEntity roleEntity = BeanCopyUtil.copy(roleDTO, RoleEntity.class);
-        roleEntity.setId(UuidUtil.getId());
-        if (StringUtils.hasText(roleEntity.getCode())) {
-            roleEntity.setCode(String.format("%s%s", SysConstants.ROLE_PREFIX, roleEntity.getCode()));
-        }
-        roleEntity.setCreatedBy(principal.getName());
-        roleEntity.setCreatedDate(LocalDateTime.now());
-        roleService.insert(roleEntity);
-        return R.success();
-    }
-
-    /**
-     * 更新方法
-     *
-     * @param roleDTO 角色信息
-     * @return 执行结果
-     */
-    @PutMapping(UrlConstants.UPDATE)
-    public R<String> update(@Valid @RequestBody RoleDTO roleDTO, Principal principal) {
-        check(roleDTO);
-        RoleEntity roleEntity = BeanCopyUtil.copy(roleDTO, RoleEntity.class);
-        roleEntity.setUpdatedBy(principal.getName());
-        roleEntity.setUpdatedDate(LocalDateTime.now());
-        roleService.updateByCode(roleEntity);
-        return R.success();
-    }
-
-    /**
-     * 删除方法
-     *
-     * @param codes 角色信息
-     * @return 执行结果
-     */
-    @DeleteMapping(UrlConstants.DELETE)
-    public R<String> delete(@RequestBody List<String> codes, Principal principal) {
-        roleService.deleteByCodes(principal.getName(), LocalDateTime.now(), codes);
-        return R.success();
     }
 
     /**
@@ -199,7 +148,8 @@ public class RoleController {
      *
      * @param roleDTO 角色信息
      */
-    private void check(RoleDTO roleDTO) {
+    @Override
+    protected void check(RoleDTO roleDTO) {
         Assert.hasText(roleDTO.getName(), "角色名不能为空");
     }
 }

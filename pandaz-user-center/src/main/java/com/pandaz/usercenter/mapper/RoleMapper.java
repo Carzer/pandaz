@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.mapper;
 
+import com.pandaz.commons.mapper.BasisMapper;
 import com.pandaz.usercenter.entity.RoleDetailEntity;
 import com.pandaz.usercenter.entity.RoleEntity;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,7 +13,7 @@ import java.util.List;
  * @author Carzer
  * @since 2019-10-23
  */
-public interface RoleMapper extends UcBaseMapper<RoleEntity> {
+public interface RoleMapper extends BasisMapper<RoleEntity> {
 
     /**
      * 根据用户编码获取非私有角色信息

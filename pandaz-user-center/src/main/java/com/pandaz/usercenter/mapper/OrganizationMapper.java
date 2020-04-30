@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.mapper;
 
+import com.pandaz.commons.mapper.BasisMapper;
 import com.pandaz.usercenter.entity.OrganizationEntity;
 
 /**
@@ -8,6 +9,6 @@ import com.pandaz.usercenter.entity.OrganizationEntity;
  * @author Carzer
  * @since 2019-12-13
  */
-public interface OrganizationMapper extends UcBaseMapper<OrganizationEntity> {
+public interface OrganizationMapper extends BasisMapper<OrganizationEntity> {
 
 }

@@ -187,19 +187,6 @@ public class GroupRoleServiceImpl extends ServiceImpl<GroupRoleMapper, GroupRole
     }
 
     /**
-     * 批量删除
-     *
-     * @param deletedBy   删除人
-     * @param deletedDate 删除时间
-     * @param codes       编码
-     * @return 执行结果
-     */
-    @Override
-    public int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
-        return 0;
-    }
-
-    /**
      * 删除绑定权限
      *
      * @param groupRoleEntity groupRoleEntity

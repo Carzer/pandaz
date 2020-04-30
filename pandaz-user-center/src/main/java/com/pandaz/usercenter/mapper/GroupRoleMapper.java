@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.mapper;
 
+import com.pandaz.commons.mapper.BasisMapper;
 import com.pandaz.usercenter.entity.GroupRoleEntity;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  * @author Carzer
  * @since 2019-10-23
  */
-public interface GroupRoleMapper extends UcBaseMapper<GroupRoleEntity> {
+public interface GroupRoleMapper extends BasisMapper<GroupRoleEntity> {
 
     /**
      * 根据组编码删除

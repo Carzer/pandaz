@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.service;
 
+import com.pandaz.commons.service.BaseService;
 import com.pandaz.usercenter.entity.PermissionEntity;
 import com.pandaz.usercenter.entity.RoleEntity;
 import com.pandaz.usercenter.entity.RolePermissionEntity;
@@ -13,7 +14,7 @@ import java.util.List;
  * @author Carzer
  * @since 2019-11-06
  */
-public interface RolePermissionService extends UcBaseService<RolePermissionEntity> {
+public interface RolePermissionService extends BaseService<RolePermissionEntity> {
 
     /**
      * 根据角色编码删除

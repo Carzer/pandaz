@@ -35,8 +35,8 @@ public enum BizCode implements ICode {
      */
     private static final Map<Long, BizCode> ENUMS = new HashMap<>();
 
-    /**
-     * 静态方法
+    /*
+      静态方法
      */
     static {
         for (BizCode bizCode : BizCode.values()) {

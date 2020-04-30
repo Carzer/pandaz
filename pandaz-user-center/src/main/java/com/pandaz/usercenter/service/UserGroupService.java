@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.service;
 
+import com.pandaz.commons.service.BaseService;
 import com.pandaz.usercenter.entity.GroupEntity;
 import com.pandaz.usercenter.entity.UserEntity;
 import com.pandaz.usercenter.entity.UserGroupEntity;
@@ -13,7 +14,7 @@ import java.util.List;
  * @author Carzer
  * @since 2019-11-05
  */
-public interface UserGroupService extends UcBaseService<UserGroupEntity> {
+public interface UserGroupService extends BaseService<UserGroupEntity> {
 
     /**
      * 根据用户编码查询

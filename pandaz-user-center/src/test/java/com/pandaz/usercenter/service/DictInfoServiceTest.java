@@ -37,8 +37,8 @@ public class DictInfoServiceTest {
     @BeforeClass
     public static void setUp() {
         // 设置nacos日志及缓存路径
-        System.setProperty("nacos.logging.path", "logs/api-gateway/nacos");
-        System.setProperty("com.alibaba.nacos.naming.cache.dir", "logs/api-gateway/nacos/naming");
+        System.setProperty("nacos.logging.path", "../logs/user-center-test/nacos");
+        System.setProperty("com.alibaba.nacos.naming.cache.dir", "../logs/user-center-test/nacos/naming");
     }
 
     @Autowired
@@ -48,7 +48,9 @@ public class DictInfoServiceTest {
 
     @Test
     public void findByCode() {
-        DictInfoEntity test = dictInfoService.findByCode("dictInfo_test");
+        DictInfoEntity dictInfoEntity = new DictInfoEntity();
+        dictInfoEntity.setCode("dictInfo_test");
+        DictInfoEntity test = dictInfoService.findByCode(dictInfoEntity);
         assertThat(test, anything());
     }
 

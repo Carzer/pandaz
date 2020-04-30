@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.mapper;
 
+import com.pandaz.commons.mapper.BasisMapper;
 import com.pandaz.usercenter.entity.GroupEntity;
 
 /**
@@ -8,6 +9,6 @@ import com.pandaz.usercenter.entity.GroupEntity;
  * @author Carzer
  * @since 2019-10-23
  */
-public interface GroupMapper extends UcBaseMapper<GroupEntity> {
+public interface GroupMapper extends BasisMapper<GroupEntity> {
 
 }

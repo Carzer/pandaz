@@ -2,6 +2,7 @@ package com.pandaz.usercenter.mapper;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.pandaz.commons.mapper.BasisMapper;
 import com.pandaz.usercenter.entity.PermissionEntity;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
  * @author Carzer
  * @since 2019-10-23
  */
-public interface PermissionMapper extends UcBaseMapper<PermissionEntity> {
+public interface PermissionMapper extends BasisMapper<PermissionEntity> {
 
     /**
      * 分页方法，系统名称及菜单名称

@@ -1,12 +1,10 @@
 package com.pandaz.usercenter.controller;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.pandaz.commons.controller.BaseController;
 import com.pandaz.commons.dto.usercenter.*;
+import com.pandaz.commons.service.BaseService;
 import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.R;
-import com.pandaz.commons.util.UuidUtil;
-import com.pandaz.usercenter.custom.constants.SysConstants;
-import com.pandaz.usercenter.custom.constants.UrlConstants;
 import com.pandaz.usercenter.entity.GroupEntity;
 import com.pandaz.usercenter.entity.GroupRoleEntity;
 import com.pandaz.usercenter.entity.UserGroupEntity;
@@ -15,10 +13,8 @@ import com.pandaz.usercenter.service.GroupService;
 import com.pandaz.usercenter.service.UserGroupService;
 import com.pandaz.usercenter.util.ControllerUtil;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -35,9 +31,8 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/group")
-@Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class GroupController {
+public class GroupController extends BaseController<GroupDTO, GroupEntity> {
 
     /**
      * 组服务
@@ -60,75 +55,13 @@ public class GroupController {
     private final ControllerUtil controllerUtil;
 
     /**
-     * 查询方法
+     * 获取服务方法
      *
-     * @param groupDTO 查询条件
-     * @return 组信息
+     * @return 服务
      */
-    @GetMapping(UrlConstants.GET)
-    public R<GroupDTO> get(@Valid GroupDTO groupDTO) {
-        GroupDTO result = BeanCopyUtil.copy(groupService.findByCode(groupDTO.getCode()), GroupDTO.class);
-        return new R<>(result);
-    }
-
-    /**
-     * 分页方法
-     *
-     * @param groupDTO 查询信息
-     * @return 分页信息
-     */
-    @GetMapping(UrlConstants.PAGE)
-    public R<Map<String, Object>> getPage(GroupDTO groupDTO) {
-        IPage<GroupEntity> page = groupService.getPage(BeanCopyUtil.copy(groupDTO, GroupEntity.class));
-        return new R<>(BeanCopyUtil.convertToMap(page, GroupDTO.class));
-    }
-
-    /**
-     * 新增方法
-     *
-     * @param groupDTO 组信息
-     * @return 组信息
-     */
-    @PostMapping(UrlConstants.INSERT)
-    public R<GroupDTO> insert(@RequestBody GroupDTO groupDTO, Principal principal) {
-        check(groupDTO);
-        GroupEntity groupEntity = BeanCopyUtil.copy(groupDTO, GroupEntity.class);
-        groupEntity.setId(UuidUtil.getId());
-        if (StringUtils.hasText(groupEntity.getCode())) {
-            groupEntity.setCode(String.format("%s%s", SysConstants.GROUP_PREFIX, groupEntity.getCode()));
-        }
-        groupEntity.setCreatedBy(principal.getName());
-        groupEntity.setCreatedDate(LocalDateTime.now());
-        groupService.insert(groupEntity);
-        return R.success();
-    }
-
-    /**
-     * 更新方法
-     *
-     * @param groupDTO 组信息
-     * @return 执行结果
-     */
-    @PutMapping(UrlConstants.UPDATE)
-    public R<String> update(@Valid @RequestBody GroupDTO groupDTO, Principal principal) {
-        check(groupDTO);
-        GroupEntity groupEntity = BeanCopyUtil.copy(groupDTO, GroupEntity.class);
-        groupEntity.setUpdatedBy(principal.getName());
-        groupEntity.setUpdatedDate(LocalDateTime.now());
-        groupService.updateByCode(groupEntity);
-        return R.success();
-    }
-
-    /**
-     * 删除方法
-     *
-     * @param codes 组信息
-     * @return 执行结果
-     */
-    @DeleteMapping(UrlConstants.DELETE)
-    public R<String> delete(@RequestBody List<String> codes, Principal principal) {
-        groupService.deleteByCodes(principal.getName(), LocalDateTime.now(), codes);
-        return R.success();
+    @Override
+    protected BaseService<GroupEntity> getBaseService() {
+        return this.groupService;
     }
 
     /**
@@ -206,7 +139,8 @@ public class GroupController {
      *
      * @param groupDTO 组信息
      */
-    private void check(GroupDTO groupDTO) {
+    @Override
+    protected void check(GroupDTO groupDTO) {
         Assert.hasText(groupDTO.getName(), "用户组名称不能为空");
     }
 }

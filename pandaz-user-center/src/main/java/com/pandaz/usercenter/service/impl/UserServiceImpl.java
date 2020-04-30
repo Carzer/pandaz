@@ -80,14 +80,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     /**
      * 根据编码查询
      *
-     * @param code code
+     * @param userEntity code
      * @return 用户信息
      */
-    @Cacheable(key = "#code")
+    @Cacheable(key = "#userEntity")
     @Override
-    public UserEntity findByCode(String code) {
+    public UserEntity findByCode(UserEntity userEntity) {
         QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("code", code);
+        queryWrapper.eq("code", userEntity.getCode());
         return userMapper.selectOne(queryWrapper);
     }
 

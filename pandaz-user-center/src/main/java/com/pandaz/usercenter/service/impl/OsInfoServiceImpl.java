@@ -66,13 +66,13 @@ public class OsInfoServiceImpl extends ServiceImpl<OsInfoMapper, OsInfoEntity> i
     /**
      * 根据编码查询
      *
-     * @param code 编码
+     * @param osInfoEntity 编码
      * @return 查询结果
      */
     @Override
-    public OsInfoEntity findByCode(String code) {
+    public OsInfoEntity findByCode(OsInfoEntity osInfoEntity) {
         QueryWrapper<OsInfoEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("code", code);
+        queryWrapper.eq("code", osInfoEntity.getCode());
         return osInfoMapper.selectOne(queryWrapper);
     }
 

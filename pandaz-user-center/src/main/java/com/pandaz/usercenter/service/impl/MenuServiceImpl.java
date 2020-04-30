@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pandaz.commons.constants.CommonConstants;
 import com.pandaz.commons.util.UuidUtil;
+import com.pandaz.usercenter.custom.constants.SysConstants;
 import com.pandaz.usercenter.entity.MenuEntity;
 import com.pandaz.usercenter.entity.PermissionEntity;
 import com.pandaz.usercenter.mapper.MenuMapper;
@@ -75,6 +76,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
         if (!StringUtils.hasText(menuEntity.getParentCode())) {
             menuEntity.setParentCode(CommonConstants.ROOT_MENU_CODE);
         }
+        menuEntity.setIsLeafNode(Byte.valueOf("1"));
         QueryWrapper<MenuEntity> parentWrapper = new QueryWrapper<>();
         parentWrapper.eq("code", menuEntity.getParentCode());
         parentWrapper.eq("is_leaf_node", Byte.valueOf("1"));
@@ -87,13 +89,13 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
     /**
      * 根据编码查询
      *
-     * @param code 菜单编码
+     * @param menuEntity 菜单编码
      * @return 菜单
      */
     @Override
-    public MenuEntity findByCode(String code) {
+    public MenuEntity findByCode(MenuEntity menuEntity) {
         QueryWrapper<MenuEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("code", code);
+        queryWrapper.eq("code", menuEntity.getCode());
         return menuMapper.selectOne(queryWrapper);
     }
 
@@ -238,7 +240,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
         List<String> allCodes = menuList.stream().map(MenuEntity::getCode).collect(Collectors.toList());
         // 计算位运算和值，并查找缺失的父级菜单
         menuList.forEach(menuEntity -> {
-            int bitResult = 1;
+            int bitResult = SysConstants.BASIC_DIGIT_RESULT;
             String parentCode = menuEntity.getParentCode();
             List<Integer> bitResults = menuEntity.getBitResults();
             for (Integer br : bitResults) {

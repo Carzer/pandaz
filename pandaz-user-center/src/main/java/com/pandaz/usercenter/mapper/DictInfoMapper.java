@@ -2,6 +2,7 @@ package com.pandaz.usercenter.mapper;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.pandaz.commons.mapper.BasisMapper;
 import com.pandaz.usercenter.entity.DictInfoEntity;
 
 /**
@@ -12,7 +13,7 @@ import com.pandaz.usercenter.entity.DictInfoEntity;
  * @author Carzer
  * @since 2019-12-19
  */
-public interface DictInfoMapper extends UcBaseMapper<DictInfoEntity> {
+public interface DictInfoMapper extends BasisMapper<DictInfoEntity> {
 
     /**
      * 显示typename

@@ -1,6 +1,6 @@
 package com.pandaz.usercenter.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.pandaz.commons.service.BaseService;
 import com.pandaz.usercenter.entity.OsInfoEntity;
 
 /**
@@ -9,37 +9,6 @@ import com.pandaz.usercenter.entity.OsInfoEntity;
  * @author Carzer
  * @since 2019-11-01 15:04
  */
-public interface OsInfoService extends UcBaseService<OsInfoEntity> {
+public interface OsInfoService extends BaseService<OsInfoEntity> {
 
-    /**
-     * 根据编码查询
-     *
-     * @param code 编码
-     * @return 查询结果
-     */
-    OsInfoEntity findByCode(String code);
-
-    /**
-     * 分页方法
-     *
-     * @param osInfoEntity 系统信息
-     * @return 分页结果
-     */
-    IPage<OsInfoEntity> getPage(OsInfoEntity osInfoEntity);
-
-    /**
-     * 更新方法
-     *
-     * @param osInfoEntity 系统信息
-     * @return 执行结果
-     */
-    int updateByCode(OsInfoEntity osInfoEntity);
-
-    /**
-     * 删除方法
-     *
-     * @param osInfoEntity 系统信息
-     * @return 执行结果
-     */
-    int deleteByCode(OsInfoEntity osInfoEntity);
 }

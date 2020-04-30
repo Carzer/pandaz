@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.mapper;
 
+import com.pandaz.commons.mapper.BasisMapper;
 import com.pandaz.usercenter.entity.UserEntity;
 
 /**
@@ -8,6 +9,6 @@ import com.pandaz.usercenter.entity.UserEntity;
  * @author Carzer
  * @since 2019-10-23
  */
-public interface UserMapper extends UcBaseMapper<UserEntity> {
+public interface UserMapper extends BasisMapper<UserEntity> {
 
 }

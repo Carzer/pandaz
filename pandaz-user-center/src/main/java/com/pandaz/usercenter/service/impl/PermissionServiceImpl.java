@@ -69,13 +69,13 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     /**
      * 根据编码查询
      *
-     * @param code 编码
+     * @param permissionEntity 编码
      * @return 查询结果
      */
     @Override
-    public PermissionEntity findByCode(String code) {
+    public PermissionEntity findByCode(PermissionEntity permissionEntity) {
         QueryWrapper<PermissionEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("code", code);
+        queryWrapper.eq("code", permissionEntity.getCode());
         return permissionMapper.selectOne(queryWrapper);
     }
 

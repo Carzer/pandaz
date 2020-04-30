@@ -48,7 +48,7 @@ public enum RCode implements ICode {
      */
     private static final Map<Long, RCode> ENUMS = new HashMap<>();
 
-    /**
+    /*
      * 静态方法
      */
     static {

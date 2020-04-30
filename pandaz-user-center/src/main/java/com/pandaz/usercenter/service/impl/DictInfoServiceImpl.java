@@ -46,13 +46,13 @@ public class DictInfoServiceImpl extends ServiceImpl<DictInfoMapper, DictInfoEnt
     /**
      * 查询方法
      *
-     * @param code 编码
+     * @param dictInfoEntity 编码
      * @return 结果
      */
     @Override
-    public DictInfoEntity findByCode(String code) {
+    public DictInfoEntity findByCode(DictInfoEntity dictInfoEntity) {
         QueryWrapper<DictInfoEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("code", code);
+        queryWrapper.eq("code", dictInfoEntity.getCode());
         return dictInfoMapper.selectOne(queryWrapper);
     }
 

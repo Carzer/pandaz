@@ -1,5 +1,6 @@
 package com.pandaz.usercenter.mapper;
 
+import com.pandaz.commons.mapper.BasisMapper;
 import com.pandaz.usercenter.entity.RolePermissionEntity;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  * @author Carzer
  * @since 2019-10-23
  */
-public interface RolePermissionMapper extends UcBaseMapper<RolePermissionEntity> {
+public interface RolePermissionMapper extends BasisMapper<RolePermissionEntity> {
 
     /**
      * 根据角色编码删除

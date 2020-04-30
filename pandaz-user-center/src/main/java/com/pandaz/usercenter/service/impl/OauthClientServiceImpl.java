@@ -93,16 +93,38 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Oauth
     }
 
     /**
-     * 根据客户端ID查询
+     * 根据编码删除
      *
-     * @param clientId 客户端ID
+     * @param oauthClientEntity entity
      * @return 执行结果
      */
     @Override
-    public OauthClientEntity findByClientId(String clientId) {
+    public int deleteByCode(OauthClientEntity oauthClientEntity) {
+        return deleteByClientId(oauthClientEntity);
+    }
+
+    /**
+     * 根据客户端ID查询
+     *
+     * @param oauthClientEntity 客户端ID
+     * @return 执行结果
+     */
+    @Override
+    public OauthClientEntity findByClientId(OauthClientEntity oauthClientEntity) {
         QueryWrapper<OauthClientEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(CLIENT_ID_COLUMN, clientId);
+        queryWrapper.eq(CLIENT_ID_COLUMN, oauthClientEntity.getClientId());
         return oauthClientMapper.selectOne(queryWrapper);
+    }
+
+    /**
+     * 根据编码查询
+     *
+     * @param entity entity
+     * @return 查询结果
+     */
+    @Override
+    public OauthClientEntity findByCode(OauthClientEntity entity) {
+        return findByClientId(entity);
     }
 
     /**
@@ -120,6 +142,17 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Oauth
     }
 
     /**
+     * 根据编码更新
+     *
+     * @param oauthClientEntity 客户端信息
+     * @return 执行结果
+     */
+    @Override
+    public int updateByCode(OauthClientEntity oauthClientEntity) {
+        return updateByClientId(oauthClientEntity);
+    }
+
+    /**
      * 插入方法
      *
      * @param oauthClientEntity 客户端信息
@@ -127,10 +160,9 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Oauth
      */
     @Override
     public int insert(OauthClientEntity oauthClientEntity) {
-        String clientId = oauthClientEntity.getClientId();
         //判断是否重复
-        if (StringUtils.hasText(clientId)) {
-            if (findByClientId(clientId) != null) {
+        if (StringUtils.hasText(oauthClientEntity.getClientId())) {
+            if (findByClientId(oauthClientEntity) != null) {
                 throw new IllegalArgumentException("客户端编码重复");
             }
         } else {
