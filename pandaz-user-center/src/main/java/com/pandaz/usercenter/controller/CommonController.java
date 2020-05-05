@@ -5,6 +5,7 @@ import com.pandaz.commons.dto.usercenter.AuthMenuDTO;
 import com.pandaz.commons.util.BeanCopyUtil;
 import com.pandaz.commons.util.R;
 import com.pandaz.usercenter.custom.CustomProperties;
+import com.pandaz.usercenter.custom.constants.SysConstants;
 import com.pandaz.usercenter.entity.MenuEntity;
 import com.pandaz.usercenter.service.CaptchaService;
 import com.pandaz.usercenter.service.MenuService;
@@ -35,11 +36,6 @@ import java.util.List;
 public class CommonController {
 
     /**
-     * 自定义配置
-     */
-    private final CustomProperties customProperties;
-
-    /**
      * 验证码服务
      */
     private final CaptchaService captchaService;
@@ -48,6 +44,11 @@ public class CommonController {
      * 菜单服务
      */
     private final MenuService menuService;
+
+    /**
+     * 通用配置
+     */
+    private final CustomProperties customProperties;
 
     /**
      * 生成验证码
@@ -72,7 +73,21 @@ public class CommonController {
         if (RCode.SUCCESS.getCode() != roleList.getCode()) {
             return new R<>(RCode.getEnum(roleList.getCode()));
         }
-        List<MenuEntity> menuList = menuService.getAuthorizedMenu(osCode, roleList.getData());
+        List<String> roles = roleList.getData();
+        List<MenuEntity> menuList;
+        // 如果开启超级管理员，并且当前用户拥有超级管理员角色，则返回所有菜单并将权限全部放开
+        if (customProperties.isEnableSuperAdmin() && roles.contains(customProperties.getSuperAdminName())) {
+            menuList = menuService.list();
+            menuList.forEach(menuEntity -> menuEntity.setBitResult(SysConstants.TOTAL_DIGIT_RESULT));
+        } else {
+            menuList = menuService.getAuthorizedMenu(osCode, roles);
+        }
+        // 无论何种权限，都默认一个404页面
+        MenuEntity menuEntity = new MenuEntity();
+        menuEntity.setCode("404");
+        menuEntity.setSorting(0);
+        menuEntity.setBitResult(1);
+        menuList.add(menuEntity);
         return new R<>(BeanCopyUtil.copyList(menuList, AuthMenuDTO.class));
     }
 }
