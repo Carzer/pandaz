@@ -5,12 +5,13 @@
 ----------------------------------------------------
 ## 一、 简介
 
-基于Java11、Spring Boot 2.1.7、Spring Cloud Greenwich.RELEASE的常用微服务集合
+基于Java11、Spring Boot 2.1.7、Spring Cloud Greenwich.RELEASE的常用微服务集合  
+[Java8](https://github.com/Carzer/pandaz-1.8)
 
-- 使用[Nacos](https://github.com/alibaba/nacos/releases)作为服务注册中心、分布式配置中心
-- 使用[Feign](https://spring.io/projects/spring-cloud-openfeign)消费微服务
-- 使用[Sentinel](https://github.com/alibaba/Sentinel/releases)进行流量控制、熔断降级
-- 使用[Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway)作为网关
+- 使用 [Nacos](https://github.com/alibaba/nacos/releases) 作为服务注册中心、分布式配置中心
+- 使用 [Feign](https://spring.io/projects/spring-cloud-openfeign) 消费微服务
+- 使用 [Sentinel](https://github.com/alibaba/Sentinel/releases) 进行流量控制、熔断降级
+- 使用 [Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway) 作为网关
 
 
 ## 二、 容器、数据库、中间件虚拟环境
