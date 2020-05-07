@@ -1,6 +1,6 @@
 package com.pandaz.commons;
 
-import com.pandaz.commons.dto.usercenter.UserDTO;
+import com.pandaz.commons.dto.auth.UserDTO;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!--mybatis生成工具的帮助文档可以看：-->
+    <!--英文：http://www.mybatis.org/generator/usage/mysql.html-->
+    <!--中文：http://www.mybatis.tk/-->
+    <!--中文：http://mbg.cndocs.tk/-->
+    <context id="context" targetRuntime="MyBatis3">
+        <!--设置编码格式-->
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <commentGenerator>
+            <!-- 删除代码中带有 代码生成器的注释信息 -->
+            <property name="suppressAllComments" value="true"/>
+            <!-- 是否去除自动生成的注释 -->
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/pandaz?useUnicode=true&amp;characterEncoding=utf-8"
+                        userId="pandaz" password="K0tXBGwNHBl#"/>
+        <!--要生成的 domain 模块位置-->
+        <javaModelGenerator targetPackage="com.pandaz.auth.entity" targetProject="src/main/java/">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+            <property name="comments" value="true"/>
+        </javaModelGenerator>
+        <!--要生成的 Mapper.xml 文件位置-->
+        <sqlMapGenerator targetPackage="mappers" targetProject="src/main/resources/mybatis/">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!--要生成的 Mapper 接口类-->
+        <javaClientGenerator targetPackage="com.pandaz.auth.mapper" targetProject="src/main/java/"
+                             type="XMLMAPPER">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+        <table tableName="t_sys_organization" domainObjectName="Organization"
+               enableInsert="true" enableDeleteByPrimaryKey="true"
+               enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true"
+               enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false">
+        </table>
+    </context>
+</generatorConfiguration>

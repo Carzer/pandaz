@@ -7,8 +7,8 @@ spring:
           enabled: true
           lowerCaseServiceId: true
       routes:
-        - id: pandaz-user-center
-          uri: lb://pandaz-user-center
+        - id: pandaz-auth
+          uri: lb://pandaz-auth
           predicates:
             - Path=/auth/**
           filters:

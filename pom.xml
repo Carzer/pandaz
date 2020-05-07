@@ -63,8 +63,8 @@
         <module>pandaz-commons</module>
         <!--定时任务-->
         <module>pandaz-task</module>
-        <!--用户中心-->
-        <module>pandaz-user-center</module>
+        <!--授权中心-->
+        <module>pandaz-auth</module>
         <!--Redis服务-->
         <module>pandaz-redis</module>
         <!--消息服务-->

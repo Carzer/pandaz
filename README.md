@@ -23,7 +23,7 @@
 
 ## 三、 微服务列表
 
-### 1. [用户中心](http://localhost:9007)
+### 1. [授权中心](http://localhost:9007)
 
     使用时，根据pandaz.sql更新数据库信息.使用InitTest初始化数据。
     默认用户：admin，密码：admin。测试oauth2客户端：test，密码：test。
@@ -119,7 +119,7 @@
 </details> 
 
 ### 7. [API网关](http://localhost:7777)
-主要的测试服务：[用户中心](http://localhost:9007)、[Redis服务](http://localhost:9001)
+主要的测试服务：[授权中心](http://localhost:9007)、[Redis服务](http://localhost:9001)
 
 <details>
 <summary>进行中...</summary>

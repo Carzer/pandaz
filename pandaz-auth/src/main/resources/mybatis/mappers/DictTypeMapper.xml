@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pandaz.auth.mapper.DictTypeMapper">
+    <insert id="insertSelective" parameterType="com.pandaz.auth.entity.DictTypeEntity">
+        insert into t_sys_dict_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                id,
+            </if>
+            <if test="name != null and name != ''">
+                name,
+            </if>
+            <if test="code != null and code != ''">
+                code,
+            </if>
+            <if test="createdBy != null and createdBy != ''">
+                created_by,
+            </if>
+            <if test="createdDate != null">
+                created_date,
+            </if>
+            <if test="updatedBy != null and updatedBy != ''">
+                updated_by,
+            </if>
+            <if test="updatedDate != null">
+                updated_date,
+            </if>
+            <if test="deletedBy != null and deletedBy != ''">
+                deleted_by,
+            </if>
+            <if test="deletedDate != null">
+                deleted_date,
+            </if>
+            <if test="deletedFlag != null">
+                deleted_flag,
+            </if>
+            <if test="locked != null">
+                locked,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null and name != ''">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null and code != ''">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="createdBy != null and createdBy != ''">
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDate != null">
+                #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedBy != null and updatedBy != ''">
+                #{updatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedDate != null">
+                #{updatedDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deletedBy != null and deletedBy != ''">
+                #{deletedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="deletedDate != null">
+                #{deletedDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deletedFlag != null">
+                #{deletedFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="locked != null">
+                #{locked,jdbcType=TINYINT},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <!-- 逻辑删除 -->
+    <update id="logicDelete">
+        update t_sys_dict_type
+        <set>
+            <if test="deletedBy != null">
+                deleted_by = #{deletedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="deletedDate != null">
+                deleted_date = #{deletedDate,jdbcType=TIMESTAMP},
+            </if>
+            deleted_flag = id
+        </set>
+        <where>
+            deleted_flag='0'
+            <choose>
+                <when test="code != null and code != ''">
+                    and code = #{code,jdbcType=VARCHAR}
+                </when>
+                <otherwise>
+                    and 1 = 2
+                </otherwise>
+            </choose>
+        </where>
+    </update>
+    <!-- 批量逻辑删除 -->
+    <update id="batchLogicDelete" parameterType="java.util.HashMap">
+        update t_sys_dict_type
+        <set>
+            <if test="deletedBy != null">
+                deleted_by = #{deletedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="deletedDate != null">
+                deleted_date = #{deletedDate,jdbcType=TIMESTAMP},
+            </if>
+            deleted_flag = id
+        </set>
+        <where>
+            deleted_flag='0'
+            <choose>
+                <when test="list != null and list.size() > 0">
+                    and code in
+                    <foreach collection="list" open="(" close=")" index="index" item="item" separator=",">
+                        #{item,jdbcType=VARCHAR}
+                    </foreach>
+                </when>
+                <otherwise>
+                    and 1 = 2
+                </otherwise>
+            </choose>
+        </where>
+    </update>
+</mapper>
