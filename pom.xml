@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.7.RELEASE</version>
+        <version>2.2.6.RELEASE</version>
     </parent>
 
     <groupId>com.pandaz</groupId>
@@ -32,7 +32,7 @@
         <maven.compiler.compilerVersion>11</maven.compiler.compilerVersion>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
+        <spring-cloud.version>Hoxton.SR4</spring-cloud.version>
         <swagger.version>2.9.2</swagger.version>
         <jedis.version>2.9.0</jedis.version>
         <mysql.version>8.0.16</mysql.version>
@@ -43,8 +43,7 @@
         <spring.security.version>2.3.6.RELEASE</spring.security.version>
         <spring.security.autoconfig.version>2.1.7.RELEASE</spring.security.autoconfig.version>
         <spring.security.jwt.version>1.0.11.RELEASE</spring.security.jwt.version>
-        <nacos.dependency.version>0.9.0.RELEASE</nacos.dependency.version>
-        <sentinel.dependency.version>0.9.0.RELEASE</sentinel.dependency.version>
+        <alibaba.dependency.version>2.2.1.RELEASE</alibaba.dependency.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <pandaz.commons.version>0.0.2-SNAPSHOT</pandaz.commons.version>
         <maven-javadoc.version>3.2.0</maven-javadoc.version>
@@ -153,11 +152,13 @@
                 <artifactId>feign-form-spring</artifactId>
                 <version>${feign-form.version}</version>
             </dependency>
-            <!--nacos-->
+            <!--alibaba-->
             <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-                <version>${nacos.dependency.version}</version>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${alibaba.dependency.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <!--captcha-->
             <dependency>
@@ -239,20 +240,17 @@
         </dependency>
         <!-- nacos -->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-alibaba-nacos-discovery</artifactId>
-            <version>${nacos.dependency.version}</version>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
+            <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-            <version>${nacos.dependency.version}</version>
         </dependency>
         <!--sentinel-->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
+            <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
-            <version>${sentinel.dependency.version}</version>
         </dependency>
         <!--监控-->
         <dependency>

@@ -14,6 +14,9 @@ import java.time.LocalDateTime;
  */
 @Data
 public class PageQuery<T extends BaseDTO> implements Serializable {
+
+    private static final long serialVersionUID = -2350052629634078067L;
+
     /**
      * 开始时间
      */
