@@ -1,8 +1,4 @@
 spring:
-  # 启动时初始化client，防止初次调用超时
-  webservices:
-    servlet:
-      load-on-startup: 0
   cloud:
     # nacos
     nacos:
@@ -68,8 +64,8 @@ feign:
     config:
       default:
         # 设置Fegin的超时时间
-        connectTimeout: 2000
-        readTimeout: 5000
+        connectTimeout: 3000
+        readTimeout: 15000
 
 # mybatis-plus配置
 mybatis-plus:
