@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pandaz.auth.mapper.RolePermissionMapper">
-    <resultMap id="BaseResultMap" type="com.pandaz.auth.entity.RolePermissionEntity">
+<mapper namespace="com.github.pandaz.auth.mapper.RolePermissionMapper">
+    <resultMap id="BaseResultMap" type="com.github.pandaz.auth.entity.RolePermissionEntity">
         <result column="id" jdbcType="VARCHAR" property="id"/>
         <result column="role_code" jdbcType="VARCHAR" property="roleCode"/>
         <result column="permission_code" jdbcType="VARCHAR" property="permissionCode"/>
@@ -15,7 +15,7 @@
         <result column="deleted_date" jdbcType="TIMESTAMP" property="deletedDate"/>
         <result column="deleted_flag" jdbcType="TINYINT" property="deletedFlag"/>
     </resultMap>
-    <insert id="insertSelective" parameterType="com.pandaz.auth.entity.RolePermissionEntity">
+    <insert id="insertSelective" parameterType="com.github.pandaz.auth.entity.RolePermissionEntity">
         insert into t_sys_role_permission
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null and id != ''">
@@ -94,7 +94,7 @@
             </if>
         </trim>
     </insert>
-    <insert id="batchInsert" parameterType="com.pandaz.auth.entity.RolePermissionEntity">
+    <insert id="batchInsert" parameterType="com.github.pandaz.auth.entity.RolePermissionEntity">
         insert into t_sys_role_permission
         (id,role_code,permission_code,os_code,menu_code,created_by,created_date)
         values
@@ -190,7 +190,7 @@
     </update>
     <!-- 查询已绑定的权限编码 -->
     <select id="listBindCodes" resultType="java.lang.String"
-            parameterType="com.pandaz.auth.entity.RolePermissionEntity">
+            parameterType="com.github.pandaz.auth.entity.RolePermissionEntity">
         select permission_code
         from t_sys_role_permission
         <where>
@@ -200,7 +200,7 @@
             and menu_code = #{menuCode,jdbcType=VARCHAR}
         </where>
     </select>
-    <select id="listByOsCode" resultType="com.pandaz.auth.entity.RolePermissionEntity"
+    <select id="listByOsCode" resultType="com.github.pandaz.auth.entity.RolePermissionEntity"
             parameterType="java.lang.String">
         select tsrp.os_code, tsrp.role_code, tsrp.menu_code, tsrp.permission_code
         from t_sys_role_permission tsrp

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pandaz.auth.mapper.OsInfoMapper">
-    <resultMap id="BaseResultMap" type="com.pandaz.auth.entity.OsInfoEntity">
+<mapper namespace="com.github.pandaz.auth.mapper.OsInfoMapper">
+    <resultMap id="BaseResultMap" type="com.github.pandaz.auth.entity.OsInfoEntity">
         <result column="id" jdbcType="VARCHAR" property="id"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="code" jdbcType="VARCHAR" property="code"/>
@@ -23,7 +23,7 @@
         deleted_date, deleted_flag, locked,
         version
     </sql>
-    <insert id="insert" parameterType="com.pandaz.auth.entity.OsInfoEntity">
+    <insert id="insert" parameterType="com.github.pandaz.auth.entity.OsInfoEntity">
         insert into t_sys_os_info (id, name, code,
         parent_code, created_by, created_date,
         updated_by, updated_date, deleted_by,
@@ -35,7 +35,7 @@
         #{deletedDate,jdbcType=TIMESTAMP}, #{deletedFlag,jdbcType=VARCHAR}, #{locked,jdbcType=TINYINT},
         #{version,jdbcType=INTEGER})
     </insert>
-    <insert id="insertSelective" parameterType="com.pandaz.auth.entity.OsInfoEntity">
+    <insert id="insertSelective" parameterType="com.github.pandaz.auth.entity.OsInfoEntity">
         insert into t_sys_os_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null and id !=''">

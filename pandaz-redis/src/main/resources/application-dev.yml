@@ -41,6 +41,6 @@ security:
 # 自定义属性
 custom:
   # 项目基础包
-  projectPackage: com.pandaz
+  projectPackage: com.github.pandaz
   # 权限控制
   enableAuth: false

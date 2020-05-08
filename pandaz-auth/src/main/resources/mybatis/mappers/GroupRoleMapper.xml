@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pandaz.auth.mapper.GroupRoleMapper">
-    <resultMap id="BaseResultMap" type="com.pandaz.auth.entity.GroupRoleEntity">
+<mapper namespace="com.github.pandaz.auth.mapper.GroupRoleMapper">
+    <resultMap id="BaseResultMap" type="com.github.pandaz.auth.entity.GroupRoleEntity">
         <result column="id" jdbcType="VARCHAR" property="id"/>
         <result column="group_code" jdbcType="VARCHAR" property="groupCode"/>
         <result column="role_code" jdbcType="VARCHAR" property="roleCode"/>
@@ -14,7 +14,7 @@
         <result column="deleted_flag" jdbcType="TINYINT" property="deletedFlag"/>
         <result column="is_private" jdbcType="TINYINT" property="isPrivate"/>
     </resultMap>
-    <insert id="insertSelective" parameterType="com.pandaz.auth.entity.GroupRoleEntity">
+    <insert id="insertSelective" parameterType="com.github.pandaz.auth.entity.GroupRoleEntity">
         insert into t_sys_group_role
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null and id != ''">
@@ -176,7 +176,7 @@
         </where>
     </update>
     <!-- 根据组编码查询已绑定角色 -->
-    <select id="listBindGroupRoles" parameterType="com.pandaz.auth.entity.GroupRoleEntity"
+    <select id="listBindGroupRoles" parameterType="com.github.pandaz.auth.entity.GroupRoleEntity"
             resultType="java.lang.String">
         select role_code
         from t_sys_group_role
@@ -186,7 +186,7 @@
         </where>
     </select>
     <!-- 根据角色编码查询已绑定组 -->
-    <select id="listBindRoleGroups" parameterType="com.pandaz.auth.entity.GroupRoleEntity"
+    <select id="listBindRoleGroups" parameterType="com.github.pandaz.auth.entity.GroupRoleEntity"
             resultType="java.lang.String">
         select group_code
         from t_sys_group_role
@@ -196,7 +196,7 @@
         </where>
     </select>
     <!-- 批量插入 -->
-    <insert id="batchInsert" parameterType="com.pandaz.auth.entity.GroupRoleEntity">
+    <insert id="batchInsert" parameterType="com.github.pandaz.auth.entity.GroupRoleEntity">
         insert into t_sys_group_role
         (id, role_code, group_code, created_by, created_date)
         values

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pandaz.auth.mapper.MenuMapper">
-    <resultMap id="BaseResultMap" type="com.pandaz.auth.entity.MenuEntity">
+<mapper namespace="com.github.pandaz.auth.mapper.MenuMapper">
+    <resultMap id="BaseResultMap" type="com.github.pandaz.auth.entity.MenuEntity">
         <result column="id" jdbcType="VARCHAR" property="id"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="code" jdbcType="VARCHAR" property="code"/>
@@ -23,7 +23,7 @@
         <result column="locked" jdbcType="TINYINT" property="locked"/>
         <result column="version" jdbcType="INTEGER" property="version"/>
     </resultMap>
-    <resultMap id="CascadeResultMap" type="com.pandaz.auth.entity.MenuEntity">
+    <resultMap id="CascadeResultMap" type="com.github.pandaz.auth.entity.MenuEntity">
         <result column="id" jdbcType="VARCHAR" property="id"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="code" jdbcType="VARCHAR" property="code"/>
@@ -46,7 +46,7 @@
         <result column="version" jdbcType="INTEGER" property="version"/>
         <association property="children" column="code" select="selectByParentCode"/>
     </resultMap>
-    <resultMap id="AuthResultMap" type="com.pandaz.auth.entity.MenuEntity">
+    <resultMap id="AuthResultMap" type="com.github.pandaz.auth.entity.MenuEntity">
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="code" jdbcType="VARCHAR" property="code"/>
         <result column="os_code" jdbcType="VARCHAR" property="osCode"/>
@@ -68,7 +68,7 @@
         deleted_by, deleted_date, deleted_flag,
         locked, version
     </sql>
-    <insert id="insertSelective" parameterType="com.pandaz.auth.entity.MenuEntity">
+    <insert id="insertSelective" parameterType="com.github.pandaz.auth.entity.MenuEntity">
         insert into t_sys_menu
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null and id != ''">
@@ -316,7 +316,7 @@
         </where>
         order by tsm.sorting, tsm.created_date
     </select>
-    <select id="selectByCodes" parameterType="java.lang.String" resultType="com.pandaz.auth.entity.MenuEntity">
+    <select id="selectByCodes" parameterType="java.lang.String" resultType="com.github.pandaz.auth.entity.MenuEntity">
         select code,name,os_code,parent_code,url,
         router,sorting,is_leaf_node,icon
         from t_sys_menu
@@ -336,7 +336,7 @@
         </where>
     </select>
     <!--获取所有子节点-->
-    <select id="listLeafNode" resultType="com.pandaz.auth.entity.MenuEntity" parameterType="java.lang.String">
+    <select id="listLeafNode" resultType="com.github.pandaz.auth.entity.MenuEntity" parameterType="java.lang.String">
         select menu.code, menu.name, menu.os_code, menu.icon, menu.locked
         from t_sys_menu menu
         where menu.deleted_flag = '0'

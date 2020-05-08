@@ -9,7 +9,7 @@
         <version>2.2.6.RELEASE</version>
     </parent>
 
-    <groupId>com.pandaz</groupId>
+    <groupId>com.github.pandaz</groupId>
     <artifactId>pandaz</artifactId>
     <version>0.0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -23,6 +23,25 @@
             <email>Carzer1020@163.com</email>
         </developer>
     </developers>
+
+    <modules>
+        <!--网关-->
+        <module>pandaz-api-gateway</module>
+        <!--commons-->
+        <module>pandaz-commons</module>
+        <!--定时任务-->
+        <module>pandaz-task</module>
+        <!--授权中心-->
+        <module>pandaz-auth</module>
+        <!--Redis服务-->
+        <module>pandaz-redis</module>
+        <!--消息服务-->
+        <module>pandaz-im</module>
+        <!--文件服务-->
+        <module>pandaz-file-server</module>
+        <!--activiti审批流-->
+        <module>pandaz-activiti</module>
+    </modules>
 
     <properties>
         <java.version>11</java.version>
@@ -55,25 +74,6 @@
         <sonar.host.url>http://localhost:9000</sonar.host.url>
     </properties>
 
-    <modules>
-        <!--网关-->
-        <module>pandaz-api-gateway</module>
-        <!--commons-->
-        <module>pandaz-commons</module>
-        <!--定时任务-->
-        <module>pandaz-task</module>
-        <!--授权中心-->
-        <module>pandaz-auth</module>
-        <!--Redis服务-->
-        <module>pandaz-redis</module>
-        <!--消息服务-->
-        <module>pandaz-im</module>
-        <!--文件服务-->
-        <module>pandaz-file-server</module>
-        <!--activiti审批流-->
-        <module>pandaz-activiti</module>
-    </modules>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -85,7 +85,7 @@
             </dependency>
             <!--project-->
             <dependency>
-                <groupId>com.pandaz</groupId>
+                <groupId>com.github.pandaz</groupId>
                 <artifactId>pandaz-commons</artifactId>
                 <version>${pandaz.commons.version}</version>
             </dependency>

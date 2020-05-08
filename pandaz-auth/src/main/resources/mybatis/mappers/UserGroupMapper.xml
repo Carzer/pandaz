@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pandaz.auth.mapper.UserGroupMapper">
-    <resultMap id="BaseResultMap" type="com.pandaz.auth.entity.UserGroupEntity">
+<mapper namespace="com.github.pandaz.auth.mapper.UserGroupMapper">
+    <resultMap id="BaseResultMap" type="com.github.pandaz.auth.entity.UserGroupEntity">
         <result column="id" jdbcType="VARCHAR" property="id"/>
         <result column="user_code" jdbcType="VARCHAR" property="userCode"/>
         <result column="group_code" jdbcType="VARCHAR" property="groupCode"/>
@@ -18,7 +18,7 @@
         id, user_code, group_code,
         created_by, created_date, is_private
     </sql>
-    <insert id="insertSelective" parameterType="com.pandaz.auth.entity.UserGroupEntity">
+    <insert id="insertSelective" parameterType="com.github.pandaz.auth.entity.UserGroupEntity">
         insert into t_sys_user_group
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null and id != ''">
@@ -180,7 +180,7 @@
         </where>
     </update>
     <!-- 列出组内成员 -->
-    <select id="listBindGroupMembers" parameterType="com.pandaz.auth.entity.UserGroupEntity"
+    <select id="listBindGroupMembers" parameterType="com.github.pandaz.auth.entity.UserGroupEntity"
             resultType="java.lang.String">
         select user_code
         from t_sys_user_group
@@ -190,7 +190,7 @@
         </where>
     </select>
     <!-- 列出用户所有的组 -->
-    <select id="listBindUserGroups" parameterType="com.pandaz.auth.entity.UserGroupEntity"
+    <select id="listBindUserGroups" parameterType="com.github.pandaz.auth.entity.UserGroupEntity"
             resultType="java.lang.String">
         select group_code
         from t_sys_user_group
@@ -200,7 +200,7 @@
         </where>
     </select>
     <!-- 批量插入 -->
-    <insert id="batchInsert" parameterType="com.pandaz.auth.entity.UserGroupEntity">
+    <insert id="batchInsert" parameterType="com.github.pandaz.auth.entity.UserGroupEntity">
         insert into t_sys_user_group
         (id, user_code, group_code, created_by, created_date)
         values

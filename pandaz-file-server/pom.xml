@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.pandaz</groupId>
+        <groupId>com.github.pandaz</groupId>
         <artifactId>pandaz</artifactId>
         <version>0.0.2-SNAPSHOT</version>
     </parent>
@@ -13,7 +13,7 @@
     <dependencies>
         <!--project-->
         <dependency>
-            <groupId>com.pandaz</groupId>
+            <groupId>com.github.pandaz</groupId>
             <artifactId>pandaz-commons</artifactId>
         </dependency>
         <!--mongodb-->

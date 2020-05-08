@@ -33,7 +33,7 @@
     <property name="ALL_TOTAL_SIZE_CAP" value="3GB"/>
 
     <springProperty scope="context" name="customProjectPackage" source="custom.projectPackage"/>
-    <!--    <springProperty scope="context" name="customProjectPackage" source="custom.projectPackage" defaultValue="com.pandaz"/>-->
+    <!--    <springProperty scope="context" name="customProjectPackage" source="custom.projectPackage" defaultValue="com.github.pandaz"/>-->
 
     <!-- debug -->
     <appender name="DEBUG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">

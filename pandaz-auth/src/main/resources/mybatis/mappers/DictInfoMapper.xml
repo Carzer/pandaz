@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pandaz.auth.mapper.DictInfoMapper">
+<mapper namespace="com.github.pandaz.auth.mapper.DictInfoMapper">
     <sql id="Base_Column_List">
         id, name, code,
         created_by, created_date, updated_by,
         updated_date, deleted_by, deleted_date,
         deleted_flag, locked, version
     </sql>
-    <insert id="insertSelective" parameterType="com.pandaz.auth.entity.DictInfoEntity">
+    <insert id="insertSelective" parameterType="com.github.pandaz.auth.entity.DictInfoEntity">
         insert into t_sys_dict_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null and id != ''">
@@ -144,7 +144,7 @@
         </where>
     </update>
     <!-- 显示typename -->
-    <select id="getWithTypeName" resultType="com.pandaz.auth.entity.DictInfoEntity"
+    <select id="getWithTypeName" resultType="com.github.pandaz.auth.entity.DictInfoEntity"
             parameterType="java.lang.String">
         select dictInfo.id,
                dictInfo.name,
@@ -166,8 +166,8 @@
           and dictInfo.code = #{code,jdbcType=VARCHAR}
     </select>
     <!-- 分页方法，显示typename -->
-    <select id="getPageWithTypeName" resultType="com.pandaz.auth.entity.DictInfoEntity"
-            parameterType="com.pandaz.auth.entity.DictInfoEntity">
+    <select id="getPageWithTypeName" resultType="com.github.pandaz.auth.entity.DictInfoEntity"
+            parameterType="com.github.pandaz.auth.entity.DictInfoEntity">
         select dictInfo.id,
         dictInfo.name,
         dictInfo.code,

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pandaz.auth.mapper.PermissionMapper">
-    <resultMap id="BaseResultMap" type="com.pandaz.auth.entity.PermissionEntity">
+<mapper namespace="com.github.pandaz.auth.mapper.PermissionMapper">
+    <resultMap id="BaseResultMap" type="com.github.pandaz.auth.entity.PermissionEntity">
         <result column="id" jdbcType="VARCHAR" property="id"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="code" jdbcType="VARCHAR" property="code"/>
@@ -25,7 +25,7 @@
         deleted_by, deleted_date, deleted_flag,
         version
     </sql>
-    <insert id="insertSelective" parameterType="com.pandaz.auth.entity.PermissionEntity">
+    <insert id="insertSelective" parameterType="com.github.pandaz.auth.entity.PermissionEntity">
         insert into t_sys_permission
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null and id !=''">
@@ -179,8 +179,8 @@
             </choose>
         </where>
     </update>
-    <select id="getPageWithFullInfo" resultType="com.pandaz.auth.entity.PermissionEntity"
-            parameterType="com.pandaz.auth.entity.PermissionEntity">
+    <select id="getPageWithFullInfo" resultType="com.github.pandaz.auth.entity.PermissionEntity"
+            parameterType="com.github.pandaz.auth.entity.PermissionEntity">
         select permission.id,
         permission.name,
         permission.code,
@@ -229,7 +229,7 @@
         order by permission.created_date desc
     </select>
     <select id="selectBitDigits" resultType="java.lang.Byte"
-            parameterType="com.pandaz.auth.entity.PermissionEntity">
+            parameterType="com.github.pandaz.auth.entity.PermissionEntity">
         select bit_digit
         from t_sys_permission
         <where>

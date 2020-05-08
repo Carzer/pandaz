@@ -70,7 +70,7 @@ feign:
 # mybatis-plus配置
 mybatis-plus:
   mapper-locations: classpath:mybatis/mappers/**/*.xml
-  type-aliases-package: com.pandaz.auth.entity
+  type-aliases-package: com.github.pandaz.auth.entity
   config-location: classpath:mybatis/mybatis-config.xml
   global-config:
     db-config:
@@ -88,7 +88,7 @@ custom:
     enable: false
     name: ROLE_SUPER_ADMIN
   # 项目基础包
-  projectPackage: com.pandaz
+  projectPackage: com.github.pandaz
   # 调用服务名称
   client:
     redis-server: pandaz-redis
