@@ -36,7 +36,7 @@ public final class R<T> {
     /**
      * 私有构造方法
      * <p>
-     * 猜测由于fegin的调用，产生的option请求
+     * 猜测由于feign的调用，产生的option请求
      * 如果没有空的构造方法，会因ICode而报空指针错误
      */
     private R() {
@@ -45,7 +45,7 @@ public final class R<T> {
     /**
      * 构造方法
      *
-     * @param iCode code
+     * @param iCode {@link ICode}
      */
     public R(ICode iCode) {
         this(iCode, null);
@@ -63,7 +63,7 @@ public final class R<T> {
     /**
      * 构造方法
      *
-     * @param iCode code
+     * @param iCode {@link ICode}
      * @param data  data
      */
     public R(ICode iCode, T data) {

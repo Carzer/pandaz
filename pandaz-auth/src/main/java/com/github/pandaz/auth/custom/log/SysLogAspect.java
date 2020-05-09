@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 public class SysLogAspect {
 
     /**
-     * 定义切入点拦截规则，拦截ImosLog注解的方法
+     * 定义切入点拦截规则，拦截{@link SysLog}注解的方法
      */
     @Pointcut("@annotation(com.github.pandaz.auth.custom.log.SysLog)")
     public void logPointCut() {
