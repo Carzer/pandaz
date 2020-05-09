@@ -1,5 +1,8 @@
 server:
   port: 9003
+  undertow:
+    io-threads: 16
+    direct-buffers: true
 spring:
   application:
     name: pandaz-task
