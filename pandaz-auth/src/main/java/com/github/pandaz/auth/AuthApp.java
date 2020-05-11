@@ -1,5 +1,7 @@
 package com.github.pandaz.auth;
 
+import com.github.pandaz.auth.controller.CommonController;
+import com.github.pandaz.auth.util.SpringBeanUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -38,6 +40,7 @@ public class AuthApp {
         // 启动项目
         SpringApplication.run(AuthApp.class, args);
         String repeat = "=".repeat(20);
+        SpringBeanUtil.getBean(CommonController.class).onStartUp();
         log.warn("{} 授权中心启动成功 {}", repeat, repeat);
     }
 }

@@ -6,6 +6,7 @@ import com.github.pandaz.auth.entity.MenuEntity;
 import com.github.pandaz.auth.service.CaptchaService;
 import com.github.pandaz.auth.service.MenuService;
 import com.github.pandaz.auth.util.AuthUtil;
+import com.github.pandaz.auth.util.ServerConfig;
 import com.github.pandaz.commons.code.RCode;
 import com.github.pandaz.commons.dto.auth.AuthMenuDTO;
 import com.github.pandaz.commons.util.BeanCopyUtil;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -34,6 +36,11 @@ import java.util.List;
 @RequestMapping("/common")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CommonController {
+
+    /**
+     * 配置
+     */
+    private final ServerConfig serverConfig;
 
     /**
      * 验证码服务
@@ -89,5 +96,17 @@ public class CommonController {
         menuEntity.setBitResult(1);
         menuList.add(menuEntity);
         return new R<>(BeanCopyUtil.copyList(menuList, AuthMenuDTO.class));
+    }
+
+    @GetMapping("wakeUp")
+    private void wake() {
+        log.info("wake up a person who pretends to be asleep");
+    }
+
+    /**
+     * 应用启动后执行
+     */
+    public void onStartUp() {
+        new RestTemplate().getForEntity(String.format("http://localhost:%s/common/wakeUp", serverConfig.getServerPort()), String.class);
     }
 }

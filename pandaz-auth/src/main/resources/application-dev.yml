@@ -55,6 +55,11 @@ spring:
 #      master: mymaster
 #      nodes: 172.16.2.130:26380,172.16.2.130:26381,172.16.2.130:26382
 
+# 热加载
+ribbon:
+  eager-load:
+    enabled: true
+    clients: pandaz-redis
 # 开启feign对sentinel的支持
 # SentinelFeignAutoConfiguration
 feign:

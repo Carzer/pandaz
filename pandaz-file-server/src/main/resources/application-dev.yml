@@ -10,15 +10,16 @@ spring:
         dashboard: localhost:8787
       log:
         dir: logs/file-server/sentinel
+
 # mongodb配置
 mongodb:
   primary:
-    host: 172.16.2.130:27017
+    host: localhost:27017
     name: admin
     user: admin
     pwd: 123456
   secondary:
-    host: 172.16.2.130:27017
+    host: localhost:27017
     name: admin
     user: admin
     pwd: 123456

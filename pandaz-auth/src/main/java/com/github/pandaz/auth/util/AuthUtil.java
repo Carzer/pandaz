@@ -36,7 +36,7 @@ public final class AuthUtil {
     /**
      * 静态权限服务
      */
-    private static RolePermissionService staticRolePermissionService;
+    private volatile static RolePermissionService staticRolePermissionService;
 
     /**
      * 权限表

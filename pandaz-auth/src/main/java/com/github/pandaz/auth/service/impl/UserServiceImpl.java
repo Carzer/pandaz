@@ -6,8 +6,6 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pandaz.commons.util.CustomPasswordEncoder;
-import com.github.pandaz.commons.util.UuidUtil;
 import com.github.pandaz.auth.config.SecurityConfig;
 import com.github.pandaz.auth.custom.constants.ExpireStateEnum;
 import com.github.pandaz.auth.custom.constants.SysConstants;
@@ -19,6 +17,8 @@ import com.github.pandaz.auth.service.GroupService;
 import com.github.pandaz.auth.service.UserGroupService;
 import com.github.pandaz.auth.service.UserService;
 import com.github.pandaz.auth.util.CheckUtil;
+import com.github.pandaz.commons.util.CustomPasswordEncoder;
+import com.github.pandaz.commons.util.UuidUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -83,7 +83,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
      * @param userEntity code
      * @return 用户信息
      */
-    @Cacheable(key = "#userEntity")
+    @Cacheable(key = "#userEntity.code")
     @Override
     public UserEntity findByCode(UserEntity userEntity) {
         QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
@@ -94,15 +94,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     /**
      * 根据用户编码更新用户信息
      *
-     * @param user user
+     * @param userEntity user
      * @return int
      */
-    @CacheEvict(key = "#user.code")
+    @CacheEvict(key = "#userEntity.code")
     @Override
-    public int updateByCode(UserEntity user) {
+    public int updateByCode(UserEntity userEntity) {
         UpdateWrapper<UserEntity> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq("code", user.getCode());
-        return userMapper.update(user, updateWrapper);
+        updateWrapper.eq("code", userEntity.getCode());
+        return userMapper.update(userEntity, updateWrapper);
     }
 
     /**
@@ -113,34 +113,34 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
      * 所以Spring无法在初始化时注入PasswordEncoder
      * 故使用新建对象的方式来使用{@link CustomPasswordEncoder}
      *
-     * @param user 用户
+     * @param userEntity 用户
      * @return 用户信息
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int insert(UserEntity user) {
+    public int insert(UserEntity userEntity) {
 
         // 校验重复
-        String userCode = checkUtil.checkOrSetCode(user, userMapper, "用户编码重复", null, null);
-        UserEntity loginUser = loadUserByUsername(user.getLoginName());
+        String userCode = checkUtil.checkOrSetCode(userEntity, userMapper, "用户编码重复", null, null);
+        UserEntity loginUser = loadUserByUsername(userEntity.getLoginName());
         if (loginUser != null) {
             throw new IllegalArgumentException("登录名已存在");
         }
 
         // 用户信息补充
-        if (!StringUtils.hasText(user.getId())) {
-            user.setId(UuidUtil.getId());
+        if (!StringUtils.hasText(userEntity.getId())) {
+            userEntity.setId(UuidUtil.getId());
         }
-        String rawPass = user.getPassword();
+        String rawPass = userEntity.getPassword();
         String encodedPass = SysConstants.DEFAULT_ENCODED_PASS;
         if (StringUtils.hasText(rawPass)) {
             CustomPasswordEncoder passwordEncoder = new CustomPasswordEncoder();
             encodedPass = passwordEncoder.encode(rawPass);
         }
-        user.setPassword(encodedPass);
-        String userName = user.getName();
-        String createdBy = user.getCreatedBy();
-        LocalDateTime createdDate = user.getCreatedDate();
+        userEntity.setPassword(encodedPass);
+        String userName = userEntity.getName();
+        String createdBy = userEntity.getCreatedBy();
+        LocalDateTime createdDate = userEntity.getCreatedDate();
 
         // 建立用户私有组
         GroupEntity group = new GroupEntity();
@@ -162,7 +162,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         // 插入相关信息
         userGroupService.insert(userGroup);
         groupService.insert(group);
-        return userMapper.insertSelective(user);
+        return userMapper.insertSelective(userEntity);
     }
 
     /**

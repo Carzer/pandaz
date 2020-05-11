@@ -1,5 +1,7 @@
 package com.github.pandaz.redis;
 
+import com.github.pandaz.redis.controller.IndexController;
+import com.github.pandaz.redis.util.SpringBeanUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,6 +25,7 @@ public class RedisApp {
         // 启动项目
         SpringApplication.run(RedisApp.class, args);
         String repeat = "=".repeat(20);
+        SpringBeanUtil.getBean(IndexController.class).onStartUp();
         log.warn("{} RedisApp 启动成功 {}", repeat, repeat);
     }
 }
