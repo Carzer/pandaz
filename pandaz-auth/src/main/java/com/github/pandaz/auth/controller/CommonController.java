@@ -99,7 +99,7 @@ public class CommonController {
     }
 
     @GetMapping("wakeUp")
-    private void wake() {
+    public void wake() {
         log.debug("wake up a person who pretends to be asleep");
     }
 
