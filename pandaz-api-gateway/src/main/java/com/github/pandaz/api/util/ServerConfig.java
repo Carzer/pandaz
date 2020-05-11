@@ -1,4 +1,4 @@
-package com.github.pandaz.auth.util;
+package com.github.pandaz.api.util;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;

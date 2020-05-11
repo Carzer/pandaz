@@ -6,6 +6,9 @@ import org.springframework.boot.web.context.WebServerInitializedEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 /**
  * 监听
  *
@@ -23,6 +26,21 @@ public class ServerConfig implements ApplicationListener<WebServerInitializedEve
     private int serverPort;
 
     /**
+     * 获取URL
+     *
+     * @return URL
+     */
+    public String getWakeUrl() {
+        try {
+            InetAddress address = InetAddress.getLocalHost();
+            return "http://" + address.getHostAddress() + ":" + this.serverPort;
+        } catch (UnknownHostException | NullPointerException e) {
+            log.error("获取应用地址出错了", e);
+        }
+        return "http://localhost:" + this.serverPort;
+    }
+
+    /**
      * web服务初始化完成
      *
      * @param event event
@@ -30,6 +48,6 @@ public class ServerConfig implements ApplicationListener<WebServerInitializedEve
     @Override
     public void onApplicationEvent(WebServerInitializedEvent event) {
         this.serverPort = event.getWebServer().getPort();
-        log.info("Get WebServer port {}", serverPort);
+        log.debug("Get WebServer port {}", serverPort);
     }
 }

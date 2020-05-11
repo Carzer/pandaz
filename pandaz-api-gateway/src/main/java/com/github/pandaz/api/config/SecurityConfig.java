@@ -98,6 +98,7 @@ public class SecurityConfig {
             "/auth/token/**",
             "/auth/userInfo",
             "/health",
+            "/wakeUp",
             "/api/socket/**"
     };
 }

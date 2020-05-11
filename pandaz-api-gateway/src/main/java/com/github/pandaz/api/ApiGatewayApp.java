@@ -1,5 +1,7 @@
 package com.github.pandaz.api;
 
+import com.github.pandaz.api.controller.IndexController;
+import com.github.pandaz.api.util.SpringBeanUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,6 +25,7 @@ public class ApiGatewayApp {
         // 启动项目
         SpringApplication.run(ApiGatewayApp.class, args);
         String repeat = "=".repeat(20);
+        SpringBeanUtil.getBean(IndexController.class).onStartUp();
         log.warn("{} ApiGatewayApp 启动成功 {}", repeat, repeat);
     }
 }

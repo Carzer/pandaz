@@ -100,13 +100,13 @@ public class CommonController {
 
     @GetMapping("wakeUp")
     private void wake() {
-        log.info("wake up a person who pretends to be asleep");
+        log.debug("wake up a person who pretends to be asleep");
     }
 
     /**
      * 应用启动后执行
      */
     public void onStartUp() {
-        new RestTemplate().getForEntity(String.format("http://localhost:%s/common/wakeUp", serverConfig.getServerPort()), String.class);
+        new RestTemplate().getForEntity(String.format("%s/common/wakeUp", serverConfig.getWakeUrl()), String.class);
     }
 }

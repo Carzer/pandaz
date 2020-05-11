@@ -60,6 +60,7 @@ ribbon:
   eager-load:
     enabled: true
     clients: pandaz-redis
+
 # 开启feign对sentinel的支持
 # SentinelFeignAutoConfiguration
 feign:
