@@ -1,7 +1,7 @@
 package com.github.pandaz.auth.mapper;
 
-import com.github.pandaz.commons.mapper.BasisMapper;
 import com.github.pandaz.auth.entity.UserEntity;
+import com.github.pandaz.commons.mapper.BasisMapper;
 
 /**
  * 用户信息mapper

@@ -1,9 +1,9 @@
 package com.github.pandaz.auth.service;
 
-import com.github.pandaz.commons.SecurityUser;
-import com.github.pandaz.commons.service.BaseService;
 import com.github.pandaz.auth.entity.RoleDetailEntity;
 import com.github.pandaz.auth.entity.RoleEntity;
+import com.github.pandaz.commons.SecurityUser;
+import com.github.pandaz.commons.service.BaseService;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.List;

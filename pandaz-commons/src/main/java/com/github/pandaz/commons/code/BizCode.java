@@ -50,7 +50,7 @@ public enum BizCode implements ICode {
      * @param code    编码
      * @param message 信息
      */
-    BizCode(int code, String message) {
+    BizCode(long code, String message) {
         this.code = code;
         this.message = message;
     }

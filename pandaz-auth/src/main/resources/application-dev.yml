@@ -1,10 +1,13 @@
 spring:
+  servlet:
+    multipart:
+      max-file-size: 50MB
   cloud:
-    # nacos
+    # alibaba nacos
     nacos:
       discovery:
         server-addr: localhost:8848
-    # sentinel
+    # alibaba sentinel
     sentinel:
       transport:
         dashboard: localhost:8787
@@ -55,7 +58,7 @@ spring:
 #      master: mymaster
 #      nodes: 172.16.2.130:26380,172.16.2.130:26381,172.16.2.130:26382
 
-# 热加载
+# ribbon热加载
 ribbon:
   eager-load:
     enabled: true
@@ -69,7 +72,7 @@ feign:
   client:
     config:
       default:
-        # 设置Fegin的超时时间
+        # 设置Feign的超时时间
         connectTimeout: 3000
         readTimeout: 15000
 
@@ -85,11 +88,17 @@ mybatis-plus:
 # 自定义属性
 custom:
   # 排除路径
-  excludedPaths: "/oauth/**,/token/**,/ws/**,/common/**,/login,/userInfo"
+  excludedPaths:
+    - "/oauth/**"
+    - "/token/**"
+    - "/ws/**"
+    - "/common/**"
+    - "/login"
+    - "/userInfo"
   # 开启验证码校验
   captcha:
     enable: true
-  # 超级管理员角色名称
+  # 超级管理员角色
   super-admin:
     enable: false
     name: ROLE_SUPER_ADMIN
@@ -100,10 +109,12 @@ custom:
     redis-server: pandaz-redis
     file-server: pandaz-file-server
     im: pandaz-im
+  # 缓存
   cache:
     # 缓存过期时间，单位：分钟
     masterEntryTtlUnit: minutes
     masterEntryTtl: 1
+    # 缓存过期时间，单位：分钟
     secondaryEntryTtlUnit: minutes
     secondaryEntryTtl: 10
   oauth2:

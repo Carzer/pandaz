@@ -1,7 +1,7 @@
 package com.github.pandaz.auth.custom.handler;
 
-import com.github.pandaz.commons.util.R;
 import com.github.pandaz.commons.util.PrintWriterUtil;
+import com.github.pandaz.commons.util.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;

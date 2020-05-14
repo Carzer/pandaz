@@ -1,8 +1,8 @@
 package com.github.pandaz.auth.mapper;
 
-import com.github.pandaz.commons.mapper.BasisMapper;
 import com.github.pandaz.auth.entity.RoleDetailEntity;
 import com.github.pandaz.auth.entity.RoleEntity;
+import com.github.pandaz.commons.mapper.BasisMapper;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;

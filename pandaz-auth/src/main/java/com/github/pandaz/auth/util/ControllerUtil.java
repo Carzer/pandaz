@@ -6,8 +6,6 @@ import com.github.pandaz.auth.service.*;
 import com.github.pandaz.commons.constants.CommonConstants;
 import com.github.pandaz.commons.dto.auth.*;
 import com.github.pandaz.commons.util.BeanCopyUtil;
-import com.github.pandaz.auth.entity.*;
-import com.github.pandaz.auth.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +14,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -162,7 +161,7 @@ public class ControllerUtil {
             rolePermissionEntity.setMenuCode(menuCode);
             return rolePermissionService.listBindCodes(rolePermissionEntity);
         }
-        return new ArrayList<>();
+        return Collections.emptyList();
     }
 
     /**

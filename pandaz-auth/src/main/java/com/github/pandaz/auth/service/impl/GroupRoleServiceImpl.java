@@ -2,12 +2,12 @@ package com.github.pandaz.auth.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pandaz.commons.util.UuidUtil;
 import com.github.pandaz.auth.entity.GroupEntity;
 import com.github.pandaz.auth.entity.GroupRoleEntity;
 import com.github.pandaz.auth.entity.RoleEntity;
 import com.github.pandaz.auth.mapper.GroupRoleMapper;
 import com.github.pandaz.auth.service.GroupRoleService;
+import com.github.pandaz.commons.util.UuidUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

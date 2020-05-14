@@ -1,9 +1,9 @@
 package com.github.pandaz.auth.service.impl;
 
+import com.github.pandaz.auth.client.CaptchaClient;
+import com.github.pandaz.auth.service.CaptchaService;
 import com.github.pandaz.commons.code.RCode;
 import com.github.pandaz.commons.util.R;
-import com.github.pandaz.auth.client.RedisClient;
-import com.github.pandaz.auth.service.CaptchaService;
 import com.wf.captcha.ArithmeticCaptcha;
 import com.wf.captcha.base.Captcha;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,7 @@ public class CaptchaServiceImpl implements CaptchaService {
     /**
      * redis 缓存
      */
-    private final RedisClient redisClient;
+    private final CaptchaClient captchaClient;
 
     /**
      * 生成验证码
@@ -50,7 +50,7 @@ public class CaptchaServiceImpl implements CaptchaService {
         }
         setHeader(response);
         Captcha captcha = createCaptcha();
-        redisClient.setObject(CAPTCHA_KEY + key, captcha.text(), 180);
+        captchaClient.setObject(CAPTCHA_KEY + key, captcha.text());
         captcha.out(response.getOutputStream());
     }
 
@@ -66,7 +66,7 @@ public class CaptchaServiceImpl implements CaptchaService {
         if (!StringUtils.hasText(value)) {
             return new R<>(RCode.VALID_CODE_EMPTY, false);
         }
-        R<Object> result = redisClient.getObject(CAPTCHA_KEY + key);
+        R<Object> result = captchaClient.getObject(CAPTCHA_KEY + key);
         if (result.getData() == null) {
             return new R<>(RCode.VALID_CODE_EXPIRED, false);
         }

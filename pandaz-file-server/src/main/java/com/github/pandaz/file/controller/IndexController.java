@@ -1,12 +1,13 @@
 package com.github.pandaz.file.controller;
 
+import com.github.pandaz.file.util.ServerConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * 默认controller
@@ -21,19 +22,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class IndexController {
 
     /**
-     * 注释
+     * 配置
      */
-    private final DiscoveryClient discoveryClient;
+    private final ServerConfig serverConfig;
+
+    @GetMapping("wakeUp")
+    public void wake() {
+        log.debug("wake up a person who pretends to be asleep");
+    }
 
     /**
-     * 测试方法
-     *
-     * @return java.lang.String
+     * 应用启动后执行
      */
-    @GetMapping("/dc")
-    public String dc() {
-        String services = String.format("Services: %s", discoveryClient.getServices());
-        log.info(services);
-        return services;
+    public void onStartUp() {
+        new RestTemplate().getForEntity(String.format("%s/wakeUp", serverConfig.getWakeUrl()), String.class);
     }
 }

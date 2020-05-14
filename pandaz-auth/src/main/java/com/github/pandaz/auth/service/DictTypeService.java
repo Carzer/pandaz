@@ -1,7 +1,7 @@
 package com.github.pandaz.auth.service;
 
-import com.github.pandaz.commons.service.BaseService;
 import com.github.pandaz.auth.entity.DictTypeEntity;
+import com.github.pandaz.commons.service.BaseService;
 
 /**
  * <p>

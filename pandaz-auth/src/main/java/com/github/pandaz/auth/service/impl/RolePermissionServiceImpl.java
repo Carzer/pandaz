@@ -1,12 +1,12 @@
 package com.github.pandaz.auth.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pandaz.commons.util.UuidUtil;
 import com.github.pandaz.auth.entity.PermissionEntity;
 import com.github.pandaz.auth.entity.RoleEntity;
 import com.github.pandaz.auth.entity.RolePermissionEntity;
 import com.github.pandaz.auth.mapper.RolePermissionMapper;
 import com.github.pandaz.auth.service.RolePermissionService;
+import com.github.pandaz.commons.util.UuidUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;

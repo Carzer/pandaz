@@ -1,9 +1,9 @@
 package com.github.pandaz.auth.custom.filter;
 
+import com.github.pandaz.auth.custom.CustomProperties;
 import com.github.pandaz.auth.service.CaptchaService;
 import com.github.pandaz.commons.util.PrintWriterUtil;
 import com.github.pandaz.commons.util.R;
-import com.github.pandaz.auth.custom.CustomProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
@@ -53,7 +53,7 @@ public class CaptchaAuthenticationFilter extends OncePerRequestFilter {
      */
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
-        if (customProperties.isEnableCaptcha() && requestMatcher.matches(request)) {
+        if (customProperties.getCaptcha().isEnable() && requestMatcher.matches(request)) {
             String randomId = this.obtainGeneratedCaptcha(request);
             String captcha = this.obtainCaptcha(request);
             R<Boolean> r = captchaService.check(randomId, captcha);

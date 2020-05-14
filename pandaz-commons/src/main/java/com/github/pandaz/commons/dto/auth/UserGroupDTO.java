@@ -17,7 +17,7 @@ import java.util.List;
 public class UserGroupDTO extends BaseDTO {
 
     private static final long serialVersionUID = 2788925334125259927L;
-    
+
     /**
      * 用户编码
      */

@@ -61,6 +61,10 @@ mkdir -p [docker统一目录]/nacos/sentinel
 [stop.sh](./conf/stop.sh)  
 [start_sentinel.sh](./conf/start_sentinel.sh)
 
+```shell
+mkdir -p [docker统一目录]/ftp/vsftpd
+```
+
 
 ##  1. mysql
 
@@ -198,4 +202,20 @@ cp start_sentinel.sh /etc/init.d/start_sentinel.sh
 ```shell
 chkconfig --add start_sentinel.sh
 chkconfig start_sentinel.sh on
+```
+
+## 9.ftp
+
+```shell
+docker pull bogem/ftp
+```
+
+```shell
+docker run -d -v [docker统一目录]/ftp/vsftpd:/home/vsftpd \
+                -p 9020:20 -p 9021:21 -p 47400-47470:47400-47470 \
+                -e FTP_USER=pandaz \
+                -e FTP_PASS=pandaz \
+                -e PASV_ADDRESS=127.0.0.1 \
+                --name ftp \
+                --restart=always bogem/ftp
 ```

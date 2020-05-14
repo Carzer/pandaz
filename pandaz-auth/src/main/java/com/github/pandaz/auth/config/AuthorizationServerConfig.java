@@ -1,6 +1,7 @@
 package com.github.pandaz.auth.config;
 
 import com.github.pandaz.auth.custom.CustomDaoAuthenticationProvider;
+import com.github.pandaz.auth.custom.CustomProperties;
 import com.github.pandaz.auth.custom.CustomTokenEnhancer;
 import com.github.pandaz.auth.service.OauthClientService;
 import com.github.pandaz.auth.service.RoleService;
@@ -8,7 +9,6 @@ import com.github.pandaz.commons.SecurityUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -42,16 +42,9 @@ import java.util.Set;
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     /**
-     * 加密私钥
+     * 通用配置
      */
-    @Value("${custom.oauth2.privateKey}")
-    private String privateKey;
-
-    /**
-     * 加密公钥
-     */
-    @Value("${custom.oauth2.publicKey}")
-    private String publicKey;
+    private final CustomProperties customProperties;
 
     /**
      * 授权管理器
@@ -91,8 +84,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Bean
     public JwtAccessTokenConverter jwtTokenEnhancer() {
         JwtAccessTokenConverter accessTokenConverter = new JwtAccessTokenConverter();
-        accessTokenConverter.setSigningKey(privateKey);
-        accessTokenConverter.setVerifierKey(publicKey);
+        accessTokenConverter.setSigningKey(customProperties.getOauth2().getPrivateKey());
+        accessTokenConverter.setVerifierKey(customProperties.getOauth2().getPublicKey());
         return accessTokenConverter;
     }
 

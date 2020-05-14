@@ -18,6 +18,7 @@ import org.springframework.util.CollectionUtils;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,13 +50,13 @@ public class CustomInvocationSecurityMetadataSourceService implements FilterInvo
         Collection<ConfigAttribute> configAttributes;
         HttpServletRequest request = ((FilterInvocation) object).getRequest();
         // 如果开启超级管理员，并拥有符合的角色，则通过所有请求
-        if (customProperties.isEnableSuperAdmin()) {
+        if (customProperties.getSuperAdmin().isEnable()) {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             List<String> roleList = authentication.getAuthorities().stream()
                     .map(grantedAuthority -> grantedAuthority.getAuthority().toLowerCase())
                     .collect(Collectors.toList());
-            if (roleList.contains(customProperties.getSuperAdminName().toLowerCase())) {
-                return new ArrayList<>(0);
+            if (roleList.contains(customProperties.getSuperAdmin().getName().toLowerCase())) {
+                return Collections.emptyList();
             }
         }
         // 过滤排除URL
@@ -63,7 +64,7 @@ public class CustomInvocationSecurityMetadataSourceService implements FilterInvo
         for (String excludedPath : excludedPaths) {
             AntPathRequestMatcher matcher = new AntPathRequestMatcher(excludedPath);
             if (matcher.matches(request)) {
-                return new ArrayList<>(0);
+                return Collections.emptyList();
             }
         }
         // 查找匹配的权限信息

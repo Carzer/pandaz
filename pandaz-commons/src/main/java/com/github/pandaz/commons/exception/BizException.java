@@ -15,14 +15,14 @@ public class BizException extends RuntimeException {
     /**
      * 业务码
      */
-    private final BizCode bizCode;
+    private final BizCode code;
 
     /**
      * 构造方法
      *
-     * @param bizCode 业务码
+     * @param code 业务码
      */
-    public BizException(BizCode bizCode) {
-        this.bizCode = bizCode;
+    public BizException(BizCode code) {
+        this.code = code;
     }
 }

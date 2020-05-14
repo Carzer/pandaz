@@ -24,8 +24,8 @@ public class RedisApp {
         System.setProperty("com.alibaba.nacos.naming.cache.dir", "logs/redis/nacos/naming");
         // 启动项目
         SpringApplication.run(RedisApp.class, args);
-        String repeat = "=".repeat(20);
         SpringBeanUtil.getBean(IndexController.class).onStartUp();
+        String repeat = "=".repeat(20);
         log.warn("{} RedisApp 启动成功 {}", repeat, repeat);
     }
 }

@@ -24,18 +24,6 @@
         deleted_by, deleted_date, deleted_flag,
         locked, version
     </sql>
-    <insert id="insert" parameterType="com.github.pandaz.auth.entity.GroupEntity">
-        insert into t_sys_group (id, name, code,
-        parent_code, is_private, created_by,
-        created_date, updated_by, updated_date,
-        deleted_by, deleted_date, deleted_flag,
-        locked, version)
-        values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
-        #{parentCode,jdbcType=VARCHAR}, #{isPrivate,jdbcType=TINYINT}, #{createdBy,jdbcType=VARCHAR},
-        #{createdDate,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, #{updatedDate,jdbcType=TIMESTAMP},
-        #{deletedBy,jdbcType=VARCHAR}, #{deletedDate,jdbcType=TIMESTAMP}, #{deletedFlag,jdbcType=VARCHAR},
-        #{locked,jdbcType=TINYINT}, #{version,jdbcType=INTEGER})
-    </insert>
     <insert id="insertSelective" parameterType="com.github.pandaz.auth.entity.GroupEntity">
         insert into t_sys_group
         <trim prefix="(" suffix=")" suffixOverrides=",">

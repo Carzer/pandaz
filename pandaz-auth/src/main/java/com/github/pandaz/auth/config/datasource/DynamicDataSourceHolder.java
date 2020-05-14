@@ -6,8 +6,8 @@ import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
  * 动态数据源持有者，负责利用ThreadLocal存取数据源名称
  *
  * @author Carzer
- * @since 2019-12-13
  * @see AbstractRoutingDataSource
+ * @since 2019-12-13
  */
 public class DynamicDataSourceHolder {
 

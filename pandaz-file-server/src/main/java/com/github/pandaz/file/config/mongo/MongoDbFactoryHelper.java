@@ -1,4 +1,4 @@
-package com.github.pandaz.file.config;
+package com.github.pandaz.file.config.mongo;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;

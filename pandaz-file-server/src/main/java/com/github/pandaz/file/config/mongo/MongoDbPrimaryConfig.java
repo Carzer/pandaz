@@ -1,4 +1,4 @@
-package com.github.pandaz.file.config;
+package com.github.pandaz.file.config.mongo;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

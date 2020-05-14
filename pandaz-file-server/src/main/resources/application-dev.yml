@@ -1,4 +1,7 @@
 spring:
+  servlet:
+    multipart:
+      max-file-size: 100MB
   cloud:
     # nacos
     nacos:
@@ -23,6 +26,24 @@ mongodb:
     name: admin
     user: admin
     pwd: 123456
+
+# ftp及连接池配置
+ftp:
+  host: 127.0.0.1
+  port: 9021
+  username: pandaz
+  password: pandaz
+  buffer-size: 8096
+  initial-size: 5
+  max-idle: 8
+  retries: 3
+  encoding: UTF-8
+  test-on-borrow: true
+  test-on-return: true
+  test-while-idle: true
+  min-evictable-idle-time-millis: 60000
+  soft-min-evictable-idle-time-millis: 50000
+  time-between-eviction-runs-millis: 30000
 
 # 自定义属性
 custom:

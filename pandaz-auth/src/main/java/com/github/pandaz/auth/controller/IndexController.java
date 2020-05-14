@@ -1,16 +1,16 @@
 package com.github.pandaz.auth.controller;
 
-import com.github.pandaz.auth.client.RedisClient;
-import com.github.pandaz.auth.client.UploadClient;
 import com.github.pandaz.commons.util.R;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
@@ -30,19 +30,9 @@ import java.util.*;
 public class IndexController {
 
     /**
-     * 上传客户端
-     */
-    private final UploadClient uploadClient;
-
-    /**
      * 上下文环境
      */
     private final WebApplicationContext applicationContext;
-
-    /**
-     * Redis客户端
-     */
-    private final RedisClient redisClient;
 
     /**
      * home
@@ -55,19 +45,6 @@ public class IndexController {
         HashMap<String, Principal> map = new HashMap<>(1);
         map.put("user", principal);
         return new R<>(map);
-    }
-
-    /**
-     * 测试Redis服务
-     *
-     * @param value value
-     * @return 执行结果
-     */
-    @GetMapping("testRedis")
-    @PreAuthorize("hasRole('ADMIN')")
-    public R<Object> testRedis(String value) {
-        String key = redisClient.setObject("test", value, 0).getData();
-        return redisClient.getObject(key);
     }
 
     /**
@@ -97,16 +74,5 @@ public class IndexController {
             list.add(singleMapping);
         });
         return new R<>(list);
-    }
-
-    /**
-     * 上传方法
-     *
-     * @param file file
-     * @return java.lang.String
-     */
-    @PostMapping("upload")
-    public String upload(MultipartFile file) {
-        return uploadClient.handleFileUpload(file);
     }
 }

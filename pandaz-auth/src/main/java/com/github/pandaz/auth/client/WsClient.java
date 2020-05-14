@@ -1,8 +1,8 @@
 package com.github.pandaz.auth.client;
 
+import com.github.pandaz.auth.client.fallback.ImClientFallBackFactory;
 import com.github.pandaz.auth.custom.interceptor.FeignOauth2RequestInterceptor;
 import com.github.pandaz.commons.util.R;
-import com.github.pandaz.auth.client.fallback.ImClientFallBackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

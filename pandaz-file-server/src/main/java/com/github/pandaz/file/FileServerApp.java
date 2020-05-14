@@ -1,5 +1,7 @@
 package com.github.pandaz.file;
 
+import com.github.pandaz.file.controller.IndexController;
+import com.github.pandaz.file.util.SpringBeanUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,6 +24,7 @@ public class FileServerApp {
         System.setProperty("com.alibaba.nacos.naming.cache.dir", "logs/file-server/nacos/naming");
         //启动项目
         SpringApplication.run(FileServerApp.class, args);
+        SpringBeanUtil.getBean(IndexController.class).onStartUp();
         String repeat = "=".repeat(20);
         log.warn("{} FileServerApp 启动成功 {}", repeat, repeat);
     }

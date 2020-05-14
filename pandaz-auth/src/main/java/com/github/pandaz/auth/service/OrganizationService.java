@@ -1,7 +1,7 @@
 package com.github.pandaz.auth.service;
 
-import com.github.pandaz.commons.service.BaseService;
 import com.github.pandaz.auth.entity.OrganizationEntity;
+import com.github.pandaz.commons.service.BaseService;
 
 /**
  * 组织信息服务

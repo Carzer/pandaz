@@ -2,8 +2,8 @@ package com.github.pandaz.auth.mapper;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.pandaz.commons.mapper.BasisMapper;
 import com.github.pandaz.auth.entity.DictInfoEntity;
+import com.github.pandaz.commons.mapper.BasisMapper;
 
 /**
  * <p>

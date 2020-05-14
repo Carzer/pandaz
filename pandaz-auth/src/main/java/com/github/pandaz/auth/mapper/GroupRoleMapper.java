@@ -1,7 +1,7 @@
 package com.github.pandaz.auth.mapper;
 
-import com.github.pandaz.commons.mapper.BasisMapper;
 import com.github.pandaz.auth.entity.GroupRoleEntity;
+import com.github.pandaz.commons.mapper.BasisMapper;
 
 import java.util.List;
 

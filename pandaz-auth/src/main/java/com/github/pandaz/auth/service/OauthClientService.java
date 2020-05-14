@@ -1,7 +1,7 @@
 package com.github.pandaz.auth.service;
 
-import com.github.pandaz.commons.service.BaseService;
 import com.github.pandaz.auth.entity.OauthClientEntity;
+import com.github.pandaz.commons.service.BaseService;
 import org.springframework.security.oauth2.provider.ClientDetails;
 
 /**

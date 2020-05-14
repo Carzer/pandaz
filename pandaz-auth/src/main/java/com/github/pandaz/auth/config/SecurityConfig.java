@@ -1,6 +1,7 @@
 package com.github.pandaz.auth.config;
 
 import com.github.pandaz.auth.custom.CustomDaoAuthenticationProvider;
+import com.github.pandaz.auth.custom.CustomProperties;
 import com.github.pandaz.auth.custom.constants.SysConstants;
 import com.github.pandaz.auth.custom.filter.CaptchaAuthenticationFilter;
 import com.github.pandaz.auth.custom.handler.CustomAuthDeniedHandler;
@@ -14,7 +15,6 @@ import com.github.pandaz.commons.SecurityUser;
 import com.github.pandaz.commons.dto.auth.UserDTO;
 import com.github.pandaz.commons.util.BeanCopyUtil;
 import com.github.pandaz.commons.util.CustomPasswordEncoder;
-import com.github.pandaz.auth.custom.CustomProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

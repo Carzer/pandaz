@@ -1,4 +1,4 @@
-package com.github.pandaz.file.config;
+package com.github.pandaz.file.config.mongo;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -11,9 +11,9 @@ import org.springframework.stereotype.Component;
  * @since 2019-07-16
  */
 @Component
-@ConfigurationProperties(prefix = "mongodb.primary")
+@ConfigurationProperties(prefix = "mongodb.secondary")
 @Data
-public class MongoDbPrimaryProperty {
+public class MongoDbSecondaryProperty {
 
     /**
      * 主机地址IP+端口

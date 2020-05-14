@@ -1,9 +1,9 @@
 package com.github.pandaz.auth.custom.handler;
 
+import com.github.pandaz.auth.util.TokenUtil;
 import com.github.pandaz.commons.util.IpUtil;
 import com.github.pandaz.commons.util.PrintWriterUtil;
 import com.github.pandaz.commons.util.R;
-import com.github.pandaz.auth.util.TokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

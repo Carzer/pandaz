@@ -141,7 +141,7 @@ public class RedisHelper {
     public List<Object> getObjectList(String pattern) {
         Set<String> keys = redisTemplate.keys(String.format("%s%s", RedisConstants.REDIS_PREFIX, pattern));
         if (CollectionUtils.isEmpty(keys)) {
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
         SessionCallback<List<Object>> sessionCallback = new SessionCallback<>() {
             @Override

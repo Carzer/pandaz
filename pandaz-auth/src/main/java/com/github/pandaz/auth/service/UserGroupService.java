@@ -1,9 +1,9 @@
 package com.github.pandaz.auth.service;
 
-import com.github.pandaz.commons.service.BaseService;
 import com.github.pandaz.auth.entity.GroupEntity;
 import com.github.pandaz.auth.entity.UserEntity;
 import com.github.pandaz.auth.entity.UserGroupEntity;
+import com.github.pandaz.commons.service.BaseService;
 
 import java.time.LocalDateTime;
 import java.util.List;

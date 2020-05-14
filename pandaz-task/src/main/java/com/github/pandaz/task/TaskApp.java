@@ -23,6 +23,6 @@ public class TaskApp {
         // 启动项目
         SpringApplication.run(TaskApp.class, args);
         String repeat = "=".repeat(20);
-        log.warn("{} TaskApp 启动成功 {}",repeat,repeat);
+        log.warn("{} TaskApp 启动成功 {}", repeat, repeat);
     }
 }

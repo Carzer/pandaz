@@ -39,8 +39,8 @@ public class AuthApp {
         System.setProperty("com.alibaba.nacos.naming.cache.dir", "logs/auth/nacos/naming");
         // 启动项目
         SpringApplication.run(AuthApp.class, args);
-        String repeat = "=".repeat(20);
         SpringBeanUtil.getBean(CommonController.class).onStartUp();
+        String repeat = "=".repeat(20);
         log.warn("{} 授权中心启动成功 {}", repeat, repeat);
     }
 }

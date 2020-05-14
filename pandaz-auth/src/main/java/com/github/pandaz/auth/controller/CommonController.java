@@ -1,5 +1,6 @@
 package com.github.pandaz.auth.controller;
 
+import com.github.pandaz.auth.client.FtpClient;
 import com.github.pandaz.auth.custom.CustomProperties;
 import com.github.pandaz.auth.custom.constants.SysConstants;
 import com.github.pandaz.auth.entity.MenuEntity;
@@ -14,11 +15,9 @@ import com.github.pandaz.commons.util.R;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -58,6 +57,11 @@ public class CommonController {
     private final CustomProperties customProperties;
 
     /**
+     * 上传客户端
+     */
+    private final FtpClient ftpClient;
+
+    /**
      * 生成验证码
      *
      * @param key      前端上传key
@@ -83,7 +87,7 @@ public class CommonController {
         List<String> roles = roleList.getData();
         List<MenuEntity> menuList;
         // 如果开启超级管理员，并且当前用户拥有超级管理员角色，则返回所有菜单并将权限全部放开
-        if (customProperties.isEnableSuperAdmin() && roles.contains(customProperties.getSuperAdminName())) {
+        if (customProperties.getSuperAdmin().isEnable() && roles.contains(customProperties.getSuperAdmin().getName())) {
             menuList = menuService.list();
             menuList.forEach(menuEntity -> menuEntity.setBitResult(SysConstants.TOTAL_DIGIT_RESULT));
         } else {
@@ -101,6 +105,49 @@ public class CommonController {
     @GetMapping("wakeUp")
     public void wake() {
         log.debug("wake up a person who pretends to be asleep");
+    }
+
+    /**
+     * 上传方法
+     *
+     * @param pathname 存储路径
+     * @param filename 存储文件名
+     * @param file     文件
+     * @return 执行结果
+     */
+    @PostMapping("/upload")
+    public R<String> upload(@RequestParam String pathname,
+                            @RequestParam String filename,
+                            @RequestPart(value = "file") MultipartFile file) {
+        return ftpClient.handleFileUpload(pathname, filename, file);
+    }
+
+    /**
+     * 下载方法
+     *
+     * @param pathname   存储路径
+     * @param filename   文件名
+     * @param originPath 下载路径
+     * @return 执行结果
+     */
+    @GetMapping("/download")
+    public R<String> download(@RequestParam String pathname,
+                              @RequestParam String filename,
+                              @RequestParam String originPath) {
+        return ftpClient.handleFileDownload(pathname, filename, originPath);
+    }
+
+    /**
+     * 删除方法
+     *
+     * @param pathname 存储路径
+     * @param filename 文件名
+     * @return 执行结果
+     */
+    @DeleteMapping("/removeFile")
+    public R<String> download(@RequestParam String pathname,
+                              @RequestParam String filename) {
+        return ftpClient.handleFileDelete(pathname, filename);
     }
 
     /**

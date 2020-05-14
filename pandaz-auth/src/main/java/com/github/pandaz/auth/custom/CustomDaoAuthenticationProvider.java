@@ -2,6 +2,7 @@ package com.github.pandaz.auth.custom;
 
 import com.github.pandaz.auth.service.RoleService;
 import com.github.pandaz.commons.SecurityUser;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -20,6 +21,7 @@ import java.util.Set;
  * @author Carzer
  * @since 2019-10-24
  */
+@Slf4j
 public class CustomDaoAuthenticationProvider extends DaoAuthenticationProvider {
 
     /**
@@ -87,5 +89,6 @@ public class CustomDaoAuthenticationProvider extends DaoAuthenticationProvider {
     protected void additionalAuthenticationChecks(UserDetails userDetails,
                                                   UsernamePasswordAuthenticationToken authentication) {
         super.additionalAuthenticationChecks(userDetails, authentication);
+        log.debug("密码校验通过");
     }
 }

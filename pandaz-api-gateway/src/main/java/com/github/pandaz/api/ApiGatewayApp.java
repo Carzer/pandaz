@@ -24,8 +24,8 @@ public class ApiGatewayApp {
         System.setProperty("com.alibaba.nacos.naming.cache.dir", "logs/api-gateway/nacos/naming");
         // 启动项目
         SpringApplication.run(ApiGatewayApp.class, args);
-        String repeat = "=".repeat(20);
         SpringBeanUtil.getBean(IndexController.class).onStartUp();
+        String repeat = "=".repeat(20);
         log.warn("{} ApiGatewayApp 启动成功 {}", repeat, repeat);
     }
 }

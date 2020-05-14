@@ -30,8 +30,8 @@ public class SecurityExceptionHandler {
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(BizException.class)
     public R<String> executeFailed(BizException e) {
-        log.error("业务异常：{}", e.getBizCode().getMessage());
-        return new R<>(e.getBizCode());
+        log.error("业务异常：{}", e.getCode().getMessage());
+        return new R<>(e.getCode());
     }
 
     /**
