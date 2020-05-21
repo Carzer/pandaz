@@ -85,6 +85,10 @@ mybatis-plus:
     db-config:
       logic-not-delete-value: 0
 
+# Swagger ui增强
+knife4j:
+  production: false
+
 # 自定义属性
 custom:
   # 排除路径
@@ -95,6 +99,9 @@ custom:
     - "/common/**"
     - "/login"
     - "/userInfo"
+    - "/v2/api-docs"
+  # 随机数
+  random: ${random.int[0,10]}
   # 开启验证码校验
   captcha:
     enable: true
@@ -117,6 +124,24 @@ custom:
     # 缓存过期时间，单位：分钟
     secondaryEntryTtlUnit: minutes
     secondaryEntryTtl: 10
+  # swagger
+  swagger:
+    # api基础包
+    basePackage: "com.github.pandaz.auth.controller"
+    # oauth2授权服务器地址
+    auth_server: "http://localhost:9007"
+    # 标题
+    title: "PandaZ - Auth APIs"
+    # 简介
+    description: ""
+    # 作者
+    name: "Carzer"
+    # url
+    url: ""
+    # 邮箱
+    email: "Carzer1020@163.com"
+    # 版本
+    version: "v0.1"
   oauth2:
     # 非对称RSA密钥对 2048位 PKCS#1
     # openssl genrsa -out jwt.pem 2048

@@ -24,7 +24,7 @@ public class ImClientFallBackFactory implements FallbackFactory<WsClient> {
      */
     @Override
     public WsClient create(Throwable cause) {
-        ImClientFallBackFactory.log.error("fallback; reason was: ", cause);
+        ImClientFallBackFactory.log.error("fallback; reason was: {}", cause.getMessage());
         return new WsClient() {
             @Override
             public R<String> sendAllWebSocket() {

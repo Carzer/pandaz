@@ -53,6 +53,16 @@ public class CustomProperties {
     private Oauth2 oauth2;
 
     /**
+     * Swagger相关配置
+     */
+    private Swagger swagger;
+
+    /**
+     * 随机数
+     */
+    private Integer random;
+
+    /**
      * 调用客户端
      */
     @Getter
@@ -128,5 +138,52 @@ public class CustomProperties {
          * oauth2 公钥
          */
         private String publicKey;
+    }
+
+    /**
+     * Swagger相关配置
+     */
+    @Getter
+    @Setter
+    public static class Swagger {
+        /**
+         * oauth2授权服务器地址
+         */
+        private String authServer = "http://localhost:9007";
+
+        /**
+         * api基础包
+         */
+        private String basePackage;
+
+        /**
+         * 标题
+         */
+        private String title;
+
+        /**
+         * 简介
+         */
+        private String description;
+
+        /**
+         * 作者
+         */
+        private String name;
+
+        /**
+         * url
+         */
+        private String url;
+
+        /**
+         * 邮箱
+         */
+        private String email;
+
+        /**
+         * 版本
+         */
+        private String version;
     }
 }

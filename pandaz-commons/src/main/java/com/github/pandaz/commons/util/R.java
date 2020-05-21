@@ -2,6 +2,7 @@ package com.github.pandaz.commons.util;
 
 import com.github.pandaz.commons.code.ICode;
 import com.github.pandaz.commons.code.RCode;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,16 +22,19 @@ public final class R<T> {
     /**
      * 编码
      */
+    @ApiModelProperty("编码：1000,操作成功")
     private long code;
 
     /**
      * 错误信息
      */
+    @ApiModelProperty("错误信息")
     private String message;
 
     /**
      * 返回数据
      */
+    @ApiModelProperty("返回数据")
     private T data;
 
     /**

@@ -1,5 +1,9 @@
+${AnsiColor.BLUE}
   ____                 _       _____          ___ __  __
  |  _ \ __ _ _ __   __| | __ _|__  /         |_ _|  \/  |
  | |_) / _` | '_ \ / _` |/ _` | / /   _____   | || |\/| |
  |  __/ (_| | | | | (_| | (_| |/ /_  |_____|  | || |  | |
  |_|   \__,_|_| |_|\__,_|\__,_/____|         |___|_|  |_|
+
+@project.description@ Version: @project.version@
+Spring Boot Version: ${spring-boot.version}

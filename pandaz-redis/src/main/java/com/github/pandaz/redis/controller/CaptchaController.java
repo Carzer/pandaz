@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * 验证码服务
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/captcha")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@ApiIgnore
 public class CaptchaController {
     /**
      * redis操作
@@ -27,25 +29,25 @@ public class CaptchaController {
     private final RedisHelper redisHelper;
 
     /**
-     * 获取Redis value
+     * 获取Redis中验证码的计算结果
      *
      * @param key key
      * @return 执行结果
      */
     @GetMapping
-    public R<Object> getObject(String key) {
+    public R<Object> getCaptchaResult(String key) {
         return new R<>(redisHelper.getObject(key));
     }
 
     /**
-     * 设置Redis value
+     * 将验证码的计算结果放入Redis
      *
      * @param key   key
      * @param value value
      * @return 执行结果
      */
     @PostMapping
-    public R<String> setObject(String key, String value) {
+    public R<String> setCaptchaResult(String key, String value) {
         redisHelper.setObject(key, value, 180);
         return R.success();
     }

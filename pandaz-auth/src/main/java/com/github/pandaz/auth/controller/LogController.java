@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.Map;
 
@@ -21,6 +22,7 @@ import java.util.Map;
 @RestController
 @PreAuthorize("hasRole('ADMIN')")
 @Slf4j
+@ApiIgnore
 public class LogController {
 
     /**

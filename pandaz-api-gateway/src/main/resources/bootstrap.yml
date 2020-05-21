@@ -2,7 +2,7 @@ server:
   port: 7777
 spring:
   application:
-    name: pandaz-api-gateway
+    name: @project.artifactId@
   # 允许多个bean调用同一个服务
   main:
     allow-bean-definition-overriding: true

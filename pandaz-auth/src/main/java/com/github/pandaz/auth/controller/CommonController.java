@@ -12,12 +12,15 @@ import com.github.pandaz.commons.code.RCode;
 import com.github.pandaz.commons.dto.auth.AuthMenuDTO;
 import com.github.pandaz.commons.util.BeanCopyUtil;
 import com.github.pandaz.commons.util.R;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -34,6 +37,7 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/common")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@Api(value = "Common", tags = "通用方法")
 public class CommonController {
 
     /**
@@ -68,6 +72,10 @@ public class CommonController {
      * @param response response
      * @throws IOException IOException
      */
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "key", value = "随机码[UI生成为24位]", dataType = "string", paramType = "query")
+    })
+    @ApiOperation(value = "生成验证码", notes = "生成验证码")
     @GetMapping(value = "/captcha", produces = "image/png")
     public void captcha(@RequestParam(value = "key") String key, HttpServletResponse response) throws IOException {
         captchaService.create(response, key);
@@ -78,8 +86,12 @@ public class CommonController {
      *
      * @return 所有菜单
      */
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "osCode", value = "系统编码", dataType = "string", paramType = "query")
+    })
+    @ApiOperation(value = "获取所有授权菜单", notes = "获取所有授权菜单")
     @GetMapping("/getAuthMenu")
-    public R<List<AuthMenuDTO>> getAuthMenu(@RequestParam String osCode, Principal principal) {
+    public R<List<AuthMenuDTO>> getAuthMenu(@RequestParam String osCode, @ApiIgnore Principal principal) {
         R<List<String>> roleList = AuthUtil.getRoleListFromPrincipal(principal);
         if (RCode.SUCCESS.getCode() != roleList.getCode()) {
             return new R<>(RCode.getEnum(roleList.getCode()));
@@ -102,6 +114,10 @@ public class CommonController {
         return new R<>(BeanCopyUtil.copyList(menuList, AuthMenuDTO.class));
     }
 
+    /**
+     * 唤醒方法
+     */
+    @ApiIgnore
     @GetMapping("wakeUp")
     public void wake() {
         log.debug("wake up a person who pretends to be asleep");
@@ -115,10 +131,15 @@ public class CommonController {
      * @param file     文件
      * @return 执行结果
      */
-    @PostMapping("/upload")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pathname", value = "存储路径", dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "filename", value = "存储文件名", dataType = "string", paramType = "query")
+    })
+    @ApiOperation(value = "上传方法", notes = "上传方法", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/upload", headers = "content-type=multipart/form-data")
     public R<String> upload(@RequestParam String pathname,
                             @RequestParam String filename,
-                            @RequestPart(value = "file") MultipartFile file) {
+                            @ApiParam(value = "file", required = true) MultipartFile file) {
         return ftpClient.handleFileUpload(pathname, filename, file);
     }
 
@@ -130,6 +151,12 @@ public class CommonController {
      * @param originPath 下载路径
      * @return 执行结果
      */
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pathname", value = "存储路径", dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "filename", value = "文件名", dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "originPath", value = "本地存储路径", dataType = "string", paramType = "query")
+    })
+    @ApiOperation(value = "下载方法", notes = "下载方法")
     @GetMapping("/download")
     public R<String> download(@RequestParam String pathname,
                               @RequestParam String filename,
@@ -144,9 +171,14 @@ public class CommonController {
      * @param filename 文件名
      * @return 执行结果
      */
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pathname", value = "存储路径", dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "filename", value = "文件名", dataType = "string", paramType = "query")
+    })
+    @ApiOperation(value = "删除方法", notes = "删除方法")
     @DeleteMapping("/removeFile")
-    public R<String> download(@RequestParam String pathname,
-                              @RequestParam String filename) {
+    public R<String> removeFile(@RequestParam String pathname,
+                                @RequestParam String filename) {
         return ftpClient.handleFileDelete(pathname, filename);
     }
 

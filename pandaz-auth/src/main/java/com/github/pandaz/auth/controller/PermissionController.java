@@ -9,6 +9,8 @@ import com.github.pandaz.commons.dto.auth.OsInfoDTO;
 import com.github.pandaz.commons.dto.auth.PermissionDTO;
 import com.github.pandaz.commons.service.BaseService;
 import com.github.pandaz.commons.util.R;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * 权限
+ * 权限信息
  *
  * @author Carzer
  * @since 2020-02-27
@@ -29,6 +31,7 @@ import java.util.List;
 @RequestMapping("/permission")
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@Api(value = "Permission", tags = "权限信息")
 public class PermissionController extends BaseController<PermissionDTO, PermissionEntity> {
 
     /**
@@ -56,6 +59,7 @@ public class PermissionController extends BaseController<PermissionDTO, Permissi
      *
      * @return 系统信息
      */
+    @ApiOperation(value = "获取全部系统信息", notes = "获取全部系统信息")
     @GetMapping("/listAllOs")
     public R<List<OsInfoDTO>> listAll() {
         return new R<>(controllerUtil.listAllOs());
@@ -66,6 +70,7 @@ public class PermissionController extends BaseController<PermissionDTO, Permissi
      *
      * @return 所有菜单
      */
+    @ApiOperation(value = "获取所有菜单信息", notes = "根据系统编码获取所有菜单信息")
     @GetMapping("/listMenuByOsCode")
     public R<List<MenuDTO>> listByOsCode(String osCode) {
         return new R<>(controllerUtil.listMenuByOsCode(osCode));

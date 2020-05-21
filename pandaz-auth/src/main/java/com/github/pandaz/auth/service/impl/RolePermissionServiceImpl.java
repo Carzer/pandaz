@@ -137,7 +137,7 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
      * @return 权限列表
      */
     @Override
-    @Cacheable(key = "#osCode")
+    @Cacheable(key = "'os:'+#osCode")
     public List<RolePermissionEntity> listByOsCode(String osCode) {
         return rolePermissionMapper.listByOsCode(osCode);
     }

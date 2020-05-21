@@ -5,6 +5,7 @@ import com.github.pandaz.auth.service.OsInfoService;
 import com.github.pandaz.commons.controller.BaseController;
 import com.github.pandaz.commons.dto.auth.OsInfoDTO;
 import com.github.pandaz.commons.service.BaseService;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/osInfo")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@Api(value = "OsInfo", tags = "系统信息")
 public class OsInfoController extends BaseController<OsInfoDTO, OsInfoEntity> {
 
     /**

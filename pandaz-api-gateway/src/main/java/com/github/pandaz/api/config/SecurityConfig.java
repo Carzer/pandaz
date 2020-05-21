@@ -99,6 +99,13 @@ public class SecurityConfig {
             "/auth/userInfo",
             "/health",
             "/wakeUp",
-            "/api/socket/**"
+            "/api/socket/**",
+            "/doc.html",
+            "/swagger-ui.html",
+            "/webjars/**",
+            "/service-worker.js",
+            "/resources/**",
+            "/swagger-resources/**",
+            "/**/v2/api-docs"
     };
 }

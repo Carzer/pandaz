@@ -6,6 +6,7 @@ import com.github.pandaz.auth.service.OauthClientService;
 import com.github.pandaz.commons.controller.BaseController;
 import com.github.pandaz.commons.dto.auth.OauthClientDTO;
 import com.github.pandaz.commons.service.BaseService;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/oauthClient")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@Api(value = "Oauth2Client", tags = "oauth2客户端信息")
 public class OauthClientController extends BaseController<OauthClientDTO, OauthClientEntity> {
 
     /**

@@ -9,6 +9,8 @@ import com.github.pandaz.commons.dto.auth.OsInfoDTO;
 import com.github.pandaz.commons.dto.auth.PermissionDTO;
 import com.github.pandaz.commons.service.BaseService;
 import com.github.pandaz.commons.util.R;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
@@ -28,6 +30,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/menu")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@Api(value = "Menu", tags = "菜单信息")
 public class MenuController extends BaseController<MenuDTO, MenuEntity> {
 
     /**
@@ -56,6 +59,7 @@ public class MenuController extends BaseController<MenuDTO, MenuEntity> {
      * @param permissionDTO 查询信息
      * @return 分页信息
      */
+    @ApiOperation(value = "权限分页方法", notes = "权限分页方法")
     @GetMapping("/getPermissionPage")
     public R<Map<String, Object>> getPermissionPage(PermissionDTO permissionDTO) {
         return new R<>(controllerUtil.getPermissionPage(permissionDTO));
@@ -66,6 +70,7 @@ public class MenuController extends BaseController<MenuDTO, MenuEntity> {
      *
      * @return 所有菜单
      */
+    @ApiOperation(value = "获取所有菜单", notes = "获取所有菜单")
     @GetMapping("/getAll")
     public R<MenuDTO> getAll(MenuDTO menuDTO) {
         return new R<>(controllerUtil.getAllMenu(menuDTO));
@@ -76,6 +81,7 @@ public class MenuController extends BaseController<MenuDTO, MenuEntity> {
      *
      * @return 系统信息
      */
+    @ApiOperation(value = "获取全部系统信息", notes = "获取全部系统信息")
     @GetMapping("/listAllOs")
     public R<List<OsInfoDTO>> listAllOs() {
         return new R<>(controllerUtil.listAllOs());

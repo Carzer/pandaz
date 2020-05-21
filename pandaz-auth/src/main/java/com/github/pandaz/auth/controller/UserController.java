@@ -8,6 +8,8 @@ import com.github.pandaz.commons.controller.BaseController;
 import com.github.pandaz.commons.dto.auth.UserDTO;
 import com.github.pandaz.commons.service.BaseService;
 import com.github.pandaz.commons.util.R;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 /**
- * 用户
+ * 用户信息
  *
  * @author Carzer
  * @since 2019-07-17
@@ -28,6 +30,7 @@ import java.util.Map;
 @RequestMapping("/user")
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@Api(value = "User", tags = "用户信息")
 public class UserController extends BaseController<UserDTO, UserEntity> {
 
     /**
@@ -51,11 +54,12 @@ public class UserController extends BaseController<UserDTO, UserEntity> {
     }
 
     /**
-     * 获取用户分页信息
+     * 分页方法
      *
      * @param userDTO userDTO
      * @return 执行结果
      */
+    @ApiOperation(value = "分页方法", notes = "分页方法")
     @GetMapping(UrlConstants.PAGE)
     @Override
     public R<Map<String, Object>> getPage(UserDTO userDTO) {

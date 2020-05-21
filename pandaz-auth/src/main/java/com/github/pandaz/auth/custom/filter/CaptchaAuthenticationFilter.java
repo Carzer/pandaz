@@ -2,6 +2,7 @@ package com.github.pandaz.auth.custom.filter;
 
 import com.github.pandaz.auth.custom.CustomProperties;
 import com.github.pandaz.auth.service.CaptchaService;
+import com.github.pandaz.commons.code.RCode;
 import com.github.pandaz.commons.util.PrintWriterUtil;
 import com.github.pandaz.commons.util.R;
 import lombok.RequiredArgsConstructor;
@@ -56,9 +57,9 @@ public class CaptchaAuthenticationFilter extends OncePerRequestFilter {
         if (customProperties.getCaptcha().isEnable() && requestMatcher.matches(request)) {
             String randomId = this.obtainGeneratedCaptcha(request);
             String captcha = this.obtainCaptcha(request);
-            R<Boolean> r = captchaService.check(randomId, captcha);
-            if (Boolean.FALSE.equals(r.getData())) {
-                PrintWriterUtil.write(response, r);
+            RCode rCode = captchaService.check(randomId, captcha);
+            if (!RCode.SUCCESS.equals(rCode)) {
+                PrintWriterUtil.write(response, R.fail(rCode.getMessage()));
                 return;
             }
         }

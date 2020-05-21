@@ -5,7 +5,7 @@ server:
     direct-buffers: true
 spring:
   application:
-    name: pandaz-task
+    name: @project.artifactId@
   # 允许多个bean调用同一个服务
   main:
     allow-bean-definition-overriding: true

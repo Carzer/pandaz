@@ -1,6 +1,6 @@
 package com.github.pandaz.auth.service;
 
-import com.github.pandaz.commons.util.R;
+import com.github.pandaz.commons.code.RCode;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -29,5 +29,5 @@ public interface CaptchaService {
      * @param value 前端上传值
      * @return 是否成功
      */
-    R<Boolean> check(String key, String value);
+    RCode check(String key, String value);
 }

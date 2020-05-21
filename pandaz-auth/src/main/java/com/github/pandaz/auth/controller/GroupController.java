@@ -12,10 +12,13 @@ import com.github.pandaz.commons.dto.auth.*;
 import com.github.pandaz.commons.service.BaseService;
 import com.github.pandaz.commons.util.BeanCopyUtil;
 import com.github.pandaz.commons.util.R;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -32,6 +35,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/group")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@Api(value = "Group", tags = "组信息")
 public class GroupController extends BaseController<GroupDTO, GroupEntity> {
 
     /**
@@ -70,6 +74,7 @@ public class GroupController extends BaseController<GroupDTO, GroupEntity> {
      * @param userDTO userDTO
      * @return 执行结果
      */
+    @ApiOperation(value = "获取用户分页信息", notes = "获取用户分页信息")
     @GetMapping("/getUserPage")
     public R<Map<String, Object>> getUserPage(UserDTO userDTO) {
         return new R<>(controllerUtil.getUserPage(userDTO));
@@ -81,8 +86,9 @@ public class GroupController extends BaseController<GroupDTO, GroupEntity> {
      * @param userGroupDTO 用户-组信息
      * @return 执行结果
      */
+    @ApiOperation(value = "绑定用户与组关系", notes = "绑定用户与组关系")
     @PutMapping("/bindGroupMember")
-    public R<String> bindGroupMember(@Valid @RequestBody UserGroupDTO userGroupDTO, Principal principal) {
+    public R<String> bindGroupMember(@Valid @RequestBody UserGroupDTO userGroupDTO, @ApiIgnore Principal principal) {
         userGroupService.bindGroupMember(principal.getName(), LocalDateTime.now(), BeanCopyUtil.copy(userGroupDTO, UserGroupEntity.class));
         return R.success();
     }
@@ -93,6 +99,7 @@ public class GroupController extends BaseController<GroupDTO, GroupEntity> {
      * @param userGroupDTO 查询条件
      * @return 执行结果
      */
+    @ApiOperation(value = "列出组内成员", notes = "列出组内成员")
     @GetMapping("/listBindGroupMembers")
     public R<List<String>> listBindGroupMembers(UserGroupDTO userGroupDTO) {
         List<String> list = userGroupService.listBindGroupMembers(BeanCopyUtil.copy(userGroupDTO, UserGroupEntity.class));
@@ -105,6 +112,7 @@ public class GroupController extends BaseController<GroupDTO, GroupEntity> {
      * @param roleDTO 查询信息
      * @return 分页信息
      */
+    @ApiOperation(value = "分页方法", notes = "分页方法")
     @GetMapping("/getRolePage")
     public R<Map<String, Object>> getRolePage(RoleDTO roleDTO) {
         return new R<>(controllerUtil.getRolePage(roleDTO));
@@ -116,8 +124,9 @@ public class GroupController extends BaseController<GroupDTO, GroupEntity> {
      * @param groupRoleDTO 组-角色信息
      * @return 执行结果
      */
+    @ApiOperation(value = "绑定用户与组关系", notes = "绑定用户与组关系")
     @PutMapping("/bindRole")
-    public R<String> bindRole(@RequestBody GroupRoleDTO groupRoleDTO, Principal principal) {
+    public R<String> bindRole(@RequestBody GroupRoleDTO groupRoleDTO, @ApiIgnore Principal principal) {
         groupRoleService.bindGroupRole(principal.getName(), LocalDateTime.now(), BeanCopyUtil.copy(groupRoleDTO, GroupRoleEntity.class));
         return R.success();
     }
@@ -128,6 +137,7 @@ public class GroupController extends BaseController<GroupDTO, GroupEntity> {
      * @param groupRoleDTO 查询条件
      * @return 执行结果
      */
+    @ApiOperation(value = "列出绑定的角色", notes = "列出绑定的角色")
     @GetMapping("/listBindRoles")
     public R<List<String>> listBindRoles(GroupRoleDTO groupRoleDTO) {
         List<String> list = groupRoleService.listBindGroupRoles(BeanCopyUtil.copy(groupRoleDTO, GroupRoleEntity.class));

@@ -25,7 +25,7 @@ public class FtpClientFallBackFactory implements FallbackFactory<FtpClient> {
      */
     @Override
     public FtpClient create(Throwable cause) {
-        FtpClientFallBackFactory.log.error("fallback; reason was: ", cause);
+        FtpClientFallBackFactory.log.error("fallback; reason was: {}", cause.getMessage());
         return new FtpClient() {
             @Override
             public R<String> handleFileUpload(String pathname, String filename, MultipartFile file) {

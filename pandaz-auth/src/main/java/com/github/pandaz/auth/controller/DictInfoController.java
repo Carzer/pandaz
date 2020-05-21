@@ -9,6 +9,8 @@ import com.github.pandaz.commons.dto.auth.DictInfoDTO;
 import com.github.pandaz.commons.dto.auth.DictTypeDTO;
 import com.github.pandaz.commons.service.BaseService;
 import com.github.pandaz.commons.util.R;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
@@ -19,9 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * <p>
  * 字典信息
- * </p>
  *
  * @author Carzer
  * @since 2019-12-19
@@ -29,6 +29,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/dict/info")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@Api(value = "DictInfo", tags = "字典信息")
 public class DictInfoController extends BaseController<DictInfoDTO, DictInfoEntity> {
 
     /**
@@ -56,6 +57,7 @@ public class DictInfoController extends BaseController<DictInfoDTO, DictInfoEnti
      *
      * @return 字典类型
      */
+    @ApiOperation(value = "获取全部字典类型", notes = "获取全部字典类型")
     @GetMapping("/listAllTypes")
     public R<List<DictTypeDTO>> listAllTypes() {
         return new R<>(controllerUtil.listAllTypes());

@@ -6,6 +6,7 @@ import com.github.pandaz.auth.service.DictTypeService;
 import com.github.pandaz.commons.controller.BaseController;
 import com.github.pandaz.commons.dto.auth.DictTypeDTO;
 import com.github.pandaz.commons.service.BaseService;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
@@ -13,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * <p>
  * 字典类型
- * </p>
  *
  * @author Carzer
  * @since 2019-12-19
@@ -23,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/dict/type")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@Api(value = "DictType", tags = "字典类型")
 public class DictTypeController extends BaseController<DictTypeDTO, DictTypeEntity> {
 
     /**

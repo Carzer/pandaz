@@ -5,8 +5,7 @@
 ----------------------------------------------------
 ## 一、 简介
 
-基于Java11、Spring Boot 2.2.6、Spring Cloud Hoxton.SR4的常用微服务集合  
-[Java8](https://github.com/Carzer/pandaz-java8)
+基于Spring Boot 2.2.6、Spring Cloud Hoxton.SR4的常用微服务集合  
 
 - 使用 [Nacos](https://github.com/alibaba/nacos/releases) 作为服务注册中心、分布式配置中心
 - 使用 [Feign](https://spring.io/projects/spring-cloud-openfeign) 消费微服务
@@ -22,6 +21,12 @@
 
 
 ## 三、 微服务列表
+
+### 0. [Swagger文档](http://localhost:7777/swagger-ui.html) | [Knife4j增强文档](http://localhost:7777/doc.html) 
+    
+    增强文档提供了更适合开发习惯的界面，建议使用
+    
+    // todo 前端对401错误处理有问题，待解决
 
 ### 1. [授权中心](http://localhost:9007)
 
@@ -62,7 +67,7 @@
 </code></pre>
 </details>  
 
-### 3. [文件存储服务](http://localhost:9005)
+### 3. [文件服务](http://localhost:9005)
 
 <details>
 <summary>进行中...</summary>
@@ -92,7 +97,7 @@
 </code></pre>
 </details> 
 
-### 5. [im](http://localhost:9004)
+### 5. [消息服务](http://localhost:9004)
 
 <details>
 <summary>进行中...</summary>
@@ -135,12 +140,6 @@
     - [x] Spring Security Oauth2
 </code></pre>
 </details> 
-
-### 8. 其他
-​    
-## 四、 之前版本中遇到的问题（Eureka、Hystrix、Zuul）
-
-> 印象笔记： https://app.yinxiang.com/fx/20e1570e-7d37-48ac-b79b-aac23b1bf952
 
 
 ## 五、 License 

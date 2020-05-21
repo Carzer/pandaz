@@ -62,18 +62,18 @@ public class CaptchaServiceImpl implements CaptchaService {
      * @return 是否成功
      */
     @Override
-    public R<Boolean> check(String key, String value) {
+    public RCode check(String key, String value) {
         if (!StringUtils.hasText(value)) {
-            return new R<>(RCode.VALID_CODE_EMPTY, false);
+            return RCode.VALID_CODE_EMPTY;
         }
         R<Object> result = captchaClient.getObject(CAPTCHA_KEY + key);
         if (result.getData() == null) {
-            return new R<>(RCode.VALID_CODE_EXPIRED, false);
+            return RCode.VALID_CODE_EXPIRED;
         }
         if (!value.equalsIgnoreCase(result.getData().toString())) {
-            return new R<>(RCode.VALID_CODE_ERROR, false);
+            return RCode.VALID_CODE_ERROR;
         }
-        return new R<>(true);
+        return RCode.SUCCESS;
     }
 
     /**

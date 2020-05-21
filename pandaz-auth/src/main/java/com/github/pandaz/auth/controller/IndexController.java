@@ -13,6 +13,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.security.Principal;
 import java.util.*;
@@ -27,6 +28,7 @@ import java.util.*;
 @RequestMapping("/")
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@ApiIgnore
 public class IndexController {
 
     /**

@@ -25,7 +25,7 @@ public class CaptchaClientFallBackFactory implements FallbackFactory<CaptchaClie
      */
     @Override
     public CaptchaClient create(Throwable cause) {
-        CaptchaClientFallBackFactory.log.error("fallback; reason was: ", cause);
+        CaptchaClientFallBackFactory.log.error("fallback; reason was: {}", cause.getMessage());
         return new CaptchaClient() {
             @Override
             public R<Object> getObject(String key) {
