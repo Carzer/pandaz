@@ -11,12 +11,4 @@
     <artifactId>pandaz-activiti-api</artifactId>
     <description>审批流服务API</description>
 
-    <dependencies>
-        <!--cloud-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-    </dependencies>
-
 </project>

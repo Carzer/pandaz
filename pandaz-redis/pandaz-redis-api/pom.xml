@@ -11,12 +11,4 @@
     <artifactId>pandaz-redis-api</artifactId>
     <description>Redis服务API</description>
 
-    <dependencies>
-        <!--cloud-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-    </dependencies>
-
 </project>

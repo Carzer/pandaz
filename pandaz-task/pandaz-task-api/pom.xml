@@ -11,12 +11,4 @@
     <artifactId>pandaz-task-api</artifactId>
     <description>定时任务API</description>
 
-    <dependencies>
-        <!--cloud-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-    </dependencies>
-
 </project>

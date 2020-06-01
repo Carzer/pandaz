@@ -32,12 +32,6 @@
             <artifactId>knife4j-micro-spring-boot-starter</artifactId>
             <optional>true</optional>
         </dependency>
-        <!--cloud-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-            <optional>true</optional>
-        </dependency>
         <!--oauth2-->
         <dependency>
             <groupId>org.springframework.security.oauth</groupId>
