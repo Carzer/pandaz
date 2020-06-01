@@ -38,7 +38,7 @@
         <!--消息服务-->
         <module>pandaz-im</module>
         <!--文件服务-->
-        <module>pandaz-file-server</module>
+        <module>pandaz-file</module>
         <!--activiti审批流-->
         <module>pandaz-activiti</module>
     </modules>
@@ -65,7 +65,7 @@
         <alibaba.dependency.version>2.2.1.RELEASE</alibaba.dependency.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <knife4j.version>2.0.2</knife4j.version>
-        <pandaz.commons.version>0.0.2-SNAPSHOT</pandaz.commons.version>
+        <pandaz.dependency.version>0.0.2-SNAPSHOT</pandaz.dependency.version>
         <maven-javadoc.version>3.2.0</maven-javadoc.version>
         <maven-delombok.version>1.18.12.0</maven-delombok.version>
         <sonar-maven-plugin.version>3.6.0.1398</sonar-maven-plugin.version>
@@ -88,7 +88,7 @@
             <dependency>
                 <groupId>com.github.pandaz</groupId>
                 <artifactId>pandaz-commons</artifactId>
-                <version>${pandaz.commons.version}</version>
+                <version>${pandaz.dependency.version}</version>
             </dependency>
             <!--mybatis plus-->
             <dependency>

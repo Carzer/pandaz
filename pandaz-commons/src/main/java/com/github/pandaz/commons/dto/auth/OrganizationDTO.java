@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 /**
  * 组织信息
@@ -69,4 +70,16 @@ public class OrganizationDTO extends BaseDTO {
      */
     @ApiModelProperty("是否锁定(0:未锁定，1:已锁定)")
     private Byte locked;
+
+    /**
+     * 描述
+     */
+    @ApiModelProperty("描述")
+    private String remark;
+
+    /**
+     * 子菜单
+     */
+    @ApiModelProperty("子菜单")
+    private List<OrganizationDTO> children;
 }

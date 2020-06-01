@@ -1,7 +1,7 @@
 package com.github.pandaz.api;
 
 import com.github.pandaz.api.controller.IndexController;
-import com.github.pandaz.api.util.SpringBeanUtil;
+import com.github.pandaz.commons.util.SpringBeanUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,7 +13,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @author Carzer
  * @since 2019-07-22
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.github.pandaz")
 @Slf4j
 @EnableDiscoveryClient
 public class ApiGatewayApp {

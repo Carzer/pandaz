@@ -1,6 +1,6 @@
 package com.github.pandaz.api.controller;
 
-import com.github.pandaz.api.util.ServerConfig;
+import com.github.pandaz.commons.util.ServerConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

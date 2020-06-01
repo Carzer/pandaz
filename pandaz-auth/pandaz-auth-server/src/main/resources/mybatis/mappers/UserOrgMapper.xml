@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.pandaz.auth.mapper.UserOrgMapper">
+    <resultMap id="BaseResultMap" type="com.github.pandaz.auth.entity.UserOrgEntity">
+        <result column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="user_code" jdbcType="VARCHAR" property="userCode"/>
+        <result column="org_code" jdbcType="VARCHAR" property="orgCode"/>
+        <result column="created_by" jdbcType="VARCHAR" property="createdBy"/>
+        <result column="created_date" jdbcType="TIMESTAMP" property="createdDate"/>
+        <result column="updated_by" jdbcType="VARCHAR" property="updatedBy"/>
+        <result column="updated_date" jdbcType="TIMESTAMP" property="updatedDate"/>
+        <result column="deleted_by" jdbcType="VARCHAR" property="deletedBy"/>
+        <result column="deleted_date" jdbcType="TIMESTAMP" property="deletedDate"/>
+        <result column="deleted_flag" jdbcType="TINYINT" property="deletedFlag"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, user_code, org_code,
+        created_by, created_date
+    </sql>
+    <insert id="insertSelective" parameterType="com.github.pandaz.auth.entity.UserOrgEntity">
+        insert into t_sys_user_org
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                id,
+            </if>
+            <if test="userCode != null and userCode != ''">
+                user_code,
+            </if>
+            <if test="orgCode != null and orgCode != ''">
+                org_code,
+            </if>
+            <if test="createdBy != null and createdBy !=''">
+                created_by,
+            </if>
+            <if test="createdDate != null">
+                created_date,
+            </if>
+            <if test="updatedBy != null and updatedBy !=''">
+                updated_by,
+            </if>
+            <if test="updatedDate != null">
+                updated_date,
+            </if>
+            <if test="deletedBy != null and deletedBy !=''">
+                deleted_by,
+            </if>
+            <if test="deletedDate != null">
+                deleted_date,
+            </if>
+            <if test="deletedFlag != null">
+                deleted_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="userCode != null and userCode != ''">
+                #{userCode,jdbcType=VARCHAR},
+            </if>
+            <if test="orgCode != null and orgCode != ''">
+                #{orgCode,jdbcType=VARCHAR},
+            </if>
+            <if test="createdBy != null and createdBy !=''">
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDate != null">
+                #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedBy != null and updatedBy !=''">
+                #{updatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedDate != null">
+                #{updatedDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deletedBy != null and deletedBy !=''">
+                #{deletedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="deletedDate != null">
+                #{deletedDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deletedFlag != null">
+                #{deletedFlag,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <!-- 批量逻辑删除 -->
+    <update id="batchLogicDelete" parameterType="java.util.HashMap">
+        update t_sys_user_org
+        <set>
+            <if test="deletedBy != null">
+                deleted_by = #{deletedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="deletedDate != null">
+                deleted_date = #{deletedDate,jdbcType=TIMESTAMP},
+            </if>
+            deleted_flag = id
+        </set>
+        <where>
+            deleted_flag='0'
+            <choose>
+                <when test="list != null and list.size() > 0">
+                    <if test="orgCode != null and orgCode != ''">
+                        and org_code = #{orgCode,jdbcType=VARCHAR}
+                        and user_code in
+                        <foreach collection="list" open="(" close=")" index="index" item="item" separator=",">
+                            #{item,jdbcType=VARCHAR}
+                        </foreach>
+                    </if>
+                    <if test="userCode != null and userCode != ''">
+                        and user_code = #{userCode,jdbcType=VARCHAR}
+                        and org_code in
+                        <foreach collection="list" open="(" close=")" index="index" item="item" separator=",">
+                            #{item,jdbcType=VARCHAR}
+                        </foreach>
+                    </if>
+                    <if test="orgCode == null and userCode == null">
+                        and 1 = 2
+                    </if>
+                </when>
+                <otherwise>
+                    and 1 = 2
+                </otherwise>
+            </choose>
+        </where>
+    </update>
+    <!-- 根据用户编码逻辑删除 -->
+    <update id="logicDeleteByUserCode">
+        update t_sys_user_org
+        <set>
+            <if test="deletedBy != null">
+                deleted_by = #{deletedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="deletedDate != null">
+                deleted_date = #{deletedDate,jdbcType=TIMESTAMP},
+            </if>
+            deleted_flag = id
+        </set>
+        <where>
+            deleted_flag='0'
+            <choose>
+                <when test="userCode != null and userCode != ''">
+                    and user_code = #{userCode,jdbcType=VARCHAR}
+                </when>
+                <otherwise>
+                    and 1 = 2
+                </otherwise>
+            </choose>
+        </where>
+    </update>
+    <!-- 根据组织编码逻辑删除 -->
+    <update id="logicDeleteByOrgCode">
+        update t_sys_user_org
+        <set>
+            <if test="deletedBy != null">
+                deleted_by = #{deletedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="deletedDate != null">
+                deleted_date = #{deletedDate,jdbcType=TIMESTAMP},
+            </if>
+            deleted_flag = id
+        </set>
+        <where>
+            deleted_flag='0'
+            <choose>
+                <when test="orgCode != null and orgCode != ''">
+                    and org_code = #{orgCode,jdbcType=VARCHAR}
+                </when>
+                <otherwise>
+                    and 1 = 2
+                </otherwise>
+            </choose>
+        </where>
+    </update>
+    <!-- 列出组织内成员 -->
+    <select id="listBindOrgMembers" parameterType="com.github.pandaz.auth.entity.UserOrgEntity"
+            resultType="java.lang.String">
+        select user_code
+        from t_sys_user_org
+        <where>
+            deleted_flag='0'
+            and org_code = #{orgCode,jdbcType=VARCHAR}
+        </where>
+    </select>
+    <!-- 列出用户所有的组织 -->
+    <select id="listBindUserOrg" parameterType="com.github.pandaz.auth.entity.UserOrgEntity"
+            resultType="java.lang.String">
+        select org_code
+        from t_sys_user_org
+        <where>
+            deleted_flag='0'
+            and user_code = #{userCode,jdbcType=VARCHAR}
+        </where>
+    </select>
+    <!-- 批量插入 -->
+    <insert id="batchInsert" parameterType="com.github.pandaz.auth.entity.UserOrgEntity">
+        insert into t_sys_user_org
+        (id, user_code, org_code, created_by, created_date)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.id,jdbcType=VARCHAR},
+            #{item.userCode,jdbcType=VARCHAR},
+            #{item.orgCode,jdbcType=VARCHAR},
+            #{item.createdBy,jdbcType=VARCHAR},
+            #{item.createdDate,jdbcType=TIMESTAMP}
+            )
+        </foreach>
+    </insert>
+</mapper>

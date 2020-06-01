@@ -18,7 +18,7 @@ public final class CommonConstants {
     /**
      * 菜单根节点编码
      */
-    public static final String ROOT_MENU_CODE = "root";
+    public static final String ROOT_CODE = "root";
 
     /**
      * 权限header

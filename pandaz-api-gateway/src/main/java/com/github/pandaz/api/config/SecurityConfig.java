@@ -33,6 +33,9 @@ import java.security.spec.X509EncodedKeySpec;
 @Slf4j
 public class SecurityConfig {
 
+    /**
+     * 公钥
+     */
     @Value("${security.oauth2.resource.jwt.key-uri}")
     private String keyUri;
 

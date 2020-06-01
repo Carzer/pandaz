@@ -62,7 +62,7 @@ public abstract class BaseController<T extends BaseDTO, E extends BaseEntity> {
     @ApiOperation(value = "查询方法", notes = "查询方法")
     @ApiOperationSupport(ignoreParameters = {"id", "createdBy", "createdDate", "updatedBy", "updatedDate", "version"})
     @GetMapping(UrlConstants.GET)
-    public R<T> get(@Valid T dto) {
+    public R<T> get(@Valid T dto, @ApiIgnore Principal principal) {
         E entity = BeanCopyUtil.copy(dto, getEntityClass());
         T result = BeanCopyUtil.copy(getBaseService().findByCode(entity), dto);
         return new R<>(result);
@@ -77,7 +77,7 @@ public abstract class BaseController<T extends BaseDTO, E extends BaseEntity> {
     @ApiOperation(value = "分页方法", notes = "分页方法")
     @ApiOperationSupport(ignoreParameters = {"id", "createdBy", "createdDate", "updatedBy", "updatedDate", "version"})
     @GetMapping(UrlConstants.PAGE)
-    public R<Map<String, Object>> getPage(T dto) {
+    public R<Map<String, Object>> getPage(T dto, @ApiIgnore Principal principal) {
         IPage<E> page = getBaseService().getPage(BeanCopyUtil.copy(dto, getEntityClass()));
         return new R<>(BeanCopyUtil.convertToMap(page, dto.getClass()));
     }
@@ -155,7 +155,7 @@ public abstract class BaseController<T extends BaseDTO, E extends BaseEntity> {
     @ApiOperation(value = "导出方法", notes = "导出方法")
     @ApiOperationSupport(ignoreParameters = {"id", "createdBy", "createdDate", "updatedBy", "updatedDate", "version"})
     @GetMapping(UrlConstants.EXPORT)
-    public void export(T dto) {
+    public void export(T dto, @ApiIgnore Principal principal) {
 
     }
 

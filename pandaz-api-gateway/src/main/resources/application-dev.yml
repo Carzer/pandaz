@@ -8,13 +8,13 @@ spring:
           lowerCaseServiceId: true
       routes:
         - id: pandaz-auth
-          uri: lb://pandaz-auth
+          uri: lb://pandaz-auth-server
           predicates:
             - Path=/auth/**
           filters:
             - StripPrefix=1
         - id: pandaz-redis
-          uri: lb://pandaz-redis
+          uri: lb://pandaz-redis-server
           predicates:
             - Path=/redis/**
           filters:

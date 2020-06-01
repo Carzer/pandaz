@@ -105,4 +105,9 @@ public final class R<T> {
     public static R<String> fail(String message) {
         return new R<>(RCode.FAILED, message);
     }
+
+    @Override
+    public String toString() {
+        return String.format("执行结果:[返回码:%s,返回信息:%s]", this.code, this.message);
+    }
 }

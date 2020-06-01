@@ -1,9 +1,6 @@
 package com.github.pandaz.commons.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.Version;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -19,6 +16,12 @@ import java.time.LocalDateTime;
 public class BaseEntity implements Serializable {
 
     private static final long serialVersionUID = -231856618304146934L;
+
+    /**
+     * 主键
+     */
+    @TableId("id")
+    private String id;
 
     /**
      * 创建人
