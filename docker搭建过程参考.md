@@ -73,6 +73,14 @@ mkdir -p [docker统一目录]/nacos/sentinel
 mkdir -p [docker统一目录]/ftp/vsftpd
 ```
 
+```shell
+mkdir -p [docker统一目录]/jenkins/sh
+mkdir -p [docker统一目录]/jenkins/jenkins_home
+```
+
+可能用到的配置文件（[docker统一目录]/jenkins/sh）  
+[jenkins.sh](./conf/jenkins.sh) 
+
 
 ##  1. mysql
 
@@ -228,4 +236,14 @@ docker run -d -v [docker统一目录]/ftp/vsftpd:/home/vsftpd \
                 -e PASV_ADDRESS=127.0.0.1 \
                 --name ftp \
                 --restart=always bogem/ftp
+```
+
+## 10.Jenkins
+
+```shell
+docker pull jenkins/jenkins
+```
+
+```shell
+docker run -d -p 8800:8080 -p 50001:50001 --env JENKINS_SLAVE_AGENT_PORT=50001 -v /etc/localtime:/etc/localtime -v [docker统一目录]/jenkins/sh/jenkins.sh:/usr/local/bin/jenkins.sh -v [docker统一目录]/jenkins/jenkins_home:/var/jenkins_home --name jenkins --restart=always jenkins/jenkins
 ```

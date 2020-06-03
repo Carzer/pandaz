@@ -1,3 +1,7 @@
+[client]
+default-character-set=utf8mb4
+[mysql]
+default-character-set=utf8mb4
 [mysqld]
 lower_case_table_names = 1
 # 创建新表时将使用的默认存储引擎
@@ -6,3 +10,7 @@ default-storage-engine=INNODB
 max_connections=200
 # 允许连接失败的次数。这是为了防止有人从该主机试图攻击数据库系统
 max_connect_errors=10
+character-set-client-handshake=FALSE
+character-set-server=utf8mb4
+collation-server=utf8mb4_unicode_ci
+init_connect='SET NAMES utf8mb4'
