@@ -28,11 +28,6 @@ public class CustomProperties {
     private String[] excludedPaths;
 
     /**
-     * 调用客户端的信息
-     */
-    private Client client;
-
-    /**
      * 缓存参数
      */
     private Cache cache;
@@ -61,17 +56,6 @@ public class CustomProperties {
      * 随机数
      */
     private Integer random;
-
-    /**
-     * 调用客户端
-     */
-    @Getter
-    @Setter
-    public static class Client {
-
-        private String redisServer;
-        private String fileServer;
-    }
 
     /**
      * 缓存参数

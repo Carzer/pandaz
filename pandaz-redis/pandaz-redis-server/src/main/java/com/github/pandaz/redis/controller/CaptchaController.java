@@ -23,6 +23,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @ApiIgnore
 public class CaptchaController {
+
     /**
      * redis操作
      */

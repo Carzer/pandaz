@@ -27,7 +27,7 @@ public class CustomAccessDecisionManager implements AccessDecisionManager {
      * 直接return即代表通过
      *
      * @param authentication   UserService中循环添加到 GrantedAuthority 对象中的权限信息集合.
-     * @param object           包含客户端发起的请求的requset信息
+     * @param object           包含客户端发起的请求的request信息
      * @param configAttributes {@link CustomInvocationSecurityMetadataSourceService#getAttributes(Object)}返回的结果
      */
     @Override

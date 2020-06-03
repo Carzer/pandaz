@@ -41,6 +41,14 @@ mkdir -p [docker统一目录]/rabbitmq/data
 mkdir -p [docker统一目录]/mongo/data
 ```
 ```shell
+mkdir -p [docker统一目录]/postgres/data
+```
+```shell
+mkdir -p [docker统一目录]/sonarqube/logs
+mkdir -p [docker统一目录]/sonarqube/data
+mkdir -p [docker统一目录]/sonarqube/extensions
+```
+```shell
 mkdir -p [docker统一目录]/nginx
 mkdir -p [docker统一目录]/nginx/ext
 mkdir -p [docker统一目录]/logs/nginx
@@ -135,13 +143,15 @@ docker run -d --name postgres -p 5432:5432 -v [docker统一目录]/postgres/data
 
 ## 6.sonarqube
 
+8.2+
+
 sonarqube7.9以后，不再对mysql提供支持，所以搭配了postgres使用
 ```shell
 docker pull sonarqube
 ```
 
 ```shell
-docker run -d --name sonar -p 9000:9000 -p 9092:9092 -v [docker统一目录]/sonarqube/conf:/opt/sonarqube/conf -v [docker统一目录]/sonarqube/data:/opt/sonarqube/data -v [docker统一目录]/sonarqube/extensions:/opt/sonarqube/extensions -v [docker统一目录]/sonarqube/bundled-plugins:/opt/sonarqube/lib/bundled-plugins -e SONARQUBE_JDBC_USERNAME=sonar -e SONARQUBE_JDBC_PASSWORD=sonar -e SONARQUBE_JDBC_URL=jdbc:postgresql://172.17.0.1:5432/sonar sonarqube
+docker run -d --name sonar -p 9000:9000 -p 9092:9092 -v [docker统一目录]/sonarqube/logs:/opt/sonarqube/logs -v [docker统一目录]/sonarqube/data:/opt/sonarqube/data -v [docker统一目录]/sonarqube/extensions:/opt/sonarqube/extensions -e SONARQUBE_JDBC_USERNAME=sonar -e SONARQUBE_JDBC_PASSWORD=sonar -e SONARQUBE_JDBC_URL=jdbc:postgresql://172.17.0.1:5432/sonar sonarqube
 ```
 
 
