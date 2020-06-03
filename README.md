@@ -30,9 +30,10 @@
 
 ### 1. [授权中心](http://localhost:9007)
 
-    使用时，根据pandaz.sql更新数据库信息.使用InitTest初始化数据。
+    使用pandaz.sql初始化数据库信息。
     默认用户：admin，密码：admin。测试oauth2客户端：test，密码：test。
     所有数据默认逻辑删除。
+    
 - [x] **功能实现**
     - [x] 完成会话管理
     - [x] 完成多数据源动态切换功能（手动或注解）

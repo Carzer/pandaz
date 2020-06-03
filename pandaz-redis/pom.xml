@@ -9,6 +9,7 @@
     </parent>
 
     <artifactId>pandaz-redis</artifactId>
+    <description>Redis服务</description>
     <packaging>pom</packaging>
 
     <modules>
