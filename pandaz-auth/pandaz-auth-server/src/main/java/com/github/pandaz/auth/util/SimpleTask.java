@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -30,21 +29,10 @@ public class SimpleTask {
 
     /**
      * 定时清理脏数据
-     * <p>
-     * 暂定6小时
-     * '@Scheduled(fixedDelay = 1000 * 60 * 60 * 6)'
      */
     public void clear() {
         // 清理菜单脏数据
         clearMenus();
-    }
-
-    /**
-     * 拉取权限信息
-     */
-    @Scheduled(fixedDelay = 1000 * 60 * 60)
-    public void loadResourceDefineMap() {
-        AuthUtil.loadResourceDefineMap();
     }
 
     /**

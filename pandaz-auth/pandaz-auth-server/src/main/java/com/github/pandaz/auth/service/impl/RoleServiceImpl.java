@@ -1,5 +1,7 @@
 package com.github.pandaz.auth.service.impl;
 
+import com.alicp.jetcache.anno.CacheType;
+import com.alicp.jetcache.anno.Cached;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -17,8 +19,6 @@ import com.github.pandaz.commons.SecurityUser;
 import com.github.pandaz.commons.util.UuidUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
@@ -31,6 +31,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -39,7 +40,6 @@ import java.util.stream.Collectors;
  * @author Carzer
  * @since 2019-10-25
  */
-@CacheConfig(cacheManager = "secondaryCacheManager", cacheNames = {"auth:role"})
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> implements RoleService {
@@ -87,7 +87,6 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
      * @param isPrivate 是否私有
      * @return 角色信息列表
      */
-    @Cacheable(key = "#userCode+':'+((1 == #isPrivate)?'private':'public')")
     @Override
     public List<RoleDetailEntity> findByUserCode(String userCode, Byte isPrivate) {
         if (SysConstants.PRIVATE.equals(isPrivate)) {
@@ -103,7 +102,6 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
      * @param userCode userCode用户编码
      * @return 执行结果
      */
-    @Cacheable(key = "#userCode+':all'")
     @Override
     public List<RoleDetailEntity> findByUserCode(String userCode) {
         return roleMapper.getAllRoles(userCode);
@@ -129,6 +127,20 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
             authorityMap.forEach((key, value) -> authoritySet.add(new SimpleGrantedAuthority(value)));
         }
         return authoritySet;
+    }
+
+    /**
+     * 获取所有角色编码
+     *
+     * @return 所有角色编码
+     */
+    @Override
+    @Cached(name = "role:", key = "'allRoleCode'", cacheType = CacheType.LOCAL, expire = 30, timeUnit = TimeUnit.MINUTES)
+    public List<String> listAllRoleCode() {
+        QueryWrapper<RoleEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("is_private", 0);
+        queryWrapper.eq("locked", 0);
+        return roleMapper.selectList(queryWrapper).parallelStream().map(RoleEntity::getCode).collect(Collectors.toList());
     }
 
     /**

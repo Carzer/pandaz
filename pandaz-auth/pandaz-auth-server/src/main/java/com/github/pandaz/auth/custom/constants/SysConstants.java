@@ -82,11 +82,6 @@ public final class SysConstants {
     public static final Byte MIN_DIGIT = 1;
 
     /**
-     * 默认系统编码os_code
-     */
-    public static final String DEFAULT_SYS_CODE = "portal";
-
-    /**
      * 默认session、token过期时间为60分钟
      */
     public static final int DEFAULT_EXPIRE_SECONDS = 60 * 60;

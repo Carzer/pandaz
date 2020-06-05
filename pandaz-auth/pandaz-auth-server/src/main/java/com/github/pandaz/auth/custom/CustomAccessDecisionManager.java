@@ -5,12 +5,12 @@ import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.web.FilterInvocation;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * AccessDecisionManager
@@ -32,16 +32,13 @@ public class CustomAccessDecisionManager implements AccessDecisionManager {
      */
     @Override
     public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) {
-        // 如果请求的资源为系统中配置的资源，进行角色匹配
-        if (!CollectionUtils.isEmpty(configAttributes)) {
-            List<String> roleList = authentication.getAuthorities().stream()
-                    .map(grantedAuthority -> grantedAuthority.getAuthority().toLowerCase())
-                    .collect(Collectors.toList());
-            for (ConfigAttribute configAttribute : configAttributes) {
-                if (roleList.contains(configAttribute.getAttribute().toLowerCase())) {
-                    return;
-                }
-            }
+        HttpServletRequest request = ((FilterInvocation) object).getRequest();
+        boolean match = configAttributes.parallelStream().anyMatch(configAttribute -> {
+            AntPathRequestMatcher matcher = new AntPathRequestMatcher(configAttribute.getAttribute());
+            return matcher.matches(request);
+        });
+        if (match) {
+            return;
         }
         throw new AccessDeniedException("no privilege");
     }

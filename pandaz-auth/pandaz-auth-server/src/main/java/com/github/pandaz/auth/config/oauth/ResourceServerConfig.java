@@ -1,4 +1,4 @@
-package com.github.pandaz.auth.config;
+package com.github.pandaz.auth.config.oauth;
 
 import com.github.pandaz.commons.constants.CommonConstants;
 import org.springframework.beans.factory.annotation.Value;

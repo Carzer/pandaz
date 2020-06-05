@@ -1,5 +1,6 @@
-package com.github.pandaz.auth.config;
+package com.github.pandaz.auth.config.security;
 
+import com.github.pandaz.auth.config.oauth.AuthorizationServerConfig;
 import com.github.pandaz.auth.custom.CustomDaoAuthenticationProvider;
 import com.github.pandaz.auth.custom.CustomProperties;
 import com.github.pandaz.auth.custom.constants.SysConstants;

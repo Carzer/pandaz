@@ -1,5 +1,7 @@
 package com.github.pandaz.auth.service.impl;
 
+import com.alicp.jetcache.anno.CacheInvalidate;
+import com.alicp.jetcache.anno.Cached;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -15,9 +17,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.NoSuchClientException;
 import org.springframework.security.oauth2.provider.client.BaseClientDetails;
@@ -42,7 +41,6 @@ import java.util.Map;
  */
 @Service
 @Slf4j
-@CacheConfig(cacheManager = "secondaryCacheManager", cacheNames = {"auth:oauth_client"})
 @SuppressWarnings("unchecked")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, OauthClientEntity> implements OauthClientService {
@@ -65,7 +63,7 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Oauth
      * @param clientId 客户端ID
      * @return 客户端
      */
-    @Cacheable(key = "#clientId")
+    @Cached(name = "client:", key = "#clientId")
     @Override
     public ClientDetails loadClientByClientId(String clientId) {
         if (!StringUtils.hasText(clientId)) {
@@ -86,7 +84,7 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Oauth
      * @param oauthClientEntity 客户端信息
      * @return 执行结果
      */
-    @CacheEvict(key = "#oauthClientEntity.clientId")
+    @CacheInvalidate(name = "client:", key = "#oauthClientEntity.clientId")
     @Override
     public int deleteByClientId(OauthClientEntity oauthClientEntity) {
         return oauthClientMapper.logicDelete(oauthClientEntity);
@@ -133,7 +131,7 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Oauth
      * @param oauthClientEntity 客户端信息
      * @return 执行结果
      */
-    @CacheEvict(key = "#oauthClientEntity.clientId")
+    @CacheInvalidate(name = "client:", key = "#oauthClientEntity.clientId")
     @Override
     public int updateByClientId(OauthClientEntity oauthClientEntity) {
         UpdateWrapper<OauthClientEntity> updateWrapper = new UpdateWrapper<>();

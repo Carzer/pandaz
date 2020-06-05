@@ -1,4 +1,4 @@
-package com.github.pandaz.auth.config;
+package com.github.pandaz.auth.config.security;
 
 import com.github.pandaz.auth.custom.CustomPermissionEvaluator;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -323,9 +323,9 @@
         <where>
             deleted_flag = '0'
             <choose>
-                <when test="list != null and list.size()>0">
+                <when test="collection != null and collection.size()>0">
                     and code in
-                    <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+                    <foreach collection="collection" index="index" item="item" separator="," open="(" close=")">
                         #{item,jdbcType=VARCHAR}
                     </foreach>
                 </when>

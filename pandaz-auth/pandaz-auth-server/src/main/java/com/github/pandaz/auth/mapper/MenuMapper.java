@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 菜单mapper
@@ -52,7 +53,7 @@ public interface MenuMapper extends BasisMapper<MenuEntity> {
      * @param codes 编码
      * @return 菜单
      */
-    List<MenuEntity> selectByCodes(List<String> codes);
+    List<MenuEntity> selectByCodes(Set<String> codes);
 
     /**
      * 只列出叶子节点

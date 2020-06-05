@@ -30,9 +30,9 @@
 
 ### 1. [授权中心](http://localhost:9007)
 
-    使用pandaz.sql初始化数据库信息。
-    默认用户：admin，密码：admin。测试oauth2客户端：test，密码：test。
-    所有数据默认逻辑删除。
+>使用 [pandaz.sql](./pandaz-auth/pandaz-auth-server/src/main/resources/sql/pandaz.sql) 初始化数据库信息。
+>默认用户：admin，密码：admin。测试oauth2客户端：test，密码：test。
+>所有数据默认逻辑删除。
     
 - [x] **功能实现**
     - [x] 完成会话管理

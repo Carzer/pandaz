@@ -18,8 +18,6 @@ import com.github.pandaz.commons.util.UuidUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,10 +25,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -39,7 +34,6 @@ import java.util.stream.Collectors;
  * @author Carzer
  * @since 2019-11-01
  */
-@CacheConfig(cacheManager = "secondaryCacheManager", cacheNames = {"auth:menu"})
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Slf4j
@@ -157,7 +151,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
      * <p>
      * 删除的同时，异步删除子菜单
      * 由定时任务进行脏数据的清理
-     * {@link SimpleTask#clear()}
+     * {@link SimpleTask}
      * <p>
      * 由于Spring的异步方法，实际上是异步调用实例方法（以类的实例为单位），{@link this#clearMenuChildren(String, LocalDateTime, List)}无法异步进行
      * 所以在使用@Async注解时，应当使用实例进行调用
@@ -222,15 +216,14 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @Cacheable(key = "#osCode+':'+ #roleList.toArray()")
     public List<MenuEntity> getAuthorizedMenu(String osCode, List<String> roleList) {
         Map<String, Object> map = new HashMap<>(2);
         List<MenuEntity> toRootList = new ArrayList<>();
-        List<String> parentCodes = new ArrayList<>();
+        Set<String> parentCodes = new HashSet<>();
         map.put("osCode", osCode);
         map.put("list", roleList);
         List<MenuEntity> menuList = menuMapper.getAuthorizedMenu(map);
-        List<String> allCodes = menuList.stream().map(MenuEntity::getCode).collect(Collectors.toList());
+        List<String> allCodes = menuList.parallelStream().map(MenuEntity::getCode).collect(Collectors.toList());
         // 计算位运算和值，并查找缺失的父级菜单
         menuList.forEach(menuEntity -> {
             int bitResult = SysConstants.BASIC_DIGIT_RESULT;
@@ -306,10 +299,10 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
      * @param codes      将要查询的菜单
      * @param toRootList 所有菜单列表
      */
-    private void findToRoot(List<String> allCodes, List<String> codes, List<MenuEntity> toRootList) {
+    private void findToRoot(List<String> allCodes, Set<String> codes, List<MenuEntity> toRootList) {
         // 根据缺失的父级菜单编码进行查询
         List<MenuEntity> menuList = menuMapper.selectByCodes(codes);
-        List<String> parentCodes = new ArrayList<>();
+        Set<String> parentCodes = new HashSet<>();
         // 将结果放入list备用
         toRootList.addAll(menuList);
         // 将所有查询出的菜单编码放入all菜单编码中

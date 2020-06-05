@@ -26,8 +26,7 @@ public enum RCode implements ICode {
     UNAUTHORIZED(1007, "未授权"),
     FORBIDDEN(1008, "权限不足，请联系管理员!"),
     BAD_CREDENTIALS(1009, "用户名或密码错误!"),
-    AUTH_TYPE_NOT_SUPPORT(1010, "不支持的授权方式"),
-    ROLE_EMPTY(1011, "没有角色"),
+    ROLE_EMPTY(1010, "没有角色"),
     ERROR(5000, "未知错误");
 
     /**

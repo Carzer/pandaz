@@ -65,6 +65,11 @@ public class ControllerUtil {
     private final RoleService roleService;
 
     /**
+     * 组织服务
+     */
+    private final OrganizationService organizationService;
+
+    /**
      * 获取所有系统信息
      *
      * @return 系统信息
@@ -118,33 +123,6 @@ public class ControllerUtil {
     }
 
     /**
-     * 将entity及children转换为dto
-     *
-     * @param menuEntity entity
-     * @return dto
-     */
-    private MenuDTO transferToDTO(MenuEntity menuEntity) {
-        MenuDTO menuDTO = new MenuDTO();
-        List<MenuEntity> entityList = menuEntity.getChildren();
-        if (!CollectionUtils.isEmpty(entityList)) {
-            List<MenuDTO> dtoList = new ArrayList<>();
-            entityList.forEach(menu -> dtoList.add(transferToDTO(menu)));
-            menuDTO.setChildren(dtoList);
-        }
-        menuDTO.setId(menuEntity.getId());
-        menuDTO.setCode(menuEntity.getCode());
-        menuDTO.setOsCode(menuEntity.getOsCode());
-        menuDTO.setParentCode(menuEntity.getParentCode());
-        menuDTO.setName(menuEntity.getName());
-        menuDTO.setUrl(menuEntity.getUrl());
-        menuDTO.setRouter(menuEntity.getRouter());
-        menuDTO.setRemark(menuEntity.getRemark());
-        menuDTO.setLocked(menuEntity.getLocked());
-        menuDTO.setSorting(menuEntity.getSorting());
-        return menuDTO;
-    }
-
-    /**
      * 根据系统编码、角色编码、菜单编码获取所有权限
      *
      * @param roleCode 角色编码
@@ -183,5 +161,69 @@ public class ControllerUtil {
     public Map<String, Object> getRolePage(RoleDTO roleDTO) {
         IPage<RoleEntity> page = roleService.getPage(BeanCopyUtil.copy(roleDTO, RoleEntity.class));
         return BeanCopyUtil.convertToMap(page, RoleDTO.class);
+    }
+
+    /**
+     * 获取所有组织
+     *
+     * @return 获取所有组织
+     */
+    public OrganizationDTO getAllOrg() {
+        OrganizationEntity organizationEntity = new OrganizationEntity();
+        organizationEntity.setParentCode(CommonConstants.ROOT_CODE);
+        List<OrganizationEntity> list = organizationService.getAll(organizationEntity);
+        organizationEntity.setChildren(list);
+        return transferToDTO(organizationEntity);
+    }
+
+    /**
+     * 将entity及children转换为dto
+     *
+     * @param menuEntity entity
+     * @return dto
+     */
+    private MenuDTO transferToDTO(MenuEntity menuEntity) {
+        MenuDTO menuDTO = new MenuDTO();
+        List<MenuEntity> entityList = menuEntity.getChildren();
+        if (!CollectionUtils.isEmpty(entityList)) {
+            List<MenuDTO> dtoList = new ArrayList<>();
+            entityList.forEach(menu -> dtoList.add(transferToDTO(menu)));
+            menuDTO.setChildren(dtoList);
+        }
+        menuDTO.setId(menuEntity.getId());
+        menuDTO.setCode(menuEntity.getCode());
+        menuDTO.setOsCode(menuEntity.getOsCode());
+        menuDTO.setParentCode(menuEntity.getParentCode());
+        menuDTO.setName(menuEntity.getName());
+        menuDTO.setUrl(menuEntity.getUrl());
+        menuDTO.setRouter(menuEntity.getRouter());
+        menuDTO.setRemark(menuEntity.getRemark());
+        menuDTO.setLocked(menuEntity.getLocked());
+        menuDTO.setSorting(menuEntity.getSorting());
+        return menuDTO;
+    }
+
+    /**
+     * 将entity及children转换为dto
+     *
+     * @param organizationEntity entity
+     * @return dto
+     */
+    private OrganizationDTO transferToDTO(OrganizationEntity organizationEntity) {
+        OrganizationDTO organizationDTO = new OrganizationDTO();
+        List<OrganizationEntity> entityList = organizationEntity.getChildren();
+        if (!CollectionUtils.isEmpty(entityList)) {
+            List<OrganizationDTO> dtoList = new ArrayList<>();
+            entityList.forEach(organization -> dtoList.add(transferToDTO(organization)));
+            organizationDTO.setChildren(dtoList);
+        }
+        organizationDTO.setId(organizationEntity.getId());
+        organizationDTO.setCode(organizationEntity.getCode());
+        organizationDTO.setParentCode(organizationEntity.getParentCode());
+        organizationDTO.setName(organizationEntity.getName());
+        organizationDTO.setRemark(organizationEntity.getRemark());
+        organizationDTO.setLocked(organizationEntity.getLocked());
+        organizationDTO.setSorting(organizationEntity.getSorting());
+        return organizationDTO;
     }
 }

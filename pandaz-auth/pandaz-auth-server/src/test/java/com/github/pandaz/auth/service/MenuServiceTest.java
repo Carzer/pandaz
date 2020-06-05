@@ -2,7 +2,6 @@ package com.github.pandaz.auth.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.pandaz.auth.AuthServerApp;
-import com.github.pandaz.auth.custom.constants.SysConstants;
 import com.github.pandaz.auth.entity.MenuEntity;
 import com.github.pandaz.commons.constants.CommonConstants;
 import com.github.pandaz.commons.dto.auth.MenuDTO;
@@ -103,7 +102,7 @@ public class MenuServiceTest {
         MenuEntity menuEntity = new MenuEntity();
         menuEntity.setParentCode(CommonConstants.ROOT_CODE);
         menuEntity.setCode(CommonConstants.ROOT_CODE);
-        menuEntity.setOsCode(SysConstants.DEFAULT_SYS_CODE);
+        menuEntity.setOsCode("portal");
         List<MenuEntity> list = menuService.getAll(menuEntity);
         menuEntity.setChildren(list);
         MenuDTO menuDTO = BeanCopyUtil.copy(menuEntity, MenuDTO.class);

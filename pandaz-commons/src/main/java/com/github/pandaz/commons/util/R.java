@@ -108,6 +108,6 @@ public final class R<T> {
 
     @Override
     public String toString() {
-        return String.format("执行结果:[返回码:%s,返回信息:%s]", this.code, this.message);
+        return String.format("[返回码:%s,返回信息:%s]", this.code, this.message);
     }
 }

@@ -1,5 +1,8 @@
 package com.github.pandaz.auth.service.impl;
 
+import com.alicp.jetcache.anno.CacheType;
+import com.alicp.jetcache.anno.CacheUpdate;
+import com.alicp.jetcache.anno.Cached;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pandaz.auth.entity.PermissionEntity;
 import com.github.pandaz.auth.entity.RoleEntity;
@@ -9,16 +12,16 @@ import com.github.pandaz.auth.service.RolePermissionService;
 import com.github.pandaz.commons.util.UuidUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -29,7 +32,6 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-@CacheConfig(cacheManager = "secondaryCacheManager", cacheNames = {"auth:rolePermission"})
 public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper, RolePermissionEntity> implements RolePermissionService {
 
     /**
@@ -88,6 +90,7 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @CacheUpdate(name = "permissions", key = "#rolePermissionEntity.osCode+':'+#rolePermissionEntity.roleCode", value = "#rolePermissionEntity.permissionCodes")
     public int bindPermissions(String operator, LocalDateTime currentDate, RolePermissionEntity rolePermissionEntity) {
         String roleCode = rolePermissionEntity.getRoleCode();
         String osCode = rolePermissionEntity.getOsCode();
@@ -131,15 +134,22 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
     }
 
     /**
-     * 根据系统编码查询
+     * 根据系统编码和角色编码查询
      *
-     * @param osCode 系统编码
+     * @param osCode   系统编码
+     * @param roleCode 角色编码
      * @return 权限列表
      */
     @Override
-    @Cacheable(key = "'os:'+#osCode")
-    public List<RolePermissionEntity> listByOsCode(String osCode) {
-        return rolePermissionMapper.listByOsCode(osCode);
+    @Cached(name = "permissions:", key = "#osCode+':'+#roleCode", cacheType = CacheType.REMOTE, expire = 30, timeUnit = TimeUnit.MINUTES)
+    public List<String> getByOsCodeAndRoleCode(String osCode, String roleCode) {
+        RolePermissionEntity rolePermissionEntity = new RolePermissionEntity();
+        rolePermissionEntity.setOsCode(osCode);
+        rolePermissionEntity.setRoleCode(roleCode);
+        List<RolePermissionEntity> permissionList = rolePermissionMapper.listByOsCodeAndRoleCode(rolePermissionEntity);
+        List<String> codeList = new ArrayList<>();
+        permissionList.forEach(permission -> codeList.add("/" + permission.getPermissionCode()));
+        return codeList;
     }
 
     /**

@@ -1,12 +1,14 @@
 package com.github.pandaz.auth.service.impl;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.alicp.jetcache.anno.CacheType;
+import com.alicp.jetcache.anno.Cached;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pandaz.auth.config.SecurityConfig;
+import com.github.pandaz.auth.config.security.SecurityConfig;
 import com.github.pandaz.auth.custom.constants.ExpireStateEnum;
 import com.github.pandaz.auth.custom.constants.SysConstants;
 import com.github.pandaz.auth.entity.GroupEntity;
@@ -22,9 +24,6 @@ import com.github.pandaz.commons.util.CustomPasswordEncoder;
 import com.github.pandaz.commons.util.UuidUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -39,7 +38,6 @@ import java.util.List;
  * @author Carzer
  * @since 2019-07-16
  */
-@CacheConfig(cacheNames = {"auth:user"})
 @Service("userService")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> implements UserService {
@@ -75,7 +73,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
      * @param loginName 用户名
      * @return org.springframework.security.core.userdetails.UserDetails
      */
-    @Cacheable(key = "'loginName:'+#loginName")
+    @Cached(name = "loginName:", key = "#loginName", cacheType = CacheType.BOTH, expire = 60, localExpire = 30)
     @Override
     public UserEntity loadUserByUsername(String loginName) {
         QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
@@ -89,7 +87,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
      * @param userEntity code
      * @return 用户信息
      */
-    @Cacheable(key = "#userEntity.code")
     @Override
     public UserEntity findByCode(UserEntity userEntity) {
         QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
@@ -103,7 +100,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
      * @param userEntity user
      * @return int
      */
-    @CacheEvict(key = "#userEntity.code")
     @Override
     public int updateByCode(UserEntity userEntity) {
         UpdateWrapper<UserEntity> updateWrapper = new UpdateWrapper<>();
@@ -177,7 +173,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
      * @param userEntity 用户信息
      * @return int
      */
-    @CacheEvict(key = "#userEntity.code")
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int deleteByCode(UserEntity userEntity) {

@@ -1,4 +1,4 @@
-package com.github.pandaz.auth.custom.log;
+package com.github.pandaz.commons.log;
 
 import org.springframework.core.annotation.AliasFor;
 
@@ -7,7 +7,6 @@ import java.lang.annotation.*;
 /**
  * 定义注解
  * {@link SysLogAspect}
- * 使用方法参照{@link com.github.pandaz.auth.controller.UserController#getPage}
  *
  * @author Carzer
  * @since 2019-12-23

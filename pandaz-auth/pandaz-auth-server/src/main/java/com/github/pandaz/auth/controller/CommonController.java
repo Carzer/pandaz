@@ -1,10 +1,11 @@
 package com.github.pandaz.auth.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pandaz.auth.custom.CustomProperties;
 import com.github.pandaz.auth.custom.constants.SysConstants;
 import com.github.pandaz.auth.entity.MenuEntity;
-import com.github.pandaz.auth.service.CaptchaService;
-import com.github.pandaz.auth.service.MenuService;
+import com.github.pandaz.auth.entity.OsInfoEntity;
+import com.github.pandaz.auth.service.*;
 import com.github.pandaz.auth.util.AuthUtil;
 import com.github.pandaz.commons.code.RCode;
 import com.github.pandaz.commons.dto.auth.AuthMenuDTO;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,7 +27,9 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 通用方法，不校验权限
@@ -54,6 +58,21 @@ public class CommonController {
      * 菜单服务
      */
     private final MenuService menuService;
+
+    /**
+     * 角色-权限服务
+     */
+    private final RolePermissionService rolePermissionService;
+
+    /**
+     * 角色服务
+     */
+    private final RoleService roleService;
+
+    /**
+     * 系统服务
+     */
+    private final OsInfoService osInfoService;
 
     /**
      * 通用配置
@@ -92,7 +111,7 @@ public class CommonController {
     @ApiOperation(value = "获取所有授权菜单", notes = "获取所有授权菜单")
     @GetMapping("/getAuthMenu")
     public R<List<AuthMenuDTO>> getAuthMenu(@RequestParam String osCode, @ApiIgnore Principal principal) {
-        R<List<String>> roleList = AuthUtil.getRoleListFromPrincipal(principal);
+        R<List<String>> roleList = AuthUtil.getRoleListFromContext();
         if (RCode.SUCCESS.getCode() != roleList.getCode()) {
             return new R<>(RCode.getEnum(roleList.getCode()));
         }
@@ -182,6 +201,57 @@ public class CommonController {
                                 @RequestParam String filename
     ) {
         return ftpApi.handleFileDelete(pathname, filename);
+    }
+
+    /**
+     * 根据系统编码及角色编码获取权限列表
+     *
+     * @param osCode    系统编码
+     * @param roleCode  角色编码
+     * @param principal 当前用户信息
+     * @return 权限列表
+     */
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "osCode", value = "系统编码", dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "roleCode", value = "角色编码", dataType = "string", paramType = "query")
+    })
+    @ApiOperation(value = "获取权限列表", notes = "根据系统编码及角色编码获取权限列表")
+    @GetMapping("/getPermissions")
+    public R<List<String>> getPermissions(@RequestParam String osCode,
+                                          @RequestParam String roleCode,
+                                          @ApiIgnore Principal principal) {
+        List<String> permissions = rolePermissionService.getByOsCodeAndRoleCode(osCode, roleCode);
+        return new R<>(permissions);
+    }
+
+    /**
+     * 根据系统编码及角色编码获取权限列表
+     *
+     * @param osCode    系统编码
+     * @param principal 当前用户信息
+     * @return 权限列表
+     */
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "osCode", value = "系统编码", dataType = "string", paramType = "query"),
+    })
+    @ApiOperation(value = "获取权限列表", notes = "根据系统编码取权限列表")
+    @GetMapping("/getAllPermissions")
+    public R<Map<String, List<String>>> getAllPermissions(@RequestParam String osCode,
+                                                          @ApiIgnore Principal principal) {
+        QueryWrapper<OsInfoEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("code", osCode);
+        int osCount = osInfoService.count(queryWrapper);
+        if (osCount > 0) {
+            List<String> roleList = roleService.listAllRoleCode();
+            if (!CollectionUtils.isEmpty(roleList)) {
+                Map<String, List<String>> permissions = new HashMap<>(roleList.size());
+                roleList.parallelStream().forEach(roleCode ->
+                        permissions.put(roleCode, rolePermissionService.getByOsCodeAndRoleCode(osCode, roleCode))
+                );
+                return new R<>(permissions);
+            }
+        }
+        return new R<>(RCode.FAILED);
     }
 
     /**

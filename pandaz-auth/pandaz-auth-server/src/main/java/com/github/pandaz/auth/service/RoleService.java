@@ -41,4 +41,11 @@ public interface RoleService extends BaseService<RoleEntity> {
      * @return 角色列表
      */
     Set<GrantedAuthority> findBySecurityUser(SecurityUser securityUser);
+
+    /**
+     * 获取所有角色编码
+     *
+     * @return 所有角色编码
+     */
+    List<String> listAllRoleCode();
 }

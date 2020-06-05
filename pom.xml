@@ -65,6 +65,7 @@
         <alibaba.dependency.version>2.2.1.RELEASE</alibaba.dependency.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <knife4j.version>2.0.2</knife4j.version>
+        <jetcache.version>2.6.0</jetcache.version>
         <pandaz.dependency.version>0.0.2-SNAPSHOT</pandaz.dependency.version>
         <maven-javadoc.version>3.2.0</maven-javadoc.version>
         <maven-delombok.version>1.18.12.0</maven-delombok.version>
@@ -214,6 +215,12 @@
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-spring-ui</artifactId>
                 <version>${knife4j.version}</version>
+            </dependency>
+            <!--cache-->
+            <dependency>
+                <groupId>com.alicp.jetcache</groupId>
+                <artifactId>jetcache-starter-redis-lettuce</artifactId>
+                <version>${jetcache.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

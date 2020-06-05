@@ -73,6 +73,7 @@ public class MenuController extends BaseController<MenuDTO, MenuEntity> {
     @ApiOperation(value = "获取所有菜单", notes = "获取所有菜单")
     @GetMapping("/getAll")
     public R<MenuDTO> getAll(MenuDTO menuDTO) {
+        Assert.hasText(menuDTO.getOsCode(), "系统编码不能为空");
         return new R<>(controllerUtil.getAllMenu(menuDTO));
     }
 

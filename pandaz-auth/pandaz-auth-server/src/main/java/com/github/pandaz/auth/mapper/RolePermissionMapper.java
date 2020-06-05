@@ -52,4 +52,12 @@ public interface RolePermissionMapper extends BasisMapper<RolePermissionEntity> 
      * @return 权限表
      */
     List<RolePermissionEntity> listByOsCode(String osCode);
+
+    /**
+     * 根据系统编码和角色编码查询
+     *
+     * @param rolePermissionEntity 查询条件
+     * @return 执行结果
+     */
+    List<RolePermissionEntity> listByOsCodeAndRoleCode(RolePermissionEntity rolePermissionEntity);
 }

@@ -51,10 +51,11 @@ public interface RolePermissionService extends BaseService<RolePermissionEntity>
     List<String> listBindCodes(RolePermissionEntity rolePermissionEntity);
 
     /**
-     * 根据系统编码查询
+     * 根据系统编码和角色编码查询
      *
-     * @param osCode 系统编码
+     * @param osCode   系统编码
+     * @param roleCode 角色编码
      * @return 权限列表
      */
-    List<RolePermissionEntity> listByOsCode(String osCode);
+    List<String> getByOsCodeAndRoleCode(String osCode, String roleCode);
 }

@@ -1,4 +1,4 @@
-package com.github.pandaz.auth.custom.log;
+package com.github.pandaz.commons.log;
 
 import com.github.pandaz.commons.util.IpUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +34,7 @@ public class SysLogAspect {
     /**
      * 定义切入点拦截规则，拦截{@link SysLog}注解的方法
      */
-    @Pointcut("@annotation(com.github.pandaz.auth.custom.log.SysLog)")
+    @Pointcut("@annotation(com.github.pandaz.commons.log.SysLog)")
     public void logPointCut() {
         // 标记方法
     }

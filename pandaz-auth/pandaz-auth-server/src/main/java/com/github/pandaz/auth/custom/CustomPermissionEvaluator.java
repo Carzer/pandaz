@@ -1,5 +1,6 @@
 package com.github.pandaz.auth.custom;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,17 +19,33 @@ import java.util.Collection;
 public class CustomPermissionEvaluator implements PermissionEvaluator {
 
     /**
+     * 通用配置
+     */
+    private CustomProperties.SuperAdmin superAdmin;
+
+    @Autowired
+    public void setSuperAdmin(CustomProperties customProperties) {
+        this.superAdmin = customProperties.getSuperAdmin();
+    }
+
+    /**
      * 判断是否有权限
      *
-     * @param authentication     authentication
-     * @param targetDomainObject targetDomainObject
-     * @param permission         permission
+     * @param authentication authentication
+     * @param prefix         prefix
+     * @param permission     permission
      * @return boolean
      */
     @Override
     public boolean hasPermission(Authentication authentication,
-                                 Object targetDomainObject, Object permission) {
-        return this.hasPermission(authentication, permission);
+                                 Object prefix, Object permission) {
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        // 如果开启超级管理员，并拥有符合的角色，则通过所有请求
+        if (superAdmin.isEnable()) {
+            return authorities.parallelStream().anyMatch(
+                    authority -> authority.getAuthority().equals(superAdmin.getName()));
+        }
+        return false;
     }
 
     /**
@@ -43,18 +60,6 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
     @Override
     public boolean hasPermission(Authentication authentication,
                                  Serializable targetId, String targetType, Object permission) {
-        return true;
-    }
-
-    /**
-     * 简单的字符串比较，相同则认为有权限
-     *
-     * @param authentication authentication
-     * @param permission     permission
-     * @return boolean
-     */
-    private boolean hasPermission(Authentication authentication, Object permission) {
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        return authorities.parallelStream().anyMatch(authority -> authority.getAuthority().equals(permission));
+        return false;
     }
 }

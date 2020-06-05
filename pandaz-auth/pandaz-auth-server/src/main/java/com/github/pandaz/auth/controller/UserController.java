@@ -1,12 +1,13 @@
 package com.github.pandaz.auth.controller;
 
-import com.github.pandaz.auth.custom.log.SysLog;
 import com.github.pandaz.auth.entity.UserEntity;
 import com.github.pandaz.auth.service.UserService;
 import com.github.pandaz.auth.util.ControllerUtil;
 import com.github.pandaz.commons.constants.UrlConstants;
 import com.github.pandaz.commons.controller.BaseController;
+import com.github.pandaz.commons.dto.auth.OrganizationDTO;
 import com.github.pandaz.commons.dto.auth.UserDTO;
+import com.github.pandaz.commons.log.SysLog;
 import com.github.pandaz.commons.service.BaseService;
 import com.github.pandaz.commons.util.R;
 import io.swagger.annotations.Api;
@@ -69,6 +70,17 @@ public class UserController extends BaseController<UserDTO, UserEntity> {
     @Override
     public R<Map<String, Object>> getPage(UserDTO userDTO, @ApiIgnore Principal principal) {
         return new R<>(controllerUtil.getUserPage(userDTO));
+    }
+
+    /**
+     * 获取所有组织
+     *
+     * @return 所有组织
+     */
+    @ApiOperation(value = "获取所有组织", notes = "获取所有组织")
+    @GetMapping("/getAllOrg")
+    public R<OrganizationDTO> getAllOrg(@ApiIgnore Principal principal) {
+        return new R<>(controllerUtil.getAllOrg());
     }
 
     /**

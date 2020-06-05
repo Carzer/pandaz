@@ -18,6 +18,11 @@ import org.springframework.stereotype.Component;
 public class CustomProperties {
 
     /**
+     * 系统编码
+     */
+    private String osCode;
+
+    /**
      * 获取全部URL mapping时扫描的包
      */
     private String projectPackage;
@@ -26,11 +31,6 @@ public class CustomProperties {
      * 鉴权排除的url列表
      */
     private String[] excludedPaths;
-
-    /**
-     * 缓存参数
-     */
-    private Cache cache;
 
     /**
      * 证码信息
@@ -56,31 +56,6 @@ public class CustomProperties {
      * 随机数
      */
     private Integer random;
-
-    /**
-     * 缓存参数
-     */
-    @Getter
-    @Setter
-    public static class Cache {
-
-        /**
-         * 主缓存过期时间单位
-         */
-        private String masterEntryTtlUnit;
-        /**
-         * 第二缓存过期时间单位
-         */
-        private String secondaryEntryTtlUnit;
-        /**
-         * 主缓存过期时间
-         */
-        private Integer masterEntryTtl;
-        /**
-         * 第二缓存过期时间
-         */
-        private Integer secondaryEntryTtl;
-    }
 
     /**
      * 验证码

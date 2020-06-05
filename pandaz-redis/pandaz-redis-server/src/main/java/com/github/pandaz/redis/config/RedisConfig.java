@@ -1,7 +1,6 @@
 package com.github.pandaz.redis.config;
 
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -20,7 +19,6 @@ import java.time.Duration;
  * @since 2019-07-02
  */
 @Configuration
-@EnableCaching
 @EnableRedisHttpSession
 public class RedisConfig {
 

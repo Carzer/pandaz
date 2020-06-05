@@ -25,20 +25,22 @@ public class SpringBeanUtil implements ApplicationContextAware {
      * 设置上下文环境
      *
      * @param applicationContext 上下文环境
+     */
+    private static void setContext(ApplicationContext applicationContext) {
+        if (SpringBeanUtil.applicationContext == null) {
+            SpringBeanUtil.applicationContext = applicationContext;
+        }
+    }
+
+    /**
+     * 设置上下文环境
+     *
+     * @param applicationContext 上下文环境
      * @throws BeansException exception
      */
     @Override
     public void setApplicationContext(@NonNull ApplicationContext applicationContext) {
-        SpringBeanUtil.applicationContext = applicationContext;
-    }
-
-    /**
-     * 获取上下文环境
-     *
-     * @return 上下文环境
-     */
-    public static ApplicationContext getApplicationContext() {
-        return applicationContext;
+        setContext(applicationContext);
     }
 
     /**
@@ -49,7 +51,7 @@ public class SpringBeanUtil implements ApplicationContextAware {
      * @return 类实例
      */
     public static <T> T getBean(Class<T> clazz) {
-        return getApplicationContext().getBean(clazz);
+        return applicationContext.getBean(clazz);
     }
 
     /**
@@ -60,6 +62,6 @@ public class SpringBeanUtil implements ApplicationContextAware {
      * @return 类实例
      */
     public static <T> T getBean(String name) {
-        return (T) getApplicationContext().getBean(name);
+        return (T) applicationContext.getBean(name);
     }
 }
