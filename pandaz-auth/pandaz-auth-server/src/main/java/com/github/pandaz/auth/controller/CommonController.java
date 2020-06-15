@@ -42,6 +42,7 @@ import java.util.Map;
 @RequestMapping("/common")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Api(value = "Common", tags = "通用方法")
+@SuppressWarnings("unused")
 public class CommonController {
 
     /**
