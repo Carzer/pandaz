@@ -19,6 +19,13 @@ spring:
             - Path=/redis/**
           filters:
             - StripPrefix=1
+        - id: pandaz-im-websocket
+          uri: lb:ws://pandaz-im-server
+          predicates:
+            - Path=/ws/**
+          filters:
+            - StripPrefix=1
+
     # nacos
     nacos:
       discovery:

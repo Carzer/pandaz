@@ -100,6 +100,7 @@ public class SecurityConfig {
             "/auth/oauth/**",
             "/auth/token/**",
             "/auth/userInfo",
+            "/ws/**",
             "/health",
             "/wakeUp",
             "/api/socket/**",
