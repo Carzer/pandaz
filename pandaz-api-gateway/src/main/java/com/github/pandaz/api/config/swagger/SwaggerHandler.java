@@ -1,4 +1,4 @@
-package com.github.pandaz.api.config;
+package com.github.pandaz.api.config.swagger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -58,6 +58,22 @@
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-spring-ui</artifactId>
         </dependency>
+        <!--cache-->
+        <dependency>
+            <groupId>com.alicp.jetcache</groupId>
+            <artifactId>jetcache-starter-redis-lettuce</artifactId>
+        </dependency>
+        <!--mysql-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <!--mybatis plus-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

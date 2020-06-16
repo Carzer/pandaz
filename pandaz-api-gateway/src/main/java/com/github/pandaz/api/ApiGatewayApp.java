@@ -1,11 +1,13 @@
 package com.github.pandaz.api;
 
 import com.github.pandaz.api.controller.IndexController;
+import com.github.pandaz.commons.interceptor.FeignOauth2RequestInterceptor;
 import com.github.pandaz.commons.util.SpringBeanUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * api gateway 负责请求转发
@@ -16,6 +18,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @SpringBootApplication(scanBasePackages = "com.github.pandaz")
 @Slf4j
 @EnableDiscoveryClient
+@EnableFeignClients(value = "com.github.pandaz", defaultConfiguration = FeignOauth2RequestInterceptor.class)
 public class ApiGatewayApp {
 
     public static void main(String[] args) {

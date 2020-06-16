@@ -1,4 +1,4 @@
-package com.github.pandaz.api.config;
+package com.github.pandaz.api.config.oauth;
 
 import lombok.Data;
 

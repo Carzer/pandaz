@@ -106,6 +106,15 @@ public final class R<T> {
         return new R<>(RCode.FAILED, message);
     }
 
+    /**
+     * 成功
+     *
+     * @return 成功
+     */
+    public boolean succeed() {
+        return RCode.SUCCESS.getCode() == this.code;
+    }
+
     @Override
     public String toString() {
         return String.format("[返回码:%s,返回信息:%s]", this.code, this.message);

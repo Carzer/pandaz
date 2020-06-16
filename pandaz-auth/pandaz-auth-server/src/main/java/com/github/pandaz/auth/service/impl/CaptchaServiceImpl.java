@@ -1,9 +1,10 @@
 package com.github.pandaz.auth.service.impl;
 
+import com.alicp.jetcache.Cache;
+import com.alicp.jetcache.anno.CacheType;
+import com.alicp.jetcache.anno.CreateCache;
 import com.github.pandaz.auth.service.CaptchaService;
 import com.github.pandaz.commons.code.RCode;
-import com.github.pandaz.commons.util.R;
-import com.github.pandaz.redis.api.CaptchaApi;
 import com.wf.captcha.ArithmeticCaptcha;
 import com.wf.captcha.base.Captcha;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 验证码
@@ -24,17 +26,19 @@ import java.io.IOException;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@SuppressWarnings("unused")
 public class CaptchaServiceImpl implements CaptchaService {
 
     /**
      * 验证码存储key
      */
-    private static final String CAPTCHA_KEY = "captcha:";
+    private static final String CAPTCHA_KEY = "pandaz:auth:captcha:";
 
     /**
-     * redis 缓存
+     * 验证码缓存
      */
-    private final CaptchaApi captchaApi;
+    @CreateCache(name = CAPTCHA_KEY, cacheType = CacheType.REMOTE, expire = 3, timeUnit = TimeUnit.MINUTES)
+    private Cache<String, String> captchaCache;
 
     /**
      * 生成验证码
@@ -50,7 +54,7 @@ public class CaptchaServiceImpl implements CaptchaService {
         }
         setHeader(response);
         Captcha captcha = createCaptcha();
-        captchaApi.setObject(CAPTCHA_KEY + key, captcha.text());
+        captchaCache.put(key, captcha.text());
         captcha.out(response.getOutputStream());
     }
 
@@ -66,11 +70,11 @@ public class CaptchaServiceImpl implements CaptchaService {
         if (!StringUtils.hasText(value)) {
             return RCode.VALID_CODE_EMPTY;
         }
-        R<Object> result = captchaApi.getObject(CAPTCHA_KEY + key);
-        if (result.getData() == null) {
+        String text = captchaCache.get(key);
+        if (!StringUtils.hasText(text)) {
             return RCode.VALID_CODE_EXPIRED;
         }
-        if (!value.equalsIgnoreCase(result.getData().toString())) {
+        if (!value.equalsIgnoreCase(text)) {
             return RCode.VALID_CODE_ERROR;
         }
         return RCode.SUCCESS;

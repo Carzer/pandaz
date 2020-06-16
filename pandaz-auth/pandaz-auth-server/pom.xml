@@ -20,11 +20,6 @@
         <!--project-->
         <dependency>
             <groupId>com.github.pandaz</groupId>
-            <artifactId>pandaz-redis-api</artifactId>
-            <version>${pandaz.dependency.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.pandaz</groupId>
             <artifactId>pandaz-file-api</artifactId>
             <version>${pandaz.dependency.version}</version>
         </dependency>
