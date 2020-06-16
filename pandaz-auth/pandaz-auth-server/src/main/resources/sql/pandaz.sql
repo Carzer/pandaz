@@ -11,7 +11,7 @@
  Target Server Version : 50729
  File Encoding         : utf-8
 
- Date: 06/05/2020 17:07:42 PM
+ Date: 06/16/2020 16:15:08 PM
 */
 
 SET NAMES utf8mb4;
@@ -73,6 +73,36 @@ CREATE TABLE `t_sys_dict_type` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `t_sys_dict_type` VALUES ('70ce63807040787c016156f0c113', '测试类型1', 'test', 'admin', '2020-03-30 16:59:18', 'admin', '2020-03-30 16:59:26', null, null, '0', '0', '2'), ('d76dd4ede6465960ecc528d75c12', '测试类型2', 'test2', 'admin', '2020-03-31 08:55:24', 'admin', '2020-03-31 09:57:22', null, null, '0', '1', '2');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for `t_sys_gateway_route`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_sys_gateway_route`;
+CREATE TABLE `t_sys_gateway_route` (
+  `id` varchar(32) NOT NULL COMMENT '主键',
+  `route_id` varchar(255) NOT NULL COMMENT '路由ID',
+  `uri` varchar(255) NOT NULL COMMENT 'URI',
+  `predicates` text NOT NULL COMMENT '判定器',
+  `filters` text COMMENT '过滤器',
+  `route_order` int(11) DEFAULT NULL COMMENT '排序',
+  `description` varchar(500) DEFAULT NULL COMMENT '描述',
+  `created_by` varchar(50) NOT NULL DEFAULT 'system' COMMENT '创建人',
+  `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_by` varchar(50) DEFAULT NULL COMMENT '更新人',
+  `updated_date` datetime DEFAULT NULL COMMENT '更新时间',
+  `deleted_by` varchar(50) DEFAULT NULL COMMENT '删除人',
+  `deleted_date` datetime DEFAULT NULL COMMENT '删除时间',
+  `deleted_flag` varchar(32) NOT NULL DEFAULT '0' COMMENT '删除标记(0:未删除，其他:已删除)',
+  `version` int(8) NOT NULL DEFAULT '1' COMMENT '版本号',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='网关路由表';
+
+-- ----------------------------
+--  Records of `t_sys_gateway_route`
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_sys_gateway_route` VALUES ('1', 'pandaz-auth', 'lb://pandaz-auth-server', '[{\"name\":\"Path\",\"args\":{\"pattern\":\"/auth/**\"}}]', '[{\"name\":\"StripPrefix\",\"args\":{\"parts\":\"1\"}}]', '0', '授权服务', 'system', '2020-06-15 17:31:40', null, null, null, null, '0', '1'), ('2', 'pandaz-redis', 'lb://pandaz-redis-server', '[{\"name\":\"Path\",\"args\":{\"pattern\":\"/redis/**\"}}]', '[{\"name\":\"StripPrefix\",\"args\":{\"parts\":\"1\"}}]', '0', 'redis服务', 'system', '2020-06-16 13:45:42', null, null, null, null, '0', '1'), ('3', 'pandaz-im-websocket', 'lb:ws://pandaz-im-server', '[{\"name\":\"Path\",\"args\":{\"pattern\":\"/ws/**\"}}]', '[{\"name\":\"StripPrefix\",\"args\":{\"parts\":\"1\"}}]', '0', 'websocket服务', 'system', '2020-06-16 13:46:21', null, null, null, null, '0', '1');
 COMMIT;
 
 -- ----------------------------
@@ -237,7 +267,7 @@ CREATE TABLE `t_sys_organization` (
 --  Records of `t_sys_organization`
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_sys_organization` VALUES ('6ba3fa32304d59e3a6db22f3d0d3', '测试组织1', 'test1', 'test2', null, '0', null, '1', '', 'admin', '2020-06-04 09:47:17', 'admin', '2020-06-04 09:47:23', 'admin', '2020-06-04 09:47:34', '6ba3fa32304d59e3a6db22f3d0d3', '0', '2'), ('b46b35907a4a88740b0bb0b3d761', '测试组织', 'test', 'root', null, '0', null, '1', '', 'admin', '2020-03-31 09:16:24', 'admin', '2020-06-04 09:45:36', null, null, '0', '1', '4'), ('b4d07f759340fa04881cf868bc7d', '测试组织2', 'test2', 'root', null, '0', null, '1', null, 'admin', '2020-06-04 09:47:02', null, null, null, null, '0', '0', '1');
+INSERT INTO `t_sys_organization` VALUES ('60d91d7956472ac59357a3943d52', '测试2', 'test2_child2', 'test2', null, '0', null, '1', null, 'admin', '2020-06-15 11:23:11', null, null, null, null, '0', '0', '1'), ('b46b35907a4a88740b0bb0b3d761', '测试组织', 'test', 'root', null, '0', null, '1', '', 'admin', '2020-03-31 09:16:24', 'admin', '2020-06-04 09:45:36', null, null, '0', '1', '4'), ('b4d07f759340fa04881cf868bc7d', '测试组织2', 'test2', 'root', null, '0', null, '1', null, 'admin', '2020-06-04 09:47:02', null, null, null, null, '0', '0', '1'), ('ef0982cce14e7a7b29518027a974', '测试1', 'test2_child', 'test2', null, '0', null, '1', null, 'admin', '2020-06-15 11:22:57', null, null, null, null, '0', '0', '1');
 COMMIT;
 
 -- ----------------------------
