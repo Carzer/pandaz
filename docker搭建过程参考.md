@@ -51,7 +51,7 @@ mkdir -p [docker统一目录]/sonarqube/extensions
 ```shell
 mkdir -p [docker统一目录]/nginx
 mkdir -p [docker统一目录]/nginx/ext
-mkdir -p [docker统一目录]/logs/nginx
+mkdir -p [docker统一目录]/nginx/log
 mkdir -p [docker统一目录]/nginx/html
 ```
 
@@ -171,7 +171,7 @@ docker pull nginx
 ```
 
 ```shell
-docker run --name nginx -p 8090:8090 -v [docker统一目录]/nginx/nginx.conf:/etc/nginx/nginx.conf -v [docker统一目录]/nginx/ext:/etc/nginx/ext -v [docker统一目录]/logs/nginx:/var/log/nginx -v [docker统一目录]/nginx/html:/etc/nginx/html -d nginx
+docker run --name nginx -p 8090:8090 -v [docker统一目录]/nginx/nginx.conf:/etc/nginx/nginx.conf -v [docker统一目录]/nginx/ext:/etc/nginx/ext -v [docker统一目录]/nginx/log:/var/log/nginx -v [docker统一目录]/nginx/html:/etc/nginx/html -d nginx
 ```
 
 ## 8.nacos&sentinel
