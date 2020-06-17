@@ -129,18 +129,13 @@
 ### 7. [API网关](http://localhost:7777)
 主要的测试服务：[授权中心](http://localhost:9007)、[Redis服务](http://localhost:9001)
 
-<details>
-<summary>进行中...</summary>
-<pre><code>
-- [ ] **功能实现**
+- [x] **功能实现**
     - [x] 网关基础功能
     - [x] 整合oauth2
-    - [ ] 动态路由
+    - [x] 动态路由
 - [x] **框架集成**
     - [x] Spring Cloud Gateway
     - [x] Spring Security Oauth2
-</code></pre>
-</details> 
 
 
 ## 五、 License 
