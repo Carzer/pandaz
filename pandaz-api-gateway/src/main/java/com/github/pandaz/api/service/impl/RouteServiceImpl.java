@@ -27,7 +27,6 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Slf4j
-@SuppressWarnings("unchecked")
 public class RouteServiceImpl implements RouteService {
 
     /**

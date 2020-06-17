@@ -64,7 +64,8 @@ mkdir -p [docker统一目录]/nacos/nacos/prometheus/prometheus
 mkdir -p [docker统一目录]/nacos/sentinel
 ```
 
-可能用到的配置文件（[docker统一目录]/nacos/sentinel）  
+可能用到的配置文件（[docker统一目录]/nacos）  
+[standalone-derby.yaml](./conf/standalone-derby.yaml)
 [startup.sh](./conf/startup.sh)  
 [stop.sh](./conf/stop.sh)  
 [start_sentinel.sh](./conf/start_sentinel.sh)
@@ -247,3 +248,9 @@ docker pull jenkins/jenkins
 ```shell
 docker run -d -p 8800:8080 -p 50001:50001 --env JENKINS_SLAVE_AGENT_PORT=50001 -v /etc/localtime:/etc/localtime -v [docker统一目录]/jenkins/sh/jenkins.sh:/usr/local/bin/jenkins.sh -v [docker统一目录]/jenkins/jenkins_home:/var/jenkins_home --name jenkins --restart=always jenkins/jenkins
 ```
+
+## 11.Redis Sentinel 集群
+
+compose文件及相关配置都在 [redis-cluster](./conf/redis-cluster) 中
+
+sentinel相关的配置文件，为了方便本地使用，监听了本地修改后的host：carzer.com，可以根据实际情况自行修改IP

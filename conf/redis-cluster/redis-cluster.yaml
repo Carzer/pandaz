@@ -1,0 +1,71 @@
+version: "3.8"
+services:
+  redis01:
+    image: redis:latest
+    container_name: redis01
+    volumes:
+      - ./redis01/conf/redis01.conf:/usr/local/etc/redis/redis.conf
+      - ./redis01/data:/data
+    ports:
+      - "26379:26379"
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+  redis02:
+    image: redis:latest
+    container_name: redis02
+    volumes:
+      - ./redis02/conf/redis02.conf:/usr/local/etc/redis/redis.conf
+      - ./redis02/data:/data
+    ports:
+      - "26380:26380"
+    depends_on:
+      - redis01
+    restart: on-failure
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+  redis03:
+    image: redis:latest
+    container_name: redis03
+    volumes:
+      - ./redis03/conf/redis03.conf:/usr/local/etc/redis/redis.conf
+      - ./redis03/data:/data
+    ports:
+      - "26381:26381"
+    depends_on:
+      - redis01
+    restart: on-failure
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+  sentinel01:
+    image: redis:latest
+    container_name: sentinel01
+    volumes:
+      - ./sentinel01/conf/sentinel01.conf:/usr/local/etc/redis/sentinel.conf
+      - ./sentinel01/data:/data
+    ports:
+      - "36379:36379"
+    depends_on:
+      - redis01
+    restart: on-failure
+    command: ["redis-sentinel", "/usr/local/etc/redis/sentinel.conf"]
+  sentinel02:
+    image: redis:latest
+    container_name: sentinel02
+    volumes:
+      - ./sentinel02/conf/sentinel02.conf:/usr/local/etc/redis/sentinel.conf
+      - ./sentinel02/data:/data
+    ports:
+      - "36380:36380"
+    depends_on:
+      - redis01
+    restart: on-failure
+    command: ["redis-sentinel", "/usr/local/etc/redis/sentinel.conf"]
+  sentinel03:
+    image: redis:latest
+    container_name: sentinel03
+    volumes:
+      - ./sentinel03/conf/sentinel03.conf:/usr/local/etc/redis/sentinel.conf
+      - ./sentinel03/data:/data
+    ports:
+      - "36381:36381"
+    depends_on:
+      - redis01
+    restart: on-failure
+    command: ["redis-sentinel", "/usr/local/etc/redis/sentinel.conf"]
