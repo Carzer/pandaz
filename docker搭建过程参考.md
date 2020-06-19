@@ -4,7 +4,9 @@
 
 由于 https://hub.docker.com/ 非常容易超时，所以需要改一下docker镜像源  
 找到/etc/docker/daemon.json，添加  
->{ "registry-mirrors" :["https://docker.mirrors.ustc.edu.cn"]}  
+>{ 
+>  "registry-mirrors" :["https://docker.mirrors.ustc.edu.cn"]
+>}  
 
 >个人镜像加速器地址：https://xvaz3vtq.mirror.aliyuncs.com
 
@@ -20,9 +22,9 @@ vi /etc/docker/daemon.json
 ```
 增加内容
 >{  
-> "registry-mirrors": ["https://xvaz3vtq.mirror.aliyuncs.com"] ,  
-> "bip":"172.17.0.1/16"  
-> }  
+>  "registry-mirrors": ["https://xvaz3vtq.mirror.aliyuncs.com"] ,  
+>  "bip":"172.17.0.1/16"  
+>}  
     
 docker间互相访问时，可以使用172.17.0.1，而非localhost
 
