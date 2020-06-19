@@ -20,9 +20,9 @@ vi /etc/docker/daemon.json
 ```
 增加内容
 >{  
- "registry-mirrors": ["https://xvaz3vtq.mirror.aliyuncs.com"] ,  
- "bip":"172.17.0.1/16"  
- }  
+> "registry-mirrors": ["https://xvaz3vtq.mirror.aliyuncs.com"] ,  
+> "bip":"172.17.0.1/16"  
+> }  
     
 docker间互相访问时，可以使用172.17.0.1，而非localhost
 
