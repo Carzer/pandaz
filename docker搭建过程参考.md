@@ -1,17 +1,39 @@
 # 写在前面
 
-> 调整时区:
+超时问题：
+
+由于 https://hub.docker.com/ 非常容易超时，所以需要改一下docker镜像源  
+找到/etc/docker/daemon.json，添加  
+>{ "registry-mirrors" :["https://docker.mirrors.ustc.edu.cn"]}  
+
+>个人镜像加速器地址：https://xvaz3vtq.mirror.aliyuncs.com
+
+如果高版本docker出现问题，可以使用其他方式：  
+```shell 
+curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud   
+```
+
+docker0 IP地址修改方法：
+
+```shell
+vi /etc/docker/daemon.json
+```
+增加内容
+>{
+ "registry-mirrors": ["https://xvaz3vtq.mirror.aliyuncs.com"] ,
+ "bip":"172.17.0.1/16"
+ }
+    
+docker间互相访问时，可以使用172.17.0.1，而非localhost
+
+调整时区：
+```shell
 cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 或
 docker cp /etc/localtime [容器ID或者NAME]:/etc/localtime
+```
 
-> docker间互相访问时，可以使用172.17.0.1，而非localhost
 
->由于 https://hub.docker.com/ 非常容易超时，所以需要改一下docker镜像源  
->找到/etc/docker/daemon.json，添加`{ "registry-mirrors" :["https://docker.mirrors.ustc.edu.cn"]}`    
->如果高版本docker出现问题，可以使用其他方式：`curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io`
-
->个人镜像加速器地址：https://xvaz3vtq.mirror.aliyuncs.com
 
 # 搭建过程
 
