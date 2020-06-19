@@ -4,29 +4,18 @@ services:
     image: nacos/nacos-server:latest
     container_name: nacos-standalone
     environment:
-    - PREFER_HOST_MODE=hostname
-    - MODE=standalone
+      - PREFER_HOST_MODE=hostname
+      - MODE=standalone
     volumes:
-    - ../sentinel:/sentinel
-    - ./standalone-logs/:/home/nacos/logs
-    - ./init.d/custom.properties:/home/nacos/init.d/custom.properties
+      - ./nacos/standalone-logs/:/home/nacos/logs
+      - ./nacos/init.d/custom.properties:/home/nacos/init.d/custom.properties
     ports:
-    - "8848:8848"
-    - "8787:8787"
-  prometheus:
-    container_name: prometheus
-    image: prom/prometheus:latest
-    volumes:
-      - ./prometheus/prometheus-standalone.yaml:/etc/prometheus/prometheus.yml
-      - ./prometheus/prometheus:/prometheus
+      - "8848:8848"
+  sentinel:
+    container_name: sentinel
+    image: bladex/sentinel-dashboard:latest
     ports:
-      - "9090:9090"
+      - "8787:8858"
     depends_on:
       - nacos
-    restart: on-failure
-  grafana:
-    container_name: grafana
-    image: grafana/grafana:latest
-    ports:
-      - 3000:3000
     restart: on-failure

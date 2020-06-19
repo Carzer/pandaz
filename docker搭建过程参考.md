@@ -60,8 +60,6 @@ mkdir -p [docker统一目录]/nginx/html
 
 ```shell
 mkdir -p [docker统一目录]/nacos/nacos
-mkdir -p [docker统一目录]/nacos/nacos/prometheus/prometheus
-mkdir -p [docker统一目录]/nacos/sentinel
 ```
 
 可能用到的配置文件（[docker统一目录]/nacos）  
@@ -81,6 +79,10 @@ mkdir -p [docker统一目录]/jenkins/jenkins_home
 
 可能用到的配置文件（[docker统一目录]/jenkins/sh）  
 [jenkins.sh](./conf/jenkins.sh) 
+
+```shell
+mkdir -p [docker统一目录]/sqlserver/data
+```
 
 
 ##  1. mysql
@@ -180,47 +182,37 @@ docker run --name nginx -p 8090:8090 -v [docker统一目录]/nginx/nginx.conf:/e
 git clone --depth 1 https://github.com/nacos-group/nacos-docker.git
 cd nacos-docker
 ```
-将example文件夹复制到`[docker统一目录]/nacos/nacos`
-修改standalone-derby.yaml文件，增加的内容
+将standalone-derby.yaml文件复制到`[docker统一目录]/nacos`
+修改内容为：
 
-1. services.prometheus.volumes
-
-```shell
-- ./prometheus/prometheus:/prometheus
-```
-2. services.nacos.volumes
-```shell
-- ../sentinel:/sentinel
-```
-3. services.nacos.ports
-```shell
-- "8787:8787"
+```yaml
+version: "2"
+services:
+  nacos:
+    image: nacos/nacos-server:latest
+    container_name: nacos-standalone
+    environment:
+    - PREFER_HOST_MODE=hostname
+    - MODE=standalone
+    volumes:
+    - ./nacos/standalone-logs/:/home/nacos/logs
+    - ./nacos/init.d/custom.properties:/home/nacos/init.d/custom.properties
+    ports:
+    - "8848:8848"
+  sentinel:
+    container_name: sentinel
+    image: bladex/sentinel-dashboard:latest
+    ports:
+      - "8787:8858"
+    depends_on:
+      - nacos
+    restart: on-failure
 ```
 
 执行
 
-~~docker-compose -f example/standalone-derby.yaml up~~
-
 ```shell
 docker-compose -f standalone-derby.yaml up
-```
-
-sentinel在nacos-server的**docker**中运行，执行以下命令，完成sentinel的自启动
-
-```shell
-chmod +x startup.sh
-chmod +x stop.sh
-chmod +x start_sentinel.sh
-```
-
-```shell
-cp start_sentinel.sh /etc/profile.d/start_sentinel.sh
-cp start_sentinel.sh /etc/init.d/start_sentinel.sh
-```
-
-```shell
-chkconfig --add start_sentinel.sh
-chkconfig start_sentinel.sh on
 ```
 
 ## 9.ftp
@@ -254,3 +246,46 @@ docker run -d -p 8800:8080 -p 50001:50001 --env JENKINS_SLAVE_AGENT_PORT=50001 -
 compose文件及相关配置都在 [redis-cluster](./conf/redis-cluster) 中
 
 sentinel相关的配置文件，为了方便本地使用，监听了本地修改后的host：carzer.com，可以根据实际情况自行修改IP
+
+
+## 12.SqlServer
+
+```shell
+docker pull mcr.microsoft.com/mssql/server:2019-CU3-ubuntu-18.04
+
+docker run -e "ACCEPT_EULA=Y" -e  "SA_PASSWORD=<YourStrong@Passw0rd>" -p 14330:1433 --name sqlserver2019 -d mcr.microsoft.com/mssql/server:2019-CU3-ubuntu-18.04
+```
+
+由于Mac的特殊性，SqlServer在挂载卷的时候会报错：`server error 87(the parameter is incorrect.)`
+根据官网的说明：
+> Important
+Host volume mapping for Docker on Mac with the SQL Server on Linux image is not supported at this time. Use data volume containers instead. This restriction is specific to the /var/opt/mssql directory. Reading from a mounted directory works fine. For example, you can mount a host directory using -v on Mac and restore a backup from a .bak file that resides on the host.
+
+[原文地址](https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-configure-docker?view=sql-server-ver15)
+
+需要使用挂载卷，参照 [docker挂载卷说明](https://docs.docker.com/storage/volumes/)
+
+```shell
+docker pull mcr.microsoft.com/mssql/server:2019-CU3-ubuntu-18.04
+
+docker volume create mssql-vol
+
+docker run -e "ACCEPT_EULA=Y" -e  "SA_PASSWORD=Ssa159753." -p 14330:1433 -v mssql-vol:/var/opt/mssql --name sqlserver2019 -d mcr.microsoft.com/mssql/server:2019-CU3-ubuntu-18.04
+```
+
+```shell
+docker volume inspect mssql-vol
+```
+
+>[
+     {
+         "CreatedAt": "2020-06-19T02:11:32Z",
+         "Driver": "local",
+         "Labels": {},
+         "Mountpoint": "/var/lib/docker/volumes/mssql-vol/_data",
+         "Name": "mssql-vol",
+         "Options": {},
+         "Scope": "local"
+     }
+ ]  
+

@@ -71,9 +71,9 @@ public class RouteServiceImpl implements RouteService {
     }
 
     /**
-     * 将dto转化为路由信息
+     * 转化路由信息
      *
-     * @param gatewayRouteEntity dto
+     * @param gatewayRouteEntity entity
      * @return 路由信息
      */
     private RouteDefinition transferToRoute(GatewayRouteEntity gatewayRouteEntity) {
