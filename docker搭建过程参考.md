@@ -64,9 +64,6 @@ mkdir -p [docker统一目录]/nacos/nacos
 
 可能用到的配置文件（[docker统一目录]/nacos）  
 [standalone-derby.yaml](./conf/standalone-derby.yaml)
-[startup.sh](./conf/startup.sh)  
-[stop.sh](./conf/stop.sh)  
-[start_sentinel.sh](./conf/start_sentinel.sh)
 
 ```shell
 mkdir -p [docker统一目录]/ftp/vsftpd
@@ -80,14 +77,9 @@ mkdir -p [docker统一目录]/jenkins/jenkins_home
 可能用到的配置文件（[docker统一目录]/jenkins/sh）  
 [jenkins.sh](./conf/jenkins.sh) 
 
-```shell
-mkdir -p [docker统一目录]/sqlserver/data
-```
-
-
 ##  1. mysql
 
-mysql高版本会有驱动异常等问题，所以选用5.7.29版本
+mysql选用5.7.29版本
 
 ```shell
 docker pull mysql:5.7.29
@@ -259,7 +251,8 @@ docker run -e "ACCEPT_EULA=Y" -e  "SA_PASSWORD=<YourStrong@Passw0rd>" -p 14330:1
 由于Mac的特殊性，SqlServer在挂载卷的时候会报错：`server error 87(the parameter is incorrect.)`
 根据官网的说明：
 > Important
-Host volume mapping for Docker on Mac with the SQL Server on Linux image is not supported at this time. Use data volume containers instead. This restriction is specific to the /var/opt/mssql directory. Reading from a mounted directory works fine. For example, you can mount a host directory using -v on Mac and restore a backup from a .bak file that resides on the host.
+>
+> Host volume mapping for Docker on Mac with the SQL Server on Linux image is not supported at this time. Use data volume containers instead. This restriction is specific to the /var/opt/mssql directory. Reading from a mounted directory works fine. For example, you can mount a host directory using -v on Mac and restore a backup from a .bak file that resides on the host.
 
 [原文地址](https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-configure-docker?view=sql-server-ver15)
 
