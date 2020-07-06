@@ -11,11 +11,6 @@
     <artifactId>pandaz-auth-server</artifactId>
     <description>授权中心</description>
 
-    <properties>
-        <sonar.coverage.jacoco.xmlReportPaths>${basedir}/target/site/jacoco/jacoco.xml
-        </sonar.coverage.jacoco.xmlReportPaths>
-    </properties>
-
     <dependencies>
         <!--project-->
         <dependency>

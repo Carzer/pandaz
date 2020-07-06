@@ -99,7 +99,6 @@ public class SecurityConfig {
             "/auth/common/**",
             "/auth/oauth/**",
             "/auth/token/**",
-            "/auth/userInfo",
             "/ws/**",
             "/health",
             "/wakeUp",

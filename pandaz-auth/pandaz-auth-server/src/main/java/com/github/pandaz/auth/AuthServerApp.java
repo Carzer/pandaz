@@ -1,6 +1,6 @@
 package com.github.pandaz.auth;
 
-import com.github.pandaz.auth.controller.CommonController;
+import com.github.pandaz.commons.controller.IndexController;
 import com.github.pandaz.commons.interceptor.FeignOauth2RequestInterceptor;
 import com.github.pandaz.commons.util.SpringBeanUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +40,7 @@ public class AuthServerApp {
         System.setProperty("com.alibaba.nacos.naming.cache.dir", "logs/auth/nacos/naming");
         // 启动项目
         SpringApplication.run(AuthServerApp.class, args);
-        SpringBeanUtil.getBean(CommonController.class).onStartUp();
+        SpringBeanUtil.getBean(IndexController.class).onStartUp();
         String repeat = "=".repeat(20);
         log.warn("{} 授权中心启动成功 {}", repeat, repeat);
     }

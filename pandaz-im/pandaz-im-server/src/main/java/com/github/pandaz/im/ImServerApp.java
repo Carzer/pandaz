@@ -11,7 +11,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @author Carzer
  * @since 2019-07-22
  */
-@SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 @SpringBootApplication
 @EnableDiscoveryClient
 @Slf4j

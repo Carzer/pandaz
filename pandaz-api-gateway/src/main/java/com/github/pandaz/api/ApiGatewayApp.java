@@ -8,6 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 
 /**
  * api gateway 负责请求转发
@@ -15,7 +17,13 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @author Carzer
  * @since 2019-07-22
  */
-@SpringBootApplication(scanBasePackages = "com.github.pandaz")
+@SpringBootApplication
+@ComponentScan(basePackages = "com.github.pandaz",
+        excludeFilters = @ComponentScan.Filter(
+                type = FilterType.ASSIGNABLE_TYPE,
+                classes = {com.github.pandaz.commons.controller.IndexController.class}
+        )
+)
 @Slf4j
 @EnableDiscoveryClient
 @EnableFeignClients(value = "com.github.pandaz", defaultConfiguration = FeignOauth2RequestInterceptor.class)

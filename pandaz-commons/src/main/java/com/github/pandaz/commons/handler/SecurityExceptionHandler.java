@@ -1,9 +1,12 @@
-package com.github.pandaz.file.custom;
+package com.github.pandaz.commons.handler;
 
-import com.github.pandaz.commons.exception.FileException;
+import com.github.pandaz.commons.code.RCode;
+import com.github.pandaz.commons.exception.AbstractCustomException;
 import com.github.pandaz.commons.util.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -25,10 +28,36 @@ public class SecurityExceptionHandler {
      * @return 执行结果
      */
     @ResponseStatus(HttpStatus.OK)
-    @ExceptionHandler(FileException.class)
-    public R<String> executeFailed(FileException e) {
+    @ExceptionHandler(AbstractCustomException.class)
+    public R<String> executeFailed(AbstractCustomException e) {
         log.error("业务异常：{}", e.getCode().getMessage());
         return new R<>(e.getCode());
+    }
+
+    /**
+     * 异常捕获：未授权
+     *
+     * @param e 异常
+     * @return 执行结果
+     */
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(AuthenticationException.class)
+    public R<String> authFailed(AuthenticationException e) {
+        log.warn("未授权：{}", e.getMessage());
+        return new R<>(RCode.UNAUTHORIZED);
+    }
+
+    /**
+     * 异常捕获：权限拒绝
+     *
+     * @param e 异常
+     * @return 执行结果
+     */
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(AccessDeniedException.class)
+    public R<String> authFailed(AccessDeniedException e) {
+        log.warn("权限拒绝：{}", e.getMessage());
+        return new R<>(RCode.FORBIDDEN);
     }
 
     /**

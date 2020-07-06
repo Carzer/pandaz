@@ -1,7 +1,7 @@
 package com.github.pandaz.file;
 
+import com.github.pandaz.commons.controller.IndexController;
 import com.github.pandaz.commons.util.SpringBeanUtil;
-import com.github.pandaz.file.controller.IndexController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

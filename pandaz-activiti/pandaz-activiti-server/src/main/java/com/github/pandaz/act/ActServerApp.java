@@ -1,5 +1,7 @@
 package com.github.pandaz.act;
 
+import com.github.pandaz.commons.controller.IndexController;
+import com.github.pandaz.commons.util.SpringBeanUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,6 +24,7 @@ public class ActServerApp {
         System.setProperty("com.alibaba.nacos.naming.cache.dir", "logs/activiti/nacos/naming");
         // 启动项目
         SpringApplication.run(ActServerApp.class, args);
+        SpringBeanUtil.getBean(IndexController.class).onStartUp();
         String repeat = "=".repeat(20);
         log.warn("{} 审批流服务启动成功 {}", repeat, repeat);
     }

@@ -14,9 +14,9 @@ import java.io.Serializable;
  * @author Carzer
  * @since 2019-09-03
  */
-@SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 @Setter
 @Getter
+@SuppressWarnings("unused")
 public final class R<T> {
 
     /**

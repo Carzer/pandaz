@@ -9,12 +9,12 @@ import lombok.Getter;
  * @author Carzer
  * @since 2020-05-12
  */
-@Getter
-public class FileException extends RuntimeException {
+public class FileException extends AbstractCustomException {
 
     /**
      * 文件服务码
      */
+    @Getter
     private final FileCode code;
 
     /**

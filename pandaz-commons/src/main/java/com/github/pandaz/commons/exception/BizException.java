@@ -9,12 +9,12 @@ import lombok.Getter;
  * @author Carzer
  * @since 2020-04-26
  */
-@Getter
-public class BizException extends RuntimeException {
+public class BizException extends AbstractCustomException {
 
     /**
      * 业务码
      */
+    @Getter
     private final BizCode code;
 
     /**

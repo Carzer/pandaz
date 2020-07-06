@@ -37,10 +37,11 @@ spring:
       connection-test-query: SELECT 1
       connection-timeout: 60000
 
-  # 连接redis-sentinel集群配置
   redis:
+    # 单机配置开始
     host: localhost
     port: 6379
+    # 单机配置结束
     timeout: 6000ms
     password: 123456
     lettuce:
@@ -53,7 +54,7 @@ spring:
         max-idle: 8
         # 最小空闲
         min-idle: 0
-    # 哨兵集群用
+    # 哨兵集群配置
 #    sentinel:
 #      master: mymaster
 #      nodes: localhost:36380,localhost:36381,localhost:36379
@@ -101,7 +102,9 @@ jetcache:
     default:
       type: redis.lettuce
       keyConvertor: fastjson
+      # 单机配置
       uri: redis://123456@localhost:6379/0
+      # 集群配置
       #      uri: redis-sentinel://123456@localhost:36380,localhost:36381,localhost:36379/?sentinelMasterId=mymaster
       #readFrom: slavePreferred
 
@@ -116,8 +119,8 @@ custom:
     - "/ws/**"
     - "/common/**"
     - "/login"
-    - "/userInfo"
     - "/v2/api-docs"
+    - "/wakeUp"
   # 随机数
   random: ${random.int[0,10]}
   # 开启验证码校验

@@ -11,7 +11,6 @@ import com.github.pandaz.commons.code.RCode;
 import com.github.pandaz.commons.dto.auth.AuthMenuDTO;
 import com.github.pandaz.commons.util.BeanCopyUtil;
 import com.github.pandaz.commons.util.R;
-import com.github.pandaz.commons.util.ServerConfig;
 import com.github.pandaz.file.api.FtpApi;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -44,11 +42,6 @@ import java.util.Map;
 @Api(value = "Common", tags = "通用方法")
 @SuppressWarnings("unused")
 public class CommonController {
-
-    /**
-     * 配置
-     */
-    private final ServerConfig serverConfig;
 
     /**
      * 验证码服务
@@ -132,15 +125,6 @@ public class CommonController {
         menuEntity.setBitResult(1);
         menuList.add(menuEntity);
         return new R<>(BeanCopyUtil.copyList(menuList, AuthMenuDTO.class));
-    }
-
-    /**
-     * 唤醒方法
-     */
-    @ApiIgnore
-    @GetMapping("wakeUp")
-    public void wake() {
-        log.debug("wake up a person who pretends to be asleep");
     }
 
     /**
@@ -256,9 +240,25 @@ public class CommonController {
     }
 
     /**
-     * 应用启动后执行
+     * userInfo
+     *
+     * @param principal principal
+     * @return 当前用户
      */
-    public void onStartUp() {
-        new RestTemplate().getForEntity(String.format("%s/common/wakeUp", serverConfig.getWakeUrl()), String.class);
+    @ApiOperation(value = "当前用户信息", notes = "当前用户信息")
+    @GetMapping("userInfo")
+    public R<HashMap<String, Principal>> home(Principal principal) {
+        HashMap<String, Principal> map = new HashMap<>(1);
+        map.put("user", principal);
+        return new R<>(map);
+    }
+
+    /**
+     * 唤醒方法
+     */
+    @ApiIgnore
+    @GetMapping("wakeUp")
+    public void wake() {
+        log.debug("wake up a person who pretends to be asleep");
     }
 }
