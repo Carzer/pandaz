@@ -33,7 +33,7 @@ public class MongoDbSecondaryConfig {
      */
     @Bean(name = "mongoDbSecondaryFactory")
     public MongoDbFactory mongoDbSecondaryFactory() {
-        return MongoDbFactoryHelper.getMongoDbFactory(mongoDbSecondaryProperty.getHost(), mongoDbSecondaryProperty.getUser(), mongoDbSecondaryProperty.getPwd(), mongoDbSecondaryProperty.getName());
+        return MongoDbFactoryHelper.getMongoDbFactory(mongoDbSecondaryProperty.getUri());
     }
 
     /**

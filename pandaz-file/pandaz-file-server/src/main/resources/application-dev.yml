@@ -17,11 +17,19 @@ spring:
 # mongodb配置
 mongodb:
   primary:
+    # 现行方式，方便集群配置
+    # 格式 mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]
+    uri: mongodb://admin:123456@localhost:27017/admin
+    # 单体连接，当前项目已过时
     host: localhost:27017
     name: admin
     user: admin
     pwd: 123456
   secondary:
+    # 现行方式，方便集群配置
+    # 格式 mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]
+    uri: mongodb://admin:123456@localhost:27017/admin
+    # 单体连接，当前项目已过时
     host: localhost:27017
     name: admin
     user: admin

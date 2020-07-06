@@ -6,6 +6,7 @@ import com.github.pandaz.commons.entity.BaseEntity;
 import com.github.pandaz.commons.util.UuidUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
@@ -56,11 +57,12 @@ public class CheckUtil<E extends BaseEntity, M extends BaseMapper<E>> {
         String declaredCode = "code";
         // 最终code
         String lastCode = "";
-        try {
-            // 通过反射获取code
-            Field field = entity.getClass().getDeclaredField(declaredCode);
-            field.setAccessible(true);
-            Object code = field.get(entity);
+        // 通过反射获取code
+        Field field = ReflectionUtils.findField(entity.getClass(), declaredCode);
+        if (field == null) {
+            throw new IllegalArgumentException(String.format("[%s]实体无[%s]属性", entity.getClass(), declaredCode));
+        } else {
+            Object code = ReflectionUtils.getField(field, entity);
             // 如果设置了code，则查询是否已存在，若已存在则返回错误
             if (!StringUtils.isEmpty(code) && StringUtils.hasText(code.toString())) {
                 lastCode = code.toString();
@@ -77,10 +79,9 @@ public class CheckUtil<E extends BaseEntity, M extends BaseMapper<E>> {
                 lastCode = UuidUtil.getUuid();
                 lastCode = StringUtils.hasText(prefix) ? String.format("%s%s", prefix, lastCode) : lastCode;
                 lastCode = StringUtils.hasText(suffix) ? String.format("%s%s", lastCode, suffix) : lastCode;
-                field.set(entity, lastCode);
+                ReflectionUtils.makeAccessible(field);
+                ReflectionUtils.setField(field, entity, lastCode);
             }
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            throw new IllegalArgumentException("illegalArgument");
         }
         return lastCode;
     }

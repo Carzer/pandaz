@@ -12,11 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 授权中心相关服务
+ * 自动生成
  *
  * @author Carzer
  * @since 2019-12-19
  */
+@SuppressWarnings("java:S1075")
 public class CodeGenerator {
 
     public static void main(String[] args) {

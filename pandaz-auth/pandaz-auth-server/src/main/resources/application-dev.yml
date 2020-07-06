@@ -102,7 +102,7 @@ jetcache:
       type: redis.lettuce
       keyConvertor: fastjson
       uri: redis://123456@localhost:6379/0
-#      uri: redis-sentinel://123456@localhost:36380,localhost:36381,localhost:36379/?sentinelMasterId=mymaster
+      #      uri: redis-sentinel://123456@localhost:36380,localhost:36381,localhost:36379/?sentinelMasterId=mymaster
       #readFrom: slavePreferred
 
 # 自定义属性

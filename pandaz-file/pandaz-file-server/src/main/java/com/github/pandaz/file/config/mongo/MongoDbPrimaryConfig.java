@@ -36,7 +36,7 @@ public class MongoDbPrimaryConfig {
     @Primary
     @Bean(name = "mongoDbPrimaryFactory")
     public MongoDbFactory mongoDbPrimaryFactory() {
-        return MongoDbFactoryHelper.getMongoDbFactory(mongoDbPrimaryProperty.getHost(), mongoDbPrimaryProperty.getUser(), mongoDbPrimaryProperty.getPwd(), mongoDbPrimaryProperty.getName());
+        return MongoDbFactoryHelper.getMongoDbFactory(mongoDbPrimaryProperty.getUri());
     }
 
     /**
