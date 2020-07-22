@@ -30,6 +30,11 @@ public class DataSourceConfig {
      */
     private final DataSourceProperties properties;
 
+    /**
+     * 数据源
+     *
+     * @return 数据源
+     */
     @Bean(name = "dataSource")
     public DataSource dataSource() {
         // 按照目标数据源名称和目标数据源对象的映射存放在Map中
@@ -43,6 +48,12 @@ public class DataSourceConfig {
         return dataSource;
     }
 
+    /**
+     * 事务管理器
+     *
+     * @param dataSource 数据源
+     * @return 事务管理器
+     */
     @Bean
     public PlatformTransactionManager txManager(DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);

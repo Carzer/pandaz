@@ -14,7 +14,8 @@ public enum ExpireStateEnum {
     /**
      * 0未过期，1已过期
      */
-    ACTIVE("0"), EXPIRED("1");
+    ACTIVE("0"),
+    EXPIRED("1");
 
     /**
      * 值

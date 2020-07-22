@@ -62,7 +62,6 @@ public class GatewayRouteController extends BaseController<GatewayRouteDTO, Gate
      * @param gatewayRouteDTO 字典信息
      */
     @Override
-
     protected void check(GatewayRouteDTO gatewayRouteDTO) {
         Assert.hasText(gatewayRouteDTO.getUri(), "uri不能为空");
     }

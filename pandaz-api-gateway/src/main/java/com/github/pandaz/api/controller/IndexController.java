@@ -26,6 +26,10 @@ public class IndexController {
      */
     private final ServerConfig serverConfig;
 
+    /**
+     * 首次访问url时，因为阿里sentinel的原因，会有一段时间的延迟
+     * 所以在启动后主动访问一次应用
+     */
     @GetMapping("wakeUp")
     public void wake() {
         log.debug("wake up a person who pretends to be asleep");

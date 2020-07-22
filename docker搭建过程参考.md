@@ -101,6 +101,10 @@ mkdir -p [docker统一目录]/jenkins/jenkins_home
 可能用到的配置文件（[docker统一目录]/jenkins/sh）  
 [jenkins.sh](./conf/jenkins.sh) 
 
+```shell
+mkdir -p [docker统一目录]/oracle/data
+```
+
 ##  1. mysql
 
 mysql选用5.7.29版本
@@ -272,7 +276,7 @@ docker pull mcr.microsoft.com/mssql/server:2019-CU3-ubuntu-18.04
 docker run -e "ACCEPT_EULA=Y" -e  "SA_PASSWORD=<YourStrong@Passw0rd>" -p 14330:1433 --name sqlserver2019 -d mcr.microsoft.com/mssql/server:2019-CU3-ubuntu-18.04
 ```
 
-由于Mac的特殊性，SqlServer在挂载卷的时候会报错：`server error 87(the parameter is incorrect.)`
+由于Mac的特殊性，SqlServer在直接挂载磁盘的时候会报错：`server error 87(the parameter is incorrect.)`
 根据官网的说明：
 > Important
 >
@@ -306,3 +310,15 @@ docker volume inspect mssql-vol
      }
  ]  
 
+
+## 13.Oracle
+
+这里选择了 [quay.io/maksymbilenko/oracle-12c](https://github.com/MaksymBilenko/docker-oracle-12c)
+
+```shell
+docker pull quay.io/maksymbilenko/oracle-12c
+```
+
+```shell
+docker run -d -p 8088:8080 -p 1521:1521 -v [docker统一目录]/oracle/data:/u01/app/oracle -e DBCA_TOTAL_MEMORY=1024 quay.io/maksymbilenko/oracle-12c
+```
