@@ -17,6 +17,11 @@ import org.springframework.stereotype.Component;
 public class FtpProperties {
 
     /**
+     * 是否开启ftp
+     */
+    private boolean open = false;
+
+    /**
      * host
      */
     private String host = "localhost";

@@ -8,7 +8,6 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 import java.time.Duration;
 
@@ -19,7 +18,6 @@ import java.time.Duration;
  * @since 2019-07-02
  */
 @Configuration
-@EnableRedisHttpSession
 public class RedisConfig {
 
     /**

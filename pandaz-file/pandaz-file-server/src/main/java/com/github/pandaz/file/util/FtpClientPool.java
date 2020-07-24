@@ -66,16 +66,18 @@ public class FtpClientPool {
      */
     @PostConstruct
     private void construct() {
-        GenericObjectPoolConfig<FTPClient> poolConfig = new GenericObjectPoolConfig<>();
-        poolConfig.setTestOnBorrow(ftpProperties.isTestOnBorrow());
-        poolConfig.setTestOnReturn(ftpProperties.isTestOnReturn());
-        poolConfig.setTestWhileIdle(ftpProperties.isTestWhileIdle());
-        poolConfig.setMinEvictableIdleTimeMillis(ftpProperties.getMinEvictableIdleTimeMillis());
-        poolConfig.setSoftMinEvictableIdleTimeMillis(ftpProperties.getSoftMinEvictableIdleTimeMillis());
-        poolConfig.setTimeBetweenEvictionRunsMillis(ftpProperties.getTimeBetweenEvictionRunsMillis());
-        poolConfig.setMaxIdle(ftpProperties.getMaxIdle());
-        pool = new GenericObjectPool<>(new FtpClientPooledObjectFactory(ftpProperties), poolConfig);
-        initPool(ftpProperties.getInitialSize(), poolConfig.getMaxIdle());
+        if (ftpProperties.isOpen()) {
+            GenericObjectPoolConfig<FTPClient> poolConfig = new GenericObjectPoolConfig<>();
+            poolConfig.setTestOnBorrow(ftpProperties.isTestOnBorrow());
+            poolConfig.setTestOnReturn(ftpProperties.isTestOnReturn());
+            poolConfig.setTestWhileIdle(ftpProperties.isTestWhileIdle());
+            poolConfig.setMinEvictableIdleTimeMillis(ftpProperties.getMinEvictableIdleTimeMillis());
+            poolConfig.setSoftMinEvictableIdleTimeMillis(ftpProperties.getSoftMinEvictableIdleTimeMillis());
+            poolConfig.setTimeBetweenEvictionRunsMillis(ftpProperties.getTimeBetweenEvictionRunsMillis());
+            poolConfig.setMaxIdle(ftpProperties.getMaxIdle());
+            pool = new GenericObjectPool<>(new FtpClientPooledObjectFactory(ftpProperties), poolConfig);
+            initPool(ftpProperties.getInitialSize(), poolConfig.getMaxIdle());
+        }
     }
 
     /**
@@ -92,8 +94,10 @@ public class FtpClientPool {
     /**
      * 预先加载FTPClient连接到对象池中
      * <p>
-     * 当执行addObject方法时，实际上是执行了{@link GenericObjectPool#addObject()} 方法，
-     * 当中会进行create {final PooledObject<T> p = create()}
+     * 当执行pool.addObject方法时，实际上是执行了{@link GenericObjectPool#addObject()} 方法，
+     * 当中会进行create <code>{
+     * final PooledObject<T> p = create()
+     * }</code>
      * 而create方法中执行了p = factory.makeObject()，也就是
      * {@link FtpClientPooledObjectFactory#makeObject()}
      *

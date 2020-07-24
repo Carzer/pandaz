@@ -37,6 +37,7 @@ mongodb:
 
 # ftp及连接池配置
 ftp:
+  open: false
   host: 127.0.0.1
   port: 9021
   username: pandaz

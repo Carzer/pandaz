@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 
 /**
  * 消息相关服务
@@ -12,6 +14,12 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @since 2019-07-22
  */
 @SpringBootApplication
+@ComponentScan(basePackages = "com.github.pandaz",
+        excludeFilters = @ComponentScan.Filter(
+                type = FilterType.ASSIGNABLE_TYPE,
+                classes = {com.github.pandaz.commons.handler.SecurityExceptionHandler.class}
+        )
+)
 @EnableDiscoveryClient
 @Slf4j
 public class ImServerApp {
