@@ -49,7 +49,7 @@ public class SecurityConfig {
         http
                 .authorizeExchange()
                 // 无需进行权限过滤的请求路径
-                .pathMatchers(excludedAuthPages).permitAll()
+                .pathMatchers(excludedPaths).permitAll()
                 .anyExchange().authenticated()
                 // 必须支持跨域
                 .and().csrf().disable()
@@ -93,7 +93,7 @@ public class SecurityConfig {
     /**
      * security的鉴权排除的url列表
      */
-    private final String[] excludedAuthPages = {
+    private final String[] excludedPaths = {
             "/auth/login",
             "/auth/logout",
             "/auth/common/**",

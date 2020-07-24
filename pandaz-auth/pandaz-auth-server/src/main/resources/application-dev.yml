@@ -59,12 +59,6 @@ spring:
 #      master: mymaster
 #      nodes: localhost:36380,localhost:36381,localhost:36379
 
-# ribbon热加载
-ribbon:
-  eager-load:
-    enabled: true
-    clients: pandaz-redis
-
 # 开启feign对sentinel的支持
 # SentinelFeignAutoConfiguration
 feign:
@@ -113,7 +107,7 @@ custom:
   # 系统编码
   os-code: portal
   # 排除路径
-  excludedPaths:
+  excluded-paths:
     - "/oauth/**"
     - "/token/**"
     - "/ws/**"

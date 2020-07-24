@@ -106,7 +106,7 @@ public class SwaggerConfig {
     }
 
     /**
-     * swagger2 认证的安全上下文
+     * swagger2 安全认证的上下文
      *
      * @return 上下文
      */

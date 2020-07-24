@@ -43,7 +43,7 @@ public class RouteServiceImpl implements RouteService {
     public List<RouteDefinition> getAll() {
         List<GatewayRouteEntity> list = gatewayRouteService.listAll();
         if (!CollectionUtils.isEmpty(list)) {
-            return list.stream().map(this::transferToRoute).collect(Collectors.toList());
+            return list.parallelStream().map(this::transferToRoute).collect(Collectors.toList());
         }
         return Collections.emptyList();
     }

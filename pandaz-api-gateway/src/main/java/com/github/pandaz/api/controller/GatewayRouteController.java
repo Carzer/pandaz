@@ -52,7 +52,7 @@ public class GatewayRouteController extends BaseController<GatewayRouteDTO, Gate
     @ApiOperation(value = "获取所有路由表", notes = "获取所有路由表")
     @GetMapping("/getAll")
     public R<List<GatewayRouteDTO>> getAll() {
-        List<GatewayRouteDTO> list = BeanCopyUtil.copyList(gatewayRouteService.list(), GatewayRouteDTO.class);
+        List<GatewayRouteDTO> list = BeanCopyUtil.copyList(gatewayRouteService.listAll(), GatewayRouteDTO.class);
         return new R<>(list);
     }
 

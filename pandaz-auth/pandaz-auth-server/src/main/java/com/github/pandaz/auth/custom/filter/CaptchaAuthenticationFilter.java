@@ -55,7 +55,7 @@ public class CaptchaAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
         if (customProperties.getCaptcha().isEnable() && requestMatcher.matches(request)) {
-            String randomId = this.obtainGeneratedCaptcha(request);
+            String randomId = this.obtainRandomId(request);
             String captcha = this.obtainCaptcha(request);
             RCode rCode = captchaService.check(randomId, captcha);
             if (!RCode.SUCCESS.equals(rCode)) {
@@ -76,7 +76,7 @@ public class CaptchaAuthenticationFilter extends OncePerRequestFilter {
     /**
      * 获取key值
      */
-    private String obtainGeneratedCaptcha(HttpServletRequest request) {
+    private String obtainRandomId(HttpServletRequest request) {
         return request.getParameter("randomId");
     }
 }

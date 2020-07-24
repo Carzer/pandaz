@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
@@ -20,7 +19,6 @@ import java.util.Map;
  * @since 2019-12-13
  */
 @Configuration
-@EnableScheduling
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class DataSourceConfig {
