@@ -18,6 +18,11 @@ import org.springframework.stereotype.Component;
 public class RedisSentinelProperties {
 
     /**
+     * 是否启用
+     */
+    private boolean enable;
+
+    /**
      * 密码
      */
     private String password;

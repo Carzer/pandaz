@@ -20,7 +20,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @author Carzer
  * @since 2020-07-27
  */
-@SuppressWarnings("rawtypes")
 @Configuration
 public class RedisStandaloneConfig {
 

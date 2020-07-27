@@ -23,7 +23,6 @@ import java.util.Set;
  * @author Carzer
  * @since 2020-07-27
  */
-@SuppressWarnings("rawtypes")
 @Configuration
 @ConditionalOnProperty(prefix = "spring.redis-sentinel", name = "enable", havingValue = "true")
 public class RedisSentinelConfig {
