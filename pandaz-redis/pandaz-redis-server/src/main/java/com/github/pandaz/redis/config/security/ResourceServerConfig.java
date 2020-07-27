@@ -1,4 +1,4 @@
-package com.github.pandaz.redis.config;
+package com.github.pandaz.redis.config.security;
 
 import com.github.pandaz.commons.constants.CommonConstants;
 import org.springframework.beans.factory.annotation.Value;

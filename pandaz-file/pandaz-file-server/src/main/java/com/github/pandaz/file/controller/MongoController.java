@@ -5,6 +5,10 @@ import com.github.pandaz.commons.util.ConvertUtil;
 import com.github.pandaz.commons.util.R;
 import com.github.pandaz.file.util.FileTypeEnum;
 import com.mongodb.client.gridfs.model.GridFSFile;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +26,7 @@ import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * MongoDB Controller
@@ -34,6 +39,7 @@ import java.util.Objects;
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @SuppressWarnings("unused")
+@Api(value = "Mongo", tags = "MongoDB操作")
 public class MongoController {
 
     /**
@@ -50,10 +56,17 @@ public class MongoController {
 
     /**
      * 查询
+     * <p>
+     * URLEncoder.encode方法只适用于谷歌浏览器的中文乱码问题
      *
      * @param type 存储类型
      * @param id   文件ID
      */
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "存储类型", value = "type", dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "文件ID", value = "id", dataType = "string", paramType = "query")
+    })
+    @ApiOperation(value = "查询方法", notes = "查询方法")
     @GetMapping
     public void get(String type, String id, HttpServletResponse response) throws IOException {
         if (FileTypeEnum.MONGO_PRIMARY.getValue().equalsIgnoreCase(type)) {
@@ -77,10 +90,17 @@ public class MongoController {
      * @param file 文件
      * @return 保存结果
      */
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "存储类型", value = "type", dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "file", value = "file")
+    })
+    @ApiOperation(value = "保存方法", notes = "保存方法")
     @PostMapping
     public R<String> save(String type, @RequestPart(value = "file") MultipartFile file) throws IOException {
         if (FileTypeEnum.MONGO_PRIMARY.getValue().equalsIgnoreCase(type)) {
-            gridFsPrimaryTemplate.store(file.getInputStream(), file.getOriginalFilename() == null ? file.getName() : file.getOriginalFilename(), file.getContentType());
+            gridFsPrimaryTemplate.store(file.getInputStream(),
+                    Optional.ofNullable(file.getOriginalFilename()).orElse(file.getName())
+                    , file.getContentType());
             return new R<>(RCode.SUCCESS);
         }
         return R.fail();

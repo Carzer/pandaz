@@ -1,16 +1,17 @@
 package com.github.pandaz.redis.service;
 
 import com.github.pandaz.commons.constants.RedisConstants;
+import com.github.pandaz.redis.config.redis.RedisSwitchHolder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.SessionCallback;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -20,20 +21,8 @@ import java.util.concurrent.TimeUnit;
  * @since 2019-07-02
  */
 @Component
-@SuppressWarnings("unchecked")
+@SuppressWarnings({"unchecked"})
 public class RedisHelper {
-
-    /**
-     * redis服务
-     */
-    private RedisTemplate<String, Object> redisTemplate;
-
-    @Autowired
-    public void setRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
-        this.redisTemplate = redisTemplate;
-        this.redisTemplate.setKeySerializer(new StringRedisSerializer());
-        this.redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
-    }
 
     /**
      * 构造方法
@@ -41,6 +30,50 @@ public class RedisHelper {
      * @author Carzer
      */
     private RedisHelper() {
+    }
+
+    /**
+     * redis操作缓存map
+     */
+    private final Map<String, RedisTemplate<String, Object>> templateMap = new ConcurrentHashMap<>(2);
+
+    /**
+     * redis服务
+     */
+    private RedisTemplate<String, Object> redisTemplate;
+
+    /**
+     * 注入方法
+     *
+     * @param redisStandaloneTemplate redis单机操作
+     */
+    @Autowired
+    @Qualifier("redisStandaloneTemplate")
+    public void setRedisStandaloneTemplate(RedisTemplate<String, Object> redisStandaloneTemplate) {
+        this.redisTemplate = redisStandaloneTemplate;
+        templateMap.put("redis", this.redisTemplate);
+        templateMap.put("standalone", redisStandaloneTemplate);
+    }
+
+    /**
+     * 注入方法
+     *
+     * @param redisSentinelTemplate redis集群操作
+     */
+    @Autowired(required = false)
+    @Qualifier("redisSentinelTemplate")
+    public void setRedisSentinelTemplate(RedisTemplate<String, Object> redisSentinelTemplate) {
+        templateMap.put("sentinel", redisSentinelTemplate);
+    }
+
+    /**
+     * 获取redis操作类
+     *
+     * @return redis操作类
+     */
+    private RedisTemplate<String, Object> determineTargetRedisTemplate() {
+        String targetRedisTemplateName = RedisSwitchHolder.getTargetName();
+        return Optional.ofNullable(templateMap.get(targetRedisTemplateName)).orElse(this.redisTemplate);
     }
 
     /**
@@ -59,7 +92,7 @@ public class RedisHelper {
                 return redisOperations.exec();
             }
         };
-        redisTemplate.execute(sessionCallback);
+        determineTargetRedisTemplate().execute(sessionCallback);
         return true;
     }
 
@@ -80,7 +113,7 @@ public class RedisHelper {
                 return redisOperations.exec();
             }
         };
-        redisTemplate.execute(sessionCallback);
+        determineTargetRedisTemplate().execute(sessionCallback);
         return true;
     }
 
@@ -104,7 +137,7 @@ public class RedisHelper {
                     return redisOperations.exec();
                 }
             };
-            redisTemplate.execute(sessionCallback);
+            determineTargetRedisTemplate().execute(sessionCallback);
             return true;
         }
     }
@@ -129,7 +162,7 @@ public class RedisHelper {
                 }
             }
         };
-        return redisTemplate.execute(sessionCallback);
+        return determineTargetRedisTemplate().execute(sessionCallback);
     }
 
     /**
@@ -139,7 +172,7 @@ public class RedisHelper {
      * @return 对象
      */
     public List<Object> getObjectList(String pattern) {
-        Set<String> keys = redisTemplate.keys(String.format("%s%s", RedisConstants.REDIS_PREFIX, pattern));
+        Set<String> keys = determineTargetRedisTemplate().keys(String.format("%s%s", RedisConstants.REDIS_PREFIX, pattern));
         if (CollectionUtils.isEmpty(keys)) {
             return Collections.emptyList();
         }
@@ -156,7 +189,7 @@ public class RedisHelper {
                 return list;
             }
         };
-        return redisTemplate.execute(sessionCallback);
+        return determineTargetRedisTemplate().execute(sessionCallback);
     }
 
     /**
@@ -174,7 +207,7 @@ public class RedisHelper {
                 return operations.exec();
             }
         };
-        redisTemplate.execute(sessionCallback);
+        determineTargetRedisTemplate().execute(sessionCallback);
         return true;
     }
 
@@ -185,7 +218,7 @@ public class RedisHelper {
      * @return 执行结果
      */
     public boolean deleteObjectList(String pattern) {
-        Set<String> keys = redisTemplate.keys(String.format("%s%s", RedisConstants.REDIS_PREFIX, pattern));
+        Set<String> keys = determineTargetRedisTemplate().keys(String.format("%s%s", RedisConstants.REDIS_PREFIX, pattern));
         if (CollectionUtils.isEmpty(keys)) {
             return false;
         }
@@ -197,7 +230,7 @@ public class RedisHelper {
                 return operations.exec();
             }
         };
-        redisTemplate.execute(sessionCallback);
+        determineTargetRedisTemplate().execute(sessionCallback);
         return true;
     }
 }

@@ -39,4 +39,9 @@ public final class CommonConstants {
      * 路由key
      */
     public static final String ROUTE_KEY = "pandaz:routes";
+
+    /**
+     * buffer len
+     */
+    public static final Integer READ_BUFFER_LEN = 100;
 }

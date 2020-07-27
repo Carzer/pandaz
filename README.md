@@ -57,16 +57,11 @@
 
 ### 2. [Redis服务](http://localhost:9001)
 
-<details>
-<summary>进行中...</summary>
-<pre><code>
-- [ ] **功能实现**
+- [x] **功能实现**
     - [x] Redis基础服务
-    - [ ] 多数据源
+    - [x] 多数据源(主要使用单机，哨兵集群模式需要修改 `spring.redis-sentinel.enable = true`
 - [x] **框架集成**
     - [x] Spring Data Redis（使用Lettuce连接Sentinel集群）
-</code></pre>
-</details>  
 
 ### 3. [文件服务](http://localhost:9005)
 

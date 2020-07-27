@@ -1,5 +1,6 @@
 package com.github.pandaz.commons.util;
 
+import com.github.pandaz.commons.constants.CommonConstants;
 import org.apache.commons.io.FileUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,7 +45,7 @@ public class ConvertUtil {
         ByteArrayOutputStream swapStream = new ByteArrayOutputStream();
         byte[] buff = new byte[100];
         int rc;
-        while ((rc = inputStream.read(buff, 0, 100)) > 0) {
+        while ((rc = inputStream.read(buff, 0, CommonConstants.READ_BUFFER_LEN)) > 0) {
             swapStream.write(buff, 0, rc);
         }
         return swapStream.toByteArray();

@@ -10,26 +10,32 @@ spring:
         dashboard: localhost:8787
       log:
         dir: logs/redis/sentinel
-  # redis配置
-  redis:
-    host: localhost
+  # redis单机配置
+  redis-standalone:
+    host-name: localhost
     port: 6379
-    timeout: 6000ms
-    password: 123456
+    database: 0
+    password: '123456'
     lettuce:
       pool:
-        # 最大连接数
-        max-active: 8
-        # 最大阻塞等待时间(负数表示没限制)
-        max-wait: -1ms
         # 最大空闲
         max-idle: 8
         # 最小空闲
         min-idle: 0
-    # 哨兵集群用
-#    sentinel:
-#      master: mymaster
-#      nodes: 172.16.2.130:26380,172.16.2.130:26381,172.16.2.130:26382
+  # redis哨兵集群配置
+  redis-sentinel:
+    enable: false
+    sentinel:
+      master: mymaster
+      nodes: localhost:36380,localhost:36381,localhost:36379
+    password: '123456'
+    lettuce:
+      pool:
+        # 最大空闲
+        max-idle: 8
+        # 最小空闲
+        min-idle: 0
+
 security:
   oauth2:
     resource:
