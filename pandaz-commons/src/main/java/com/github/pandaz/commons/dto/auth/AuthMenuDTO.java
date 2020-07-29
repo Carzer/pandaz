@@ -28,8 +28,8 @@ public class AuthMenuDTO implements Serializable {
     /**
      * 菜单编码
      */
-    @NotEmpty
     @ApiModelProperty("菜单编码")
+    @NotEmpty
     private String code;
 
     /**

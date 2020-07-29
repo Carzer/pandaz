@@ -6,7 +6,10 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 /**
  * 权限信息
@@ -25,43 +28,51 @@ public class PermissionDTO extends BaseDTO {
      * 权限名
      */
     @ApiModelProperty("权限名")
+    @Size(min = 1, max = 100)
     private String name;
 
     /**
      * 权限编码
      */
-    @NotEmpty
     @ApiModelProperty("权限编码")
+    @NotEmpty
+    @Size(min = 1, max = 50)
     private String code;
 
     /**
      * 系统编码
      */
     @ApiModelProperty("系统编码")
+    @Size(min = 1, max = 50)
     private String osCode;
 
     /**
      * 系统名称
      */
     @ApiModelProperty("系统名称")
+    @Size(min = 1, max = 100)
     private String osName;
 
     /**
      * 菜单编码
      */
     @ApiModelProperty("菜单编码")
+    @Size(min = 1, max = 50)
     private String menuCode;
 
     /**
      * 菜单名称
      */
     @ApiModelProperty("菜单名称")
+    @Size(min = 1, max = 100)
     private String menuName;
 
     /**
      * 位移数
      */
     @ApiModelProperty("位移数")
+    @Min(0)
+    @Max(25)
     private Byte bitDigit;
 
     /**

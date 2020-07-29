@@ -6,7 +6,10 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 /**
  * 客户端
@@ -24,8 +27,9 @@ public class OauthClientDTO extends BaseDTO {
     /**
      * 客户端ID
      */
-    @NotEmpty
     @ApiModelProperty("客户端ID")
+    @NotEmpty
+    @Size(min = 1, max = 256)
     private String clientId;
 
     /**
@@ -33,42 +37,49 @@ public class OauthClientDTO extends BaseDTO {
      */
     @NotEmpty
     @ApiModelProperty("客户端名称")
+    @Size(min = 1, max = 256)
     private String clientName;
 
     /**
      * 可访问资源ID
      */
     @ApiModelProperty("可访问资源ID")
+    @Size(min = 1, max = 256)
     private String resourceIds;
 
     /**
      * 客户端密钥
      */
     @ApiModelProperty("客户端密钥")
+    @Size(min = 1, max = 256)
     private String clientSecret;
 
     /**
      * 使用范围
      */
     @ApiModelProperty("使用范围")
+    @Size(min = 1, max = 256)
     private String scope;
 
     /**
      * token获取方式
      */
     @ApiModelProperty("token获取方式")
+    @Size(min = 1, max = 256)
     private String authorizedGrantTypes;
 
     /**
      * 授权码模式跳转uri
      */
     @ApiModelProperty("授权码模式跳转uri")
+    @Size(min = 1, max = 256)
     private String webServerRedirectUri;
 
     /**
      * 权限
      */
     @ApiModelProperty("权限")
+    @Size(min = 1, max = 256)
     private String authorities;
 
     /**
@@ -87,17 +98,21 @@ public class OauthClientDTO extends BaseDTO {
      * 附加信息
      */
     @ApiModelProperty("附加信息")
+    @Size(min = 1, max = 4096)
     private String additionalInformation;
 
     /**
      * 授权码模式自动跳过页面授权步骤
      */
     @ApiModelProperty("授权码模式自动跳过页面授权步骤")
+    @Size(min = 1, max = 256)
     private String autoApprove;
 
     /**
      * 是否锁定
      */
     @ApiModelProperty("是否锁定")
+    @Min(0)
+    @Max(1)
     private Byte locked;
 }

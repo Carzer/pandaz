@@ -6,7 +6,10 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 /**
  * 系统信息
@@ -25,6 +28,7 @@ public class OsInfoDTO extends BaseDTO {
      * 系统名
      */
     @ApiModelProperty("系统名")
+    @Size(min = 1, max = 100)
     private String name;
 
     /**
@@ -32,17 +36,21 @@ public class OsInfoDTO extends BaseDTO {
      */
     @NotEmpty
     @ApiModelProperty("系统编码")
+    @Size(min = 1, max = 50)
     private String code;
 
     /**
      * 父编码
      */
     @ApiModelProperty("父编码")
+    @Size(min = 1, max = 50)
     private String parentCode;
 
     /**
      * 是否锁定
      */
     @ApiModelProperty("是否锁定")
+    @Min(0)
+    @Max(1)
     private Byte locked;
 }

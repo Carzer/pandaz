@@ -6,8 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
 /**
@@ -27,25 +26,30 @@ public class UserDTO extends BaseDTO {
      * 用户名
      */
     @ApiModelProperty("用户名")
+    @Size(min = 1, max = 50)
     private String name;
 
     /**
      * 用户编码
      */
-    @NotEmpty
     @ApiModelProperty("用户编码")
+    @NotEmpty
+    @Size(min = 1, max = 36)
     private String code;
 
     /**
      * 登录名
      */
     @ApiModelProperty("登录名")
+    @Size(min = 1, max = 50)
     private String loginName;
 
     /**
      * 性别
      */
     @ApiModelProperty("性别")
+    @Min(0)
+    @Max(1)
     private Integer gender;
 
     /**
@@ -57,20 +61,23 @@ public class UserDTO extends BaseDTO {
     /**
      * 邮箱
      */
-    @Email
     @ApiModelProperty("邮箱")
+    @Email
     private String email;
 
     /**
      * 手机号
      */
     @ApiModelProperty("手机号")
+    @Size(min = 11, max = 20)
     private String phone;
 
     /**
      * 是否锁定
      */
     @ApiModelProperty("是否锁定")
+    @Min(0)
+    @Max(1)
     private Byte locked;
 
     /**

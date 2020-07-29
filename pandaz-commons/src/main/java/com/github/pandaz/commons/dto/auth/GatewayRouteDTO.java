@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 /**
  * 网关路由表
@@ -25,13 +26,15 @@ public class GatewayRouteDTO extends BaseDTO {
      * 路由ID
      */
     @ApiModelProperty("路由ID")
+    @Size(min = 1, max = 255)
     private String routeId;
 
     /**
      * URI
      */
-    @NotEmpty
     @ApiModelProperty("URI")
+    @NotEmpty
+    @Size(min = 1, max = 255)
     private String uri;
 
     /**
@@ -56,5 +59,6 @@ public class GatewayRouteDTO extends BaseDTO {
      * 描述
      */
     @ApiModelProperty("描述")
+    @Size(min = 1, max = 500)
     private String description;
 }

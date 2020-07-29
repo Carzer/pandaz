@@ -6,7 +6,10 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 /**
  * 角色信息
@@ -25,30 +28,37 @@ public class RoleDTO extends BaseDTO {
      * 角色名
      */
     @ApiModelProperty("角色名")
+    @Size(min = 1, max = 100)
     private String name;
 
     /**
      * 角色编码
      */
-    @NotEmpty
     @ApiModelProperty("角色编码")
+    @NotEmpty
+    @Size(min = 1, max = 50)
     private String code;
 
     /**
      * 父角色编码
      */
     @ApiModelProperty("父角色编码")
+    @Size(min = 1, max = 50)
     private String parentCode;
 
     /**
      * 是否私有(0:否，1:是)
      */
     @ApiModelProperty("是否私有(0:否，1:是)")
+    @Min(0)
+    @Max(1)
     private Byte isPrivate;
 
     /**
      * 是否锁定(0:未锁定，1:已锁定)
      */
     @ApiModelProperty("是否锁定(0:未锁定，1:已锁定)")
+    @Min(0)
+    @Max(1)
     private Byte locked;
 }
