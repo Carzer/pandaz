@@ -108,18 +108,11 @@
 
 ### 5. [消息服务](http://localhost:9004)
 
-<details>
-<summary>进行中...</summary>
-<pre><code>
-- [ ] **功能实现**
+- [x] **功能实现**
     - [x] rabbitmq
     - [x] websocket
-    - [ ] 统一消息管理
-    - [ ] ～～实现简单的分布式事务～～
 - [x] **框架集成**
     - [x] Spring Cloud Stream
-</code></pre>
-</details> 
 
 ### 6. [审批流服务](http://localhost:9006)
 
