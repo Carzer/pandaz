@@ -2,6 +2,8 @@
 
 前端：[PandaZ-UI](https://github.com/Carzer/pandaz-ui)
 
+[toc]
+
 ----------------------------------------------------
 ## 一、 简介
 
@@ -14,7 +16,7 @@
 
 
 ## 二、 容器、数据库、中间件虚拟环境
-  
+
 - 搭建参考
 
 推荐使用Docker直接搭建，搭建过程参考：[docker搭建过程参考](./docker搭建过程参考.md)
@@ -23,7 +25,7 @@
 ## 三、 微服务列表
 
 ### 0. [Swagger文档](http://localhost:7777/swagger-ui.html) | [Knife4j增强文档](http://localhost:7777/doc.html) 
-    
+
     增强文档提供了更适合开发习惯的界面，建议使用
     
     // todo 前端对401错误处理有问题，待解决
@@ -33,7 +35,7 @@
 >使用 [pandaz.sql](./pandaz-auth/pandaz-auth-server/src/main/resources/sql/pandaz.sql) 初始化数据库信息。
 >默认用户：admin，密码：admin。测试oauth2客户端：test，密码：test。
 >所有数据默认逻辑删除。
-    
+
 - [x] **功能实现**
     - [x] 完成会话管理
     - [x] 完成多数据源动态切换功能（手动或注解）
@@ -133,7 +135,7 @@
     - [x] Spring Security Oauth2
 
 
-## 五、 License 
+## 四、 License 
 
 [MIT](./LICENSE)
 
