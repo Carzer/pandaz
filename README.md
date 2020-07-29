@@ -2,8 +2,23 @@
 
 前端：[PandaZ-UI](https://github.com/Carzer/pandaz-ui)
 
-[toc]
+<!-- TOC -->
 
+- [![pandaz](./logo.png) <sup><sup>PandaZ</sup></sup>](#pandazlogopng-supsuppandazsupsup)
+    - [一、 简介](#一-简介)
+    - [二、 容器、数据库、中间件虚拟环境](#二-容器数据库中间件虚拟环境)
+    - [三、 微服务列表](#三-微服务列表)
+        - [0. [Swagger文档](http://localhost:7777/swagger-ui.html) | [Knife4j增强文档](http://localhost:7777/doc.html)](#0-swagger文档httplocalhost7777swagger-uihtml--knife4j增强文档httplocalhost7777dochtml)
+        - [1. [授权中心](http://localhost:9007)](#1-授权中心httplocalhost9007)
+        - [2. [Redis服务](http://localhost:9001)](#2-redis服务httplocalhost9001)
+        - [3. [文件服务](http://localhost:9005)](#3-文件服务httplocalhost9005)
+        - [4. [定时任务](http://localhost:9003)](#4-定时任务httplocalhost9003)
+        - [5. [消息服务](http://localhost:9004)](#5-消息服务httplocalhost9004)
+        - [6. [审批流服务](http://localhost:9006)](#6-审批流服务httplocalhost9006)
+        - [7. [API网关](http://localhost:7777)](#7-api网关httplocalhost7777)
+    - [四、 License](#四-license)
+
+<!-- /TOC -->
 ----------------------------------------------------
 ## 一、 简介
 
