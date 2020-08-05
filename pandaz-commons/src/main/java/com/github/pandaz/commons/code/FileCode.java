@@ -11,6 +11,7 @@ import java.util.Map;
  * @author Carzer
  * @since 2020-05-12
  */
+@SuppressWarnings("unused")
 public enum FileCode implements ICode {
     /**
      * 操作码

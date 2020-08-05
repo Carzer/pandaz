@@ -30,7 +30,7 @@ import java.util.Map;
  * @author Carzer
  * @since 2020-04-30
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings({"unchecked", "unused"})
 public abstract class BaseController<T extends BaseDTO, E extends BaseEntity> {
 
     /**

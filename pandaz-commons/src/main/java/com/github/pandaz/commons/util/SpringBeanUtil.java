@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  * @since 2020-04-13
  */
 @Component
-@SuppressWarnings("unchecked")
+@SuppressWarnings({"unchecked", "unused"})
 public class SpringBeanUtil implements ApplicationContextAware {
 
     /**

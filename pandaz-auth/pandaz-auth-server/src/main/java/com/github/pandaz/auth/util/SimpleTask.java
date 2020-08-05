@@ -20,6 +20,7 @@ import java.util.List;
 @EnableScheduling
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@SuppressWarnings("unused")
 public class SimpleTask {
 
     /**

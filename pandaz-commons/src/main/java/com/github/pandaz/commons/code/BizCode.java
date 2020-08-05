@@ -11,6 +11,7 @@ import java.util.Map;
  * @author Carzer
  * @since 2020-04-26
  */
+@SuppressWarnings("unused")
 public enum BizCode implements ICode {
 
     /**

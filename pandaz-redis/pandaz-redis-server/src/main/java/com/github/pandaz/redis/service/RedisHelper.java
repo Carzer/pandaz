@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
  * @since 2019-07-02
  */
 @Component
-@SuppressWarnings({"unchecked"})
+@SuppressWarnings({"unchecked", "unused"})
 public class RedisHelper {
 
     /**

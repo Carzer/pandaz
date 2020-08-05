@@ -46,7 +46,7 @@ public class CustomInvocationSecurityMetadataSourceService implements FilterInvo
      * 如果在权限表中，则返回给 {@link CustomAccessDecisionManager#decide(Authentication, Object, Collection)} 方法，用来判定用户是否有此权限
      * 如果不在权限表中则放行
      *
-     * @param object 包含客户端发起的请求的requset信息
+     * @param object 包含客户端发起的请求的request信息
      */
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) {

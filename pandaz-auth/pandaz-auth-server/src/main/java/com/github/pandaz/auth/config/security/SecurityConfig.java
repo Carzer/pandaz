@@ -139,7 +139,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * 返回一个实现UserDetailsService接口的类
      *
-     * @return org.springframework.security.core.userdetails.UserDetailsService
+     * @return UserDetailsService
      */
     @Bean
     @Override

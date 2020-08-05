@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@SuppressWarnings("unused")
 public class FtpUtil {
 
     /**

@@ -60,7 +60,7 @@ public class MultipartFileToFile {
      * @throws IOException e
      */
     private static void inputStreamToFile(InputStream ins, File file) throws IOException {
-        try (OutputStream os = new FileOutputStream(file);) {
+        try (OutputStream os = new FileOutputStream(file)) {
             int bytesRead;
             int len = 8192;
             byte[] buffer = new byte[len];

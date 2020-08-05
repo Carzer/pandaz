@@ -8,6 +8,7 @@ import java.util.List;
  * @author Carzer
  * @since 2020-04-27
  */
+@SuppressWarnings("unused")
 public class CommonUtils {
 
     /**

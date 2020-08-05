@@ -23,12 +23,12 @@ public enum FileTypeEnum {
     /**
      * key
      */
-    private int key;
+    private final int key;
 
     /**
      * value
      */
-    private String value;
+    private final String value;
 
     /**
      * 构造方法

@@ -56,7 +56,7 @@ public class CheckUtil<E extends BaseEntity, M extends BaseMapper<E>> {
         // 指定查询列
         String declaredCode = "code";
         // 最终code
-        String lastCode = "";
+        String lastCode;
         // 通过反射获取code
         Field field = ReflectionUtils.findField(entity.getClass(), declaredCode);
         if (field == null) {
