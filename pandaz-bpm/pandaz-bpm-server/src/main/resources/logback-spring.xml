@@ -4,7 +4,7 @@
     <!-- 上下文属性 -->
     <springProperty scope="context" name="spring_application_name" source="spring.application.name"/>
     <!-- 定义日志文件的输出路径 -->
-    <property name="LOG_HOME" value="logs/activiti"/>
+    <property name="LOG_HOME" value="logs/bpm"/>
     <!-- CONSOLE_LOG_PATTERN属性会在console-appender.xml文件中引用 -->
     <property name="CONSOLE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"/>
 

@@ -39,8 +39,8 @@
         <module>pandaz-im</module>
         <!--文件服务-->
         <module>pandaz-file</module>
-        <!--activiti审批流-->
-        <module>pandaz-activiti</module>
+        <!--流程管理-->
+        <module>pandaz-bpm</module>
     </modules>
 
     <properties>

@@ -4,12 +4,12 @@
 
     <parent>
         <groupId>com.github.pandaz</groupId>
-        <artifactId>pandaz-activiti</artifactId>
+        <artifactId>pandaz-bpm</artifactId>
         <version>0.0.2-SNAPSHOT</version>
     </parent>
 
-    <artifactId>pandaz-activiti-server</artifactId>
-    <description>审批流服务</description>
+    <artifactId>pandaz-bpm-server</artifactId>
+    <description>流程管理服务</description>
 
     <dependencies>
         <!--cloud-->

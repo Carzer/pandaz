@@ -4,11 +4,11 @@
 
     <parent>
         <groupId>com.github.pandaz</groupId>
-        <artifactId>pandaz-activiti</artifactId>
+        <artifactId>pandaz-bpm</artifactId>
         <version>0.0.2-SNAPSHOT</version>
     </parent>
 
-    <artifactId>pandaz-activiti-api</artifactId>
-    <description>审批流服务API</description>
+    <artifactId>pandaz-bpm-api</artifactId>
+    <description>流程管理API</description>
 
 </project>

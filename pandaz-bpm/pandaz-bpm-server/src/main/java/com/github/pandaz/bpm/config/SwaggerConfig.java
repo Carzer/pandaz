@@ -1,4 +1,4 @@
-package com.github.pandaz.act.config;
+package com.github.pandaz.bpm.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

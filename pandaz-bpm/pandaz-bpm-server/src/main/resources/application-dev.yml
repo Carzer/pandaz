@@ -9,7 +9,7 @@ spring:
       transport:
         dashboard: localhost:8787
       log:
-        dir: logs/activiti/sentinel
+        dir: logs/bpm/sentinel
   # 数据库配置
   datasource:
     url: jdbc:mysql://localhost:3306/activiti?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
@@ -19,7 +19,7 @@ spring:
     # hikari连接池
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
-      pool-name: ActAppHikariPool
+      pool-name: BpmAppHikariPool
       maximum-pool-size: 20
       minimum-idle: 10
       connection-test-query: SELECT 1

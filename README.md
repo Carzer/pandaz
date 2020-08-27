@@ -114,7 +114,7 @@
 - [x] **框架集成**
     - [x] Spring Cloud Stream
 
-### 6. [审批流服务](http://localhost:9006)
+### 6. [流程管理服务](http://localhost:9006)
 
 <details>
 <summary>进行中...</summary>

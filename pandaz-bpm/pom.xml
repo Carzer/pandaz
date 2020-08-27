@@ -8,12 +8,12 @@
         <version>0.0.2-SNAPSHOT</version>
     </parent>
 
-    <artifactId>pandaz-activiti</artifactId>
+    <artifactId>pandaz-bpm</artifactId>
     <packaging>pom</packaging>
 
     <modules>
-        <module>pandaz-activiti-api</module>
-        <module>pandaz-activiti-server</module>
+        <module>pandaz-bpm-api</module>
+        <module>pandaz-bpm-server</module>
     </modules>
 
     <dependencies>

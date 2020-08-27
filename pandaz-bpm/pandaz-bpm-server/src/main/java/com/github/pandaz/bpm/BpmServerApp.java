@@ -1,4 +1,4 @@
-package com.github.pandaz.act;
+package com.github.pandaz.bpm;
 
 import com.github.pandaz.commons.controller.IndexController;
 import com.github.pandaz.commons.util.SpringBeanUtil;
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 
 /**
- * Activiti 相关服务
+ * 流程管理相关服务
  *
  * @author Carzer
  * @since 2019-07-19
@@ -24,14 +24,14 @@ import org.springframework.context.annotation.FilterType;
 )
 @EnableDiscoveryClient
 @Slf4j
-public class ActServerApp {
+public class BpmServerApp {
 
     public static void main(String[] args) {
         // 设置nacos日志及缓存路径
-        System.setProperty("nacos.logging.path", "logs/activiti/nacos");
-        System.setProperty("com.alibaba.nacos.naming.cache.dir", "logs/activiti/nacos/naming");
+        System.setProperty("nacos.logging.path", "logs/bpm/nacos");
+        System.setProperty("com.alibaba.nacos.naming.cache.dir", "logs/bpm/nacos/naming");
         // 启动项目
-        SpringApplication.run(ActServerApp.class, args);
+        SpringApplication.run(BpmServerApp.class, args);
         SpringBeanUtil.getBean(IndexController.class).onStartUp();
         String repeat = "=".repeat(20);
         log.warn("{} 审批流服务启动成功 {}", repeat, repeat);
