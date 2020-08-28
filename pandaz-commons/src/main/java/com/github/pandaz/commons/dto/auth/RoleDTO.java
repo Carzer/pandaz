@@ -43,7 +43,7 @@ public class RoleDTO extends BaseDTO {
      * 父角色编码
      */
     @ApiModelProperty("父角色编码")
-    @Size(min = 1, max = 50)
+    @Size(max = 50)
     private String parentCode;
 
     /**

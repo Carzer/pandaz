@@ -44,7 +44,7 @@ public class OauthClientDTO extends BaseDTO {
      * 可访问资源ID
      */
     @ApiModelProperty("可访问资源ID")
-    @Size(min = 1, max = 256)
+    @Size(max = 256)
     private String resourceIds;
 
     /**
@@ -58,7 +58,7 @@ public class OauthClientDTO extends BaseDTO {
      * 使用范围
      */
     @ApiModelProperty("使用范围")
-    @Size(min = 1, max = 256)
+    @Size(max = 256)
     private String scope;
 
     /**
@@ -72,14 +72,14 @@ public class OauthClientDTO extends BaseDTO {
      * 授权码模式跳转uri
      */
     @ApiModelProperty("授权码模式跳转uri")
-    @Size(min = 1, max = 256)
+    @Size(max = 256)
     private String webServerRedirectUri;
 
     /**
      * 权限
      */
     @ApiModelProperty("权限")
-    @Size(min = 1, max = 256)
+    @Size(max = 256)
     private String authorities;
 
     /**
@@ -98,14 +98,14 @@ public class OauthClientDTO extends BaseDTO {
      * 附加信息
      */
     @ApiModelProperty("附加信息")
-    @Size(min = 1, max = 4096)
+    @Size(max = 4096)
     private String additionalInformation;
 
     /**
      * 授权码模式自动跳过页面授权步骤
      */
     @ApiModelProperty("授权码模式自动跳过页面授权步骤")
-    @Size(min = 1, max = 256)
+    @Size(max = 256)
     private String autoApprove;
 
     /**

@@ -43,7 +43,7 @@ public class OsInfoDTO extends BaseDTO {
      * 父编码
      */
     @ApiModelProperty("父编码")
-    @Size(min = 1, max = 50)
+    @Size(max = 50)
     private String parentCode;
 
     /**

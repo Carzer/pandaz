@@ -59,6 +59,6 @@ public class GatewayRouteDTO extends BaseDTO {
      * 描述
      */
     @ApiModelProperty("描述")
-    @Size(min = 1, max = 500)
+    @Size(max = 500)
     private String description;
 }

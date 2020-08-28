@@ -72,7 +72,7 @@ public class MenuDTO extends BaseDTO {
      * 图标
      */
     @ApiModelProperty("图标")
-    @Size(min = 1, max = 200)
+    @Size(max = 200)
     private String icon;
 
     /**
@@ -101,7 +101,7 @@ public class MenuDTO extends BaseDTO {
      * 描述
      */
     @ApiModelProperty("描述")
-    @Size(min = 1, max = 256)
+    @Size(max = 256)
     private String remark;
 
     /**
