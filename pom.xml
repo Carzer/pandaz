@@ -57,7 +57,7 @@
         <mysql.version>8.0.16</mysql.version>
         <activiti.version>7.1.0.M2</activiti.version>
         <feign-form.version>3.5.0</feign-form.version>
-        <mybatis-plus-starter.version>3.3.0</mybatis-plus-starter.version>
+        <mybatis-plus-starter.version>3.4.0</mybatis-plus-starter.version>
         <freemarker.version>2.3.29</freemarker.version>
         <spring.security.version>2.3.6.RELEASE</spring.security.version>
         <spring.security.autoconfig.version>2.1.7.RELEASE</spring.security.autoconfig.version>
