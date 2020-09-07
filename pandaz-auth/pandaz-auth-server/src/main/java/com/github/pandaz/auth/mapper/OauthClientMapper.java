@@ -1,6 +1,6 @@
 package com.github.pandaz.auth.mapper;
 
-import com.github.pandaz.auth.entity.OauthClientEntity;
+import com.github.pandaz.auth.entity.ClientEntity;
 import com.github.pandaz.commons.mapper.BasisMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.github.pandaz.commons.mapper.BasisMapper;
  * @author Carzer
  * @since 2020-01-02
  */
-public interface OauthClientMapper extends BasisMapper<OauthClientEntity> {
+public interface OauthClientMapper extends BasisMapper<ClientEntity> {
 
 }

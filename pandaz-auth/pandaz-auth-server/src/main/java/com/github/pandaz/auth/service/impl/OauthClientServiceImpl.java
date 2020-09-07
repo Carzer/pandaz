@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pandaz.auth.custom.constants.SysConstants;
-import com.github.pandaz.auth.entity.OauthClientEntity;
+import com.github.pandaz.auth.entity.ClientEntity;
 import com.github.pandaz.auth.mapper.OauthClientMapper;
 import com.github.pandaz.auth.service.OauthClientService;
 import com.github.pandaz.commons.util.CustomPasswordEncoder;
@@ -43,7 +43,7 @@ import java.util.Map;
 @Slf4j
 @SuppressWarnings("unchecked")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, OauthClientEntity> implements OauthClientService {
+public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, ClientEntity> implements OauthClientService {
 
     /**
      * oauth2客户端信息 mapper
@@ -69,48 +69,48 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Oauth
         if (!StringUtils.hasText(clientId)) {
             return null;
         }
-        QueryWrapper<OauthClientEntity> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<ClientEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(CLIENT_ID_COLUMN, clientId);
-        OauthClientEntity oauthClientEntity = oauthClientMapper.selectOne(queryWrapper);
-        if (oauthClientEntity == null) {
+        ClientEntity clientEntity = oauthClientMapper.selectOne(queryWrapper);
+        if (clientEntity == null) {
             throw new NoSuchClientException(String.format("No client with requested id: %s", clientId));
         }
-        return convertClient(oauthClientEntity);
+        return convertClient(clientEntity);
     }
 
     /**
      * 根据客户端ID删除
      *
-     * @param oauthClientEntity 客户端信息
+     * @param clientEntity 客户端信息
      * @return 执行结果
      */
     @CacheInvalidate(name = "client:", key = "#oauthClientEntity.clientId")
     @Override
-    public int deleteByClientId(OauthClientEntity oauthClientEntity) {
-        return oauthClientMapper.logicDelete(oauthClientEntity);
+    public int deleteByClientId(ClientEntity clientEntity) {
+        return oauthClientMapper.logicDelete(clientEntity);
     }
 
     /**
      * 根据编码删除
      *
-     * @param oauthClientEntity entity
+     * @param clientEntity entity
      * @return 执行结果
      */
     @Override
-    public int deleteByCode(OauthClientEntity oauthClientEntity) {
-        return deleteByClientId(oauthClientEntity);
+    public int deleteByCode(ClientEntity clientEntity) {
+        return deleteByClientId(clientEntity);
     }
 
     /**
      * 根据客户端ID查询
      *
-     * @param oauthClientEntity 客户端ID
+     * @param clientEntity 客户端ID
      * @return 执行结果
      */
     @Override
-    public OauthClientEntity findByClientId(OauthClientEntity oauthClientEntity) {
-        QueryWrapper<OauthClientEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(CLIENT_ID_COLUMN, oauthClientEntity.getClientId());
+    public ClientEntity findByClientId(ClientEntity clientEntity) {
+        QueryWrapper<ClientEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(CLIENT_ID_COLUMN, clientEntity.getClientId());
         return oauthClientMapper.selectOne(queryWrapper);
     }
 
@@ -121,86 +121,86 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Oauth
      * @return 查询结果
      */
     @Override
-    public OauthClientEntity findByCode(OauthClientEntity entity) {
+    public ClientEntity findByCode(ClientEntity entity) {
         return findByClientId(entity);
     }
 
     /**
      * 根据客户端ID更新
      *
-     * @param oauthClientEntity 客户端信息
+     * @param clientEntity 客户端信息
      * @return 执行结果
      */
     @CacheInvalidate(name = "client:", key = "#oauthClientEntity.clientId")
     @Override
-    public int updateByClientId(OauthClientEntity oauthClientEntity) {
-        UpdateWrapper<OauthClientEntity> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq(CLIENT_ID_COLUMN, oauthClientEntity.getClientId());
-        return oauthClientMapper.update(oauthClientEntity, updateWrapper);
+    public int updateByClientId(ClientEntity clientEntity) {
+        UpdateWrapper<ClientEntity> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq(CLIENT_ID_COLUMN, clientEntity.getClientId());
+        return oauthClientMapper.update(clientEntity, updateWrapper);
     }
 
     /**
      * 根据编码更新
      *
-     * @param oauthClientEntity 客户端信息
+     * @param clientEntity 客户端信息
      * @return 执行结果
      */
     @Override
-    public int updateByCode(OauthClientEntity oauthClientEntity) {
-        return updateByClientId(oauthClientEntity);
+    public int updateByCode(ClientEntity clientEntity) {
+        return updateByClientId(clientEntity);
     }
 
     /**
      * 插入方法
      *
-     * @param oauthClientEntity 客户端信息
+     * @param clientEntity 客户端信息
      * @return 结果
      */
     @Override
-    public int insert(OauthClientEntity oauthClientEntity) {
+    public int insert(ClientEntity clientEntity) {
         //判断是否重复
-        if (StringUtils.hasText(oauthClientEntity.getClientId())) {
-            if (findByClientId(oauthClientEntity) != null) {
+        if (StringUtils.hasText(clientEntity.getClientId())) {
+            if (findByClientId(clientEntity) != null) {
                 throw new IllegalArgumentException("客户端编码重复");
             }
         } else {
-            oauthClientEntity.setClientId(UuidUtil.getId());
+            clientEntity.setClientId(UuidUtil.getId());
         }
-        String rawPass = oauthClientEntity.getClientSecret();
+        String rawPass = clientEntity.getClientSecret();
         String encodedPass = SysConstants.DEFAULT_ENCODED_PASS;
         if (StringUtils.hasText(rawPass)) {
             CustomPasswordEncoder passwordEncoder = new CustomPasswordEncoder();
             encodedPass = passwordEncoder.encode(rawPass);
         }
-        oauthClientEntity.setClientSecret(encodedPass);
-        oauthClientEntity.setId(UuidUtil.getId());
-        return oauthClientMapper.insertSelective(oauthClientEntity);
+        clientEntity.setClientSecret(encodedPass);
+        clientEntity.setId(UuidUtil.getId());
+        return oauthClientMapper.insertSelective(clientEntity);
     }
 
     /**
      * 分页方法
      *
-     * @param oauthClientEntity 查询条件
+     * @param clientEntity 查询条件
      * @return 分页
      */
     @Override
-    public IPage<OauthClientEntity> getPage(OauthClientEntity oauthClientEntity) {
-        Page<OauthClientEntity> page = new Page<>(oauthClientEntity.getPageNum(), oauthClientEntity.getPageSize());
-        QueryWrapper<OauthClientEntity> queryWrapper = new QueryWrapper<>();
-        if (StringUtils.hasText(oauthClientEntity.getClientId())) {
-            queryWrapper.likeRight(CLIENT_ID_COLUMN, oauthClientEntity.getClientId());
+    public IPage<ClientEntity> getPage(ClientEntity clientEntity) {
+        Page<ClientEntity> page = new Page<>(clientEntity.getPageNum(), clientEntity.getPageSize());
+        QueryWrapper<ClientEntity> queryWrapper = new QueryWrapper<>();
+        if (StringUtils.hasText(clientEntity.getClientId())) {
+            queryWrapper.likeRight(CLIENT_ID_COLUMN, clientEntity.getClientId());
         }
-        if (StringUtils.hasText(oauthClientEntity.getClientName())) {
-            queryWrapper.likeRight("client_name", oauthClientEntity.getClientName());
+        if (StringUtils.hasText(clientEntity.getClientName())) {
+            queryWrapper.likeRight("client_name", clientEntity.getClientName());
         }
-        if (oauthClientEntity.getLocked() != null) {
-            queryWrapper.eq("locked", oauthClientEntity.getLocked());
+        if (clientEntity.getLocked() != null) {
+            queryWrapper.eq("locked", clientEntity.getLocked());
         }
-        if (oauthClientEntity.getStartDate() != null) {
-            queryWrapper.ge(SysConstants.CREATED_DATE_COLUMN, oauthClientEntity.getStartDate());
+        if (clientEntity.getStartDate() != null) {
+            queryWrapper.ge(SysConstants.CREATED_DATE_COLUMN, clientEntity.getStartDate());
         }
-        if (oauthClientEntity.getEndDate() != null) {
-            queryWrapper.le(SysConstants.CREATED_DATE_COLUMN, oauthClientEntity.getEndDate());
+        if (clientEntity.getEndDate() != null) {
+            queryWrapper.le(SysConstants.CREATED_DATE_COLUMN, clientEntity.getEndDate());
         }
         queryWrapper.orderByDesc(SysConstants.CREATED_DATE_COLUMN);
         return page(page, queryWrapper);
@@ -209,23 +209,23 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Oauth
     /**
      * 转换client类型
      *
-     * @param oauthClientEntity 客户端
+     * @param clientEntity 客户端
      * @return 客户端
      */
-    private BaseClientDetails convertClient(OauthClientEntity oauthClientEntity) {
+    private BaseClientDetails convertClient(ClientEntity clientEntity) {
         BaseClientDetails baseClientDetails = new BaseClientDetails(
-                oauthClientEntity.getClientId(), oauthClientEntity.getResourceIds(),
-                oauthClientEntity.getScope(), oauthClientEntity.getAuthorizedGrantTypes(),
-                oauthClientEntity.getAuthorities(), oauthClientEntity.getWebServerRedirectUri()
+                clientEntity.getClientId(), clientEntity.getResourceIds(),
+                clientEntity.getScope(), clientEntity.getAuthorizedGrantTypes(),
+                clientEntity.getAuthorities(), clientEntity.getWebServerRedirectUri()
         );
-        baseClientDetails.setClientSecret(oauthClientEntity.getClientSecret());
-        if (oauthClientEntity.getAccessTokenValidity() != null) {
-            baseClientDetails.setAccessTokenValiditySeconds(oauthClientEntity.getAccessTokenValidity());
+        baseClientDetails.setClientSecret(clientEntity.getClientSecret());
+        if (clientEntity.getAccessTokenValidity() != null) {
+            baseClientDetails.setAccessTokenValiditySeconds(clientEntity.getAccessTokenValidity());
         }
-        if (oauthClientEntity.getRefreshTokenValidity() != null) {
-            baseClientDetails.setRefreshTokenValiditySeconds(oauthClientEntity.getRefreshTokenValidity());
+        if (clientEntity.getRefreshTokenValidity() != null) {
+            baseClientDetails.setRefreshTokenValiditySeconds(clientEntity.getRefreshTokenValidity());
         }
-        String json = oauthClientEntity.getAdditionalInformation();
+        String json = clientEntity.getAdditionalInformation();
         if (StringUtils.hasText(json)) {
             try {
                 ObjectMapper mapper = new ObjectMapper();
@@ -235,8 +235,8 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Oauth
                 log.warn("读取附加信息出错了");
             }
         }
-        if (oauthClientEntity.getAutoApprove() != null) {
-            baseClientDetails.setAutoApproveScopes(StringUtils.commaDelimitedListToSet(oauthClientEntity.getAutoApprove()));
+        if (clientEntity.getAutoApprove() != null) {
+            baseClientDetails.setAutoApproveScopes(StringUtils.commaDelimitedListToSet(clientEntity.getAutoApprove()));
         }
         return baseClientDetails;
     }

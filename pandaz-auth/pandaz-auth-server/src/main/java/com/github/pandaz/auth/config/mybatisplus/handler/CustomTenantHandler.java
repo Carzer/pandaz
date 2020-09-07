@@ -1,12 +1,14 @@
 package com.github.pandaz.auth.config.mybatisplus.handler;
 
 import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
+import com.github.pandaz.auth.custom.CustomProperties;
+import com.github.pandaz.auth.util.TenantUtil;
 import com.github.pandaz.commons.constants.CommonConstants;
+import lombok.RequiredArgsConstructor;
 import net.sf.jsqlparser.expression.Expression;
+import net.sf.jsqlparser.expression.LongValue;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 租户handler
@@ -15,12 +17,18 @@ import java.util.List;
  * @since 2020-09-02
  */
 @Component
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CustomTenantHandler implements TenantLineHandler {
 
     /**
-     * 需要过滤的表
+     * 自定义属性
      */
-    private static final List<String> IGNORE_TENANT_TABLES = new ArrayList<>();
+    private final CustomProperties customProperties;
+
+    /**
+     * 租户工具类
+     */
+    private final TenantUtil tenantUtil;
 
     /**
      * 获取租户ID字段
@@ -34,13 +42,14 @@ public class CustomTenantHandler implements TenantLineHandler {
 
     /**
      * 判断表名是否被忽略
+     * 忽略语句
      *
      * @param tableName 表名
      * @return 结果
      */
     @Override
     public boolean ignoreTable(String tableName) {
-        return IGNORE_TENANT_TABLES.parallelStream().anyMatch(e -> e.equalsIgnoreCase(tableName));
+        return customProperties.getIgnoreTenantTables().parallelStream().anyMatch(e -> e.equalsIgnoreCase(tableName));
     }
 
     /**
@@ -50,6 +59,10 @@ public class CustomTenantHandler implements TenantLineHandler {
      */
     @Override
     public Expression getTenantId() {
-        return null;
+        Long tenantId = tenantUtil.getTenantId();
+        if (tenantId == null) {
+            return null;
+        }
+        return new LongValue(tenantId);
     }
 }

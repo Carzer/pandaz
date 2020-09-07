@@ -54,6 +54,9 @@ public class BaseDTO implements Serializable {
     @ApiModelProperty("版本号")
     private Integer version;
 
+    @ApiModelProperty("租户ID")
+    private Long tenantId;
+
     /**
      * 开始时间
      */

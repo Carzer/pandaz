@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("t_sys_gateway_route")
+@TableName("api_gateway_route")
 public class GatewayRouteEntity extends BaseEntity {
 
     private static final long serialVersionUID = -4448301455268929428L;

@@ -16,8 +16,8 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("t_sys_oauth_client")
-public class OauthClientEntity extends BaseEntity {
+@TableName("auth_client")
+public class ClientEntity extends BaseEntity {
 
     private static final long serialVersionUID = -8914139658642484148L;
 

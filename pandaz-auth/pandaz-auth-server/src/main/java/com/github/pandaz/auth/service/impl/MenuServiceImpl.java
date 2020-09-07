@@ -210,18 +210,18 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
     /**
      * 获取已授权的菜单
      *
-     * @param osCode   系统编码
-     * @param roleList 角色列表
+     * @param osCode 系统编码
+     * @param roles  角色列表
      * @return 菜单列表
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public List<MenuEntity> getAuthorizedMenu(String osCode, List<String> roleList) {
+    public List<MenuEntity> getAuthorizedMenu(String osCode, Set<String> roles) {
         Map<String, Object> map = new HashMap<>(2);
         List<MenuEntity> toRootList = new ArrayList<>();
         Set<String> parentCodes = new HashSet<>();
         map.put("osCode", osCode);
-        map.put("list", roleList);
+        map.put("list", roles);
         List<MenuEntity> menuList = menuMapper.getAuthorizedMenu(map);
         List<String> allCodes = menuList.parallelStream().map(MenuEntity::getCode).collect(Collectors.toList());
         // 计算位运算和值，并查找缺失的父级菜单

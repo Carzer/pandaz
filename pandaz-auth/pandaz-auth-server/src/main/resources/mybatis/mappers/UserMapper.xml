@@ -52,7 +52,7 @@
         </if>
     </sql>
     <insert id="insertSelective" parameterType="com.github.pandaz.auth.entity.UserEntity">
-        insert into t_sys_user
+        insert into auth_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null and id != ''">
                 id,
@@ -174,7 +174,7 @@
     </insert>
     <!-- 逻辑删除 -->
     <update id="logicDelete">
-        update t_sys_user
+        update auth_user
         <set>
             <if test="deletedBy != null">
                 deleted_by = #{deletedBy,jdbcType=VARCHAR},
@@ -198,7 +198,7 @@
     </update>
     <!-- 批量逻辑删除 -->
     <update id="batchLogicDelete" parameterType="java.util.HashMap">
-        update t_sys_user
+        update auth_user
         <set>
             <if test="deletedBy != null">
                 deleted_by = #{deletedBy,jdbcType=VARCHAR},

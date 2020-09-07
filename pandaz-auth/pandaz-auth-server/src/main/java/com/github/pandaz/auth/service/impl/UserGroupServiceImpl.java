@@ -109,14 +109,14 @@ public class UserGroupServiceImpl extends ServiceImpl<UserGroupMapper, UserGroup
         userGroupEntity.setUserCode(null);
         List<String> existingCodes = userGroupMapper.listBindGroupMembers(userGroupEntity);
         List<String> newCodes = userGroupEntity.getUserCodes();
-        List<String> codesToRemove = existingCodes.stream().filter(code -> !(newCodes.contains(code))).collect(Collectors.toList());
-        List<String> codesToAdd = newCodes.stream().filter(code -> !(existingCodes.contains(code))).collect(Collectors.toList());
+        List<String> codesToRemove = existingCodes.parallelStream().filter(code -> !(newCodes.contains(code))).collect(Collectors.toList());
+        List<String> codesToAdd = newCodes.parallelStream().filter(code -> !(existingCodes.contains(code))).collect(Collectors.toList());
         // 清理之前的关系
         userGroupEntity.setDeletedBy(operator);
         userGroupEntity.setDeletedDate(currentDate);
         deleteByCodes(userGroupEntity, codesToRemove);
         // 保存关系
-        List<UserGroupEntity> list = codesToAdd.stream().map(code -> {
+        List<UserGroupEntity> list = codesToAdd.parallelStream().map(code -> {
             UserGroupEntity userGroup = new UserGroupEntity();
             userGroup.setId(UuidUtil.getId());
             userGroup.setGroupCode(groupCode);
@@ -145,14 +145,14 @@ public class UserGroupServiceImpl extends ServiceImpl<UserGroupMapper, UserGroup
         userGroupEntity.setGroupCode(null);
         List<String> existingCodes = userGroupMapper.listBindUserGroups(userGroupEntity);
         List<String> newCodes = userGroupEntity.getGroupCodes();
-        List<String> codesToRemove = existingCodes.stream().filter(code -> !(newCodes.contains(code))).collect(Collectors.toList());
-        List<String> codesToAdd = newCodes.stream().filter(code -> !(existingCodes.contains(code))).collect(Collectors.toList());
+        List<String> codesToRemove = existingCodes.parallelStream().filter(code -> !(newCodes.contains(code))).collect(Collectors.toList());
+        List<String> codesToAdd = newCodes.parallelStream().filter(code -> !(existingCodes.contains(code))).collect(Collectors.toList());
         // 清理之前的关系
         userGroupEntity.setDeletedBy(operator);
         userGroupEntity.setDeletedDate(currentDate);
         deleteByCodes(userGroupEntity, codesToRemove);
         // 保存关系
-        List<UserGroupEntity> list = codesToAdd.stream().map(code -> {
+        List<UserGroupEntity> list = codesToAdd.parallelStream().map(code -> {
             UserGroupEntity userGroup = new UserGroupEntity();
             userGroup.setId(UuidUtil.getId());
             userGroup.setGroupCode(code);

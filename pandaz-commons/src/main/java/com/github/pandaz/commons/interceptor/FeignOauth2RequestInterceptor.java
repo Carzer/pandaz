@@ -4,10 +4,11 @@ import com.github.pandaz.commons.constants.CommonConstants;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Base64Utils;
 import org.springframework.util.StringUtils;
@@ -33,13 +34,12 @@ public class FeignOauth2RequestInterceptor implements RequestInterceptor {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
             try {
-                Object details = authentication.getDetails();
                 // oauth2认证
-                if (details instanceof OAuth2AuthenticationDetails) {
-                    OAuth2AuthenticationDetails auth2AuthenticationDetails = (OAuth2AuthenticationDetails) details;
+                if (authentication instanceof OAuth2Authentication) {
+                    OAuth2AuthenticationDetails auth2AuthenticationDetails = (OAuth2AuthenticationDetails) authentication.getDetails();
                     requestTemplate.header(CommonConstants.AUTHORIZATION, String.format("%s %s", CommonConstants.BEARER_TYPE, auth2AuthenticationDetails.getTokenValue()));
                     // form登陆认证
-                } else if (details instanceof WebAuthenticationDetails) {
+                } else if (authentication instanceof UsernamePasswordAuthenticationToken) {
                     // details中的sessionID非Spring security统一管理的，需使用RequestContextHolder
                     String sessionId = RequestContextHolder.currentRequestAttributes().getSessionId();
                     if (StringUtils.hasText(sessionId)) {

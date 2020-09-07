@@ -8,7 +8,7 @@
         deleted_flag, locked, version
     </sql>
     <insert id="insertSelective" parameterType="com.github.pandaz.auth.entity.DictInfoEntity">
-        insert into t_sys_dict_info
+        insert into auth_dict_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null and id != ''">
                 id,
@@ -94,7 +94,7 @@
     </insert>
     <!-- 逻辑删除 -->
     <update id="logicDelete">
-        update t_sys_dict_info
+        update auth_dict_info
         <set>
             <if test="deletedBy != null">
                 deleted_by = #{deletedBy,jdbcType=VARCHAR},
@@ -118,7 +118,7 @@
     </update>
     <!-- 批量逻辑删除 -->
     <update id="batchLogicDelete" parameterType="java.util.HashMap">
-        update t_sys_dict_info
+        update auth_dict_info
         <set>
             <if test="deletedBy != null">
                 deleted_by = #{deletedBy,jdbcType=VARCHAR},
@@ -160,8 +160,8 @@
                dictInfo.locked,
                dictInfo.version,
                dictType.name as typeName
-        from t_sys_dict_info dictInfo
-                 inner join t_sys_dict_type dictType on dictInfo.type_code = dictType.code
+        from auth_dict_info dictInfo
+                 inner join auth_dict_type dictType on dictInfo.type_code = dictType.code
         where dictInfo.deleted_flag = '0'
           and dictType.deleted_flag = '0'
           and dictInfo.code = #{code,jdbcType=VARCHAR}
@@ -183,8 +183,8 @@
         dictInfo.locked,
         dictInfo.version,
         dictType.name as typeName
-        from t_sys_dict_info dictInfo
-        inner join t_sys_dict_type dictType on dictInfo.type_code = dictType.code
+        from auth_dict_info dictInfo
+        inner join auth_dict_type dictType on dictInfo.type_code = dictType.code
         <where>
             dictInfo.deleted_flag = '0'
             and dictType.deleted_flag = '0'

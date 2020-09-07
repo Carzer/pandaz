@@ -1,7 +1,7 @@
 package com.github.pandaz.auth.controller;
 
 
-import com.github.pandaz.auth.entity.OauthClientEntity;
+import com.github.pandaz.auth.entity.ClientEntity;
 import com.github.pandaz.auth.service.OauthClientService;
 import com.github.pandaz.commons.controller.BaseController;
 import com.github.pandaz.commons.dto.auth.OauthClientDTO;
@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020-01-02
  */
 @RestController
-@RequestMapping("/oauthClient")
+@RequestMapping("/client")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-@Api(value = "Oauth2Client", tags = "oauth2客户端信息")
-public class OauthClientController extends BaseController<OauthClientDTO, OauthClientEntity> {
+@Api(value = "Client", tags = "oauth2客户端信息")
+public class ClientController extends BaseController<OauthClientDTO, ClientEntity> {
 
     /**
      * 客户端服务
@@ -36,7 +36,7 @@ public class OauthClientController extends BaseController<OauthClientDTO, OauthC
      * @return 服务
      */
     @Override
-    protected BaseService<OauthClientEntity> getBaseService() {
+    protected BaseService<ClientEntity> getBaseService() {
         return this.oauthClientService;
     }
 

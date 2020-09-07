@@ -97,15 +97,15 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
         String menuCode = rolePermissionEntity.getMenuCode();
         List<String> existingCodes = rolePermissionMapper.listBindCodes(rolePermissionEntity);
         List<String> newCodes = rolePermissionEntity.getPermissionCodes();
-        List<String> codesToRemove = existingCodes.stream().filter(code -> !(newCodes.contains(code))).collect(Collectors.toList());
-        List<String> codesToAdd = newCodes.stream().filter(code -> !(existingCodes.contains(code))).collect(Collectors.toList());
+        List<String> codesToRemove = existingCodes.parallelStream().filter(code -> !(newCodes.contains(code))).collect(Collectors.toList());
+        List<String> codesToAdd = newCodes.parallelStream().filter(code -> !(existingCodes.contains(code))).collect(Collectors.toList());
         // 清理之前的角色菜单关系
         rolePermissionEntity.setDeletedBy(operator);
         rolePermissionEntity.setDeletedDate(currentDate);
         deleteByCodes(rolePermissionEntity, codesToRemove);
 
         // 保存关系
-        List<RolePermissionEntity> list = codesToAdd.stream().map(code -> {
+        List<RolePermissionEntity> list = codesToAdd.parallelStream().map(code -> {
             RolePermissionEntity rolePermission = new RolePermissionEntity();
             rolePermission.setId(UuidUtil.getId());
             rolePermission.setPermissionCode(code);

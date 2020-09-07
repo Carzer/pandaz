@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@TableName("t_sys_group_role")
+@TableName("auth_group_role")
 public class GroupRoleEntity extends BaseEntity {
 
     private static final long serialVersionUID = -8221295574031161475L;

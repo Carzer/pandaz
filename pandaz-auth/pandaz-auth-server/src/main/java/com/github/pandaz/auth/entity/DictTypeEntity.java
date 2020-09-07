@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@TableName("t_sys_dict_type")
+@TableName("auth_dict_type")
 public class DictTypeEntity extends BaseEntity {
 
     private static final long serialVersionUID = -4804489435289983563L;

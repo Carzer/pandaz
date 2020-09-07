@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @author Carzer
  * @since 2019-11-05
  */
-@SuppressWarnings("AlibabaLowerCamelCaseVariableNaming")
+@SuppressWarnings("all")
 @EnableTransactionManagement
 @Configuration
 @MapperScan("com.github.pandaz.auth.mapper")
@@ -36,9 +36,10 @@ public class MybatisPlusConfig {
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-        interceptor.addInnerInterceptor((tenantLineInnerInterceptor()));
+        interceptor.addInnerInterceptor(tenantLineInnerInterceptor());
         interceptor.addInnerInterceptor(paginationInnerInterceptor());
         interceptor.addInnerInterceptor(optimisticLockerInnerInterceptor());
+//        interceptor.addInnerInterceptor(illegalSQLInnerInterceptor());
         interceptor.addInnerInterceptor(blockAttackInnerInterceptor());
         return interceptor;
     }

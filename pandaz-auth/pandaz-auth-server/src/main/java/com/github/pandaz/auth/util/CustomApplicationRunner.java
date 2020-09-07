@@ -50,7 +50,7 @@ public class CustomApplicationRunner implements ApplicationRunner {
         String osCode = customProperties.getOsCode();
         List<String> roleList = roleService.listAllRoleCode();
         if (!CollectionUtils.isEmpty(roleList)) {
-            roleList.parallelStream().forEach(roleCode ->
+            roleList.forEach(roleCode ->
                     rolePermissionService.getByOsCodeAndRoleCode(osCode, roleCode)
             );
         }

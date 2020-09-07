@@ -4,6 +4,7 @@ import com.github.pandaz.auth.entity.MenuEntity;
 import com.github.pandaz.commons.service.BaseService;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 菜单服务
@@ -39,11 +40,11 @@ public interface MenuService extends BaseService<MenuEntity> {
     /**
      * 获取已授权的菜单
      *
-     * @param osCode   系统编码
-     * @param roleList 角色列表
+     * @param osCode 系统编码
+     * @param roles  角色列表
      * @return 菜单列表
      */
-    List<MenuEntity> getAuthorizedMenu(String osCode, List<String> roleList);
+    List<MenuEntity> getAuthorizedMenu(String osCode, Set<String> roles);
 
     /**
      * 只列出叶子节点

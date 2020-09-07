@@ -38,6 +38,12 @@
             <artifactId>spring-security-oauth2</artifactId>
             <optional>true</optional>
         </dependency>
+        <!--cache-->
+        <dependency>
+            <groupId>com.alicp.jetcache</groupId>
+            <artifactId>jetcache-starter-redis-lettuce</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
 </project>

@@ -26,7 +26,7 @@
         version
     </sql>
     <insert id="insertSelective" parameterType="com.github.pandaz.auth.entity.PermissionEntity">
-        insert into t_sys_permission
+        insert into auth_permission
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null and id !=''">
                 id,
@@ -130,7 +130,7 @@
     </insert>
     <!-- 逻辑删除 -->
     <update id="logicDelete">
-        update t_sys_permission
+        update auth_permission
         <set>
             <if test="deletedBy != null">
                 deleted_by = #{deletedBy,jdbcType=VARCHAR},
@@ -154,7 +154,7 @@
     </update>
     <!-- 批量逻辑删除 -->
     <update id="batchLogicDelete" parameterType="java.util.HashMap">
-        update t_sys_permission
+        update auth_permission
         <set>
             <if test="deletedBy != null">
                 deleted_by = #{deletedBy,jdbcType=VARCHAR},
@@ -199,10 +199,10 @@
         permission.version,
         osInfo.name as osName,
         menu.name as menuName
-        from t_sys_permission permission
-        inner join t_sys_os_info osInfo
+        from auth_permission permission
+        inner join auth_os_info osInfo
         on permission.os_code = osInfo.code
-        left join t_sys_menu menu
+        left join auth_menu menu
         on permission.menu_code = menu.code and menu.deleted_flag = '0'
         <where>
             permission.deleted_flag = '0'
@@ -231,7 +231,7 @@
     <select id="selectBitDigits" resultType="java.lang.Byte"
             parameterType="com.github.pandaz.auth.entity.PermissionEntity">
         select bit_digit
-        from t_sys_permission
+        from auth_permission
         <where>
             deleted_flag = '0'
             <if test="osCode != null and osCode !=''">

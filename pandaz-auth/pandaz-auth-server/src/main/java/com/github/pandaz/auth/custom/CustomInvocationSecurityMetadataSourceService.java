@@ -1,5 +1,6 @@
 package com.github.pandaz.auth.custom;
 
+import com.github.pandaz.auth.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +9,6 @@ import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.access.SecurityMetadataSource;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -18,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * SecurityMetadataSource
@@ -53,15 +51,12 @@ public class CustomInvocationSecurityMetadataSourceService implements FilterInvo
         Set<ConfigAttribute> configAttributes;
         // 查找匹配的权限信息
         try {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            Set<String> roleSet = authentication.getAuthorities().stream()
-                    .map(GrantedAuthority::getAuthority)
-                    .collect(Collectors.toSet());
+            Set<String> roles = AuthUtil.getRolesFromContext();
             // 如果开启超级管理员，并拥有符合的角色，则通过所有请求
-            if (customProperties.getSuperAdmin().isEnable() && roleSet.contains(customProperties.getSuperAdmin().getName())) {
+            if (customProperties.getSuperAdmin().isEnable() && roles.contains(customProperties.getSuperAdmin().getName())) {
                 return Collections.emptyList();
             }
-            configAttributes = metadataResourceProvider.getResourceDefineValue(roleSet);
+            configAttributes = metadataResourceProvider.getResourceDefineValue(roles);
             // 添加过滤排除URL
             String[] excludedPaths = customProperties.getExcludedPaths();
             if (excludedPaths != null && excludedPaths.length > 0) {

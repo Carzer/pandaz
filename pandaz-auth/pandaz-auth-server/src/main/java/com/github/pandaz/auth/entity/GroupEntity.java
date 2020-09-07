@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@TableName("t_sys_group")
+@TableName("auth_group")
 public class GroupEntity extends BaseEntity {
 
     private static final long serialVersionUID = -1911290286990476968L;

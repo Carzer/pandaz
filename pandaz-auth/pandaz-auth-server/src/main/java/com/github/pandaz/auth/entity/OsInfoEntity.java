@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@TableName("t_sys_os_info")
+@TableName("auth_os_info")
 public class OsInfoEntity extends BaseEntity {
 
     private static final long serialVersionUID = 1210965567272983588L;

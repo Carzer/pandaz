@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@TableName("t_sys_user_group")
+@TableName("auth_user_group")
 public class UserGroupEntity extends BaseEntity {
 
     private static final long serialVersionUID = 6268647528238681429L;

@@ -19,7 +19,7 @@
         created_by, created_date, is_private
     </sql>
     <insert id="insertSelective" parameterType="com.github.pandaz.auth.entity.UserGroupEntity">
-        insert into t_sys_user_group
+        insert into auth_user_group
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null and id != ''">
                 id,
@@ -93,7 +93,7 @@
     </insert>
     <!-- 批量逻辑删除 -->
     <update id="batchLogicDelete" parameterType="java.util.HashMap">
-        update t_sys_user_group
+        update auth_user_group
         <set>
             <if test="deletedBy != null">
                 deleted_by = #{deletedBy,jdbcType=VARCHAR},
@@ -133,7 +133,7 @@
     </update>
     <!-- 根据用户编码逻辑删除 -->
     <update id="logicDeleteByUserCode">
-        update t_sys_user_group
+        update auth_user_group
         <set>
             <if test="deletedBy != null">
                 deleted_by = #{deletedBy,jdbcType=VARCHAR},
@@ -157,7 +157,7 @@
     </update>
     <!-- 根据用户组编码逻辑删除 -->
     <update id="logicDeleteByGroupCode">
-        update t_sys_user_group
+        update auth_user_group
         <set>
             <if test="deletedBy != null">
                 deleted_by = #{deletedBy,jdbcType=VARCHAR},
@@ -183,7 +183,7 @@
     <select id="listBindGroupMembers" parameterType="com.github.pandaz.auth.entity.UserGroupEntity"
             resultType="java.lang.String">
         select user_code
-        from t_sys_user_group
+        from auth_user_group
         <where>
             deleted_flag='0' and is_private='0'
             and group_code = #{groupCode,jdbcType=VARCHAR}
@@ -193,7 +193,7 @@
     <select id="listBindUserGroups" parameterType="com.github.pandaz.auth.entity.UserGroupEntity"
             resultType="java.lang.String">
         select group_code
-        from t_sys_user_group
+        from auth_user_group
         <where>
             deleted_flag='0' and is_private='0'
             and user_code = #{userCode,jdbcType=VARCHAR}
@@ -201,7 +201,7 @@
     </select>
     <!-- 批量插入 -->
     <insert id="batchInsert" parameterType="com.github.pandaz.auth.entity.UserGroupEntity">
-        insert into t_sys_user_group
+        insert into auth_user_group
         (id, user_code, group_code, created_by, created_date)
         values
         <foreach collection="list" item="item" index="index" separator=",">

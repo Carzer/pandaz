@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("t_sys_user_org")
+@TableName("auth_user_org")
 public class UserOrgEntity extends BaseEntity {
 
     private static final long serialVersionUID = 1L;

@@ -2,7 +2,7 @@ package com.github.pandaz.auth.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.pandaz.auth.AuthServerApp;
-import com.github.pandaz.auth.entity.OauthClientEntity;
+import com.github.pandaz.auth.entity.ClientEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -48,38 +48,38 @@ public class OauthClientServiceTest {
 
     @Test
     public void deleteByClientId() {
-        OauthClientEntity oauthClientEntity = new OauthClientEntity();
-        oauthClientEntity.setClientId("test");
-        oauthClientEntity.setDeletedBy("admin");
-        oauthClientEntity.setDeletedDate(LocalDateTime.now());
-        int result = oauthClientService.deleteByClientId(oauthClientEntity);
+        ClientEntity clientEntity = new ClientEntity();
+        clientEntity.setClientId("test");
+        clientEntity.setDeletedBy("admin");
+        clientEntity.setDeletedDate(LocalDateTime.now());
+        int result = oauthClientService.deleteByClientId(clientEntity);
         assertThat(result, anything());
     }
 
     @Test
     public void findByClientId() {
-        OauthClientEntity oauthClientEntity = new OauthClientEntity();
-        oauthClientEntity.setClientId("test");
-        OauthClientEntity test = oauthClientService.findByClientId(oauthClientEntity);
+        ClientEntity clientEntity = new ClientEntity();
+        clientEntity.setClientId("test");
+        ClientEntity test = oauthClientService.findByClientId(clientEntity);
         assertThat(test, anything());
     }
 
     @Test
     public void updateByClientId() {
-        OauthClientEntity oauthClientEntity = new OauthClientEntity();
-        oauthClientEntity.setClientId("client_test");
-        int result = oauthClientService.updateByClientId(oauthClientEntity);
+        ClientEntity clientEntity = new ClientEntity();
+        clientEntity.setClientId("client_test");
+        int result = oauthClientService.updateByClientId(clientEntity);
         assertThat(result, anything());
     }
 
     @Test
     public void insert() {
-        OauthClientEntity oauthClientEntity = new OauthClientEntity();
-        oauthClientEntity.setClientId("client_test");
-        oauthClientEntity.setClientName("client_test");
+        ClientEntity clientEntity = new ClientEntity();
+        clientEntity.setClientId("client_test");
+        clientEntity.setClientName("client_test");
         int result = 0;
         try {
-            result = oauthClientService.insert(oauthClientEntity);
+            result = oauthClientService.insert(clientEntity);
         } catch (Exception e) {
             log.error("插入客户端信息出错", e);
         }
@@ -88,9 +88,9 @@ public class OauthClientServiceTest {
 
     @Test
     public void getPage() {
-        OauthClientEntity oauthClientEntity = new OauthClientEntity();
-        oauthClientEntity.setClientId("client_test");
-        IPage<OauthClientEntity> page = oauthClientService.getPage(oauthClientEntity);
+        ClientEntity clientEntity = new ClientEntity();
+        clientEntity.setClientId("client_test");
+        IPage<ClientEntity> page = oauthClientService.getPage(clientEntity);
         assertNotNull(page);
     }
 }

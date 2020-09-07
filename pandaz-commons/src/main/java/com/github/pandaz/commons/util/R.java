@@ -16,7 +16,7 @@ import java.io.Serializable;
  */
 @Setter
 @Getter
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "AlibabaClassNamingShouldBeCamel"})
 public final class R<T> {
 
     /**

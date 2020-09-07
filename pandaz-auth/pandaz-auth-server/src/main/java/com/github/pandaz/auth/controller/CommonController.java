@@ -28,6 +28,7 @@ import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 通用方法，不校验权限
@@ -105,11 +106,10 @@ public class CommonController {
     @ApiOperation(value = "获取所有授权菜单", notes = "获取所有授权菜单")
     @GetMapping("/getAuthMenu")
     public R<List<AuthMenuDTO>> getAuthMenu(@RequestParam String osCode, @ApiIgnore Principal principal) {
-        R<List<String>> roleList = AuthUtil.getRoleListFromContext();
-        if (RCode.SUCCESS.getCode() != roleList.getCode()) {
-            return new R<>(RCode.getEnum(roleList.getCode()));
+        Set<String> roles = AuthUtil.getRolesFromContext();
+        if (CollectionUtils.isEmpty(roles)) {
+            return new R<>(RCode.ROLE_EMPTY);
         }
-        List<String> roles = roleList.getData();
         List<MenuEntity> menuList;
         // 如果开启超级管理员，并且当前用户拥有超级管理员角色，则返回所有菜单并将权限全部放开
         if (customProperties.getSuperAdmin().isEnable() && roles.contains(customProperties.getSuperAdmin().getName())) {

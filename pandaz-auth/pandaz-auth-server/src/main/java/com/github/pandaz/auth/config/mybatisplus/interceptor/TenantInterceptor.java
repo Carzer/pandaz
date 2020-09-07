@@ -1,9 +1,9 @@
 package com.github.pandaz.auth.config.mybatisplus.interceptor;
 
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
 import net.sf.jsqlparser.expression.Expression;
+import net.sf.jsqlparser.expression.LongValue;
 import net.sf.jsqlparser.schema.Table;
 
 /**
@@ -39,9 +39,19 @@ public class TenantInterceptor extends TenantLineInnerInterceptor {
      */
     @Override
     protected Expression builderExpression(Expression currentExpression, Table table) {
-        if (StringUtils.checkValNull(tenantLineHandler.getTenantId())) {
+        if (tenantLineHandler.getTenantId() == null || ((LongValue) tenantLineHandler.getTenantId()).getValue() <= 0L) {
             return currentExpression;
         }
         return super.builderExpression(currentExpression, table);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }

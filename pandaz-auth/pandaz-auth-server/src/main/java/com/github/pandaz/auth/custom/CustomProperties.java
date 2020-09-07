@@ -5,6 +5,9 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 自定义属性
  *
@@ -56,6 +59,12 @@ public class CustomProperties {
      * 随机数
      */
     private Integer random;
+
+    /**
+     * 租户handler需要过滤的表
+     */
+    private List<String> ignoreTenantTables = new ArrayList<>();
+
 
     /**
      * 验证码

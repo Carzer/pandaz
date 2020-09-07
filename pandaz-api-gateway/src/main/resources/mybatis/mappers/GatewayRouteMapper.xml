@@ -7,7 +7,7 @@
         deleted_by, deleted_date, deleted_flag, version
     </sql>
     <insert id="insertSelective" parameterType="com.github.pandaz.api.entity.GatewayRouteEntity">
-        insert into t_sys_gateway_route
+        insert into api_gateway_route
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null and id != ''">
                 id,
@@ -105,7 +105,7 @@
     </insert>
     <!-- 逻辑删除 -->
     <update id="logicDelete">
-        update t_sys_gateway_route
+        update api_gateway_route
         <set>
             <if test="deletedBy != null">
                 deleted_by = #{deletedBy,jdbcType=VARCHAR},
@@ -129,7 +129,7 @@
     </update>
     <!-- 批量逻辑删除 -->
     <update id="batchLogicDelete" parameterType="java.util.HashMap">
-        update t_sys_gateway_route
+        update api_gateway_route
         <set>
             <if test="deletedBy != null">
                 deleted_by = #{deletedBy,jdbcType=VARCHAR},

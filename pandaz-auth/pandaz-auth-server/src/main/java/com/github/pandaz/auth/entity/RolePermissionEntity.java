@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@TableName("t_sys_role_permission")
+@TableName("auth_role_permission")
 public class RolePermissionEntity extends BaseEntity {
 
     private static final long serialVersionUID = -837121706345482664L;

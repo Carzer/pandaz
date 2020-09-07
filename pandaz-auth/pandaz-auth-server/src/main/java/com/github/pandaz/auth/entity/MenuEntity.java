@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@TableName("t_sys_menu")
+@TableName("auth_menu")
 public class MenuEntity extends BaseEntity {
 
     private static final long serialVersionUID = 6931559535632842272L;

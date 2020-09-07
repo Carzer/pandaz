@@ -1,8 +1,8 @@
 package com.github.pandaz.auth.service;
 
 import com.github.pandaz.auth.AuthServerApp;
+import com.github.pandaz.auth.entity.ClientEntity;
 import com.github.pandaz.auth.entity.GroupRoleEntity;
-import com.github.pandaz.auth.entity.OauthClientEntity;
 import com.github.pandaz.auth.entity.RoleEntity;
 import com.github.pandaz.auth.entity.UserEntity;
 import lombok.extern.slf4j.Slf4j;
@@ -94,15 +94,15 @@ public class InitTest {
     }
 
     private void insertClient() {
-        OauthClientEntity oauthClientEntity = new OauthClientEntity();
-        oauthClientEntity.setClientId("test");
-        oauthClientEntity.setClientName("测试客户端");
-        oauthClientEntity.setClientSecret("test");
-        oauthClientEntity.setScope("read,write");
-        oauthClientEntity.setAuthorizedGrantTypes("password,refresh");
-        oauthClientEntity.setAccessTokenValidity(1800);
-        oauthClientEntity.setRefreshTokenValidity(1800);
-        oauthClientService.insert(oauthClientEntity);
+        ClientEntity clientEntity = new ClientEntity();
+        clientEntity.setClientId("test");
+        clientEntity.setClientName("测试客户端");
+        clientEntity.setClientSecret("test");
+        clientEntity.setScope("read,write");
+        clientEntity.setAuthorizedGrantTypes("password,refresh");
+        clientEntity.setAccessTokenValidity(1800);
+        clientEntity.setRefreshTokenValidity(1800);
+        oauthClientService.insert(clientEntity);
     }
 
     private void insertRole() {

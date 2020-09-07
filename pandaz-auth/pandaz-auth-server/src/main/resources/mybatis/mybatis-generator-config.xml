@@ -34,7 +34,7 @@
                              type="XMLMAPPER">
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
-        <table tableName="t_sys_organization" domainObjectName="Organization"
+        <table tableName="auth_organization" domainObjectName="Organization"
                enableInsert="true" enableDeleteByPrimaryKey="true"
                enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true"
                enableCountByExample="false" enableDeleteByExample="false"

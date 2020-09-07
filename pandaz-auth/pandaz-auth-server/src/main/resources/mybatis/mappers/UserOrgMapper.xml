@@ -18,7 +18,7 @@
         created_by, created_date
     </sql>
     <insert id="insertSelective" parameterType="com.github.pandaz.auth.entity.UserOrgEntity">
-        insert into t_sys_user_org
+        insert into auth_user_org
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null and id != ''">
                 id,
@@ -86,7 +86,7 @@
     </insert>
     <!-- 批量逻辑删除 -->
     <update id="batchLogicDelete" parameterType="java.util.HashMap">
-        update t_sys_user_org
+        update auth_user_org
         <set>
             <if test="deletedBy != null">
                 deleted_by = #{deletedBy,jdbcType=VARCHAR},
@@ -126,7 +126,7 @@
     </update>
     <!-- 根据用户编码逻辑删除 -->
     <update id="logicDeleteByUserCode">
-        update t_sys_user_org
+        update auth_user_org
         <set>
             <if test="deletedBy != null">
                 deleted_by = #{deletedBy,jdbcType=VARCHAR},
@@ -150,7 +150,7 @@
     </update>
     <!-- 根据组织编码逻辑删除 -->
     <update id="logicDeleteByOrgCode">
-        update t_sys_user_org
+        update auth_user_org
         <set>
             <if test="deletedBy != null">
                 deleted_by = #{deletedBy,jdbcType=VARCHAR},
@@ -176,7 +176,7 @@
     <select id="listBindOrgMembers" parameterType="com.github.pandaz.auth.entity.UserOrgEntity"
             resultType="java.lang.String">
         select user_code
-        from t_sys_user_org
+        from auth_user_org
         <where>
             deleted_flag='0'
             and org_code = #{orgCode,jdbcType=VARCHAR}
@@ -186,7 +186,7 @@
     <select id="listBindUserOrg" parameterType="com.github.pandaz.auth.entity.UserOrgEntity"
             resultType="java.lang.String">
         select org_code
-        from t_sys_user_org
+        from auth_user_org
         <where>
             deleted_flag='0'
             and user_code = #{userCode,jdbcType=VARCHAR}
@@ -194,7 +194,7 @@
     </select>
     <!-- 批量插入 -->
     <insert id="batchInsert" parameterType="com.github.pandaz.auth.entity.UserOrgEntity">
-        insert into t_sys_user_org
+        insert into auth_user_org
         (id, user_code, org_code, created_by, created_date)
         values
         <foreach collection="list" item="item" index="index" separator=",">

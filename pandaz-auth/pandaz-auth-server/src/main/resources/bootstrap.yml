@@ -3,6 +3,7 @@ server:
   undertow:
     io-threads: 16
     direct-buffers: true
+    worker-threads: 60
 # 当前配置环境
 spring:
   application:

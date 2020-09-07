@@ -3,6 +3,7 @@ package com.github.pandaz.auth.service.impl;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alicp.jetcache.anno.CacheType;
 import com.alicp.jetcache.anno.Cached;
+import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -75,6 +76,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
      */
     @Cached(name = "loginName:", key = "#loginName", cacheType = CacheType.BOTH, expire = 60, localExpire = 30)
     @Override
+    @InterceptorIgnore(tenantLine = "true")
     public UserEntity loadUserByUsername(String loginName) {
         QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("login_name", loginName);

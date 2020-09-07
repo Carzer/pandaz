@@ -117,6 +117,9 @@ custom:
     - "/wakeUp"
   # 随机数
   random: ${random.int[0,10]}
+  # 租户handler需要过滤的表
+  ignore-tenant-tables:
+    - "auth_client"
   # 开启验证码校验
   captcha:
     enable: true

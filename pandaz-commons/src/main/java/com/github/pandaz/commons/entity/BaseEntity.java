@@ -72,7 +72,7 @@ public class BaseEntity implements Serializable {
      * 租户ID
      */
     @TableField("tenant_id")
-    private long tenantId;
+    private Long tenantId;
 
     /**
      * 开始时间

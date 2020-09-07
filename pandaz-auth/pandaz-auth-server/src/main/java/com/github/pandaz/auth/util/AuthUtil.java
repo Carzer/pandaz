@@ -1,15 +1,15 @@
 package com.github.pandaz.auth.util;
 
-import com.github.pandaz.commons.code.RCode;
-import com.github.pandaz.commons.util.R;
+import com.github.pandaz.commons.SecurityUser;
+import com.github.pandaz.commons.dto.auth.UserDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
  * @author Carzer
  * @since 2019-09-03 14:37
  */
+@SuppressWarnings("AlibabaLowerCamelCaseVariableNaming")
 @Component
 @Slf4j
 public final class AuthUtil {
@@ -26,7 +27,6 @@ public final class AuthUtil {
      * 私有构造方法
      */
     private AuthUtil() {
-
     }
 
     /**
@@ -34,14 +34,23 @@ public final class AuthUtil {
      *
      * @return 当前用户角色列表
      */
-    public static R<List<String>> getRoleListFromContext() {
+    public static Set<String> getRolesFromContext() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        List<String> roleList = authentication.getAuthorities().stream()
+        return authentication.getAuthorities().parallelStream()
                 .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList());
-        if (CollectionUtils.isEmpty(roleList)) {
-            return new R<>(RCode.ROLE_EMPTY);
+                .collect(Collectors.toSet());
+    }
+
+    /**
+     * 获取用户信息
+     *
+     * @param authentication authentication
+     * @return 用户信息
+     */
+    public static UserDTO getUserFromOAuth2(OAuth2Authentication authentication) {
+        if (authentication == null) {
+            return null;
         }
-        return new R<>(roleList);
+        return ((SecurityUser) (authentication.getUserAuthentication()).getPrincipal()).getUser();
     }
 }

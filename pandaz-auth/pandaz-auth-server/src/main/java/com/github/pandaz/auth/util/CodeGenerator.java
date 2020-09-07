@@ -77,7 +77,7 @@ public class CodeGenerator {
 
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
-        strategy.setInclude("t_sys_user_org");
+        strategy.setInclude("auth_user_org");
         strategy.setEntityTableFieldAnnotationEnable(true);
         strategy.setVersionFieldName("version");
         strategy.setLogicDeleteFieldName("deleted_flag");

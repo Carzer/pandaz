@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@TableName("t_sys_user")
+@TableName("auth_user")
 public class UserEntity extends BaseEntity {
 
     private static final long serialVersionUID = 2983929245005559740L;

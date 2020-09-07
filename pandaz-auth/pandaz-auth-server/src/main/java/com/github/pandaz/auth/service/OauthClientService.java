@@ -1,6 +1,6 @@
 package com.github.pandaz.auth.service;
 
-import com.github.pandaz.auth.entity.OauthClientEntity;
+import com.github.pandaz.auth.entity.ClientEntity;
 import com.github.pandaz.commons.service.BaseService;
 import org.springframework.security.oauth2.provider.ClientDetails;
 
@@ -12,7 +12,7 @@ import org.springframework.security.oauth2.provider.ClientDetails;
  * @author Carzer
  * @since 2020-01-02
  */
-public interface OauthClientService extends BaseService<OauthClientEntity> {
+public interface OauthClientService extends BaseService<ClientEntity> {
 
     /**
      * 根据客户端ID查询客户端
@@ -25,24 +25,24 @@ public interface OauthClientService extends BaseService<OauthClientEntity> {
     /**
      * 根据客户端ID删除
      *
-     * @param oauthClientEntity 客户端信息
+     * @param clientEntity 客户端信息
      * @return 执行结果
      */
-    int deleteByClientId(OauthClientEntity oauthClientEntity);
+    int deleteByClientId(ClientEntity clientEntity);
 
     /**
      * 根据客户端ID查询
      *
-     * @param oauthClientEntity 客户端ID
+     * @param clientEntity 客户端ID
      * @return 执行结果
      */
-    OauthClientEntity findByClientId(OauthClientEntity oauthClientEntity);
+    ClientEntity findByClientId(ClientEntity clientEntity);
 
     /**
      * 根据客户端ID更新
      *
-     * @param oauthClientEntity 客户端信息
+     * @param clientEntity 客户端信息
      * @return 执行结果
      */
-    int updateByClientId(OauthClientEntity oauthClientEntity);
+    int updateByClientId(ClientEntity clientEntity);
 }

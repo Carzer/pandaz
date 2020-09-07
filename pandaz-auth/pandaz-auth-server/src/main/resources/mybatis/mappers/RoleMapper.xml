@@ -43,7 +43,7 @@
         locked, version
     </sql>
     <insert id="insertSelective" parameterType="com.github.pandaz.auth.entity.RoleEntity">
-        insert into t_sys_role
+        insert into auth_role
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null and id !=''">
                 id,
@@ -140,12 +140,12 @@
                role.is_private   as is_private,
                usr_gp.user_code  as user_code,
                usr_gp.group_code as group_code
-        from t_sys_user usr
-                 inner join t_sys_user_group usr_gp
+        from auth_user usr
+                 inner join auth_user_group usr_gp
                             on usr.code = usr_gp.user_code and usr_gp.is_private = 0
-                 inner join t_sys_group_role gp_role
+                 inner join auth_group_role gp_role
                             on usr_gp.group_code = gp_role.group_code and gp_role.is_private = 0
-                 inner join t_sys_role role
+                 inner join auth_role role
                             on gp_role.role_code = role.code
         where usr.code = #{userCode}
           and role.deleted_flag = '0'
@@ -159,12 +159,12 @@
                role.is_private   as is_private,
                usr_gp.user_code  as user_code,
                usr_gp.group_code as group_code
-        from t_sys_user usr
-                 inner join t_sys_user_group usr_gp
+        from auth_user usr
+                 inner join auth_user_group usr_gp
                             on usr.code = usr_gp.user_code and usr_gp.is_private = 1
-                 inner join t_sys_group_role gp_role
+                 inner join auth_group_role gp_role
                             on usr_gp.group_code = gp_role.group_code and gp_role.is_private = 1
-                 inner join t_sys_role role
+                 inner join auth_role role
                             on gp_role.role_code = role.code
         where usr.code = #{userCode}
           and role.deleted_flag = '0'
@@ -178,12 +178,12 @@
                role.is_private   as is_private,
                usr_gp.user_code  as user_code,
                usr_gp.group_code as group_code
-        from t_sys_user usr
-                 inner join t_sys_user_group usr_gp
+        from auth_user usr
+                 inner join auth_user_group usr_gp
                             on usr.code = usr_gp.user_code
-                 inner join t_sys_group_role gp_role
+                 inner join auth_group_role gp_role
                             on usr_gp.group_code = gp_role.group_code
-                 inner join t_sys_role role
+                 inner join auth_role role
                             on gp_role.role_code = role.code
         where usr.code = #{userCode}
           and role.deleted_flag = '0'
@@ -192,7 +192,7 @@
     </select>
     <!-- 逻辑删除 -->
     <update id="logicDelete">
-        update t_sys_role
+        update auth_role
         <set>
             <if test="deletedBy != null">
                 deleted_by = #{deletedBy,jdbcType=VARCHAR},
@@ -216,7 +216,7 @@
     </update>
     <!-- 批量逻辑删除 -->
     <update id="batchLogicDelete" parameterType="java.util.HashMap">
-        update t_sys_role
+        update auth_role
         <set>
             <if test="deletedBy != null">
                 deleted_by = #{deletedBy,jdbcType=VARCHAR},

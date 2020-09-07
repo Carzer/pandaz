@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.pandaz.auth.mapper.OauthClientMapper">
     <insert id="insertSelective">
-        insert into t_sys_oauth_client
+        insert into auth_client
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null and id !=''">
                 id,
@@ -142,7 +142,7 @@
     </insert>
     <!-- 逻辑删除 -->
     <update id="logicDelete">
-        update t_sys_oauth_client
+        update auth_client
         <set>
             <if test="deletedBy != null">
                 deleted_by = #{deletedBy,jdbcType=VARCHAR},
@@ -166,7 +166,7 @@
     </update>
     <!-- 批量逻辑删除 -->
     <update id="batchLogicDelete" parameterType="java.util.HashMap">
-        update t_sys_oauth_client
+        update auth_client
         <set>
             <if test="deletedBy != null">
                 deleted_by = #{deletedBy,jdbcType=VARCHAR},

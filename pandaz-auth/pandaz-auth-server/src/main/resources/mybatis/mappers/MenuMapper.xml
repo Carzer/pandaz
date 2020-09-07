@@ -69,7 +69,7 @@
         locked, version
     </sql>
     <insert id="insertSelective" parameterType="com.github.pandaz.auth.entity.MenuEntity">
-        insert into t_sys_menu
+        insert into auth_menu
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null and id != ''">
                 id,
@@ -198,7 +198,7 @@
     <select id="getAllAsTree" resultMap="CascadeResultMap">
         select
         <include refid="Base_Column_List"/>
-        from t_sys_menu
+        from auth_menu
         <where>
             deleted_flag = '0'
             <if test="parentCode != null and parentCode !=''">
@@ -213,13 +213,13 @@
     <select id="selectByParentCode" resultMap="CascadeResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List"/>
-        from t_sys_menu
+        from auth_menu
         where deleted_flag = '0' and parent_code = #{parentCode,jdbcType=VARCHAR}
         order by sorting, created_date
     </select>
     <!-- 逻辑删除 -->
     <update id="logicDelete">
-        update t_sys_menu
+        update auth_menu
         <set>
             <if test="deletedBy != null">
                 deleted_by = #{deletedBy,jdbcType=VARCHAR},
@@ -243,7 +243,7 @@
     </update>
     <!-- 批量逻辑删除 -->
     <update id="batchLogicDelete" parameterType="java.util.HashMap">
-        update t_sys_menu
+        update auth_menu
         <set>
             <if test="deletedBy != null">
                 deleted_by = #{deletedBy,jdbcType=VARCHAR},
@@ -271,9 +271,11 @@
     <!--获取没有父级的菜单编码-->
     <select id="listMenusWithoutParent" resultType="java.lang.String">
         select child.code
-        from t_sys_menu child
+        from auth_menu child
         where child.parent_code not in (
-            select parent.code from t_sys_menu parent where parent.deleted_flag = '0'
+            select parent.code
+            from auth_menu parent
+            where parent.deleted_flag = '0'
         )
           and child.deleted_flag = '0'
           and child.parent_code != 'root'
@@ -291,14 +293,14 @@
         tsm.is_leaf_node as is_leaf_node,
         tsm.icon as icon,
         tsp.bit_result as bit_result
-        FROM t_sys_role_permission tsrp
-        INNER JOIN t_sys_permission tsp
+        FROM auth_role_permission tsrp
+        INNER JOIN auth_permission tsp
         ON tsrp.permission_code = tsp.code and tsp.deleted_flag = '0'
-        INNER JOIN t_sys_menu tsm
+        INNER JOIN auth_menu tsm
         ON tsrp.menu_code = tsm.code and tsm.deleted_flag = '0' and tsm.locked = 0
         <where>
             tsrp.deleted_flag = '0'
-            and not exists(select m.code from t_sys_menu m where m.deleted_flag = '0' and m.parent_code = tsm.code)
+            and not exists(select m.code from auth_menu m where m.deleted_flag = '0' and m.parent_code = tsm.code)
             <choose>
                 <when test="list != null and list.size() >0 ">
                     and tsrp.role_code in
@@ -319,7 +321,7 @@
     <select id="selectByCodes" parameterType="java.lang.String" resultType="com.github.pandaz.auth.entity.MenuEntity">
         select code,name,os_code,parent_code,url,
         router,sorting,is_leaf_node,icon
-        from t_sys_menu
+        from auth_menu
         <where>
             deleted_flag = '0'
             <choose>
@@ -338,10 +340,10 @@
     <!--获取所有子节点-->
     <select id="listLeafNode" resultType="com.github.pandaz.auth.entity.MenuEntity" parameterType="java.lang.String">
         select menu.code, menu.name, menu.os_code, menu.icon, menu.locked
-        from t_sys_menu menu
+        from auth_menu menu
         where menu.deleted_flag = '0'
           and menu.os_code = #{osCode,jdbcType=VARCHAR}
-          and not exists(select m.code from t_sys_menu m where m.deleted_flag = '0' and m.parent_code = menu.code)
+          and not exists(select m.code from auth_menu m where m.deleted_flag = '0' and m.parent_code = menu.code)
         order by sorting, created_date
     </select>
 </mapper>

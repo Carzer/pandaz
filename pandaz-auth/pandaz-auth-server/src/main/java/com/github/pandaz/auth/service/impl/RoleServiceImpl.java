@@ -119,7 +119,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
         Set<GrantedAuthority> authoritySet = new HashSet<>();
         if (!CollectionUtils.isEmpty(roleDetailEntities)) {
             // 转换为map，简单去重
-            Map<String, String> authorityMap = roleDetailEntities.stream()
+            Map<String, String> authorityMap = roleDetailEntities.parallelStream()
                     .collect(Collectors.toMap(RoleDetailEntity::getCode, RoleDetailEntity::getCode,
                             // 如果key值重复，可能会报重复错误
                             // 增加判断方法，如果重复，则保留第一个

@@ -48,7 +48,7 @@
         deleted_flag, locked, version
     </sql>
     <insert id="insertSelective" parameterType="com.github.pandaz.auth.entity.OrganizationEntity">
-        insert into t_sys_organization
+        insert into auth_organization
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null and id !=''">
                 id,
@@ -164,7 +164,7 @@
     </insert>
     <!-- 逻辑删除 -->
     <update id="logicDelete">
-        update t_sys_organization
+        update auth_organization
         <set>
             <if test="deletedBy != null">
                 deleted_by = #{deletedBy,jdbcType=VARCHAR},
@@ -188,7 +188,7 @@
     </update>
     <!-- 批量逻辑删除 -->
     <update id="batchLogicDelete" parameterType="java.util.HashMap">
-        update t_sys_organization
+        update auth_organization
         <set>
             <if test="deletedBy != null">
                 deleted_by = #{deletedBy,jdbcType=VARCHAR},
@@ -216,7 +216,7 @@
     <select id="getAllAsTree" resultMap="CascadeResultMap">
         select
         <include refid="Base_Column_List"/>
-        from t_sys_organization
+        from auth_organization
         <where>
             deleted_flag = '0'
             <if test="parentCode != null and parentCode !=''">
@@ -228,7 +228,7 @@
     <select id="selectByParentCode" resultMap="CascadeResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List"/>
-        from t_sys_organization
+        from auth_organization
         where deleted_flag = '0' and parent_code = #{parentCode,jdbcType=VARCHAR}
         order by sorting, created_date
     </select>
