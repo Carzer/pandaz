@@ -100,11 +100,11 @@
             <groupId>io.github.openfeign.form</groupId>
             <artifactId>feign-form-spring</artifactId>
         </dependency>
-        <!--sleuth-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-sleuth</artifactId>
-        </dependency>
+<!--        &lt;!&ndash;sleuth&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-starter-sleuth</artifactId>-->
+<!--        </dependency>-->
         <!--web-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
