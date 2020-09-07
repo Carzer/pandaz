@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.mongodb.MongoDbFactory;
+import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 
@@ -30,7 +30,7 @@ public class MongoDbSecondaryConfig {
      * @return org.springframework.data.mongodb.MongoDbFactory
      */
     @Bean(name = "mongoDbSecondaryFactory")
-    public MongoDbFactory mongoDbSecondaryFactory() {
+    public MongoDatabaseFactory mongoDbSecondaryFactory() {
         return MongoDbFactoryHelper.getMongoDbFactory(mongoDbSecondaryProperty.getUri());
     }
 
@@ -41,7 +41,7 @@ public class MongoDbSecondaryConfig {
      * @return org.springframework.data.mongodb.core.MongoTemplate
      */
     @Bean(name = "mongoSecondaryTemplate")
-    public MongoTemplate mongoSecondaryTemplate(@Qualifier("mongoDbSecondaryFactory") MongoDbFactory mongoDbSecondaryFactory) {
+    public MongoTemplate mongoSecondaryTemplate(@Qualifier("mongoDbSecondaryFactory") MongoDatabaseFactory mongoDbSecondaryFactory) {
         return new MongoTemplate(mongoDbSecondaryFactory);
     }
 
@@ -53,7 +53,7 @@ public class MongoDbSecondaryConfig {
      * @return org.springframework.data.mongodb.gridfs.GridFsTemplate
      */
     @Bean(name = "gridFsSecondaryTemplate")
-    public GridFsTemplate gridFsSecondaryTemplate(@Qualifier("mongoDbSecondaryFactory") MongoDbFactory mongoDbSecondaryFactory, @Qualifier("mongoSecondaryTemplate") MongoTemplate mongoSecondaryTemplate) {
+    public GridFsTemplate gridFsSecondaryTemplate(@Qualifier("mongoDbSecondaryFactory") MongoDatabaseFactory mongoDbSecondaryFactory, @Qualifier("mongoSecondaryTemplate") MongoTemplate mongoSecondaryTemplate) {
         return new GridFsTemplate(mongoDbSecondaryFactory, mongoSecondaryTemplate.getConverter());
     }
 }

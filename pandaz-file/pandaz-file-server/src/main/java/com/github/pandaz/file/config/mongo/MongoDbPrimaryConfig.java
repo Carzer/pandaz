@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.data.mongodb.MongoDbFactory;
+import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 
@@ -33,7 +33,7 @@ public class MongoDbPrimaryConfig {
      */
     @Primary
     @Bean(name = "mongoDbPrimaryFactory")
-    public MongoDbFactory mongoDbPrimaryFactory() {
+    public MongoDatabaseFactory mongoDbPrimaryFactory() {
         return MongoDbFactoryHelper.getMongoDbFactory(mongoDbPrimaryProperty.getUri());
     }
 
@@ -45,7 +45,7 @@ public class MongoDbPrimaryConfig {
      */
     @Primary
     @Bean(name = "mongoPrimaryTemplate")
-    public MongoTemplate mongoPrimaryTemplate(@Qualifier("mongoDbPrimaryFactory") MongoDbFactory mongoDbPrimaryFactory) {
+    public MongoTemplate mongoPrimaryTemplate(@Qualifier("mongoDbPrimaryFactory") MongoDatabaseFactory mongoDbPrimaryFactory) {
         return new MongoTemplate(mongoDbPrimaryFactory);
     }
 
@@ -57,7 +57,7 @@ public class MongoDbPrimaryConfig {
      * @return org.springframework.data.mongodb.gridfs.GridFsTemplate
      */
     @Bean(name = "gridFsPrimaryTemplate")
-    public GridFsTemplate gridFsPrimaryTemplate(@Qualifier("mongoDbPrimaryFactory") MongoDbFactory mongoDbPrimaryFactory, @Qualifier("mongoPrimaryTemplate") MongoTemplate mongoPrimaryTemplate) {
+    public GridFsTemplate gridFsPrimaryTemplate(@Qualifier("mongoDbPrimaryFactory") MongoDatabaseFactory mongoDbPrimaryFactory, @Qualifier("mongoPrimaryTemplate") MongoTemplate mongoPrimaryTemplate) {
         return new GridFsTemplate(mongoDbPrimaryFactory, mongoPrimaryTemplate.getConverter());
     }
 }

@@ -1,7 +1,9 @@
 server:
   port: 9004
   undertow:
-    io-threads: 16
+    threads:
+      io: 16
+      worker: 60
     direct-buffers: true
 spring:
   application:

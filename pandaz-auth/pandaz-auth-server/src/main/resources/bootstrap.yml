@@ -1,9 +1,10 @@
 server:
   port: 9007
   undertow:
-    io-threads: 16
+    threads:
+      io: 16
+      worker: 60
     direct-buffers: true
-    worker-threads: 60
 # 当前配置环境
 spring:
   application:

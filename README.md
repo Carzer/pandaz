@@ -18,7 +18,7 @@
 ----------------------------------------------------
 ## 一、 简介
 
-基于Spring Boot 2.2.6、Spring Cloud Hoxton.SR4的常用微服务集合  
+基于Spring Boot 2.3.3、Spring Cloud Hoxton.SR8的常用微服务集合  
 
 - 使用 [Nacos](https://github.com/alibaba/nacos/releases) 作为服务注册中心、分布式配置中心
 - 使用 [Feign](https://spring.io/projects/spring-cloud-openfeign) 消费微服务
