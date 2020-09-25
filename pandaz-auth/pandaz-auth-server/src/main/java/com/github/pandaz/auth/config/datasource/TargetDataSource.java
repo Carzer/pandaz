@@ -13,6 +13,9 @@ import java.lang.annotation.*;
 @Target(ElementType.METHOD)
 @Documented
 public @interface TargetDataSource {
-    // 数据源的名称
+
+    /**
+     * 数据源的名称
+     */
     String value();
 }

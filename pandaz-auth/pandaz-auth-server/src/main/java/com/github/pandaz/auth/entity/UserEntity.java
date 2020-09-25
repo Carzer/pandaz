@@ -86,4 +86,10 @@ public class UserEntity extends BaseEntity {
      */
     @TableField(exist = false)
     private String expireState;
+
+    /**
+     * 租户ID
+     */
+    @TableField("tenant_id")
+    private Long tenantId;
 }

@@ -1,7 +1,7 @@
 package com.github.pandaz.auth.custom.handler;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pandaz.commons.code.RCode;
+import com.github.pandaz.commons.util.PrintWriterUtil;
 import com.github.pandaz.commons.util.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * 权限拒绝handler
@@ -34,13 +33,6 @@ public class CustomAuthDeniedHandler implements AccessDeniedHandler {
     public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                        AccessDeniedException e) throws IOException {
         log.warn(e.getMessage());
-        httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
-        httpServletResponse.setContentType("application/json;charset=utf-8");
-        ObjectMapper objectMapper = new ObjectMapper();
-        String s = objectMapper.writeValueAsString(new R<String>(RCode.FORBIDDEN));
-        try (PrintWriter out = httpServletResponse.getWriter()) {
-            out.write(s);
-            out.flush();
-        }
+        PrintWriterUtil.write(httpServletResponse, new R<String>(RCode.FORBIDDEN), HttpServletResponse.SC_FORBIDDEN);
     }
 }

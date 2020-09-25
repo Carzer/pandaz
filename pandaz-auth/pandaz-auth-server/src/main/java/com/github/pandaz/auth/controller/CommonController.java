@@ -1,5 +1,6 @@
 package com.github.pandaz.auth.controller;
 
+import com.alicp.jetcache.anno.Cached;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pandaz.auth.custom.CustomProperties;
 import com.github.pandaz.auth.custom.constants.SysConstants;
@@ -202,6 +203,7 @@ public class CommonController {
     })
     @ApiOperation(value = "获取权限列表", notes = "根据系统编码及角色编码获取权限列表")
     @GetMapping("/getPermissions")
+    @Cached(name = "rolePermission", key = "#osCode+':'+#roleCode")
     public R<List<String>> getPermissions(@RequestParam String osCode,
                                           @RequestParam String roleCode,
                                           @ApiIgnore Principal principal) {
@@ -230,7 +232,7 @@ public class CommonController {
             List<String> roleList = roleService.listAllRoleCode();
             if (!CollectionUtils.isEmpty(roleList)) {
                 Map<String, List<String>> permissions = new HashMap<>(roleList.size());
-                roleList.parallelStream().forEach(roleCode ->
+                roleList.stream().forEach(roleCode ->
                         permissions.put(roleCode, rolePermissionService.getByOsCodeAndRoleCode(osCode, roleCode))
                 );
                 return new R<>(permissions);

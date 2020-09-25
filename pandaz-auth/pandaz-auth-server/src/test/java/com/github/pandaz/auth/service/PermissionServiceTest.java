@@ -120,8 +120,8 @@ public class PermissionServiceTest {
                     permissionEntity.setCreatedDate(LocalDateTime.now());
                     permissionEntity.setOsCode("portal");
                     permissionEntity.setMenuCode(menuEntity.getCode());
-                    permissionEntity.setName(menuEntity.getName() + ":" + value.getName());
-                    permissionEntity.setCode(menuEntity.getCode() + value.getUrl());
+                    permissionEntity.setName(menuEntity.getName() + ":" + value.getDesc());
+                    permissionEntity.setCode(menuEntity.getCode() + value.getKey());
                     permissionService.insert(permissionEntity);
                 }
             });

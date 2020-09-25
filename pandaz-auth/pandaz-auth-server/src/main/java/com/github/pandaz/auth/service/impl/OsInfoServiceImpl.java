@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pandaz.auth.custom.constants.SysConstants;
 import com.github.pandaz.auth.entity.MenuEntity;
 import com.github.pandaz.auth.entity.OsInfoEntity;
 import com.github.pandaz.auth.mapper.OsInfoMapper;
@@ -72,7 +71,7 @@ public class OsInfoServiceImpl extends ServiceImpl<OsInfoMapper, OsInfoEntity> i
     @Override
     public OsInfoEntity findByCode(OsInfoEntity osInfoEntity) {
         QueryWrapper<OsInfoEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("code", osInfoEntity.getCode());
+        queryWrapper.lambda().eq(OsInfoEntity::getCode, osInfoEntity.getCode());
         return osInfoMapper.selectOne(queryWrapper);
     }
 
@@ -86,22 +85,12 @@ public class OsInfoServiceImpl extends ServiceImpl<OsInfoMapper, OsInfoEntity> i
     public IPage<OsInfoEntity> getPage(OsInfoEntity osInfoEntity) {
         Page<OsInfoEntity> page = new Page<>(osInfoEntity.getPageNum(), osInfoEntity.getPageSize());
         QueryWrapper<OsInfoEntity> queryWrapper = new QueryWrapper<>();
-        if (StringUtils.hasText(osInfoEntity.getCode())) {
-            queryWrapper.likeRight("code", osInfoEntity.getCode());
-        }
-        if (StringUtils.hasText(osInfoEntity.getName())) {
-            queryWrapper.likeRight("name", osInfoEntity.getName());
-        }
-        if (osInfoEntity.getLocked() != null) {
-            queryWrapper.eq("locked", osInfoEntity.getLocked());
-        }
-        if (osInfoEntity.getStartDate() != null) {
-            queryWrapper.ge(SysConstants.CREATED_DATE_COLUMN, osInfoEntity.getStartDate());
-        }
-        if (osInfoEntity.getEndDate() != null) {
-            queryWrapper.le(SysConstants.CREATED_DATE_COLUMN, osInfoEntity.getEndDate());
-        }
-        queryWrapper.orderByDesc(SysConstants.CREATED_DATE_COLUMN);
+        queryWrapper.lambda().likeRight(StringUtils.hasText(osInfoEntity.getCode()), OsInfoEntity::getCode, osInfoEntity.getCode());
+        queryWrapper.lambda().likeRight(StringUtils.hasText(osInfoEntity.getName()), OsInfoEntity::getName, osInfoEntity.getName());
+        queryWrapper.lambda().eq(osInfoEntity.getLocked() != null, OsInfoEntity::getLocked, osInfoEntity.getLocked());
+        queryWrapper.lambda().ge(osInfoEntity.getStartDate() != null, OsInfoEntity::getCreatedDate, osInfoEntity.getStartDate());
+        queryWrapper.lambda().le(osInfoEntity.getEndDate() != null, OsInfoEntity::getCreatedDate, osInfoEntity.getEndDate());
+        queryWrapper.lambda().orderByDesc(OsInfoEntity::getCreatedDate);
         return page(page, queryWrapper);
     }
 

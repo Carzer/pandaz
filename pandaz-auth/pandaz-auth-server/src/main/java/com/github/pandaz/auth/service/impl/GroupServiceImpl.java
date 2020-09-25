@@ -142,7 +142,7 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupEntity> impl
     @Override
     public GroupEntity findByCode(GroupEntity groupEntity) {
         QueryWrapper<GroupEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("code", groupEntity.getCode());
+        queryWrapper.lambda().eq(GroupEntity::getCode, groupEntity.getCode());
         return groupMapper.selectOne(queryWrapper);
     }
 
@@ -156,23 +156,13 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupEntity> impl
     public IPage<GroupEntity> getPage(GroupEntity groupEntity) {
         Page<GroupEntity> page = new Page<>(groupEntity.getPageNum(), groupEntity.getPageSize());
         QueryWrapper<GroupEntity> queryWrapper = new QueryWrapper<>();
-        if (StringUtils.hasText(groupEntity.getName())) {
-            queryWrapper.likeRight("name", groupEntity.getName());
-        }
-        if (StringUtils.hasText(groupEntity.getCode())) {
-            queryWrapper.likeRight("code", groupEntity.getCode());
-        }
-        if (groupEntity.getLocked() != null) {
-            queryWrapper.eq("locked", groupEntity.getLocked());
-        }
-        if (groupEntity.getStartDate() != null) {
-            queryWrapper.ge(SysConstants.CREATED_DATE_COLUMN, groupEntity.getStartDate());
-        }
-        if (groupEntity.getEndDate() != null) {
-            queryWrapper.le(SysConstants.CREATED_DATE_COLUMN, groupEntity.getEndDate());
-        }
-        queryWrapper.eq("is_private", SysConstants.PUBLIC);
-        queryWrapper.orderByDesc(SysConstants.CREATED_DATE_COLUMN);
+        queryWrapper.lambda().likeRight(StringUtils.hasText(groupEntity.getName()), GroupEntity::getName, groupEntity.getName());
+        queryWrapper.lambda().likeRight(StringUtils.hasText(groupEntity.getCode()), GroupEntity::getCode, groupEntity.getCode());
+        queryWrapper.lambda().eq(groupEntity.getLocked() != null, GroupEntity::getLocked, groupEntity.getLocked());
+        queryWrapper.lambda().ge(groupEntity.getStartDate() != null, GroupEntity::getCreatedDate, groupEntity.getStartDate());
+        queryWrapper.lambda().le(groupEntity.getEndDate() != null, GroupEntity::getCreatedDate, groupEntity.getEndDate());
+        queryWrapper.lambda().eq(GroupEntity::getIsPrivate, SysConstants.PUBLIC);
+        queryWrapper.lambda().orderByDesc(GroupEntity::getCreatedDate);
         return page(page, queryWrapper);
     }
 

@@ -69,12 +69,6 @@ public class BaseEntity implements Serializable {
     private Integer version;
 
     /**
-     * 租户ID
-     */
-    @TableField("tenant_id")
-    private Long tenantId;
-
-    /**
      * 开始时间
      */
     @TableField(exist = false)

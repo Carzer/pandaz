@@ -52,7 +52,7 @@ public class DictInfoServiceImpl extends ServiceImpl<DictInfoMapper, DictInfoEnt
     @Override
     public DictInfoEntity findByCode(DictInfoEntity dictInfoEntity) {
         QueryWrapper<DictInfoEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("code", dictInfoEntity.getCode());
+        queryWrapper.lambda().eq(DictInfoEntity::getCode, dictInfoEntity.getCode());
         return dictInfoMapper.selectOne(queryWrapper);
     }
 
@@ -92,7 +92,7 @@ public class DictInfoServiceImpl extends ServiceImpl<DictInfoMapper, DictInfoEnt
     @Override
     public int updateByCode(DictInfoEntity dictInfoEntity) {
         UpdateWrapper<DictInfoEntity> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq("code", dictInfoEntity.getCode());
+        updateWrapper.lambda().eq(DictInfoEntity::getCode, dictInfoEntity.getCode());
         return dictInfoMapper.update(dictInfoEntity, updateWrapper);
     }
 

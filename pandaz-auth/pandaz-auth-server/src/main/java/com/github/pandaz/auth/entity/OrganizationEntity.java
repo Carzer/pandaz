@@ -52,7 +52,7 @@ public class OrganizationEntity extends BaseEntity {
     private Integer sorting;
 
     /**
-     * 级别
+     * 数据权限级别
      */
     @TableField("level")
     private Integer level;
@@ -80,4 +80,10 @@ public class OrganizationEntity extends BaseEntity {
      */
     @TableField(exist = false)
     private List<OrganizationEntity> children;
+
+    /**
+     * 租户ID
+     */
+    @TableField("tenant_id")
+    private Long tenantId;
 }

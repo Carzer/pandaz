@@ -56,4 +56,10 @@ public class RolePermissionEntity extends BaseEntity {
      */
     @TableField(exist = false)
     private Integer version;
+
+    /**
+     * 租户ID
+     */
+    @TableField("tenant_id")
+    private Long tenantId;
 }

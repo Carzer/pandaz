@@ -3,6 +3,7 @@ package com.github.pandaz.auth.util;
 import com.alicp.jetcache.Cache;
 import com.alicp.jetcache.anno.CacheType;
 import com.alicp.jetcache.anno.CreateCache;
+import com.github.pandaz.auth.custom.constants.SysConstants;
 import com.github.pandaz.commons.SecurityUser;
 import com.github.pandaz.commons.util.SpringBeanUtil;
 import lombok.RequiredArgsConstructor;
@@ -56,7 +57,7 @@ public class TenantUtil {
             if (authentication instanceof OAuth2Authentication) {
                 String token = ((OAuth2AuthenticationDetails) authentication.getDetails()).getTokenValue();
                 OAuth2AccessToken oAuth2AccessToken = SpringBeanUtil.getBean(JwtTokenStore.class).readAccessToken(token);
-                String tenantIdStr = oAuth2AccessToken.getAdditionalInformation().get("tenantId").toString();
+                String tenantIdStr = oAuth2AccessToken.getAdditionalInformation().get(SysConstants.TOKEN_TENANT_ID).toString();
                 tenantId = Long.parseLong(tenantIdStr);
                 // 从用户信息中读取
             } else if (authentication.getPrincipal() instanceof SecurityUser) {

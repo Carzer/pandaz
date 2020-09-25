@@ -56,4 +56,10 @@ public class GroupRoleEntity extends BaseEntity {
      */
     @TableField(exist = false)
     private List<String> roleCodes;
+
+    /**
+     * 租户ID
+     */
+    @TableField("tenant_id")
+    private Long tenantId;
 }

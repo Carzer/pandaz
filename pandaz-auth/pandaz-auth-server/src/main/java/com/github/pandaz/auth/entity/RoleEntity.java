@@ -38,6 +38,12 @@ public class RoleEntity extends BaseEntity {
     private String parentCode;
 
     /**
+     * 数据权限级别
+     */
+    @TableField("level")
+    private Integer level;
+
+    /**
      * 是否私有(0:否，1:是)
      */
     @TableField("is_private")
@@ -48,4 +54,10 @@ public class RoleEntity extends BaseEntity {
      */
     @TableField("locked")
     private Byte locked;
+
+    /**
+     * 租户ID
+     */
+    @TableField("tenant_id")
+    private Long tenantId;
 }

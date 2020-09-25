@@ -34,6 +34,21 @@ public class PrintWriterUtil {
      * @throws IOException IOException
      */
     public static void write(HttpServletResponse httpServletResponse, Object o) throws IOException {
+        write(httpServletResponse, o, null);
+    }
+
+    /**
+     * 输出方法
+     *
+     * @param httpServletResponse httpServletResponse
+     * @param o                   输出内容
+     * @param statusCode          请求状态码
+     * @throws IOException IOException
+     */
+    public static void write(HttpServletResponse httpServletResponse, Object o, Integer statusCode) throws IOException {
+        if (statusCode != null) {
+            httpServletResponse.setStatus(statusCode);
+        }
         httpServletResponse.setContentType("application/json;charset=utf-8");
         String s = MAPPER.writeValueAsString(o);
         try (PrintWriter out = httpServletResponse.getWriter()) {
@@ -41,5 +56,4 @@ public class PrintWriterUtil {
             out.flush();
         }
     }
-
 }

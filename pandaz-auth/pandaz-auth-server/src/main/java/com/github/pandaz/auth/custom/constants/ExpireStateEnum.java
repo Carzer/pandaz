@@ -12,10 +12,10 @@ import lombok.Getter;
 public enum ExpireStateEnum {
 
     /**
-     * 0未过期，1已过期
+     * 状态值
      */
-    ACTIVE("0"),
-    EXPIRED("1");
+    ACTIVE("0", "未过期"),
+    EXPIRED("1", "已过期");
 
     /**
      * 值
@@ -23,11 +23,18 @@ public enum ExpireStateEnum {
     private final String val;
 
     /**
+     * 描述
+     */
+    private final String desc;
+
+    /**
      * 构造方法
      *
-     * @param val val
+     * @param val  val
+     * @param desc desc
      */
-    ExpireStateEnum(String val) {
+    ExpireStateEnum(String val, String desc) {
         this.val = val;
+        this.desc = desc;
     }
 }

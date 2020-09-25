@@ -138,9 +138,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
     @Cached(name = "role:", key = "'allRoleCode'", cacheType = CacheType.LOCAL, expire = 30, timeUnit = TimeUnit.MINUTES)
     public List<String> listAllRoleCode() {
         QueryWrapper<RoleEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("is_private", 0);
-        queryWrapper.eq("locked", 0);
-        return roleMapper.selectList(queryWrapper).parallelStream().map(RoleEntity::getCode).collect(Collectors.toList());
+        queryWrapper.lambda().eq(RoleEntity::getIsPrivate, 0);
+        queryWrapper.lambda().eq(RoleEntity::getLocked, 0);
+        return roleMapper.selectList(queryWrapper).stream().map(RoleEntity::getCode).collect(Collectors.toList());
     }
 
     /**
@@ -166,7 +166,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
     @Override
     public RoleEntity findByCode(RoleEntity roleEntity) {
         QueryWrapper<RoleEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("code", queryWrapper);
+        queryWrapper.lambda().eq(RoleEntity::getCode, queryWrapper);
         return roleMapper.selectOne(queryWrapper);
     }
 
@@ -180,23 +180,13 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
     public IPage<RoleEntity> getPage(RoleEntity roleEntity) {
         Page<RoleEntity> page = new Page<>(roleEntity.getPageNum(), roleEntity.getPageSize());
         QueryWrapper<RoleEntity> queryWrapper = new QueryWrapper<>();
-        if (StringUtils.hasText(roleEntity.getCode())) {
-            queryWrapper.likeRight("code", roleEntity.getCode());
-        }
-        if (StringUtils.hasText(roleEntity.getName())) {
-            queryWrapper.likeRight("name", roleEntity.getName());
-        }
-        if (roleEntity.getLocked() != null) {
-            queryWrapper.eq("locked", roleEntity.getLocked());
-        }
-        if (roleEntity.getStartDate() != null) {
-            queryWrapper.ge(SysConstants.CREATED_DATE_COLUMN, roleEntity.getStartDate());
-        }
-        if (roleEntity.getEndDate() != null) {
-            queryWrapper.le(SysConstants.CREATED_DATE_COLUMN, roleEntity.getEndDate());
-        }
-        queryWrapper.eq("is_private", SysConstants.PUBLIC);
-        queryWrapper.orderByDesc(SysConstants.CREATED_DATE_COLUMN);
+        queryWrapper.lambda().likeRight(StringUtils.hasText(roleEntity.getCode()), RoleEntity::getCode, roleEntity.getCode());
+        queryWrapper.lambda().likeRight(StringUtils.hasText(roleEntity.getName()), RoleEntity::getName, roleEntity.getName());
+        queryWrapper.lambda().eq(roleEntity.getLocked() != null, RoleEntity::getLocked, roleEntity.getLocked());
+        queryWrapper.lambda().ge(roleEntity.getStartDate() != null, RoleEntity::getCreatedDate, roleEntity.getStartDate());
+        queryWrapper.lambda().le(roleEntity.getEndDate() != null, RoleEntity::getCreatedDate, roleEntity.getEndDate());
+        queryWrapper.lambda().eq(RoleEntity::getIsPrivate, SysConstants.PUBLIC);
+        queryWrapper.lambda().orderByDesc(RoleEntity::getCreatedDate);
         return page(page, queryWrapper);
     }
 
@@ -209,7 +199,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
     @Override
     public int updateByCode(RoleEntity roleEntity) {
         UpdateWrapper<RoleEntity> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq("code", roleEntity.getCode());
+        updateWrapper.lambda().eq(RoleEntity::getCode, roleEntity.getCode());
         return roleMapper.update(roleEntity, updateWrapper);
     }
 

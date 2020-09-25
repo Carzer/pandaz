@@ -58,7 +58,7 @@ public class GroupRoleServiceImpl extends ServiceImpl<GroupRoleMapper, GroupRole
     @Override
     public List<GroupRoleEntity> findByGroupCode(GroupRoleEntity groupRole) {
         QueryWrapper<GroupRoleEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("group_code", groupRole.getGroupCode());
+        queryWrapper.lambda().eq(GroupRoleEntity::getGroupCode, groupRole.getGroupCode());
         return groupRoleMapper.selectList(queryWrapper);
     }
 
@@ -128,14 +128,14 @@ public class GroupRoleServiceImpl extends ServiceImpl<GroupRoleMapper, GroupRole
         groupRoleEntity.setRoleCode(null);
         List<String> existingCodes = groupRoleMapper.listBindGroupRoles(groupRoleEntity);
         List<String> newCodes = groupRoleEntity.getRoleCodes();
-        List<String> codesToRemove = existingCodes.parallelStream().filter(code -> !(newCodes.contains(code))).collect(Collectors.toList());
-        List<String> codesToAdd = newCodes.parallelStream().filter(code -> !(existingCodes.contains(code))).collect(Collectors.toList());
+        List<String> codesToRemove = existingCodes.stream().filter(code -> !(newCodes.contains(code))).collect(Collectors.toList());
+        List<String> codesToAdd = newCodes.stream().filter(code -> !(existingCodes.contains(code))).collect(Collectors.toList());
         // 清理之前的关系
         groupRoleEntity.setDeletedBy(operator);
         groupRoleEntity.setDeletedDate(currentDate);
         deleteByCodes(groupRoleEntity, codesToRemove);
         // 保存关系
-        List<GroupRoleEntity> list = codesToAdd.parallelStream().map(code -> {
+        List<GroupRoleEntity> list = codesToAdd.stream().map(code -> {
             GroupRoleEntity groupRole = new GroupRoleEntity();
             groupRole.setId(UuidUtil.getId());
             groupRole.setGroupCode(groupCode);
@@ -164,14 +164,14 @@ public class GroupRoleServiceImpl extends ServiceImpl<GroupRoleMapper, GroupRole
         groupRoleEntity.setGroupCode(null);
         List<String> existingCodes = groupRoleMapper.listBindRoleGroups(groupRoleEntity);
         List<String> newCodes = groupRoleEntity.getGroupCodes();
-        List<String> codesToRemove = existingCodes.parallelStream().filter(code -> !(newCodes.contains(code))).collect(Collectors.toList());
-        List<String> codesToAdd = newCodes.parallelStream().filter(code -> !(existingCodes.contains(code))).collect(Collectors.toList());
+        List<String> codesToRemove = existingCodes.stream().filter(code -> !(newCodes.contains(code))).collect(Collectors.toList());
+        List<String> codesToAdd = newCodes.stream().filter(code -> !(existingCodes.contains(code))).collect(Collectors.toList());
         // 清理之前的关系
         groupRoleEntity.setDeletedBy(operator);
         groupRoleEntity.setDeletedDate(currentDate);
         deleteByCodes(groupRoleEntity, codesToRemove);
         // 保存关系
-        List<GroupRoleEntity> list = codesToAdd.parallelStream().map(code -> {
+        List<GroupRoleEntity> list = codesToAdd.stream().map(code -> {
             GroupRoleEntity groupRole = new GroupRoleEntity();
             groupRole.setId(UuidUtil.getId());
             groupRole.setGroupCode(code);

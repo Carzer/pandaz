@@ -1,6 +1,7 @@
 package com.github.pandaz.auth.custom;
 
-import com.github.pandaz.auth.util.AuthUtil;
+import com.github.pandaz.auth.custom.constants.SysConstants;
+import com.github.pandaz.commons.SecurityUser;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -30,9 +31,22 @@ public class CustomTokenEnhancer implements TokenEnhancer {
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
         // 测试信息
         final Map<String, Object> additionalInfo = new HashMap<>(1);
-        Long tenantId = AuthUtil.getUserFromOAuth2(authentication).getTenantId();
-        additionalInfo.put("tenantId", tenantId);
+        Long tenantId = getTenantId(authentication);
+        additionalInfo.put(SysConstants.TOKEN_TENANT_ID, tenantId);
         ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
         return accessToken;
+    }
+
+    /**
+     * 获取租户ID
+     *
+     * @param authentication authentication
+     * @return 租户ID
+     */
+    private Long getTenantId(OAuth2Authentication authentication) {
+        if (authentication == null) {
+            return null;
+        }
+        return ((SecurityUser) (authentication.getUserAuthentication()).getPrincipal()).getUser().getTenantId();
     }
 }

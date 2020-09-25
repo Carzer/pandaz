@@ -49,7 +49,7 @@ public class CustomTenantHandler implements TenantLineHandler {
      */
     @Override
     public boolean ignoreTable(String tableName) {
-        return customProperties.getIgnoreTenantTables().parallelStream().anyMatch(e -> e.equalsIgnoreCase(tableName));
+        return customProperties.getIgnoreTenantTables().stream().anyMatch(e -> e.equalsIgnoreCase(tableName));
     }
 
     /**
@@ -60,9 +60,6 @@ public class CustomTenantHandler implements TenantLineHandler {
     @Override
     public Expression getTenantId() {
         Long tenantId = tenantUtil.getTenantId();
-        if (tenantId == null) {
-            return null;
-        }
-        return new LongValue(tenantId);
+        return tenantId == null ? null : new LongValue(tenantId);
     }
 }

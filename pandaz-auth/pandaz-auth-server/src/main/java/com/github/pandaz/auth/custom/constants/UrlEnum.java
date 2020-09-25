@@ -23,23 +23,23 @@ public enum UrlEnum {
     EXPORT("/export", "导出");
 
     /**
-     * url
+     * key
      */
-    private final String url;
+    private final String key;
 
     /**
-     * name
+     * desc
      */
-    private final String name;
+    private final String desc;
 
     /**
      * 构造方法
      *
-     * @param url  url
-     * @param name name
+     * @param key  key
+     * @param desc desc
      */
-    UrlEnum(String url, String name) {
-        this.url = url;
-        this.name = name;
+    UrlEnum(String key, String desc) {
+        this.key = key;
+        this.desc = desc;
     }
 }

@@ -5,12 +5,12 @@ import com.github.pandaz.auth.entity.UserOrgEntity;
 import com.github.pandaz.auth.service.UserOrgService;
 import com.github.pandaz.auth.service.UserService;
 import com.github.pandaz.auth.util.ControllerUtil;
+import com.github.pandaz.commons.annotations.log.OpLog;
 import com.github.pandaz.commons.constants.UrlConstants;
 import com.github.pandaz.commons.controller.BaseController;
 import com.github.pandaz.commons.dto.auth.OrganizationDTO;
 import com.github.pandaz.commons.dto.auth.UserDTO;
 import com.github.pandaz.commons.dto.auth.UserOrgDTO;
-import com.github.pandaz.commons.log.SysLog;
 import com.github.pandaz.commons.service.BaseService;
 import com.github.pandaz.commons.util.BeanCopyUtil;
 import com.github.pandaz.commons.util.R;
@@ -69,13 +69,13 @@ public class UserController extends BaseController<UserDTO, UserEntity> {
 
     /**
      * 分页方法
-     * 操作日志记录{@link SysLog}
+     * 操作日志记录{@link OpLog}
      *
      * @param userDTO userDTO
      * @return 执行结果
      */
     @ApiOperation(value = "分页方法", notes = "分页方法")
-    @SysLog(value = "用户分页", userIndex = 1)
+    @OpLog(value = "用户分页", userIndex = 1)
     @GetMapping(UrlConstants.PAGE)
     @Override
     public R<Map<String, Object>> getPage(UserDTO userDTO, @ApiIgnore Principal principal) {

@@ -58,14 +58,14 @@ public class MenuDTO extends BaseDTO {
      * url
      */
     @ApiModelProperty("后端请求url")
-    @Size(min = 1, max = 500)
+    @Size(max = 500)
     private String url;
 
     /**
      * router
      */
     @ApiModelProperty("前端router")
-    @Size(min = 1, max = 200)
+    @Size(max = 200)
     private String router;
 
     /**

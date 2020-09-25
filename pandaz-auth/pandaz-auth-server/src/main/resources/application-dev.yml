@@ -120,6 +120,11 @@ custom:
   # 租户handler需要过滤的表
   ignore-tenant-tables:
     - "auth_client"
+    - "api_gateway_route"
+    - "auth_dict_info"
+    - "auth_dict_type"
+    - "auth_menu"
+    - "auth_permission"
   # 开启验证码校验
   captcha:
     enable: true

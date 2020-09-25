@@ -53,4 +53,10 @@ public class UserGroupEntity extends BaseEntity {
      */
     @TableField(exist = false)
     private List<String> groupCodes;
+
+    /**
+     * 租户ID
+     */
+    @TableField("tenant_id")
+    private Long tenantId;
 }

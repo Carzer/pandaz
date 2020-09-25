@@ -61,9 +61,9 @@ public class OrganizationDTO extends BaseDTO {
     private Integer sorting;
 
     /**
-     * 级别
+     * 数据权限级别
      */
-    @ApiModelProperty("级别")
+    @ApiModelProperty("数据权限级别")
     private Integer level;
 
     /**

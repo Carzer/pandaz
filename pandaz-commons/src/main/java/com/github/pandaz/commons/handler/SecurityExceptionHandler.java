@@ -55,7 +55,7 @@ public class SecurityExceptionHandler {
      */
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(AccessDeniedException.class)
-    public R<String> authFailed(AccessDeniedException e) {
+    public R<String> forbidden(AccessDeniedException e) {
         log.warn("权限拒绝：{}", e.getMessage());
         return new R<>(RCode.FORBIDDEN);
     }
@@ -69,7 +69,7 @@ public class SecurityExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalArgumentException.class)
     public R<String> validFailed(IllegalArgumentException e) {
-        log.warn("请求异常：{}", e.getMessage());
+        log.warn("参数异常：{}", e.getMessage());
         return R.fail(e.getMessage());
     }
 

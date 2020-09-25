@@ -36,11 +36,6 @@ public final class SysConstants {
     public static final String PRIVATE_ROLE = "_PRIVATE_ROLE";
 
     /**
-     * 创建时间列
-     */
-    public static final String CREATED_DATE_COLUMN = "created_date";
-
-    /**
      * 默认密码为12345678
      */
     public static final String DEFAULT_ENCODED_PASS = "$2a$10$89UJRZ6A.ubPmT9MrN6iEePGKdmW2N2b8tIe3Ng1MAVaTfRB2gTKC";
@@ -85,4 +80,9 @@ public final class SysConstants {
      * 默认session、token过期时间为60分钟
      */
     public static final int DEFAULT_EXPIRE_SECONDS = 60 * 60;
+
+    /**
+     * token中租户ID字段
+     */
+    public static final String TOKEN_TENANT_ID = "tenantId";
 }

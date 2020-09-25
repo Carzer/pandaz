@@ -3,7 +3,6 @@ package com.github.pandaz.auth.service.impl;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alicp.jetcache.anno.CacheType;
 import com.alicp.jetcache.anno.Cached;
-import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -21,6 +20,7 @@ import com.github.pandaz.auth.service.UserGroupService;
 import com.github.pandaz.auth.service.UserOrgService;
 import com.github.pandaz.auth.service.UserService;
 import com.github.pandaz.auth.util.CheckUtil;
+import com.github.pandaz.commons.annotations.tenant.SqlParserIgnore;
 import com.github.pandaz.commons.util.CustomPasswordEncoder;
 import com.github.pandaz.commons.util.UuidUtil;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +32,7 @@ import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 用户信息相关服务
@@ -74,12 +75,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
      * @param loginName 用户名
      * @return org.springframework.security.core.userdetails.UserDetails
      */
-    @Cached(name = "loginName:", key = "#loginName", cacheType = CacheType.BOTH, expire = 60, localExpire = 30)
+    @Cached(name = "loginName:", key = "#loginName", cacheType = CacheType.BOTH, expire = 60, localExpire = 30, timeUnit = TimeUnit.MINUTES)
     @Override
-    @InterceptorIgnore(tenantLine = "true")
+    @SqlParserIgnore
     public UserEntity loadUserByUsername(String loginName) {
         QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("login_name", loginName);
+        queryWrapper.lambda().eq(UserEntity::getLoginName, loginName);
         return userMapper.selectOne(queryWrapper);
     }
 
@@ -92,7 +93,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     @Override
     public UserEntity findByCode(UserEntity userEntity) {
         QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("code", userEntity.getCode());
+        queryWrapper.lambda().eq(UserEntity::getCode, userEntity.getCode());
         return userMapper.selectOne(queryWrapper);
     }
 
@@ -105,7 +106,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     @Override
     public int updateByCode(UserEntity userEntity) {
         UpdateWrapper<UserEntity> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq("code", userEntity.getCode());
+        updateWrapper.lambda().eq(UserEntity::getCode, userEntity.getCode());
         return userMapper.update(userEntity, updateWrapper);
     }
 
@@ -213,31 +214,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     public IPage<UserEntity> getPage(UserEntity userEntity) {
         Page<UserEntity> page = new Page<>(userEntity.getPageNum(), userEntity.getPageSize());
         QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
-
-        if (StringUtils.hasText(userEntity.getName())) {
-            queryWrapper.likeRight("name", userEntity.getName());
-        }
-        if (StringUtils.hasText(userEntity.getCode())) {
-            queryWrapper.likeRight("code", userEntity.getCode());
-        }
-        if (userEntity.getLocked() != null) {
-            queryWrapper.eq("locked", userEntity.getLocked());
-        }
-        if (userEntity.getStartDate() != null) {
-            queryWrapper.ge(SysConstants.CREATED_DATE_COLUMN, userEntity.getStartDate());
-        }
-        if (userEntity.getEndDate() != null) {
-            queryWrapper.le(SysConstants.CREATED_DATE_COLUMN, userEntity.getEndDate());
-        }
+        queryWrapper.lambda().likeRight(StringUtils.hasText(userEntity.getName()), UserEntity::getName, userEntity.getName());
+        queryWrapper.lambda().likeRight(StringUtils.hasText(userEntity.getCode()), UserEntity::getCode, userEntity.getCode());
+        queryWrapper.lambda().eq(userEntity.getLocked() != null, UserEntity::getLocked, userEntity.getLocked());
+        queryWrapper.lambda().ge(userEntity.getStartDate() != null, UserEntity::getCreatedDate, userEntity.getStartDate());
+        queryWrapper.lambda().le(userEntity.getEndDate() != null, UserEntity::getCreatedDate, userEntity.getEndDate());
         String expireState = userEntity.getExpireState();
-        if (StringUtils.hasText(expireState)) {
-            if (ExpireStateEnum.ACTIVE.getVal().equals(expireState)) {
-                queryWrapper.ge("expire_at", LocalDateTime.now());
-            } else if (ExpireStateEnum.EXPIRED.getVal().equals(expireState)) {
-                queryWrapper.lt("expire_at", LocalDateTime.now());
-            }
-        }
-        queryWrapper.orderByDesc(SysConstants.CREATED_DATE_COLUMN);
+        queryWrapper.lambda().ge(ExpireStateEnum.ACTIVE.getVal().equals(expireState), UserEntity::getExpireAt, LocalDateTime.now());
+        queryWrapper.lambda().lt(ExpireStateEnum.EXPIRED.getVal().equals(expireState), UserEntity::getExpireAt, LocalDateTime.now());
+        queryWrapper.lambda().orderByDesc(UserEntity::getCreatedDate);
         return page(page, queryWrapper);
     }
 

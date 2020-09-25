@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pandaz.auth.custom.constants.SysConstants;
 import com.github.pandaz.auth.entity.DictTypeEntity;
 import com.github.pandaz.auth.mapper.DictTypeMapper;
 import com.github.pandaz.auth.service.DictTypeService;
@@ -53,7 +52,7 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictTypeEnt
     @Override
     public DictTypeEntity findByCode(DictTypeEntity dictTypeEntity) {
         QueryWrapper<DictTypeEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("code", dictTypeEntity.getCode());
+        queryWrapper.lambda().eq(DictTypeEntity::getCode, dictTypeEntity.getCode());
         return dictTypeMapper.selectOne(queryWrapper);
     }
 
@@ -67,22 +66,12 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictTypeEnt
     public IPage<DictTypeEntity> getPage(DictTypeEntity dictTypeEntity) {
         Page<DictTypeEntity> page = new Page<>(dictTypeEntity.getPageNum(), dictTypeEntity.getPageSize());
         QueryWrapper<DictTypeEntity> queryWrapper = new QueryWrapper<>();
-        if (StringUtils.hasText(dictTypeEntity.getName())) {
-            queryWrapper.likeRight("name", dictTypeEntity.getName());
-        }
-        if (StringUtils.hasText(dictTypeEntity.getCode())) {
-            queryWrapper.likeRight("code", dictTypeEntity.getCode());
-        }
-        if (dictTypeEntity.getLocked() != null) {
-            queryWrapper.eq("locked", dictTypeEntity.getLocked());
-        }
-        if (dictTypeEntity.getStartDate() != null) {
-            queryWrapper.ge(SysConstants.CREATED_DATE_COLUMN, dictTypeEntity.getStartDate());
-        }
-        if (dictTypeEntity.getEndDate() != null) {
-            queryWrapper.le(SysConstants.CREATED_DATE_COLUMN, dictTypeEntity.getEndDate());
-        }
-        queryWrapper.orderByDesc(SysConstants.CREATED_DATE_COLUMN);
+        queryWrapper.lambda().likeRight(StringUtils.hasText(dictTypeEntity.getName()), DictTypeEntity::getName, dictTypeEntity.getName());
+        queryWrapper.lambda().likeRight(StringUtils.hasText(dictTypeEntity.getCode()), DictTypeEntity::getCode, dictTypeEntity.getCode());
+        queryWrapper.lambda().eq(dictTypeEntity.getLocked() != null, DictTypeEntity::getLocked, dictTypeEntity.getLocked());
+        queryWrapper.lambda().ge(dictTypeEntity.getStartDate() != null, DictTypeEntity::getCreatedDate, dictTypeEntity.getStartDate());
+        queryWrapper.lambda().le(dictTypeEntity.getEndDate() != null, DictTypeEntity::getCreatedDate, dictTypeEntity.getEndDate());
+        queryWrapper.lambda().orderByDesc(DictTypeEntity::getStartDate);
         return page(page, queryWrapper);
     }
 
@@ -110,7 +99,7 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictTypeEnt
     @Override
     public int updateByCode(DictTypeEntity dictTypeEntity) {
         UpdateWrapper<DictTypeEntity> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq("code", dictTypeEntity.getCode());
+        updateWrapper.lambda().eq(DictTypeEntity::getCode, dictTypeEntity.getCode());
         return dictTypeMapper.update(dictTypeEntity, updateWrapper);
     }
 

@@ -7,6 +7,7 @@
         <result column="code" jdbcType="VARCHAR" property="code"/>
         <result column="os_code" jdbcType="VARCHAR" property="osCode"/>
         <result column="parent_code" jdbcType="VARCHAR" property="parentCode"/>
+        <result column="parent_codes" jdbcType="VARCHAR" property="parentCodes"/>
         <result column="icon" jdbcType="VARCHAR" property="icon"/>
         <result column="url" jdbcType="VARCHAR" property="url"/>
         <result column="router" jdbcType="VARCHAR" property="router"/>
@@ -29,6 +30,7 @@
         <result column="code" jdbcType="VARCHAR" property="code"/>
         <result column="os_code" jdbcType="VARCHAR" property="osCode"/>
         <result column="parent_code" jdbcType="VARCHAR" property="parentCode"/>
+        <result column="parent_codes" jdbcType="VARCHAR" property="parentCodes"/>
         <result column="icon" jdbcType="VARCHAR" property="icon"/>
         <result column="url" jdbcType="VARCHAR" property="url"/>
         <result column="router" jdbcType="VARCHAR" property="router"/>
@@ -62,7 +64,7 @@
     </resultMap>
     <sql id="Base_Column_List">
         id, name, code, os_code,
-        parent_code, icon, url, router,
+        parent_code, parent_codes, icon, url, router,
         sorting, is_leaf_node, remark, created_by,
         created_date, updated_by, updated_date,
         deleted_by, deleted_date, deleted_flag,
@@ -85,6 +87,9 @@
             </if>
             <if test="parentCode != null and parentCode != ''">
                 parent_code,
+            </if>
+            <if test="parentCodes != null and parentCodes != ''">
+                parent_codes,
             </if>
             <if test="icon != null and icon != ''">
                 icon,
@@ -147,6 +152,9 @@
             </if>
             <if test="parentCode != null and parentCode != ''">
                 #{parentCode,jdbcType=VARCHAR},
+            </if>
+            <if test="parentCodes != null and parentCodes != ''">
+                #{parentCodes,jdbcType=VARCHAR},
             </if>
             <if test="icon != null and icon != ''">
                 #{icon,jdbcType=VARCHAR},
@@ -287,6 +295,7 @@
         tsm.name as name,
         tsm.os_code as os_code,
         tsm.parent_code as parent_code,
+        tsm.parent_codes as parent_codes,
         tsm.url as url,
         tsm.router as router,
         tsm.sorting as sorting,
@@ -319,7 +328,7 @@
         order by tsm.sorting, tsm.created_date
     </select>
     <select id="selectByCodes" parameterType="java.lang.String" resultType="com.github.pandaz.auth.entity.MenuEntity">
-        select code,name,os_code,parent_code,url,
+        select code,name,os_code,parent_code,parent_codes,url,
         router,sorting,is_leaf_node,icon
         from auth_menu
         <where>

@@ -51,11 +51,6 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Clien
     private final OauthClientMapper oauthClientMapper;
 
     /**
-     * clientIdColumn
-     */
-    private static final String CLIENT_ID_COLUMN = "client_id";
-
-    /**
      * 根据客户端ID查询客户端
      * <p>
      * {@link TokenEndpoint#postAccessToken}
@@ -70,7 +65,7 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Clien
             return null;
         }
         QueryWrapper<ClientEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(CLIENT_ID_COLUMN, clientId);
+        queryWrapper.lambda().eq(ClientEntity::getClientId, clientId);
         ClientEntity clientEntity = oauthClientMapper.selectOne(queryWrapper);
         if (clientEntity == null) {
             throw new NoSuchClientException(String.format("No client with requested id: %s", clientId));
@@ -110,7 +105,7 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Clien
     @Override
     public ClientEntity findByClientId(ClientEntity clientEntity) {
         QueryWrapper<ClientEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(CLIENT_ID_COLUMN, clientEntity.getClientId());
+        queryWrapper.lambda().eq(ClientEntity::getClientId, clientEntity.getClientId());
         return oauthClientMapper.selectOne(queryWrapper);
     }
 
@@ -135,7 +130,7 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Clien
     @Override
     public int updateByClientId(ClientEntity clientEntity) {
         UpdateWrapper<ClientEntity> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq(CLIENT_ID_COLUMN, clientEntity.getClientId());
+        updateWrapper.lambda().eq(ClientEntity::getClientId, clientEntity.getClientId());
         return oauthClientMapper.update(clientEntity, updateWrapper);
     }
 
@@ -187,22 +182,12 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Clien
     public IPage<ClientEntity> getPage(ClientEntity clientEntity) {
         Page<ClientEntity> page = new Page<>(clientEntity.getPageNum(), clientEntity.getPageSize());
         QueryWrapper<ClientEntity> queryWrapper = new QueryWrapper<>();
-        if (StringUtils.hasText(clientEntity.getClientId())) {
-            queryWrapper.likeRight(CLIENT_ID_COLUMN, clientEntity.getClientId());
-        }
-        if (StringUtils.hasText(clientEntity.getClientName())) {
-            queryWrapper.likeRight("client_name", clientEntity.getClientName());
-        }
-        if (clientEntity.getLocked() != null) {
-            queryWrapper.eq("locked", clientEntity.getLocked());
-        }
-        if (clientEntity.getStartDate() != null) {
-            queryWrapper.ge(SysConstants.CREATED_DATE_COLUMN, clientEntity.getStartDate());
-        }
-        if (clientEntity.getEndDate() != null) {
-            queryWrapper.le(SysConstants.CREATED_DATE_COLUMN, clientEntity.getEndDate());
-        }
-        queryWrapper.orderByDesc(SysConstants.CREATED_DATE_COLUMN);
+        queryWrapper.lambda().likeRight(StringUtils.hasText(clientEntity.getClientId()), ClientEntity::getClientId, clientEntity.getClientId());
+        queryWrapper.lambda().likeRight(StringUtils.hasText(clientEntity.getClientName()), ClientEntity::getClientName, clientEntity.getClientName());
+        queryWrapper.lambda().eq(clientEntity.getLocked() != null, ClientEntity::getLocked, clientEntity.getLocked());
+        queryWrapper.lambda().ge(clientEntity.getStartDate() != null, ClientEntity::getCreatedDate, clientEntity.getStartDate());
+        queryWrapper.lambda().le(clientEntity.getEndDate() != null, ClientEntity::getCreatedDate, clientEntity.getEndDate());
+        queryWrapper.lambda().orderByDesc(ClientEntity::getCreatedDate);
         return page(page, queryWrapper);
     }
 

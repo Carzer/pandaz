@@ -42,4 +42,10 @@ public class OsInfoEntity extends BaseEntity {
      */
     @TableField("locked")
     private Byte locked;
+
+    /**
+     * 租户ID
+     */
+    @TableField("tenant_id")
+    private Long tenantId;
 }

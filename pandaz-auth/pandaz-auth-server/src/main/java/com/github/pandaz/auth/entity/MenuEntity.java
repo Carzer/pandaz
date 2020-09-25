@@ -46,6 +46,12 @@ public class MenuEntity extends BaseEntity {
     private String parentCode;
 
     /**
+     * 所有父菜单编码
+     */
+    @TableField("parent_codes")
+    private String parentCodes;
+
+    /**
      * url
      */
     @TableField("url")

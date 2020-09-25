@@ -16,8 +16,8 @@ import java.util.List;
 
 /***
  * Swagger资源配置
- * @author Carzer
  * @since 2020-05-20
+ * @author Carzer
  */
 @Component
 @Primary

@@ -69,6 +69,15 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
         }
         if (!StringUtils.hasText(menuEntity.getParentCode())) {
             menuEntity.setParentCode(CommonConstants.ROOT_CODE);
+            menuEntity.setParentCodes(CommonConstants.ROOT_CODE);
+        } else {
+            // 查询父菜单,并设置所有父编码
+            QueryWrapper<MenuEntity> queryWrapper = new QueryWrapper<>();
+            queryWrapper.lambda().eq(MenuEntity::getCode, menuEntity.getParentCode());
+            MenuEntity parent = menuMapper.selectOne(queryWrapper);
+            if (parent != null) {
+                menuEntity.setParentCodes(parent.getParentCodes() + "," + parent.getCode());
+            }
         }
         return menuMapper.insertSelective(menuEntity);
     }
@@ -82,7 +91,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
     @Override
     public MenuEntity findByCode(MenuEntity menuEntity) {
         QueryWrapper<MenuEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("code", menuEntity.getCode());
+        queryWrapper.lambda().eq(MenuEntity::getCode, menuEntity.getCode());
         return menuMapper.selectOne(queryWrapper);
     }
 
@@ -96,12 +105,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
     public IPage<MenuEntity> getPage(MenuEntity menuEntity) {
         Page<MenuEntity> page = new Page<>(menuEntity.getPageNum(), menuEntity.getPageSize());
         QueryWrapper<MenuEntity> queryWrapper = new QueryWrapper<>();
-        if (StringUtils.hasText(menuEntity.getCode())) {
-            queryWrapper.likeRight("code", menuEntity.getCode());
-        }
-        if (StringUtils.hasText(menuEntity.getName())) {
-            queryWrapper.likeRight("name", menuEntity.getName());
-        }
+        queryWrapper.lambda().likeRight(StringUtils.hasText(menuEntity.getCode()), MenuEntity::getCode, menuEntity.getCode());
+        queryWrapper.lambda().likeRight(StringUtils.hasText(menuEntity.getName()), MenuEntity::getName, menuEntity.getName());
         return page(page, queryWrapper);
     }
 
@@ -114,7 +119,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
     @Override
     public int updateByCode(MenuEntity menuEntity) {
         UpdateWrapper<MenuEntity> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq("code", menuEntity.getCode());
+        updateWrapper.lambda().eq(MenuEntity::getCode, menuEntity.getCode());
         return menuMapper.update(menuEntity, updateWrapper);
     }
 
@@ -188,7 +193,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
     @Override
     public int deleteByOsCode(MenuEntity menuEntity) {
         QueryWrapper<MenuEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("os_code", menuEntity.getOsCode());
+        queryWrapper.lambda().eq(MenuEntity::getOsCode, menuEntity.getOsCode());
         List<MenuEntity> list = menuMapper.selectList(queryWrapper);
         if (!CollectionUtils.isEmpty(list)) {
             list.forEach(this::deleteByCode);
@@ -223,7 +228,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
         map.put("osCode", osCode);
         map.put("list", roles);
         List<MenuEntity> menuList = menuMapper.getAuthorizedMenu(map);
-        List<String> allCodes = menuList.parallelStream().map(MenuEntity::getCode).collect(Collectors.toList());
+        List<String> allCodes = menuList.stream().map(MenuEntity::getCode).collect(Collectors.toList());
         // 计算位运算和值，并查找缺失的父级菜单
         menuList.forEach(menuEntity -> {
             int bitResult = SysConstants.BASIC_DIGIT_RESULT;

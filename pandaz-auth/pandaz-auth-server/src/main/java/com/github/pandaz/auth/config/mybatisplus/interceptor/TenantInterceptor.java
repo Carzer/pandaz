@@ -2,6 +2,8 @@ package com.github.pandaz.auth.config.mybatisplus.interceptor;
 
 import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
+import com.github.pandaz.commons.annotations.tenant.SqlParserIgnoreEnum;
+import com.github.pandaz.commons.aspects.tenant.SqlParserIgnoreHolder;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.LongValue;
 import net.sf.jsqlparser.schema.Table;
@@ -39,10 +41,23 @@ public class TenantInterceptor extends TenantLineInnerInterceptor {
      */
     @Override
     protected Expression builderExpression(Expression currentExpression, Table table) {
-        if (tenantLineHandler.getTenantId() == null || ((LongValue) tenantLineHandler.getTenantId()).getValue() <= 0L) {
+        if (tenantLineHandler.getTenantId() == null || ((LongValue) tenantLineHandler.getTenantId()).getValue() <= 0L || ignoreOnce()) {
             return currentExpression;
         }
         return super.builderExpression(currentExpression, table);
+    }
+
+    /**
+     * 忽略这次构建
+     *
+     * @return 是否忽略
+     */
+    private boolean ignoreOnce() {
+        Integer ignoreScope = SqlParserIgnoreHolder.getIgnoreScope();
+        if (ignoreScope != null && ignoreScope > 0) {
+            return (ignoreScope & SqlParserIgnoreEnum.TENANT.getValue()) == SqlParserIgnoreEnum.TENANT.getValue();
+        }
+        return false;
     }
 
     @Override

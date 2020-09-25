@@ -53,8 +53,8 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     @Transactional(rollbackFor = Exception.class)
     public int insert(PermissionEntity permissionEntity) {
         QueryWrapper<PermissionEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("os_code", permissionEntity.getOsCode());
-        queryWrapper.eq("code", permissionEntity.getCode());
+        queryWrapper.lambda().eq(PermissionEntity::getOsCode, permissionEntity.getOsCode());
+        queryWrapper.lambda().eq(PermissionEntity::getCode, permissionEntity.getCode());
         int count = permissionMapper.selectCount(queryWrapper);
         if (count > 0) {
             throw new IllegalArgumentException("权限编码重复");
@@ -75,7 +75,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     @Override
     public PermissionEntity findByCode(PermissionEntity permissionEntity) {
         QueryWrapper<PermissionEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("code", permissionEntity.getCode());
+        queryWrapper.lambda().eq(PermissionEntity::getCode, permissionEntity.getCode());
         return permissionMapper.selectOne(queryWrapper);
     }
 
@@ -101,7 +101,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     @Transactional(rollbackFor = Exception.class)
     public int updateByCode(PermissionEntity permissionEntity) {
         UpdateWrapper<PermissionEntity> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq("code", permissionEntity.getCode());
+        updateWrapper.lambda().eq(PermissionEntity::getCode, permissionEntity.getCode());
         setBitResult(permissionEntity);
         return permissionMapper.update(permissionEntity, updateWrapper);
     }
@@ -153,7 +153,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     @Transactional(rollbackFor = Exception.class)
     public int deleteByMenuCode(PermissionEntity permissionEntity) {
         QueryWrapper<PermissionEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("menu_code", permissionEntity.getMenuCode());
+        queryWrapper.lambda().eq(PermissionEntity::getMenuCode, permissionEntity.getMenuCode());
         List<PermissionEntity> list = permissionMapper.selectList(queryWrapper);
         if (!CollectionUtils.isEmpty(list)) {
             list.forEach(this::deleteByCode);

@@ -87,6 +87,17 @@ public final class R<T> {
     }
 
     /**
+     * success 方法
+     *
+     * @param t   t
+     * @param <T> t
+     * @return 返回成功
+     */
+    public static <T extends Serializable> R<T> success(T t) {
+        return new R<>(t);
+    }
+
+    /**
      * fail 方法
      *
      * @param <T> t
@@ -94,6 +105,17 @@ public final class R<T> {
      */
     public static <T extends Serializable> R<T> fail() {
         return new R<>(RCode.FAILED);
+    }
+
+    /**
+     * fail 方法
+     *
+     * @param t   t
+     * @param <T> t
+     * @return 返回失败
+     */
+    public static <T extends Serializable> R<T> fail(T t) {
+        return new R<>(RCode.FAILED, t);
     }
 
     /**

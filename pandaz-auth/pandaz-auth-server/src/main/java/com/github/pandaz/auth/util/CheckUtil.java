@@ -62,6 +62,7 @@ public class CheckUtil<E extends BaseEntity, M extends BaseMapper<E>> {
         if (field == null) {
             throw new IllegalArgumentException(String.format("[%s]实体无[%s]属性", entity.getClass(), declaredCode));
         } else {
+            field.setAccessible(true);
             Object code = ReflectionUtils.getField(field, entity);
             // 如果设置了code，则查询是否已存在，若已存在则返回错误
             if (!StringUtils.isEmpty(code) && StringUtils.hasText(code.toString())) {

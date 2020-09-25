@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pandaz.auth.custom.constants.SysConstants;
 import com.github.pandaz.auth.entity.OrganizationEntity;
 import com.github.pandaz.auth.mapper.OrganizationMapper;
 import com.github.pandaz.auth.service.OrganizationService;
@@ -58,7 +57,7 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
     @Override
     public OrganizationEntity findByCode(OrganizationEntity organizationEntity) {
         QueryWrapper<OrganizationEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("code", organizationEntity.getCode());
+        queryWrapper.lambda().eq(OrganizationEntity::getCode, organizationEntity.getCode());
         return organizationMapper.selectOne(queryWrapper);
     }
 
@@ -72,22 +71,12 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
     public IPage<OrganizationEntity> getPage(OrganizationEntity organizationEntity) {
         Page<OrganizationEntity> page = new Page<>(organizationEntity.getPageNum(), organizationEntity.getPageSize());
         QueryWrapper<OrganizationEntity> queryWrapper = new QueryWrapper<>();
-        if (StringUtils.hasText(organizationEntity.getCode())) {
-            queryWrapper.likeRight("code", organizationEntity.getCode());
-        }
-        if (StringUtils.hasText(organizationEntity.getName())) {
-            queryWrapper.likeRight("name", organizationEntity.getName());
-        }
-        if (organizationEntity.getLocked() != null) {
-            queryWrapper.eq("locked", organizationEntity.getLocked());
-        }
-        if (organizationEntity.getStartDate() != null) {
-            queryWrapper.ge(SysConstants.CREATED_DATE_COLUMN, organizationEntity.getStartDate());
-        }
-        if (organizationEntity.getEndDate() != null) {
-            queryWrapper.le(SysConstants.CREATED_DATE_COLUMN, organizationEntity.getEndDate());
-        }
-        queryWrapper.orderByDesc(SysConstants.CREATED_DATE_COLUMN);
+        queryWrapper.lambda().likeRight(StringUtils.hasText(organizationEntity.getCode()), OrganizationEntity::getCode, organizationEntity.getCode());
+        queryWrapper.lambda().likeRight(StringUtils.hasText(organizationEntity.getName()), OrganizationEntity::getName, organizationEntity.getName());
+        queryWrapper.lambda().eq(organizationEntity.getLocked() != null, OrganizationEntity::getLocked, organizationEntity.getLocked());
+        queryWrapper.lambda().ge(organizationEntity.getStartDate() != null, OrganizationEntity::getCreatedDate, organizationEntity.getStartDate());
+        queryWrapper.lambda().le(organizationEntity.getEndDate() != null, OrganizationEntity::getCreatedDate, organizationEntity.getEndDate());
+        queryWrapper.lambda().orderByDesc(OrganizationEntity::getCreatedDate);
         return page(page, queryWrapper);
     }
 
@@ -118,7 +107,7 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
     @Override
     public int updateByCode(OrganizationEntity organizationEntity) {
         UpdateWrapper<OrganizationEntity> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq("code", organizationEntity.getCode());
+        updateWrapper.lambda().eq(OrganizationEntity::getCode, organizationEntity.getCode());
         return organizationMapper.update(organizationEntity, updateWrapper);
     }
 

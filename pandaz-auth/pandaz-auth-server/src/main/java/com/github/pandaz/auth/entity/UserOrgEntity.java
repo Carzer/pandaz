@@ -50,4 +50,10 @@ public class UserOrgEntity extends BaseEntity {
      */
     @TableField(exist = false)
     private List<String> orgCodes;
+
+    /**
+     * 租户ID
+     */
+    @TableField("tenant_id")
+    private Long tenantId;
 }

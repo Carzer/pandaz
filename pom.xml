@@ -33,6 +33,8 @@
         <module>pandaz-task</module>
         <!--授权中心-->
         <module>pandaz-auth</module>
+        <!--租户管理-->
+        <module>pandaz-tenant</module>
         <!--Redis服务-->
         <module>pandaz-redis</module>
         <!--消息服务-->
@@ -66,6 +68,7 @@
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <knife4j.version>2.0.2</knife4j.version>
         <jetcache.version>2.6.0</jetcache.version>
+        <hutool.version>5.4.2</hutool.version>
         <pandaz.dependency.version>0.0.2-SNAPSHOT</pandaz.dependency.version>
         <maven-javadoc.version>3.2.0</maven-javadoc.version>
         <maven-delombok.version>1.18.12.0</maven-delombok.version>
@@ -222,6 +225,11 @@
                 <artifactId>jetcache-starter-redis-lettuce</artifactId>
                 <version>${jetcache.version}</version>
             </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-core</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -318,6 +326,11 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <!-- hutool -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-core</artifactId>
         </dependency>
     </dependencies>
 

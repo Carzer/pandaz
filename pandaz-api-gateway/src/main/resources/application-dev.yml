@@ -43,7 +43,7 @@ spring:
     # hikari连接池
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
-      pool-name: AuthAppHikariPool-ds0
+      pool-name: GatewayAppHikariPool
       maximum-pool-size: 20
       minimum-idle: 10
       connection-test-query: SELECT 1
