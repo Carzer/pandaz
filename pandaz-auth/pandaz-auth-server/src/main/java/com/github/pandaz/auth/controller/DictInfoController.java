@@ -1,12 +1,11 @@
 package com.github.pandaz.auth.controller;
 
-
+import com.github.pandaz.auth.dto.DictInfoDTO;
+import com.github.pandaz.auth.dto.DictTypeDTO;
 import com.github.pandaz.auth.entity.DictInfoEntity;
 import com.github.pandaz.auth.service.DictInfoService;
 import com.github.pandaz.auth.util.ControllerUtil;
 import com.github.pandaz.commons.controller.BaseController;
-import com.github.pandaz.commons.dto.auth.DictInfoDTO;
-import com.github.pandaz.commons.dto.auth.DictTypeDTO;
 import com.github.pandaz.commons.service.BaseService;
 import com.github.pandaz.commons.util.R;
 import io.swagger.annotations.Api;

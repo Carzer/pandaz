@@ -7,6 +7,7 @@ import com.github.pandaz.auth.entity.GroupRoleEntity;
 import com.github.pandaz.auth.entity.RoleEntity;
 import com.github.pandaz.auth.mapper.GroupRoleMapper;
 import com.github.pandaz.auth.service.GroupRoleService;
+import com.github.pandaz.commons.util.ListUtil;
 import com.github.pandaz.commons.util.UuidUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -128,14 +129,16 @@ public class GroupRoleServiceImpl extends ServiceImpl<GroupRoleMapper, GroupRole
         groupRoleEntity.setRoleCode(null);
         List<String> existingCodes = groupRoleMapper.listBindGroupRoles(groupRoleEntity);
         List<String> newCodes = groupRoleEntity.getRoleCodes();
-        List<String> codesToRemove = existingCodes.stream().filter(code -> !(newCodes.contains(code))).collect(Collectors.toList());
-        List<String> codesToAdd = newCodes.stream().filter(code -> !(existingCodes.contains(code))).collect(Collectors.toList());
+        // 已经存在的编码，如果没有在新list中存在，则准备删除
+        List<String> codesToRemove = ListUtil.more(existingCodes, newCodes);
+        // 新list中增加的编码，则准备保存
+        List<String> codesToSave = ListUtil.more(newCodes, existingCodes);
         // 清理之前的关系
         groupRoleEntity.setDeletedBy(operator);
         groupRoleEntity.setDeletedDate(currentDate);
         deleteByCodes(groupRoleEntity, codesToRemove);
         // 保存关系
-        List<GroupRoleEntity> list = codesToAdd.stream().map(code -> {
+        List<GroupRoleEntity> list = codesToSave.stream().map(code -> {
             GroupRoleEntity groupRole = new GroupRoleEntity();
             groupRole.setId(UuidUtil.getId());
             groupRole.setGroupCode(groupCode);
@@ -164,14 +167,16 @@ public class GroupRoleServiceImpl extends ServiceImpl<GroupRoleMapper, GroupRole
         groupRoleEntity.setGroupCode(null);
         List<String> existingCodes = groupRoleMapper.listBindRoleGroups(groupRoleEntity);
         List<String> newCodes = groupRoleEntity.getGroupCodes();
-        List<String> codesToRemove = existingCodes.stream().filter(code -> !(newCodes.contains(code))).collect(Collectors.toList());
-        List<String> codesToAdd = newCodes.stream().filter(code -> !(existingCodes.contains(code))).collect(Collectors.toList());
+        // 已经存在的编码，如果没有在新list中存在，则准备删除
+        List<String> codesToRemove = ListUtil.more(existingCodes, newCodes);
+        // 新list中增加的编码，则准备保存
+        List<String> codesToSave = ListUtil.more(newCodes, existingCodes);
         // 清理之前的关系
         groupRoleEntity.setDeletedBy(operator);
         groupRoleEntity.setDeletedDate(currentDate);
         deleteByCodes(groupRoleEntity, codesToRemove);
         // 保存关系
-        List<GroupRoleEntity> list = codesToAdd.stream().map(code -> {
+        List<GroupRoleEntity> list = codesToSave.stream().map(code -> {
             GroupRoleEntity groupRole = new GroupRoleEntity();
             groupRole.setId(UuidUtil.getId());
             groupRole.setGroupCode(code);

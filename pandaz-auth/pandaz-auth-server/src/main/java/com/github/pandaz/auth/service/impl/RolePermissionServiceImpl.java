@@ -9,6 +9,7 @@ import com.github.pandaz.auth.entity.RoleEntity;
 import com.github.pandaz.auth.entity.RolePermissionEntity;
 import com.github.pandaz.auth.mapper.RolePermissionMapper;
 import com.github.pandaz.auth.service.RolePermissionService;
+import com.github.pandaz.commons.util.ListUtil;
 import com.github.pandaz.commons.util.UuidUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,15 +98,17 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
         String menuCode = rolePermissionEntity.getMenuCode();
         List<String> existingCodes = rolePermissionMapper.listBindCodes(rolePermissionEntity);
         List<String> newCodes = rolePermissionEntity.getPermissionCodes();
-        List<String> codesToRemove = existingCodes.stream().filter(code -> !(newCodes.contains(code))).collect(Collectors.toList());
-        List<String> codesToAdd = newCodes.stream().filter(code -> !(existingCodes.contains(code))).collect(Collectors.toList());
+        // 已经存在的编码，如果没有在新list中存在，则准备删除
+        List<String> codesToRemove = ListUtil.more(existingCodes, newCodes);
+        // 新list中增加的编码，则准备保存
+        List<String> codesToSave = ListUtil.more(newCodes, existingCodes);
         // 清理之前的角色菜单关系
         rolePermissionEntity.setDeletedBy(operator);
         rolePermissionEntity.setDeletedDate(currentDate);
         deleteByCodes(rolePermissionEntity, codesToRemove);
 
         // 保存关系
-        List<RolePermissionEntity> list = codesToAdd.stream().map(code -> {
+        List<RolePermissionEntity> list = codesToSave.stream().map(code -> {
             RolePermissionEntity rolePermission = new RolePermissionEntity();
             rolePermission.setId(UuidUtil.getId());
             rolePermission.setPermissionCode(code);

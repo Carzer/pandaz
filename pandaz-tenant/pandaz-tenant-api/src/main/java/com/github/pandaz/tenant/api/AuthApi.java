@@ -1,6 +1,6 @@
 package com.github.pandaz.tenant.api;
 
-import com.github.pandaz.commons.dto.auth.MenuDTO;
+import com.github.pandaz.auth.dto.MenuDTO;
 import com.github.pandaz.commons.util.R;
 import com.github.pandaz.tenant.api.fallback.AuthApiFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -16,7 +16,7 @@ import java.util.Map;
  * @author Carzer
  * @since 2020-06-03
  */
-@FeignClient(name = "pandaz-auth-server", fallbackFactory = AuthApiFallbackFactory.class)
+@FeignClient(name = "pandaz-tenant-server", fallbackFactory = AuthApiFallbackFactory.class)
 public interface AuthApi {
 
     /**

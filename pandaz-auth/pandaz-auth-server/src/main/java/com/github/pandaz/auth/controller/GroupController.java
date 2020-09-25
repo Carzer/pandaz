@@ -1,5 +1,6 @@
 package com.github.pandaz.auth.controller;
 
+import com.github.pandaz.auth.dto.*;
 import com.github.pandaz.auth.entity.GroupEntity;
 import com.github.pandaz.auth.entity.GroupRoleEntity;
 import com.github.pandaz.auth.entity.UserGroupEntity;
@@ -8,7 +9,6 @@ import com.github.pandaz.auth.service.GroupService;
 import com.github.pandaz.auth.service.UserGroupService;
 import com.github.pandaz.auth.util.ControllerUtil;
 import com.github.pandaz.commons.controller.BaseController;
-import com.github.pandaz.commons.dto.auth.*;
 import com.github.pandaz.commons.service.BaseService;
 import com.github.pandaz.commons.util.BeanCopyUtil;
 import com.github.pandaz.commons.util.R;

@@ -1,7 +1,7 @@
 package com.github.pandaz.auth.util;
 
-import com.github.pandaz.commons.SecurityUser;
-import com.github.pandaz.commons.dto.auth.UserDTO;
+import com.github.pandaz.auth.dto.SecurityUser;
+import com.github.pandaz.auth.dto.UserDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;

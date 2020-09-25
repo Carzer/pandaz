@@ -65,6 +65,7 @@
         <spring.security.autoconfig.version>2.1.7.RELEASE</spring.security.autoconfig.version>
         <spring.security.jwt.version>1.0.11.RELEASE</spring.security.jwt.version>
         <alibaba.dependency.version>2.2.1.RELEASE</alibaba.dependency.version>
+        <nacos.group>pandaz</nacos.group>
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <knife4j.version>2.0.2</knife4j.version>
         <jetcache.version>2.6.0</jetcache.version>

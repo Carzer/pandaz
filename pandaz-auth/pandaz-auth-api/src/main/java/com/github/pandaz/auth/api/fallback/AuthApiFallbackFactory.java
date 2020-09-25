@@ -1,8 +1,8 @@
 package com.github.pandaz.auth.api.fallback;
 
 import com.github.pandaz.auth.api.AuthApi;
+import com.github.pandaz.auth.dto.MenuDTO;
 import com.github.pandaz.commons.code.RCode;
-import com.github.pandaz.commons.dto.auth.MenuDTO;
 import com.github.pandaz.commons.util.R;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;

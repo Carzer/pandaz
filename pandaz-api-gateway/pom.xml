@@ -15,6 +15,11 @@
         <!--project-->
         <dependency>
             <groupId>com.github.pandaz</groupId>
+            <artifactId>pandaz-auth-dto</artifactId>
+            <version>${pandaz.dependency.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.pandaz</groupId>
             <artifactId>pandaz-commons</artifactId>
         </dependency>
         <!--cloud-->

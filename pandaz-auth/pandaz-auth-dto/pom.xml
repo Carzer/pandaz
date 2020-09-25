@@ -4,26 +4,19 @@
 
     <parent>
         <groupId>com.github.pandaz</groupId>
-        <artifactId>pandaz</artifactId>
+        <artifactId>pandaz-auth</artifactId>
         <version>0.0.2-SNAPSHOT</version>
     </parent>
 
-    <artifactId>pandaz-auth</artifactId>
-    <description>授权中心</description>
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>pandaz-auth-api</module>
-        <module>pandaz-auth-dto</module>
-        <module>pandaz-auth-server</module>
-    </modules>
+    <artifactId>pandaz-auth-dto</artifactId>
+    <description>授权中心DTO</description>
 
     <dependencies>
-        <!--project-->
+        <!--security-->
         <dependency>
-            <groupId>com.github.pandaz</groupId>
-            <artifactId>pandaz-commons</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+            <optional>true</optional>
         </dependency>
     </dependencies>
-
 </project>

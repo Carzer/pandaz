@@ -1,7 +1,7 @@
 package com.github.pandaz.auth.custom;
 
+import com.github.pandaz.auth.dto.SecurityUser;
 import com.github.pandaz.auth.service.RoleService;
-import com.github.pandaz.commons.SecurityUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pandaz.auth.custom.constants.SysConstants;
+import com.github.pandaz.auth.dto.SecurityUser;
 import com.github.pandaz.auth.entity.RoleDetailEntity;
 import com.github.pandaz.auth.entity.RoleEntity;
 import com.github.pandaz.auth.mapper.RoleMapper;
@@ -15,7 +16,6 @@ import com.github.pandaz.auth.service.GroupRoleService;
 import com.github.pandaz.auth.service.RolePermissionService;
 import com.github.pandaz.auth.service.RoleService;
 import com.github.pandaz.auth.util.CheckUtil;
-import com.github.pandaz.commons.SecurityUser;
 import com.github.pandaz.commons.util.UuidUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,11 +60,6 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
     private final GroupRoleService groupRoleService;
 
     /**
-     * 编码检查工具
-     */
-    private final CheckUtil<RoleEntity, RoleMapper> checkUtil;
-
-    /**
      * 插入角色信息
      *
      * @param roleEntity 角色信息
@@ -75,7 +70,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
         if (StringUtils.hasText(roleEntity.getCode())) {
             roleEntity.setCode(String.format("%s%s", SysConstants.ROLE_PREFIX, roleEntity.getCode()));
         }
-        checkUtil.checkOrSetCode(roleEntity, roleMapper, "角色编码重复", SysConstants.ROLE_PREFIX, null);
+        CheckUtil.checkOrSetCode(roleMapper, roleEntity, "角色编码重复", SysConstants.ROLE_PREFIX, null);
         roleEntity.setId(UuidUtil.getId());
         return roleMapper.insertSelective(roleEntity);
     }

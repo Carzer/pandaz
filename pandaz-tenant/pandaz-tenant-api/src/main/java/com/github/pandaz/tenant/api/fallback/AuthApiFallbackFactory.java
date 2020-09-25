@@ -1,7 +1,7 @@
 package com.github.pandaz.tenant.api.fallback;
 
+import com.github.pandaz.auth.dto.MenuDTO;
 import com.github.pandaz.commons.code.RCode;
-import com.github.pandaz.commons.dto.auth.MenuDTO;
 import com.github.pandaz.commons.util.R;
 import com.github.pandaz.tenant.api.AuthApi;
 import feign.hystrix.FallbackFactory;

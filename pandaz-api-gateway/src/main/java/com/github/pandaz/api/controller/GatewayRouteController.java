@@ -3,8 +3,8 @@ package com.github.pandaz.api.controller;
 
 import com.github.pandaz.api.entity.GatewayRouteEntity;
 import com.github.pandaz.api.service.GatewayRouteService;
+import com.github.pandaz.auth.dto.GatewayRouteDTO;
 import com.github.pandaz.commons.controller.BaseController;
-import com.github.pandaz.commons.dto.auth.GatewayRouteDTO;
 import com.github.pandaz.commons.service.BaseService;
 import com.github.pandaz.commons.util.BeanCopyUtil;
 import com.github.pandaz.commons.util.R;

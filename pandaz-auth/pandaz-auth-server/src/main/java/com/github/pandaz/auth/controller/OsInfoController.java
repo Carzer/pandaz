@@ -1,9 +1,9 @@
 package com.github.pandaz.auth.controller;
 
+import com.github.pandaz.auth.dto.OsInfoDTO;
 import com.github.pandaz.auth.entity.OsInfoEntity;
 import com.github.pandaz.auth.service.OsInfoService;
 import com.github.pandaz.commons.controller.BaseController;
-import com.github.pandaz.commons.dto.auth.OsInfoDTO;
 import com.github.pandaz.commons.service.BaseService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;

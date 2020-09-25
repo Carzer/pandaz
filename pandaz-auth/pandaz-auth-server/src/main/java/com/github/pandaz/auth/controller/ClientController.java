@@ -1,10 +1,10 @@
 package com.github.pandaz.auth.controller;
 
 
+import com.github.pandaz.auth.dto.OauthClientDTO;
 import com.github.pandaz.auth.entity.ClientEntity;
 import com.github.pandaz.auth.service.OauthClientService;
 import com.github.pandaz.commons.controller.BaseController;
-import com.github.pandaz.commons.dto.auth.OauthClientDTO;
 import com.github.pandaz.commons.service.BaseService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;

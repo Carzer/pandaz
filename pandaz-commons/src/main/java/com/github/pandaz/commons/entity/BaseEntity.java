@@ -93,6 +93,12 @@ public class BaseEntity implements Serializable {
     private Integer pageSize = 10;
 
     /**
+     * 编码
+     */
+    @TableField(exist = false)
+    private String code;
+
+    /**
      * 设置pageNum
      *
      * @param pageNum 第几页

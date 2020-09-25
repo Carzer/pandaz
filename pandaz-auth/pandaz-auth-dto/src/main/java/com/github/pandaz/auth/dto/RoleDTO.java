@@ -1,6 +1,5 @@
-package com.github.pandaz.commons.dto.auth;
+package com.github.pandaz.auth.dto;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.github.pandaz.commons.dto.BaseDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -50,7 +49,7 @@ public class RoleDTO extends BaseDTO {
     /**
      * 数据权限级别
      */
-    @TableField("level")
+    @ApiModelProperty("level")
     @Size(max = 8)
     private Integer level;
 

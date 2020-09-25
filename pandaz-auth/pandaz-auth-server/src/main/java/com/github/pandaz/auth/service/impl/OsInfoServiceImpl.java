@@ -43,11 +43,6 @@ public class OsInfoServiceImpl extends ServiceImpl<OsInfoMapper, OsInfoEntity> i
     private final MenuService menuService;
 
     /**
-     * 编码检查工具
-     */
-    private final CheckUtil<OsInfoEntity, OsInfoMapper> checkUtil;
-
-    /**
      * 插入方法
      *
      * @param osInfoEntity osInfo
@@ -55,7 +50,7 @@ public class OsInfoServiceImpl extends ServiceImpl<OsInfoMapper, OsInfoEntity> i
      */
     @Override
     public int insert(OsInfoEntity osInfoEntity) {
-        checkUtil.checkOrSetCode(osInfoEntity, osInfoMapper, "系统编码重复");
+        CheckUtil.checkOrSetCode(osInfoMapper, osInfoEntity, "系统编码重复");
         if (!StringUtils.hasText(osInfoEntity.getId())) {
             osInfoEntity.setId(UuidUtil.getId());
         }

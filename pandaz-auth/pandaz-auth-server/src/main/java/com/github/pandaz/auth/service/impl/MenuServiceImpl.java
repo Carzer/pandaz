@@ -50,11 +50,6 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
     private final PermissionService permissionService;
 
     /**
-     * 编码检查工具
-     */
-    private final CheckUtil<MenuEntity, MenuMapper> checkUtil;
-
-    /**
      * 插入方法
      *
      * @param menuEntity 菜单信息
@@ -63,7 +58,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insert(MenuEntity menuEntity) {
-        checkUtil.checkOrSetCode(menuEntity, menuMapper, "菜单编码重复");
+        CheckUtil.checkOrSetCode(menuMapper, menuEntity, "菜单编码重复");
         if (!StringUtils.hasText(menuEntity.getId())) {
             menuEntity.setId(UuidUtil.getId());
         }

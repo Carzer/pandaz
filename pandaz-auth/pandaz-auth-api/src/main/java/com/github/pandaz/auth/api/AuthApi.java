@@ -1,7 +1,7 @@
 package com.github.pandaz.auth.api;
 
 import com.github.pandaz.auth.api.fallback.AuthApiFallbackFactory;
-import com.github.pandaz.commons.dto.auth.MenuDTO;
+import com.github.pandaz.auth.dto.MenuDTO;
 import com.github.pandaz.commons.util.R;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

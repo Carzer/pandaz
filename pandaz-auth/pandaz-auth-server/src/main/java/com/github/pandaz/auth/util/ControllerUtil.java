@@ -1,10 +1,10 @@
 package com.github.pandaz.auth.util;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.pandaz.auth.dto.*;
 import com.github.pandaz.auth.entity.*;
 import com.github.pandaz.auth.service.*;
 import com.github.pandaz.commons.constants.CommonConstants;
-import com.github.pandaz.commons.dto.auth.*;
 import com.github.pandaz.commons.util.BeanCopyUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

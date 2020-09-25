@@ -1,5 +1,8 @@
 package com.github.pandaz.auth.controller;
 
+import com.github.pandaz.auth.dto.OrganizationDTO;
+import com.github.pandaz.auth.dto.UserDTO;
+import com.github.pandaz.auth.dto.UserOrgDTO;
 import com.github.pandaz.auth.entity.UserEntity;
 import com.github.pandaz.auth.entity.UserOrgEntity;
 import com.github.pandaz.auth.service.UserOrgService;
@@ -8,9 +11,6 @@ import com.github.pandaz.auth.util.ControllerUtil;
 import com.github.pandaz.commons.annotations.log.OpLog;
 import com.github.pandaz.commons.constants.UrlConstants;
 import com.github.pandaz.commons.controller.BaseController;
-import com.github.pandaz.commons.dto.auth.OrganizationDTO;
-import com.github.pandaz.commons.dto.auth.UserDTO;
-import com.github.pandaz.commons.dto.auth.UserOrgDTO;
 import com.github.pandaz.commons.service.BaseService;
 import com.github.pandaz.commons.util.BeanCopyUtil;
 import com.github.pandaz.commons.util.R;

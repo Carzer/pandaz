@@ -7,6 +7,7 @@ import com.github.pandaz.auth.entity.UserEntity;
 import com.github.pandaz.auth.entity.UserOrgEntity;
 import com.github.pandaz.auth.mapper.UserOrgMapper;
 import com.github.pandaz.auth.service.UserOrgService;
+import com.github.pandaz.commons.util.ListUtil;
 import com.github.pandaz.commons.util.UuidUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,14 +106,16 @@ public class UserOrgServiceImpl extends ServiceImpl<UserOrgMapper, UserOrgEntity
         userOrgEntity.setUserCode(null);
         List<String> existingCodes = userOrgMapper.listBindOrgMembers(userOrgEntity);
         List<String> newCodes = userOrgEntity.getUserCodes();
-        List<String> codesToRemove = existingCodes.stream().filter(code -> !(newCodes.contains(code))).collect(Collectors.toList());
-        List<String> codesToAdd = newCodes.stream().filter(code -> !(existingCodes.contains(code))).collect(Collectors.toList());
+        // 已经存在的编码，如果没有在新list中存在，则准备删除
+        List<String> codesToRemove = ListUtil.more(existingCodes, newCodes);
+        // 新list中增加的编码，则准备保存
+        List<String> codesToSave = ListUtil.more(newCodes, existingCodes);
         // 清理之前的关系
         userOrgEntity.setDeletedBy(operator);
         userOrgEntity.setDeletedDate(currentDate);
         deleteByCodes(userOrgEntity, codesToRemove);
         // 保存关系
-        List<UserOrgEntity> list = codesToAdd.stream().map(code -> {
+        List<UserOrgEntity> list = codesToSave.stream().map(code -> {
             UserOrgEntity userOrg = new UserOrgEntity();
             userOrg.setId(UuidUtil.getId());
             userOrg.setOrgCode(orgCode);
@@ -141,14 +144,16 @@ public class UserOrgServiceImpl extends ServiceImpl<UserOrgMapper, UserOrgEntity
         userOrgEntity.setOrgCode(null);
         List<String> existingCodes = userOrgMapper.listBindUserOrg(userOrgEntity);
         List<String> newCodes = userOrgEntity.getOrgCodes();
-        List<String> codesToRemove = existingCodes.stream().filter(code -> !(newCodes.contains(code))).collect(Collectors.toList());
-        List<String> codesToAdd = newCodes.stream().filter(code -> !(existingCodes.contains(code))).collect(Collectors.toList());
+        // 已经存在的编码，如果没有在新list中存在，则准备删除
+        List<String> codesToRemove = ListUtil.more(existingCodes, newCodes);
+        // 新list中增加的编码，则准备保存
+        List<String> codesToSave = ListUtil.more(newCodes, existingCodes);
         // 清理之前的关系
         userOrgEntity.setDeletedBy(operator);
         userOrgEntity.setDeletedDate(currentDate);
         deleteByCodes(userOrgEntity, codesToRemove);
         // 保存关系
-        List<UserOrgEntity> list = codesToAdd.stream().map(code -> {
+        List<UserOrgEntity> list = codesToSave.stream().map(code -> {
             UserOrgEntity userOrg = new UserOrgEntity();
             userOrg.setId(UuidUtil.getId());
             userOrg.setOrgCode(code);

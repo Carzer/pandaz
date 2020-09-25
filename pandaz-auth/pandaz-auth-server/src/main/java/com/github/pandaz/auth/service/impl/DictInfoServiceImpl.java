@@ -39,11 +39,6 @@ public class DictInfoServiceImpl extends ServiceImpl<DictInfoMapper, DictInfoEnt
     private final DictInfoMapper dictInfoMapper;
 
     /**
-     * 编码检查工具
-     */
-    private final CheckUtil<DictInfoEntity, DictInfoMapper> checkUtil;
-
-    /**
      * 查询方法
      *
      * @param dictInfoEntity 编码
@@ -76,7 +71,7 @@ public class DictInfoServiceImpl extends ServiceImpl<DictInfoMapper, DictInfoEnt
      */
     @Override
     public int insert(DictInfoEntity dictInfoEntity) {
-        checkUtil.checkOrSetCode(dictInfoEntity, dictInfoMapper, "字典信息编码重复");
+        CheckUtil.checkOrSetCode(dictInfoMapper, dictInfoEntity, "字典信息编码重复");
         if (!StringUtils.hasText(dictInfoEntity.getId())) {
             dictInfoEntity.setId(UuidUtil.getId());
         }

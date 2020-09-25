@@ -4,7 +4,7 @@ import com.alicp.jetcache.Cache;
 import com.alicp.jetcache.anno.CacheType;
 import com.alicp.jetcache.anno.CreateCache;
 import com.github.pandaz.auth.custom.constants.SysConstants;
-import com.github.pandaz.commons.SecurityUser;
+import com.github.pandaz.auth.dto.SecurityUser;
 import com.github.pandaz.commons.util.SpringBeanUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

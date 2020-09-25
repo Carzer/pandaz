@@ -1,6 +1,5 @@
-package com.github.pandaz.commons;
+package com.github.pandaz.auth.dto;
 
-import com.github.pandaz.commons.dto.auth.UserDTO;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

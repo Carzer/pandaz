@@ -39,11 +39,6 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictTypeEnt
     private final DictTypeMapper dictTypeMapper;
 
     /**
-     * 编码检查工具
-     */
-    private final CheckUtil<DictTypeEntity, DictTypeMapper> checkUtil;
-
-    /**
      * 查询方法
      *
      * @param dictTypeEntity 编码
@@ -71,7 +66,7 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictTypeEnt
         queryWrapper.lambda().eq(dictTypeEntity.getLocked() != null, DictTypeEntity::getLocked, dictTypeEntity.getLocked());
         queryWrapper.lambda().ge(dictTypeEntity.getStartDate() != null, DictTypeEntity::getCreatedDate, dictTypeEntity.getStartDate());
         queryWrapper.lambda().le(dictTypeEntity.getEndDate() != null, DictTypeEntity::getCreatedDate, dictTypeEntity.getEndDate());
-        queryWrapper.lambda().orderByDesc(DictTypeEntity::getStartDate);
+        queryWrapper.lambda().orderByDesc(DictTypeEntity::getCreatedDate);
         return page(page, queryWrapper);
     }
 
@@ -83,7 +78,7 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictTypeEnt
      */
     @Override
     public int insert(DictTypeEntity dictTypeEntity) {
-        checkUtil.checkOrSetCode(dictTypeEntity, dictTypeMapper, "字典信息编码重复");
+        CheckUtil.checkOrSetCode(dictTypeMapper, dictTypeEntity, "字典信息编码重复");
         if (!StringUtils.hasText(dictTypeEntity.getId())) {
             dictTypeEntity.setId(UuidUtil.getId());
         }

@@ -1,4 +1,4 @@
-package com.github.pandaz.commons.dto.auth;
+package com.github.pandaz.auth.dto;
 
 import com.github.pandaz.commons.dto.BaseDTO;
 import io.swagger.annotations.ApiModel;
@@ -13,39 +13,60 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 /**
- * 组织信息
+ * 菜单信息
  *
  * @author Carzer
  * @since 2020-02-27
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value = "OrganizationDTO", description = "组织信息")
-public class OrganizationDTO extends BaseDTO {
+@ApiModel(value = "MenuDTO", description = "菜单信息")
+public class MenuDTO extends BaseDTO {
 
-    private static final long serialVersionUID = -5865998917996643986L;
+    private static final long serialVersionUID = -3846122439228839344L;
 
     /**
-     * 组织名
+     * 菜单名
      */
-    @ApiModelProperty("组织名")
+    @ApiModelProperty("菜单名")
     @Size(min = 1, max = 100)
     private String name;
 
     /**
-     * 组织编码
+     * 菜单编码
      */
-    @ApiModelProperty("组织编码")
+    @ApiModelProperty("菜单编码")
     @NotEmpty
     @Size(min = 1, max = 50)
     private String code;
 
     /**
-     * 父组织编码
+     * 系统编码
      */
-    @ApiModelProperty("父组织编码")
+    @ApiModelProperty("系统编码")
+    @Size(min = 1, max = 50)
+    private String osCode;
+
+    /**
+     * 父菜单编码
+     */
+    @ApiModelProperty("父菜单编码")
     @Size(min = 1, max = 50)
     private String parentCode;
+
+    /**
+     * url
+     */
+    @ApiModelProperty("后端请求url")
+    @Size(max = 500)
+    private String url;
+
+    /**
+     * router
+     */
+    @ApiModelProperty("前端router")
+    @Size(max = 200)
+    private String router;
 
     /**
      * 图标
@@ -59,12 +80,6 @@ public class OrganizationDTO extends BaseDTO {
      */
     @ApiModelProperty("排序")
     private Integer sorting;
-
-    /**
-     * 数据权限级别
-     */
-    @ApiModelProperty("数据权限级别")
-    private Integer level;
 
     /**
      * 是否叶子节点
@@ -93,5 +108,11 @@ public class OrganizationDTO extends BaseDTO {
      * 子菜单
      */
     @ApiModelProperty("子菜单")
-    private List<OrganizationDTO> children;
+    private List<MenuDTO> children;
+
+    /**
+     * 位运算结果
+     */
+    @ApiModelProperty("位运算结果")
+    private Integer bitResult;
 }

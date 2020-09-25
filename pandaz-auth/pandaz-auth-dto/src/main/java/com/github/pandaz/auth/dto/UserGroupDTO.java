@@ -1,4 +1,4 @@
-package com.github.pandaz.commons.dto.auth;
+package com.github.pandaz.auth.dto;
 
 import com.github.pandaz.commons.dto.BaseDTO;
 import io.swagger.annotations.ApiModel;

@@ -1,4 +1,4 @@
-package com.github.pandaz.commons.dto.auth;
+package com.github.pandaz.auth.dto;
 
 import com.github.pandaz.commons.dto.BaseDTO;
 import io.swagger.annotations.ApiModel;
@@ -12,38 +12,44 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 /**
- * 字典类型
+ * 系统信息
  *
  * @author Carzer
- * @since 2019-12-19
+ * @since 2019-10-25
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value = "DictTypeDTO", description = "字典类型")
-public class DictTypeDTO extends BaseDTO {
+@ApiModel(value = "OsInfoDTO", description = "系统信息")
+public class OsInfoDTO extends BaseDTO {
 
-    private static final long serialVersionUID = -8875582609243206625L;
+    private static final long serialVersionUID = 1210965567272983588L;
 
     /**
-     * 类型名称
+     * 系统名
      */
-    @NotEmpty
-    @ApiModelProperty("类型名称")
+    @ApiModelProperty("系统名")
     @Size(min = 1, max = 100)
     private String name;
 
     /**
-     * 类型编码
+     * 系统编码
      */
     @NotEmpty
-    @ApiModelProperty("类型编码")
+    @ApiModelProperty("系统编码")
     @Size(min = 1, max = 50)
     private String code;
 
     /**
-     * 是否锁定(0:未锁定，1:已锁定)
+     * 父编码
      */
-    @ApiModelProperty("是否锁定(0:未锁定，1:已锁定)")
+    @ApiModelProperty("父编码")
+    @Size(max = 50)
+    private String parentCode;
+
+    /**
+     * 是否锁定
+     */
+    @ApiModelProperty("是否锁定")
     @Min(0)
     @Max(1)
     private Byte locked;

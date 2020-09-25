@@ -44,11 +44,6 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
     private final UserOrgService userOrgService;
 
     /**
-     * 编码检查工具
-     */
-    private final CheckUtil<OrganizationEntity, OrganizationMapper> checkUtil;
-
-    /**
      * 根据编码查询
      *
      * @param organizationEntity 组织编码
@@ -88,7 +83,7 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
      */
     @Override
     public int insert(OrganizationEntity organizationEntity) {
-        checkUtil.checkOrSetCode(organizationEntity, organizationMapper, "组织编码重复");
+        CheckUtil.checkOrSetCode(organizationMapper, organizationEntity, "组织编码重复");
         if (!StringUtils.hasText(organizationEntity.getId())) {
             organizationEntity.setId(UuidUtil.getId());
         }

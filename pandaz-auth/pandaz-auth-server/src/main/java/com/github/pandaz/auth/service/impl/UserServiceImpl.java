@@ -65,11 +65,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     private final UserMapper userMapper;
 
     /**
-     * 编码检查工具
-     */
-    private final CheckUtil<UserEntity, UserMapper> checkUtil;
-
-    /**
      * 根据用户名获取用户信息
      *
      * @param loginName 用户名
@@ -126,7 +121,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     public int insert(UserEntity userEntity) {
 
         // 校验重复
-        String userCode = checkUtil.checkOrSetCode(userEntity, userMapper, "用户编码重复", null, null);
+        String userCode = CheckUtil.checkOrSetCode(userMapper, userEntity, "用户编码重复", null, null);
         UserEntity loginUser = loadUserByUsername(userEntity.getLoginName());
         if (loginUser != null) {
             throw new IllegalArgumentException("登录名已存在");

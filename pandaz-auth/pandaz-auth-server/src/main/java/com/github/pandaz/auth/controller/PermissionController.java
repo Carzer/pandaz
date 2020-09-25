@@ -1,12 +1,12 @@
 package com.github.pandaz.auth.controller;
 
+import com.github.pandaz.auth.dto.MenuDTO;
+import com.github.pandaz.auth.dto.OsInfoDTO;
+import com.github.pandaz.auth.dto.PermissionDTO;
 import com.github.pandaz.auth.entity.PermissionEntity;
 import com.github.pandaz.auth.service.PermissionService;
 import com.github.pandaz.auth.util.ControllerUtil;
 import com.github.pandaz.commons.controller.BaseController;
-import com.github.pandaz.commons.dto.auth.MenuDTO;
-import com.github.pandaz.commons.dto.auth.OsInfoDTO;
-import com.github.pandaz.commons.dto.auth.PermissionDTO;
 import com.github.pandaz.commons.service.BaseService;
 import com.github.pandaz.commons.util.R;
 import io.swagger.annotations.Api;

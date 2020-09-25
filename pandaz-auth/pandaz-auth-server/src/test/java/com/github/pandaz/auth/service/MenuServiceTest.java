@@ -2,9 +2,9 @@ package com.github.pandaz.auth.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.pandaz.auth.AuthServerApp;
+import com.github.pandaz.auth.dto.MenuDTO;
 import com.github.pandaz.auth.entity.MenuEntity;
 import com.github.pandaz.commons.constants.CommonConstants;
-import com.github.pandaz.commons.dto.auth.MenuDTO;
 import com.github.pandaz.commons.util.BeanCopyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.BeforeClass;

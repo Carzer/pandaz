@@ -6,6 +6,7 @@ spring:
     # nacos
     nacos:
       discovery:
+        group: '@nacos.group@'
         server-addr: localhost:8848
     # sentinel
     sentinel:

@@ -52,11 +52,6 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupEntity> impl
     private final UserGroupService userGroupService;
 
     /**
-     * 编码检查工具
-     */
-    private final CheckUtil<GroupEntity, GroupMapper> checkUtil;
-
-    /**
      * 组mapper
      */
     private final GroupMapper groupMapper;
@@ -74,7 +69,7 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupEntity> impl
             groupEntity.setCode(String.format("%s%s", SysConstants.GROUP_PREFIX, groupEntity.getCode()));
         }
         // 组信息补充
-        String groupCode = checkUtil.checkOrSetCode(groupEntity, groupMapper, "组编码重复", SysConstants.GROUP_PREFIX, null);
+        String groupCode = CheckUtil.checkOrSetCode(groupMapper, groupEntity, "组编码重复", SysConstants.GROUP_PREFIX, null);
         if (!StringUtils.hasText(groupEntity.getId())) {
             groupEntity.setId(UuidUtil.getId());
         }
