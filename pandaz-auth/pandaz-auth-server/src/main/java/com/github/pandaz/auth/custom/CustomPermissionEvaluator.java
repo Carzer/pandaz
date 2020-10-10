@@ -42,8 +42,8 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         // 如果开启超级管理员，并拥有符合的角色，则通过所有请求
         if (superAdmin.isEnable()) {
-            return authorities.parallelStream().anyMatch(
-                    authority -> authority.getAuthority().equals(superAdmin.getName()));
+            return authorities.stream().anyMatch(
+                    authority -> authority.getAuthority().equalsIgnoreCase(superAdmin.getName()));
         }
         return false;
     }

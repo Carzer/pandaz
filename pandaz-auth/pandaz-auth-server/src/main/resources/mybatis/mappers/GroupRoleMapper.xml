@@ -198,7 +198,7 @@
     <!-- 批量插入 -->
     <insert id="batchInsert" parameterType="com.github.pandaz.auth.entity.GroupRoleEntity">
         insert into auth_group_role
-        (id, role_code, group_code, created_by, created_date)
+        (id, role_code, group_code, created_by, created_date,tenant_id)
         values
         <foreach collection="list" item="item" index="index" separator=",">
             (
@@ -206,7 +206,8 @@
             #{item.roleCode,jdbcType=VARCHAR},
             #{item.groupCode,jdbcType=VARCHAR},
             #{item.createdBy,jdbcType=VARCHAR},
-            #{item.createdDate,jdbcType=TIMESTAMP}
+            #{item.createdDate,jdbcType=TIMESTAMP},
+            #{item.tenantId,jdbcType=INTEGER}
             )
         </foreach>
     </insert>

@@ -202,7 +202,7 @@
     <!-- 批量插入 -->
     <insert id="batchInsert" parameterType="com.github.pandaz.auth.entity.UserGroupEntity">
         insert into auth_user_group
-        (id, user_code, group_code, created_by, created_date)
+        (id, user_code, group_code, created_by, created_date,tenant_id)
         values
         <foreach collection="list" item="item" index="index" separator=",">
             (
@@ -210,7 +210,8 @@
             #{item.userCode,jdbcType=VARCHAR},
             #{item.groupCode,jdbcType=VARCHAR},
             #{item.createdBy,jdbcType=VARCHAR},
-            #{item.createdDate,jdbcType=TIMESTAMP}
+            #{item.createdDate,jdbcType=TIMESTAMP},
+            #{item.tenantId,jdbcType=INTEGER}
             )
         </foreach>
     </insert>

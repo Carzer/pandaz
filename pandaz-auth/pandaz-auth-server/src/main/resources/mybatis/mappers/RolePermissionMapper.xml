@@ -96,7 +96,7 @@
     </insert>
     <insert id="batchInsert" parameterType="com.github.pandaz.auth.entity.RolePermissionEntity">
         insert into auth_role_permission
-        (id,role_code,permission_code,os_code,menu_code,created_by,created_date)
+        (id,role_code,permission_code,os_code,menu_code,created_by,created_date,tenant_id)
         values
         <foreach collection="list" separator="," item="item" index="index">
             (
@@ -106,7 +106,8 @@
             #{item.osCode,jdbcType=VARCHAR},
             #{item.menuCode,jdbcType=VARCHAR},
             #{item.createdBy,jdbcType=VARCHAR},
-            #{item.createdDate,jdbcType=TIMESTAMP}
+            #{item.createdDate,jdbcType=TIMESTAMP},
+            #{item.tenantId,jdbcType=INTEGER}
             )
         </foreach>
     </insert>

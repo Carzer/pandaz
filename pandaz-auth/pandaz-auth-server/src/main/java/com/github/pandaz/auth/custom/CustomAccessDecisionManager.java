@@ -33,7 +33,7 @@ public class CustomAccessDecisionManager implements AccessDecisionManager {
     @Override
     public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) {
         HttpServletRequest request = ((FilterInvocation) object).getRequest();
-        boolean match = configAttributes.parallelStream().anyMatch(configAttribute -> {
+        boolean match = configAttributes.stream().anyMatch(configAttribute -> {
             AntPathRequestMatcher matcher = new AntPathRequestMatcher(configAttribute.getAttribute());
             return matcher.matches(request);
         });
