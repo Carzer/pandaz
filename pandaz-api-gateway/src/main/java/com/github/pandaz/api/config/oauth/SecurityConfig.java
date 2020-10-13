@@ -33,11 +33,8 @@ import java.security.spec.X509EncodedKeySpec;
 @Slf4j
 public class SecurityConfig {
 
-    /**
-     * 公钥
-     */
-    @Value("${security.oauth2.resource.jwt.key-uri}")
-    private String keyUri;
+    @Value("${custom.publicKey}")
+    private String publicKey;
 
     /**
      * 配置请求
@@ -55,22 +52,8 @@ public class SecurityConfig {
                 .and().csrf().disable()
                 .logout().disable();
         // 设置jwtDecoder
-        http.oauth2ResourceServer().jwt().jwtDecoder(jwtDecoder());
+        http.oauth2ResourceServer().jwt().publicKey(parsePublicKey(publicKey));
         return http.build();
-    }
-
-    /**
-     * 配置jwtDecoder
-     *
-     * @return jwtDecoder
-     */
-    @Bean
-    ReactiveJwtDecoder jwtDecoder() {
-        return WebClient.create().get().uri(URI.create(keyUri))
-                .exchange()
-                .flatMap(clientResponse -> clientResponse.bodyToMono(JwtPublicKey.class))
-                .map(jwtPublicKey -> parsePublicKey(jwtPublicKey.getValue()))
-                .map(NimbusReactiveJwtDecoder::new).block();
     }
 
     /**

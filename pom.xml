@@ -65,9 +65,6 @@
         <spring.security.autoconfig.version>2.1.7.RELEASE</spring.security.autoconfig.version>
         <spring.security.jwt.version>1.0.11.RELEASE</spring.security.jwt.version>
         <alibaba.dependency.version>2.2.1.RELEASE</alibaba.dependency.version>
-        <nacos.group>pandaz</nacos.group>
-        <nacos.server.addr>localhost:8848</nacos.server.addr>
-        <sentinel.dashboard.addr>localhost:8787</sentinel.dashboard.addr>
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <knife4j.version>2.0.2</knife4j.version>
         <jetcache.version>2.6.0</jetcache.version>
@@ -77,9 +74,6 @@
         <maven-delombok.version>1.18.12.0</maven-delombok.version>
         <sonar-maven-plugin.version>3.6.0.1398</sonar-maven-plugin.version>
         <jacoco-maven-plugin.version>0.8.4</jacoco-maven-plugin.version>
-        <sonar.jdbc.username>pandaz</sonar.jdbc.username>
-        <sonar.jdbc.password>pandaz</sonar.jdbc.password>
-        <sonar.host.url>http://localhost:9000</sonar.host.url>
     </properties>
 
     <dependencyManagement>
@@ -397,5 +391,47 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <spring.profiles.active>dev</spring.profiles.active>
+                <nacos.group>pandaz</nacos.group>
+                <nacos.server.addr>localhost:8848</nacos.server.addr>
+                <sentinel.dashboard.addr>localhost:8787</sentinel.dashboard.addr>
+                <sonar.jdbc.username>pandaz</sonar.jdbc.username>
+                <sonar.jdbc.password>pandaz</sonar.jdbc.password>
+                <sonar.host.url>http://localhost:9000</sonar.host.url>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <spring.profiles.active>test</spring.profiles.active>
+                <nacos.group>pandaz</nacos.group>
+                <nacos.server.addr>localhost:8848</nacos.server.addr>
+                <sentinel.dashboard.addr>localhost:8787</sentinel.dashboard.addr>
+                <sonar.jdbc.username>pandaz</sonar.jdbc.username>
+                <sonar.jdbc.password>pandaz</sonar.jdbc.password>
+                <sonar.host.url>http://localhost:9000</sonar.host.url>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <spring.profiles.active>prod</spring.profiles.active>
+                <nacos.group>pandaz</nacos.group>
+                <nacos.server.addr>localhost:8848</nacos.server.addr>
+                <sentinel.dashboard.addr>localhost:8787</sentinel.dashboard.addr>
+                <sonar.jdbc.username>pandaz</sonar.jdbc.username>
+                <sonar.jdbc.password>pandaz</sonar.jdbc.password>
+                <sonar.host.url>http://localhost:9000</sonar.host.url>
+            </properties>
+        </profile>
+    </profiles>
 
 </project>

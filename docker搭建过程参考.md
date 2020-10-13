@@ -55,7 +55,6 @@ docker cp /etc/localtime [容器ID或者NAME]:/etc/localtime
 ```
 
 
-
 # 搭建过程
 
 ## 0. 文件夹准备
@@ -204,7 +203,6 @@ docker pull sonarqube
 docker run -d --name sonar -p 9000:9000 -p 9092:9092 -v [docker统一目录]/sonarqube/logs:/opt/sonarqube/logs -v [docker统一目录]/sonarqube/data:/opt/sonarqube/data -v [docker统一目录]/sonarqube/extensions:/opt/sonarqube/extensions -e SONARQUBE_JDBC_USERNAME=sonar -e SONARQUBE_JDBC_PASSWORD=sonar -e SONARQUBE_JDBC_URL=jdbc:postgresql://172.17.0.1:5432/sonar sonarqube
 ```
 
-
 ## 7.nginx
 
 ```shell
@@ -285,7 +283,6 @@ docker run -d -p 8800:8080 -p 50001:50001 --env JENKINS_SLAVE_AGENT_PORT=50001 -
 compose文件及相关配置都在 [redis-cluster](./conf/redis-cluster) 中
 
 sentinel相关的配置文件，为了方便本地使用，监听了本地修改后的host：carzer.com，可以根据实际情况自行修改IP
-
 
 ## 12.SqlServer
 

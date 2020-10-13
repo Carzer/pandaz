@@ -100,6 +100,11 @@ jetcache:
 custom:
   # 项目基础包
   projectPackage: com.github.pandaz
-
-
+  publicKey: |
+    -----BEGIN PUBLIC KEY-----
+    MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCAzDxTx+zRtvJHX3a7MU1xBBBQ
+    0/d1orZ7gPvzMGyo4S06/CRdu85rNqwkNLbYeYkQkUYuw0zeLFKFqI04WWg8Gavu
+    y/gGBd4jAZEHjMZo4GCnXGEu8Bkib4fSukm8m+63zWCpwL7tHjLpqqFzsMY0tRTC
+    JV/LxZIdvUDAZZk18QIDAQAB
+    -----END PUBLIC KEY-----
 
