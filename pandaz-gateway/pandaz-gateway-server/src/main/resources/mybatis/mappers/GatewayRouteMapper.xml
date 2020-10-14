@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.pandaz.gateway.mapper.GatewayRouteMapper">
+    <sql id="Base_Column_List">
+        id, route_id, uri, predicates, filters, route_order, description,
+        created_by, created_date, updated_by, updated_date,
+        deleted_by, deleted_date, deleted_flag, version
+    </sql>
+    <insert id="insertSelective" parameterType="com.github.pandaz.gateway.entity.GatewayRouteEntity">
+        insert into api_gateway_route
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                id,
+            </if>
+            <if test="routeId != null and routeId != ''">
+                route_id,
+            </if>
+            <if test="uri != null and uri != ''">
+                uri,
+            </if>
+            <if test="predicates != null and predicates != ''">
+                predicates,
+            </if>
+            <if test="filters != null and filters != ''">
+                filters,
+            </if>
+            <if test="routeOrder != null and routeOrder != ''">
+                route_order,
+            </if>
+            <if test="description != null and description != ''">
+                description,
+            </if>
+            <if test="createdBy != null and createdBy != ''">
+                created_by,
+            </if>
+            <if test="createdDate != null">
+                created_date,
+            </if>
+            <if test="updatedBy != null and updatedBy != ''">
+                updated_by,
+            </if>
+            <if test="updatedDate != null">
+                updated_date,
+            </if>
+            <if test="deletedBy != null and deletedBy != ''">
+                deleted_by,
+            </if>
+            <if test="deletedDate != null">
+                deleted_date,
+            </if>
+            <if test="deletedFlag != null">
+                deleted_flag,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="routeId != null and routeId != ''">
+                #{routeId,jdbcType=VARCHAR},
+            </if>
+            <if test="uri != null and uri != ''">
+                #{uri,jdbcType=VARCHAR},
+            </if>
+            <if test="predicates != null and predicates != ''">
+                #{predicates,jdbcType=VARCHAR},
+            </if>
+            <if test="filters != null and filters != ''">
+                #{filters,jdbcType=VARCHAR},
+            </if>
+            <if test="routeOrder != null and routeOrder != ''">
+                #{routeOrder,jdbcType=INTEGER},
+            </if>
+            <if test="description != null and description != ''">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="createdBy != null and createdBy != ''">
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDate != null">
+                #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedBy != null and updatedBy != ''">
+                #{updatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedDate != null">
+                #{updatedDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deletedBy != null and deletedBy != ''">
+                #{deletedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="deletedDate != null">
+                #{deletedDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deletedFlag != null">
+                #{deletedFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <!-- 逻辑删除 -->
+    <update id="logicDeleteByCode">
+        update api_gateway_route
+        <set>
+            <if test="deletedBy != null">
+                deleted_by = #{deletedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="deletedDate != null">
+                deleted_date = #{deletedDate,jdbcType=TIMESTAMP},
+            </if>
+            deleted_flag = id
+        </set>
+        <where>
+            deleted_flag='0'
+            <choose>
+                <when test="routeId != null and routeId != ''">
+                    and route_id = #{routeId,jdbcType=VARCHAR}
+                </when>
+                <otherwise>
+                    and 1 = 2
+                </otherwise>
+            </choose>
+        </where>
+    </update>
+    <!-- 批量逻辑删除 -->
+    <update id="logicDeleteByCodes" parameterType="java.util.HashMap">
+        update api_gateway_route
+        <set>
+            <if test="deletedBy != null">
+                deleted_by = #{deletedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="deletedDate != null">
+                deleted_date = #{deletedDate,jdbcType=TIMESTAMP},
+            </if>
+            deleted_flag = id
+        </set>
+        <where>
+            deleted_flag='0'
+            <choose>
+                <when test="list != null and list.size() > 0">
+                    and route_id in
+                    <foreach collection="list" open="(" close=")" index="index" item="item" separator=",">
+                        #{item,jdbcType=VARCHAR}
+                    </foreach>
+                </when>
+                <otherwise>
+                    and 1 = 2
+                </otherwise>
+            </choose>
+        </where>
+    </update>
+</mapper>

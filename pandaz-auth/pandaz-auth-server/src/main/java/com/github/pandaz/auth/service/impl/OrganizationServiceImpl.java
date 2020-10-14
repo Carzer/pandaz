@@ -114,9 +114,9 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int deleteByCode(OrganizationEntity organizationEntity) {
+    public int logicDeleteByCode(OrganizationEntity organizationEntity) {
         userOrgService.deleteByOrgCode(organizationEntity);
-        return organizationMapper.logicDelete(organizationEntity);
+        return organizationMapper.logicDeleteByCode(organizationEntity);
     }
 
     /**
@@ -129,7 +129,7 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
+    public int logicDeleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
         if (CollectionUtils.isEmpty(codes)) {
             return 0;
         }
@@ -138,7 +138,7 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
             organizationEntity.setCode(code);
             organizationEntity.setDeletedBy(deletedBy);
             organizationEntity.setDeletedDate(deletedDate);
-            deleteByCode(organizationEntity);
+            logicDeleteByCode(organizationEntity);
         });
         clearMenuChildren(deletedBy, deletedDate, codes);
         return codes.size();
@@ -189,7 +189,7 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
                 organization.setDeletedBy(organizationEntity.getDeletedBy());
                 organization.setDeletedDate(organizationEntity.getDeletedDate());
                 clearChildren(organization);
-                deleteByCode(organization);
+                logicDeleteByCode(organization);
             });
         }
     }

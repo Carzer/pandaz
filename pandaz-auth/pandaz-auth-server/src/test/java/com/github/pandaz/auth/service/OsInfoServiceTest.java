@@ -89,7 +89,7 @@ public class OsInfoServiceTest {
         osInfoEntity.setCode("os_test");
         osInfoEntity.setDeletedBy("admin");
         osInfoEntity.setDeletedDate(LocalDateTime.now());
-        int result = osInfoService.deleteByCode(osInfoEntity);
+        int result = osInfoService.logicDeleteByCode(osInfoEntity);
         assertThat(result, anything());
     }
 }

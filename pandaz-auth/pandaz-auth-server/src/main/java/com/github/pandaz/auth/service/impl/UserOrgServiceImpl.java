@@ -204,7 +204,7 @@ public class UserOrgServiceImpl extends ServiceImpl<UserOrgMapper, UserOrgEntity
             map.put("userCode", userOrgEntity.getUserCode());
             map.put("orgCode", userOrgEntity.getOrgCode());
             map.put("list", codes);
-            userOrgMapper.batchLogicDelete(map);
+            userOrgMapper.logicDeleteByCodes(map);
         }
     }
 }

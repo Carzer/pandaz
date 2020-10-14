@@ -103,7 +103,7 @@ public class PermissionServiceTest {
         permissionEntity.setCode("per_test");
         permissionEntity.setDeletedBy("admin");
         permissionEntity.setDeletedDate(LocalDateTime.now());
-        int result = permissionService.deleteByCode(permissionEntity);
+        int result = permissionService.logicDeleteByCode(permissionEntity);
         assertThat(result, anything());
     }
 

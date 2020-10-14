@@ -206,7 +206,7 @@ public class UserGroupServiceImpl extends ServiceImpl<UserGroupMapper, UserGroup
             map.put("userCode", userGroupEntity.getUserCode());
             map.put("groupCode", userGroupEntity.getGroupCode());
             map.put("list", codes);
-            userGroupMapper.batchLogicDelete(map);
+            userGroupMapper.logicDeleteByCodes(map);
         }
     }
 }

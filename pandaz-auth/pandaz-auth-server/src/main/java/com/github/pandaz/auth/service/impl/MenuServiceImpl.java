@@ -126,13 +126,13 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int deleteByCode(MenuEntity menuEntity) {
+    public int logicDeleteByCode(MenuEntity menuEntity) {
         PermissionEntity permissionEntity = new PermissionEntity();
         permissionEntity.setMenuCode(menuEntity.getCode());
         permissionEntity.setDeletedBy(menuEntity.getDeletedBy());
         permissionEntity.setDeletedDate(menuEntity.getDeletedDate());
         permissionService.deleteByMenuCode(permissionEntity);
-        return menuMapper.logicDelete(menuEntity);
+        return menuMapper.logicDeleteByCode(menuEntity);
     }
 
     /**
@@ -164,7 +164,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
+    public int logicDeleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
         if (CollectionUtils.isEmpty(codes)) {
             return 0;
         }
@@ -173,7 +173,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
             menuEntity.setCode(code);
             menuEntity.setDeletedBy(deletedBy);
             menuEntity.setDeletedDate(deletedDate);
-            deleteByCode(menuEntity);
+            logicDeleteByCode(menuEntity);
         });
         clearMenuChildren(deletedBy, deletedDate, codes);
         return codes.size();
@@ -191,7 +191,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
         queryWrapper.lambda().eq(MenuEntity::getOsCode, menuEntity.getOsCode());
         List<MenuEntity> list = menuMapper.selectList(queryWrapper);
         if (!CollectionUtils.isEmpty(list)) {
-            list.forEach(this::deleteByCode);
+            list.forEach(this::logicDeleteByCode);
             return list.size();
         }
         return 0;
@@ -287,7 +287,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
                 menu.setDeletedBy(menuEntity.getDeletedBy());
                 menu.setDeletedDate(menuEntity.getDeletedDate());
                 clearChildren(menu);
-                deleteByCode(menu);
+                logicDeleteByCode(menu);
             });
         }
     }

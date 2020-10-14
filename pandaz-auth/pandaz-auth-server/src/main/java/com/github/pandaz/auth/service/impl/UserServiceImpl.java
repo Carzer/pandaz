@@ -173,7 +173,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int deleteByCode(UserEntity userEntity) {
+    public int logicDeleteByCode(UserEntity userEntity) {
         // 查询私有组，并进行删除
         UserGroupEntity userGroup = new UserGroupEntity();
         userGroup.setIsPrivate(SysConstants.PRIVATE);
@@ -187,7 +187,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
                 groupEntity.setCode(entity.getGroupCode());
                 groupEntity.setDeletedBy(deletedBy);
                 groupEntity.setDeletedDate(deletedDate);
-                groupService.deleteByCode(groupEntity);
+                groupService.logicDeleteByCode(groupEntity);
             });
         }
         // 删除所有用户相关的组关联信息
@@ -195,7 +195,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         // 删除所有用户相关的组织关联信息
         userOrgService.deleteByUserCode(userEntity);
         // 最终删除用户
-        return userMapper.logicDelete(userEntity);
+        return userMapper.logicDeleteByCode(userEntity);
     }
 
     /**
@@ -231,7 +231,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
+    public int logicDeleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
         if (CollectionUtils.isEmpty(codes)) {
             return 0;
         }
@@ -240,7 +240,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
             userEntity.setCode(code);
             userEntity.setDeletedBy(deletedBy);
             userEntity.setDeletedDate(deletedDate);
-            deleteByCode(userEntity);
+            logicDeleteByCode(userEntity);
         });
         return codes.size();
     }

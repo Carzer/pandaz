@@ -89,7 +89,7 @@ public class OrganizationServiceTest {
         organizationEntity.setCode("org_test");
         organizationEntity.setDeletedBy("admin");
         organizationEntity.setDeletedDate(LocalDateTime.now());
-        int result = organizationService.deleteByCode(organizationEntity);
+        int result = organizationService.logicDeleteByCode(organizationEntity);
         assertThat(result, anything());
     }
 }

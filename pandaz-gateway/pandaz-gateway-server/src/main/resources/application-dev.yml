@@ -1,0 +1,110 @@
+spring:
+  cloud:
+    # gateway
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lowerCaseServiceId: true
+      routes:
+        - id: pandaz-auth
+          uri: lb://pandaz-auth-server
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=1
+        - id: pandaz-redis
+          uri: lb://pandaz-redis-server
+          predicates:
+            - Path=/redis/**
+          filters:
+            - StripPrefix=1
+        - id: pandaz-im-websocket
+          uri: lb:ws://pandaz-im-server
+          predicates:
+            - Path=/ws/**
+          filters:
+            - StripPrefix=1
+    # nacos
+    nacos:
+      discovery:
+        group: '@nacos.group@'
+        server-addr: '@nacos.server.addr@'
+    # sentinel
+    sentinel:
+      transport:
+        dashboard: '@sentinel.dashboard.addr@'
+      log:
+        dir: logs/gateway/sentinel
+  datasource:
+    url: jdbc:mysql://localhost:3306/pandaz?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&allowMultiQueries=true
+    username: pandaz
+    password: K0tXBGwNHBl#
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # hikari连接池
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      pool-name: GatewayAppHikariPool
+      maximum-pool-size: 20
+      minimum-idle: 10
+      connection-test-query: SELECT 1
+      connection-timeout: 60000
+
+# mybatis-plus配置
+mybatis-plus:
+  mapper-locations: classpath:mybatis/mappers/**/*.xml
+  type-aliases-package: com.github.pandaz.api.entity
+  config-location: classpath:mybatis/mybatis-config.xml
+  global-config:
+    db-config:
+      logic-not-delete-value: 0
+
+# oauth2
+security:
+  oauth2:
+    resource:
+      jwt:
+        # jwt公钥获取地址
+        # Note: 需要先启动授权服务器
+        key-uri: "http://localhost:9007/oauth/token_key"
+
+# 开启feign对sentinel的支持
+# SentinelFeignAutoConfiguration
+feign:
+  sentinel:
+    enabled: true
+  client:
+    config:
+      default:
+        # 设置Feign的超时时间
+        connectTimeout: 3000
+        readTimeout: 15000
+
+# jetcache
+jetcache:
+  statIntervalMinutes: 15
+  areaInCacheName: false
+  local:
+    default:
+      type: linkedhashmap
+      keyConvertor: fastjson
+  remote:
+    default:
+      type: redis.lettuce
+      keyConvertor: fastjson
+      uri: redis://123456@localhost:6379/0
+      #uri: redis-sentinel://127.0.0.1:26379,127.0.0.1:26380,127.0.0.1:26381/?sentinelMasterId=mymaster
+      #readFrom: slavePreferred
+
+# 自定义属性
+custom:
+  # 项目基础包
+  projectPackage: com.github.pandaz
+  publicKey: |
+    -----BEGIN PUBLIC KEY-----
+    MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCAzDxTx+zRtvJHX3a7MU1xBBBQ
+    0/d1orZ7gPvzMGyo4S06/CRdu85rNqwkNLbYeYkQkUYuw0zeLFKFqI04WWg8Gavu
+    y/gGBd4jAZEHjMZo4GCnXGEu8Bkib4fSukm8m+63zWCpwL7tHjLpqqFzsMY0tRTC
+    JV/LxZIdvUDAZZk18QIDAQAB
+    -----END PUBLIC KEY-----
+

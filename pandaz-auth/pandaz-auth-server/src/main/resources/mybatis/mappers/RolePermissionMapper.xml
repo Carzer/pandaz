@@ -112,7 +112,7 @@
         </foreach>
     </insert>
     <!-- 批量逻辑删除 -->
-    <update id="batchLogicDelete" parameterType="java.util.HashMap">
+    <update id="logicDeleteByCodes" parameterType="java.util.HashMap">
         update auth_role_permission
         <set>
             <if test="deletedBy != null">

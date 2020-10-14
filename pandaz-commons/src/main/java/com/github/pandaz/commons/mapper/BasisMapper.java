@@ -27,7 +27,7 @@ public interface BasisMapper<T extends BaseEntity> extends BaseMapper<T> {
      * @param t 删除信息
      * @return 执行结果
      */
-    int logicDelete(T t);
+    int logicDeleteByCode(T t);
 
     /**
      * 批量逻辑删除
@@ -35,5 +35,5 @@ public interface BasisMapper<T extends BaseEntity> extends BaseMapper<T> {
      * @param map 删除列表
      * @return 执行结果
      */
-    int batchLogicDelete(Map<String, Object> map);
+    int logicDeleteByCodes(Map<String, Object> map);
 }

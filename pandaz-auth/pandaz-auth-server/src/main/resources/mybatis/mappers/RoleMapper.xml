@@ -202,7 +202,7 @@
           and gp_role.deleted_flag = '0'
     </select>
     <!-- 逻辑删除 -->
-    <update id="logicDelete">
+    <update id="logicDeleteByCode">
         update auth_role
         <set>
             <if test="deletedBy != null">
@@ -226,7 +226,7 @@
         </where>
     </update>
     <!-- 批量逻辑删除 -->
-    <update id="batchLogicDelete" parameterType="java.util.HashMap">
+    <update id="logicDeleteByCodes" parameterType="java.util.HashMap">
         update auth_role
         <set>
             <if test="deletedBy != null">

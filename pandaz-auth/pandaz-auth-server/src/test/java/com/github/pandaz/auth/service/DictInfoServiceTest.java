@@ -96,7 +96,7 @@ public class DictInfoServiceTest {
         dictInfoEntity.setCode("dictInfo_test");
         dictInfoEntity.setDeletedBy("admin");
         dictInfoEntity.setDeletedDate(LocalDateTime.now());
-        int result = dictInfoService.deleteByCode(dictInfoEntity);
+        int result = dictInfoService.logicDeleteByCode(dictInfoEntity);
         assertThat(result, anything());
     }
 }

@@ -89,7 +89,7 @@ public class DictTypeServiceTest {
         dictTypeEntity.setCode("dictType_test");
         dictTypeEntity.setDeletedBy("admin");
         dictTypeEntity.setDeletedDate(LocalDateTime.now());
-        int result = dictTypeService.deleteByCode(dictTypeEntity);
+        int result = dictTypeService.logicDeleteByCode(dictTypeEntity);
         assertThat(result, anything());
     }
 }

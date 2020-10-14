@@ -109,7 +109,7 @@
         </trim>
     </insert>
     <!-- 逻辑删除 -->
-    <update id="logicDelete">
+    <update id="logicDeleteByCode">
         update auth_os_info
         <set>
             <if test="deletedBy != null">
@@ -133,7 +133,7 @@
         </where>
     </update>
     <!-- 批量逻辑删除 -->
-    <update id="batchLogicDelete" parameterType="java.util.HashMap">
+    <update id="logicDeleteByCodes" parameterType="java.util.HashMap">
         update auth_os_info
         <set>
             <if test="deletedBy != null">

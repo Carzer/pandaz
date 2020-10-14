@@ -42,7 +42,7 @@ public class SimpleTask {
     private void clearMenus() {
         try {
             List<String> list = menuService.listMenusWithoutParent();
-            menuService.deleteByCodes("schedule", LocalDateTime.now(), list);
+            menuService.logicDeleteByCodes("schedule", LocalDateTime.now(), list);
             log.info("清理菜单脏数据完成");
         } catch (Exception e) {
             log.error("清理菜单脏数据异常：", e);

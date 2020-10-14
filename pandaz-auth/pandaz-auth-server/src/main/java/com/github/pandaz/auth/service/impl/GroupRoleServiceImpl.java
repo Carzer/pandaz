@@ -205,7 +205,7 @@ public class GroupRoleServiceImpl extends ServiceImpl<GroupRoleMapper, GroupRole
             map.put("roleCode", groupRoleEntity.getRoleCode());
             map.put("groupCode", groupRoleEntity.getGroupCode());
             map.put("list", codes);
-            groupRoleMapper.batchLogicDelete(map);
+            groupRoleMapper.logicDeleteByCodes(map);
         }
     }
 }

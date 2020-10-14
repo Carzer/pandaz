@@ -93,7 +93,7 @@ public class MenuServiceTest {
         menuEntity.setCode("menu_test");
         menuEntity.setDeletedBy("admin");
         menuEntity.setDeletedDate(LocalDateTime.now());
-        int result = menuService.deleteByCode(menuEntity);
+        int result = menuService.logicDeleteByCode(menuEntity);
         assertThat(result, anything());
     }
 

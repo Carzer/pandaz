@@ -146,10 +146,10 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int deleteByCode(RoleEntity roleEntity) {
+    public int logicDeleteByCode(RoleEntity roleEntity) {
         rolePermissionService.deleteByRoleCode(roleEntity);
         groupRoleService.deleteByRoleCode(roleEntity);
-        return roleMapper.logicDelete(roleEntity);
+        return roleMapper.logicDeleteByCode(roleEntity);
     }
 
     /**
@@ -208,7 +208,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
+    public int logicDeleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
         if (CollectionUtils.isEmpty(codes)) {
             return 0;
         }
@@ -217,7 +217,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
             roleEntity.setCode(code);
             roleEntity.setDeletedBy(deletedBy);
             roleEntity.setDeletedDate(deletedDate);
-            deleteByCode(roleEntity);
+            logicDeleteByCode(roleEntity);
         });
         return codes.size();
     }

@@ -105,7 +105,7 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupEntity> impl
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int deleteByCode(GroupEntity groupEntity) {
+    public int logicDeleteByCode(GroupEntity groupEntity) {
         GroupRoleEntity groupRole = new GroupRoleEntity();
         groupRole.setGroupCode(groupEntity.getCode());
         groupRole.setIsPrivate(SysConstants.PRIVATE);
@@ -119,14 +119,14 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupEntity> impl
                 roleEntity.setCode(entity.getRoleCode());
                 roleEntity.setDeletedBy(deletedBy);
                 roleEntity.setDeletedDate(deletedDate);
-                roleService.deleteByCode(roleEntity);
+                roleService.logicDeleteByCode(roleEntity);
             });
         }
         // 清理所有关系
         groupRoleService.deleteByGroupCode(groupEntity);
         userGroupService.deleteByGroupCode(groupEntity);
         // 最终删除组信息
-        return groupMapper.logicDelete(groupEntity);
+        return groupMapper.logicDeleteByCode(groupEntity);
     }
 
     /**
@@ -184,7 +184,7 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupEntity> impl
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
+    public int logicDeleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
         if (CollectionUtils.isEmpty(codes)) {
             return 0;
         }
@@ -193,7 +193,7 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupEntity> impl
             groupEntity.setCode(code);
             groupEntity.setDeletedBy(deletedBy);
             groupEntity.setDeletedDate(deletedDate);
-            deleteByCode(groupEntity);
+            logicDeleteByCode(groupEntity);
         });
         return codes.size();
     }

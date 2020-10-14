@@ -65,7 +65,7 @@ public interface BaseService<T extends BaseEntity> extends IService<T> {
      * @param codes       编码
      * @return 执行结果
      */
-    default int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
+    default int logicDeleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
         return 0;
     }
 
@@ -75,7 +75,7 @@ public interface BaseService<T extends BaseEntity> extends IService<T> {
      * @param entity entity
      * @return 执行结果
      */
-    default int deleteByCode(T entity) {
+    default int logicDeleteByCode(T entity) {
         return 0;
     }
 }

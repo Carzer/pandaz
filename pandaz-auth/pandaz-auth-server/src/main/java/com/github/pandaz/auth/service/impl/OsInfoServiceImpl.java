@@ -110,13 +110,13 @@ public class OsInfoServiceImpl extends ServiceImpl<OsInfoMapper, OsInfoEntity> i
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int deleteByCode(OsInfoEntity osInfoEntity) {
+    public int logicDeleteByCode(OsInfoEntity osInfoEntity) {
         MenuEntity menuEntity = new MenuEntity();
         menuEntity.setOsCode(osInfoEntity.getCode());
         menuEntity.setDeletedBy(osInfoEntity.getDeletedBy());
         menuEntity.setDeletedDate(osInfoEntity.getDeletedDate());
         menuService.deleteByOsCode(menuEntity);
-        return osInfoMapper.logicDelete(osInfoEntity);
+        return osInfoMapper.logicDeleteByCode(osInfoEntity);
     }
 
     /**
@@ -129,7 +129,7 @@ public class OsInfoServiceImpl extends ServiceImpl<OsInfoMapper, OsInfoEntity> i
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
+    public int logicDeleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
         if (CollectionUtils.isEmpty(codes)) {
             return 0;
         }
@@ -138,7 +138,7 @@ public class OsInfoServiceImpl extends ServiceImpl<OsInfoMapper, OsInfoEntity> i
             osInfoEntity.setCode(code);
             osInfoEntity.setDeletedBy(deletedBy);
             osInfoEntity.setDeletedDate(deletedDate);
-            deleteByCode(osInfoEntity);
+            logicDeleteByCode(osInfoEntity);
         });
         return codes.size();
     }

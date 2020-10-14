@@ -170,7 +170,7 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
             map.put("osCode", rolePermissionEntity.getOsCode());
             map.put("menuCode", rolePermissionEntity.getMenuCode());
             map.put("list", codes);
-            rolePermissionMapper.batchLogicDelete(map);
+            rolePermissionMapper.logicDeleteByCodes(map);
         }
     }
 }

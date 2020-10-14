@@ -131,7 +131,7 @@ public abstract class BaseController<T extends BaseDTO, E extends BaseEntity> {
     @ApiOperationSupport(ignoreParameters = {"id", "createdBy", "createdDate", "updatedBy", "updatedDate", "version"})
     @DeleteMapping(UrlConstants.DELETE)
     public R<String> delete(@RequestBody List<String> codes, @ApiIgnore Principal principal) {
-        getBaseService().deleteByCodes(principal.getName(), LocalDateTime.now(), codes);
+        getBaseService().logicDeleteByCodes(principal.getName(), LocalDateTime.now(), codes);
         return R.success();
     }
 

@@ -93,14 +93,14 @@ public class UserServiceTest {
         userEntity.setDeletedDate(LocalDateTime.now());
         userEntity.setDeletedBy("admin");
         userEntity.setCode("test17");
-        int result = userService.deleteByCode(userEntity);
+        int result = userService.logicDeleteByCode(userEntity);
         assertThat(result, anything());
     }
 
     @Test
     public void deleteByCodes() {
         List<String> list = List.of("test17", "test18");
-        int result = userService.deleteByCodes("admin", LocalDateTime.now(), list);
+        int result = userService.logicDeleteByCodes("admin", LocalDateTime.now(), list);
         assertThat(result, anything());
     }
 

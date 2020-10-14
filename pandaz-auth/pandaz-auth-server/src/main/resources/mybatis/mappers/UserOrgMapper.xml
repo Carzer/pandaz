@@ -85,7 +85,7 @@
         </trim>
     </insert>
     <!-- 批量逻辑删除 -->
-    <update id="batchLogicDelete" parameterType="java.util.HashMap">
+    <update id="logicDeleteByCodes" parameterType="java.util.HashMap">
         update auth_user_org
         <set>
             <if test="deletedBy != null">

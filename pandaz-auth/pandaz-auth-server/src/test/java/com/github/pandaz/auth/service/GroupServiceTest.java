@@ -66,7 +66,7 @@ public class GroupServiceTest {
         groupEntity.setCode("group_test");
         groupEntity.setDeletedBy("admin");
         groupEntity.setDeletedDate(LocalDateTime.now());
-        int result = groupService.deleteByCode(groupEntity);
+        int result = groupService.logicDeleteByCode(groupEntity);
         assertThat(result, anything());
     }
 

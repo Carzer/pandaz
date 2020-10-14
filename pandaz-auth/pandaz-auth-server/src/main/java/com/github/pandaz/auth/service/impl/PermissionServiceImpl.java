@@ -114,9 +114,9 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int deleteByCode(PermissionEntity permissionEntity) {
+    public int logicDeleteByCode(PermissionEntity permissionEntity) {
         rolePermissionService.deleteByPermissionCode(permissionEntity);
-        return permissionMapper.logicDelete(permissionEntity);
+        return permissionMapper.logicDeleteByCode(permissionEntity);
     }
 
     /**
@@ -129,7 +129,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
+    public int logicDeleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
         if (CollectionUtils.isEmpty(codes)) {
             return 0;
         }
@@ -138,7 +138,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
             permissionEntity.setCode(code);
             permissionEntity.setDeletedBy(deletedBy);
             permissionEntity.setDeletedDate(deletedDate);
-            deleteByCode(permissionEntity);
+            logicDeleteByCode(permissionEntity);
         });
         return codes.size();
     }
@@ -156,7 +156,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         queryWrapper.lambda().eq(PermissionEntity::getMenuCode, permissionEntity.getMenuCode());
         List<PermissionEntity> list = permissionMapper.selectList(queryWrapper);
         if (!CollectionUtils.isEmpty(list)) {
-            list.forEach(this::deleteByCode);
+            list.forEach(this::logicDeleteByCode);
             return list.size();
         }
         return 0;

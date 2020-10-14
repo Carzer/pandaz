@@ -89,7 +89,7 @@ public class RoleServiceTest {
         roleEntity.setCode("role_test");
         roleEntity.setDeletedBy("admin");
         roleEntity.setDeletedDate(LocalDateTime.now());
-        int size = roleService.deleteByCode(roleEntity);
+        int size = roleService.logicDeleteByCode(roleEntity);
         assertThat(size, anything());
     }
 

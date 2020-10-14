@@ -105,8 +105,8 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictTypeEnt
      * @return 执行结果
      */
     @Override
-    public int deleteByCode(DictTypeEntity dictTypeEntity) {
-        return dictTypeMapper.logicDelete(dictTypeEntity);
+    public int logicDeleteByCode(DictTypeEntity dictTypeEntity) {
+        return dictTypeMapper.logicDeleteByCode(dictTypeEntity);
     }
 
     /**
@@ -118,7 +118,7 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictTypeEnt
      * @return 执行结果
      */
     @Override
-    public int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
+    public int logicDeleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
         if (CollectionUtils.isEmpty(codes)) {
             return 0;
         }
@@ -126,6 +126,6 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictTypeEnt
         map.put("deletedBy", deletedBy);
         map.put("deletedDate", deletedDate);
         map.put("list", codes);
-        return dictTypeMapper.batchLogicDelete(map);
+        return dictTypeMapper.logicDeleteByCodes(map);
     }
 }

@@ -82,7 +82,7 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Clien
     @CacheInvalidate(name = "client:", key = "#oauthClientEntity.clientId")
     @Override
     public int deleteByClientId(ClientEntity clientEntity) {
-        return oauthClientMapper.logicDelete(clientEntity);
+        return oauthClientMapper.logicDeleteByCode(clientEntity);
     }
 
     /**
@@ -92,7 +92,7 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Clien
      * @return 执行结果
      */
     @Override
-    public int deleteByCode(ClientEntity clientEntity) {
+    public int logicDeleteByCode(ClientEntity clientEntity) {
         return deleteByClientId(clientEntity);
     }
 
@@ -235,7 +235,7 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Clien
      * @return 执行结果
      */
     @Override
-    public int deleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
+    public int logicDeleteByCodes(String deletedBy, LocalDateTime deletedDate, List<String> codes) {
         if (CollectionUtils.isEmpty(codes)) {
             return 0;
         }
@@ -243,6 +243,6 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Clien
         map.put("deletedBy", deletedBy);
         map.put("deletedDate", deletedDate);
         map.put("list", codes);
-        return oauthClientMapper.batchLogicDelete(map);
+        return oauthClientMapper.logicDeleteByCodes(map);
     }
 }
