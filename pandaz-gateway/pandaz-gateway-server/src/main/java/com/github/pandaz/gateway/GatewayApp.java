@@ -1,8 +1,8 @@
 package com.github.pandaz.gateway;
 
-import com.github.pandaz.gateway.controller.IndexController;
 import com.github.pandaz.commons.interceptor.FeignOauth2RequestInterceptor;
 import com.github.pandaz.commons.util.SpringBeanUtil;
+import com.github.pandaz.gateway.controller.IndexController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

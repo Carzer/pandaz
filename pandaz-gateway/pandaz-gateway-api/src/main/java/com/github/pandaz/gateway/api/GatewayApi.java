@@ -1,7 +1,7 @@
 package com.github.pandaz.gateway.api;
 
-import com.github.pandaz.gateway.api.fallback.GatewayApiFallbackFactory;
 import com.github.pandaz.commons.util.R;
+import com.github.pandaz.gateway.api.fallback.GatewayApiFallbackFactory;
 import com.github.pandaz.gateway.dto.GatewayRouteDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +14,7 @@ import java.util.List;
  * @author Carzer
  * @since 2020-06-03
  */
-@FeignClient(name = "${project.artifactId}", fallbackFactory = GatewayApiFallbackFactory.class)
+@FeignClient(name = "pandaz-gateway-server", fallbackFactory = GatewayApiFallbackFactory.class)
 public interface GatewayApi {
 
     /**

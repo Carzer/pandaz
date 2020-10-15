@@ -47,5 +47,5 @@ public class UrlConstants {
     /**
      * 导出请求
      */
-    public static final String EXPORT = "export";
+    public static final String EXPORT = "/export";
 }

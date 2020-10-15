@@ -3,6 +3,7 @@ package com.github.pandaz.auth.controller;
 import com.github.pandaz.auth.dto.OsInfoDTO;
 import com.github.pandaz.auth.entity.OsInfoEntity;
 import com.github.pandaz.auth.service.OsInfoService;
+import com.github.pandaz.commons.annotations.security.PreAuth;
 import com.github.pandaz.commons.controller.BaseController;
 import com.github.pandaz.commons.service.BaseService;
 import io.swagger.annotations.Api;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/osInfo")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Api(value = "OsInfo", tags = "系统信息")
+@PreAuth("osInfo")
 public class OsInfoController extends BaseController<OsInfoDTO, OsInfoEntity> {
 
     /**

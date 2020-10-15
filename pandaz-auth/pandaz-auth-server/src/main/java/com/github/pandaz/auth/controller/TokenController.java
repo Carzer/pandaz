@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.common.ExpiringOAuth2RefreshToken;
@@ -36,6 +37,7 @@ import java.util.HashMap;
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Api(value = "Token", tags = "自定义token")
+@PreAuthorize("isAuthenticated()")
 public class TokenController {
 
     /**

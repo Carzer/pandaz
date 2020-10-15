@@ -12,7 +12,9 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
@@ -30,7 +32,8 @@ import java.util.Map;
  * @author Carzer
  * @since 2020-04-30
  */
-@SuppressWarnings({"unchecked", "unused"})
+@SuppressWarnings("all")
+@Slf4j
 public abstract class BaseController<T extends BaseDTO, E extends BaseEntity> {
 
     /**
@@ -62,6 +65,7 @@ public abstract class BaseController<T extends BaseDTO, E extends BaseEntity> {
     @ApiOperation(value = "查询方法", notes = "查询方法")
     @ApiOperationSupport(ignoreParameters = {"id", "createdBy", "createdDate", "updatedBy", "updatedDate", "version"})
     @GetMapping(UrlConstants.GET)
+    @PreAuthorize("hasAuth('{}" + UrlConstants.GET + "')")
     public R<T> get(@Valid T dto, @ApiIgnore Principal principal) {
         E entity = BeanCopyUtil.copy(dto, getEntityClass());
         T result = BeanCopyUtil.copy(getBaseService().findByCode(entity), dto);
@@ -77,6 +81,7 @@ public abstract class BaseController<T extends BaseDTO, E extends BaseEntity> {
     @ApiOperation(value = "分页方法", notes = "分页方法")
     @ApiOperationSupport(ignoreParameters = {"id", "createdBy", "createdDate", "updatedBy", "updatedDate", "version"})
     @GetMapping(UrlConstants.PAGE)
+    @PreAuthorize("hasAuth('{}" + UrlConstants.GET + "')")
     public R<Map<String, Object>> getPage(T dto, @ApiIgnore Principal principal) {
         IPage<E> page = getBaseService().getPage(BeanCopyUtil.copy(dto, getEntityClass()));
         return new R<>(BeanCopyUtil.convertToMap(page, dto.getClass()));
@@ -91,6 +96,7 @@ public abstract class BaseController<T extends BaseDTO, E extends BaseEntity> {
     @ApiOperation(value = "插入方法", notes = "插入方法")
     @ApiOperationSupport(ignoreParameters = {"id", "createdBy", "createdDate", "updatedBy", "updatedDate", "version"})
     @PostMapping(UrlConstants.INSERT)
+    @PreAuthorize("hasAuth('{}" + UrlConstants.INSERT + "')")
     public R<String> insert(@Valid @RequestBody T dto, @ApiIgnore Principal principal) {
         check(dto);
         E entity = BeanCopyUtil.copy(dto, getEntityClass());
@@ -109,6 +115,7 @@ public abstract class BaseController<T extends BaseDTO, E extends BaseEntity> {
     @ApiOperation(value = "更新方法", notes = "更新方法")
     @ApiOperationSupport(ignoreParameters = {"id", "createdBy", "createdDate", "updatedBy", "updatedDate", "version"})
     @PutMapping(UrlConstants.UPDATE)
+    @PreAuthorize("hasAuth('{}" + UrlConstants.UPDATE + "')")
     public R<String> update(@Valid @RequestBody T dto, @ApiIgnore Principal principal) {
         check(dto);
         E entity = BeanCopyUtil.copy(dto, getEntityClass());
@@ -130,6 +137,7 @@ public abstract class BaseController<T extends BaseDTO, E extends BaseEntity> {
     @ApiOperation(value = "删除方法", notes = "删除方法")
     @ApiOperationSupport(ignoreParameters = {"id", "createdBy", "createdDate", "updatedBy", "updatedDate", "version"})
     @DeleteMapping(UrlConstants.DELETE)
+    @PreAuthorize("hasAuth('{}" + UrlConstants.DELETE + "')")
     public R<String> delete(@RequestBody List<String> codes, @ApiIgnore Principal principal) {
         getBaseService().logicDeleteByCodes(principal.getName(), LocalDateTime.now(), codes);
         return R.success();
@@ -143,6 +151,7 @@ public abstract class BaseController<T extends BaseDTO, E extends BaseEntity> {
      */
     @ApiOperation(value = "上传方法", notes = "上传方法", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PostMapping(value = UrlConstants.IMPORT, headers = "content-type=multipart/form-data")
+    @PreAuthorize("hasAuth('{}" + UrlConstants.IMPORT + "')")
     public R<String> upload(@ApiParam(value = "file", required = true) MultipartFile file, @ApiIgnore Principal principal) {
         return R.success();
     }
@@ -155,6 +164,7 @@ public abstract class BaseController<T extends BaseDTO, E extends BaseEntity> {
     @ApiOperation(value = "导出方法", notes = "导出方法")
     @ApiOperationSupport(ignoreParameters = {"id", "createdBy", "createdDate", "updatedBy", "updatedDate", "version"})
     @GetMapping(UrlConstants.EXPORT)
+    @PreAuthorize("hasAuth('{}" + UrlConstants.EXPORT + "')")
     public void export(T dto, @ApiIgnore Principal principal) {
 
     }

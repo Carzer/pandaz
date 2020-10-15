@@ -5,6 +5,7 @@ import com.github.pandaz.auth.dto.DictTypeDTO;
 import com.github.pandaz.auth.entity.DictInfoEntity;
 import com.github.pandaz.auth.service.DictInfoService;
 import com.github.pandaz.auth.util.ControllerUtil;
+import com.github.pandaz.commons.annotations.security.PreAuth;
 import com.github.pandaz.commons.controller.BaseController;
 import com.github.pandaz.commons.service.BaseService;
 import com.github.pandaz.commons.util.R;
@@ -12,6 +13,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +31,7 @@ import java.util.List;
 @RequestMapping("/dict/info")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Api(value = "DictInfo", tags = "字典信息")
+@PreAuth("dict/info")
 public class DictInfoController extends BaseController<DictInfoDTO, DictInfoEntity> {
 
     /**
@@ -58,6 +61,7 @@ public class DictInfoController extends BaseController<DictInfoDTO, DictInfoEnti
      */
     @ApiOperation(value = "获取全部字典类型", notes = "获取全部字典类型")
     @GetMapping("/listAllTypes")
+    @PreAuthorize("hasAuth('{}/get')")
     public R<List<DictTypeDTO>> listAllTypes() {
         return new R<>(controllerUtil.listAllTypes());
     }

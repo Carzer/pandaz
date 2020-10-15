@@ -1,7 +1,7 @@
 package com.github.pandaz.gateway.service;
 
-import com.github.pandaz.gateway.entity.GatewayRouteEntity;
 import com.github.pandaz.commons.service.BaseService;
+import com.github.pandaz.gateway.entity.GatewayRouteEntity;
 
 import java.util.List;
 

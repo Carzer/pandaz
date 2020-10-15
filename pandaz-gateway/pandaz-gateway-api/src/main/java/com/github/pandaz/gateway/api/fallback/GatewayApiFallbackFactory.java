@@ -1,13 +1,9 @@
 package com.github.pandaz.gateway.api.fallback;
 
 import com.github.pandaz.gateway.api.GatewayApi;
-import com.github.pandaz.commons.util.R;
-import com.github.pandaz.gateway.dto.GatewayRouteDTO;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * 权限相关接口 fallback
@@ -28,11 +24,6 @@ public class GatewayApiFallbackFactory implements FallbackFactory<GatewayApi> {
     @Override
     public GatewayApi create(Throwable cause) {
         GatewayApiFallbackFactory.log.error("fallback; reason was: {}", cause.getMessage());
-        return new GatewayApi() {
-            @Override
-            public R<List<GatewayRouteDTO>> getAll() {
-                return null;
-            }
-        };
+        return () -> null;
     }
 }

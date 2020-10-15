@@ -5,8 +5,6 @@ import com.alicp.jetcache.anno.Cached;
 import com.github.pandaz.auth.service.RolePermissionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.ConfigAttribute;
-import org.springframework.security.access.SecurityConfig;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -40,12 +38,11 @@ public class CustomMetadataResourceProvider implements MetadataResourceProvider 
      * @return 权限信息
      */
     @Override
-    public Set<ConfigAttribute> getResourceDefineValue(Set<String> roleSet) {
+    public Set<String> getResourceDefineValue(Set<String> roleSet) {
         String osCode = customProperties.getOsCode();
-        Set<ConfigAttribute> configAttributeSet = new HashSet<>();
-        roleSet.forEach(roleCode -> getConfigAttributes(osCode, roleCode)
-                .forEach(code -> configAttributeSet.add(new SecurityConfig(code))));
-        return configAttributeSet;
+        Set<String> allResources = new HashSet<>();
+        roleSet.forEach(roleCode -> allResources.addAll(getConfigAttributes(osCode, roleCode)));
+        return allResources;
     }
 
     /**

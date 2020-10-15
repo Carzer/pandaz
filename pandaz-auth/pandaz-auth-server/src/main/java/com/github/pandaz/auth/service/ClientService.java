@@ -12,7 +12,7 @@ import org.springframework.security.oauth2.provider.ClientDetails;
  * @author Carzer
  * @since 2020-01-02
  */
-public interface OauthClientService extends BaseService<ClientEntity> {
+public interface ClientService extends BaseService<ClientEntity> {
 
     /**
      * 根据客户端ID查询客户端

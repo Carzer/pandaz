@@ -1,9 +1,10 @@
 package com.github.pandaz.auth.controller;
 
 
-import com.github.pandaz.auth.dto.OauthClientDTO;
+import com.github.pandaz.auth.dto.ClientDTO;
 import com.github.pandaz.auth.entity.ClientEntity;
-import com.github.pandaz.auth.service.OauthClientService;
+import com.github.pandaz.auth.service.ClientService;
+import com.github.pandaz.commons.annotations.security.PreAuth;
 import com.github.pandaz.commons.controller.BaseController;
 import com.github.pandaz.commons.service.BaseService;
 import io.swagger.annotations.Api;
@@ -23,12 +24,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/client")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Api(value = "Client", tags = "oauth2客户端信息")
-public class ClientController extends BaseController<OauthClientDTO, ClientEntity> {
+@PreAuth("client")
+public class ClientController extends BaseController<ClientDTO, ClientEntity> {
 
     /**
      * 客户端服务
      */
-    private final OauthClientService oauthClientService;
+    private final ClientService clientService;
 
     /**
      * 获取服务方法
@@ -37,16 +39,16 @@ public class ClientController extends BaseController<OauthClientDTO, ClientEntit
      */
     @Override
     protected BaseService<ClientEntity> getBaseService() {
-        return this.oauthClientService;
+        return this.clientService;
     }
 
     /**
      * 检查方法
      *
-     * @param oauthClientDTO 客户端信息
+     * @param clientDTO 客户端信息
      */
     @Override
-    protected void check(OauthClientDTO oauthClientDTO) {
-        Assert.hasText(oauthClientDTO.getClientId(), "clientId不能为空");
+    protected void check(ClientDTO clientDTO) {
+        Assert.hasText(clientDTO.getClientId(), "clientId不能为空");
     }
 }

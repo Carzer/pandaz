@@ -8,6 +8,7 @@ import com.github.pandaz.auth.service.GroupRoleService;
 import com.github.pandaz.auth.service.GroupService;
 import com.github.pandaz.auth.service.UserGroupService;
 import com.github.pandaz.auth.util.ControllerUtil;
+import com.github.pandaz.commons.annotations.security.PreAuth;
 import com.github.pandaz.commons.controller.BaseController;
 import com.github.pandaz.commons.service.BaseService;
 import com.github.pandaz.commons.util.BeanCopyUtil;
@@ -16,6 +17,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
@@ -36,6 +38,7 @@ import java.util.Map;
 @RequestMapping("/group")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Api(value = "Group", tags = "组信息")
+@PreAuth("group")
 public class GroupController extends BaseController<GroupDTO, GroupEntity> {
 
     /**
@@ -76,6 +79,7 @@ public class GroupController extends BaseController<GroupDTO, GroupEntity> {
      */
     @ApiOperation(value = "获取用户分页信息", notes = "获取用户分页信息")
     @GetMapping("/getUserPage")
+    @PreAuthorize("hasAuth('{}/get')")
     public R<Map<String, Object>> getUserPage(UserDTO userDTO) {
         return new R<>(controllerUtil.getUserPage(userDTO));
     }
@@ -88,6 +92,7 @@ public class GroupController extends BaseController<GroupDTO, GroupEntity> {
      */
     @ApiOperation(value = "绑定用户与组关系", notes = "绑定用户与组关系")
     @PutMapping("/bindGroupMember")
+    @PreAuthorize("hasAuth('{}/update')")
     public R<String> bindGroupMember(@Valid @RequestBody UserGroupDTO userGroupDTO, @ApiIgnore Principal principal) {
         userGroupService.bindGroupMember(principal.getName(), LocalDateTime.now(), BeanCopyUtil.copy(userGroupDTO, UserGroupEntity.class));
         return R.success();
@@ -101,6 +106,7 @@ public class GroupController extends BaseController<GroupDTO, GroupEntity> {
      */
     @ApiOperation(value = "列出组内成员", notes = "列出组内成员")
     @GetMapping("/listBindGroupMembers")
+    @PreAuthorize("hasAuth('{}/get')")
     public R<List<String>> listBindGroupMembers(UserGroupDTO userGroupDTO) {
         List<String> list = userGroupService.listBindGroupMembers(BeanCopyUtil.copy(userGroupDTO, UserGroupEntity.class));
         return new R<>(list);
@@ -114,6 +120,7 @@ public class GroupController extends BaseController<GroupDTO, GroupEntity> {
      */
     @ApiOperation(value = "分页方法", notes = "分页方法")
     @GetMapping("/getRolePage")
+    @PreAuthorize("hasAuth('{}/get')")
     public R<Map<String, Object>> getRolePage(RoleDTO roleDTO) {
         return new R<>(controllerUtil.getRolePage(roleDTO));
     }
@@ -126,6 +133,7 @@ public class GroupController extends BaseController<GroupDTO, GroupEntity> {
      */
     @ApiOperation(value = "绑定用户与组关系", notes = "绑定用户与组关系")
     @PutMapping("/bindRole")
+    @PreAuthorize("hasAuth('{}/update')")
     public R<String> bindRole(@RequestBody GroupRoleDTO groupRoleDTO, @ApiIgnore Principal principal) {
         groupRoleService.bindGroupRole(principal.getName(), LocalDateTime.now(), BeanCopyUtil.copy(groupRoleDTO, GroupRoleEntity.class));
         return R.success();
@@ -139,6 +147,7 @@ public class GroupController extends BaseController<GroupDTO, GroupEntity> {
      */
     @ApiOperation(value = "列出绑定的角色", notes = "列出绑定的角色")
     @GetMapping("/listBindRoles")
+    @PreAuthorize("hasAuth('{}/get')")
     public R<List<String>> listBindRoles(GroupRoleDTO groupRoleDTO) {
         List<String> list = groupRoleService.listBindGroupRoles(BeanCopyUtil.copy(groupRoleDTO, GroupRoleEntity.class));
         return new R<>(list);

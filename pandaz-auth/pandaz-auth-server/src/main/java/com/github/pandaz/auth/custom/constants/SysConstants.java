@@ -74,7 +74,7 @@ public final class SysConstants {
     /**
      * 最小位移数
      */
-    public static final Byte MIN_DIGIT = 1;
+    public static final Byte MIN_DIGIT = 0;
 
     /**
      * 默认session、token过期时间为60分钟

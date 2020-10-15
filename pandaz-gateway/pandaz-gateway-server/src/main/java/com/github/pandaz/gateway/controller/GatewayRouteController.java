@@ -1,13 +1,13 @@
 package com.github.pandaz.gateway.controller;
 
 
-import com.github.pandaz.gateway.dto.GatewayRouteDTO;
-import com.github.pandaz.gateway.entity.GatewayRouteEntity;
-import com.github.pandaz.gateway.service.GatewayRouteService;
 import com.github.pandaz.commons.controller.BaseController;
 import com.github.pandaz.commons.service.BaseService;
 import com.github.pandaz.commons.util.BeanCopyUtil;
 import com.github.pandaz.commons.util.R;
+import com.github.pandaz.gateway.dto.GatewayRouteDTO;
+import com.github.pandaz.gateway.entity.GatewayRouteEntity;
+import com.github.pandaz.gateway.service.GatewayRouteService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

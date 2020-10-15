@@ -6,6 +6,7 @@ import com.github.pandaz.auth.dto.PermissionDTO;
 import com.github.pandaz.auth.entity.PermissionEntity;
 import com.github.pandaz.auth.service.PermissionService;
 import com.github.pandaz.auth.util.ControllerUtil;
+import com.github.pandaz.commons.annotations.security.PreAuth;
 import com.github.pandaz.commons.controller.BaseController;
 import com.github.pandaz.commons.service.BaseService;
 import com.github.pandaz.commons.util.R;
@@ -14,6 +15,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +34,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Api(value = "Permission", tags = "权限信息")
+@PreAuth("permission")
 public class PermissionController extends BaseController<PermissionDTO, PermissionEntity> {
 
     /**
@@ -61,6 +64,7 @@ public class PermissionController extends BaseController<PermissionDTO, Permissi
      */
     @ApiOperation(value = "获取全部系统信息", notes = "获取全部系统信息")
     @GetMapping("/listAllOs")
+    @PreAuthorize("hasAuth('{}/get')")
     public R<List<OsInfoDTO>> listAll() {
         return new R<>(controllerUtil.listAllOs());
     }
@@ -72,6 +76,7 @@ public class PermissionController extends BaseController<PermissionDTO, Permissi
      */
     @ApiOperation(value = "获取所有菜单信息", notes = "根据系统编码获取所有菜单信息")
     @GetMapping("/listMenuByOsCode")
+    @PreAuthorize("hasAuth('{}/get')")
     public R<List<MenuDTO>> listByOsCode(String osCode) {
         return new R<>(controllerUtil.listMenuByOsCode(osCode));
     }

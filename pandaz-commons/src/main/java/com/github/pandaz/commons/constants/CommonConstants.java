@@ -49,4 +49,9 @@ public final class CommonConstants {
      * 系统租户字段
      */
     public static final String SYSTEM_TENANT_ID_COLUMN = "tenant_id";
+
+    /**
+     * 权限replace标识符
+     */
+    public static final String REPLACE = "{}";
 }

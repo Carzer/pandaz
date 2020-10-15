@@ -4,6 +4,7 @@ package com.github.pandaz.auth.controller;
 import com.github.pandaz.auth.dto.DictTypeDTO;
 import com.github.pandaz.auth.entity.DictTypeEntity;
 import com.github.pandaz.auth.service.DictTypeService;
+import com.github.pandaz.commons.annotations.security.PreAuth;
 import com.github.pandaz.commons.controller.BaseController;
 import com.github.pandaz.commons.service.BaseService;
 import io.swagger.annotations.Api;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/dict/type")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Api(value = "DictType", tags = "字典类型")
+@PreAuth("dict/type")
 public class DictTypeController extends BaseController<DictTypeDTO, DictTypeEntity> {
 
     /**

@@ -1,7 +1,5 @@
 package com.github.pandaz.auth.custom;
 
-import org.springframework.security.access.ConfigAttribute;
-
 import java.util.Set;
 
 /**
@@ -18,5 +16,5 @@ public interface MetadataResourceProvider {
      * @param roleSet 角色集合
      * @return 权限信息
      */
-    Set<ConfigAttribute> getResourceDefineValue(Set<String> roleSet);
+    Set<String> getResourceDefineValue(Set<String> roleSet);
 }

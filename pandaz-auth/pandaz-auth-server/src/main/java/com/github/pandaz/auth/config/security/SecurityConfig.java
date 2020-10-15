@@ -9,7 +9,6 @@ import com.github.pandaz.auth.custom.handler.CustomAuthDeniedHandler;
 import com.github.pandaz.auth.custom.handler.CustomLogoutSuccessHandler;
 import com.github.pandaz.auth.custom.handler.LoginFailureHandler;
 import com.github.pandaz.auth.custom.handler.LoginSuccessHandler;
-import com.github.pandaz.auth.custom.interceptor.CustomFilterSecurityInterceptor;
 import com.github.pandaz.auth.dto.SecurityUser;
 import com.github.pandaz.auth.dto.UserDTO;
 import com.github.pandaz.auth.entity.UserEntity;
@@ -34,7 +33,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
-import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
@@ -78,11 +76,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * 登出成功
      */
     private final CustomLogoutSuccessHandler logoutSuccessHandler;
-
-    /**
-     * 权限filter
-     */
-    private final CustomFilterSecurityInterceptor filterSecurityInterceptor;
 
     /**
      * 验证码filter
@@ -213,7 +206,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .and().sessionManagement().maximumSessions(1)
 //                .maxSessionsPreventsLogin(true)
         ;
-        http.addFilterBefore(filterSecurityInterceptor, FilterSecurityInterceptor.class);
         http.addFilterBefore(captchaAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }

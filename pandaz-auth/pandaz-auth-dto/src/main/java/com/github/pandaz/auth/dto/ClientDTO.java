@@ -19,8 +19,8 @@ import javax.validation.constraints.Size;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value = "OauthClientDTO", description = "客户端")
-public class OauthClientDTO extends BaseDTO {
+@ApiModel(value = "ClientDTO", description = "客户端")
+public class ClientDTO extends BaseDTO {
 
     private static final long serialVersionUID = -7367804678272243234L;
 

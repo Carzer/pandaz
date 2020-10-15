@@ -4,6 +4,7 @@ import com.github.pandaz.commons.util.R;
 import com.github.pandaz.im.api.WsApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @RequestMapping("/ws")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @ApiIgnore
+@PreAuthorize("isAuthenticated()")
 public class WebSocketController {
 
     /**

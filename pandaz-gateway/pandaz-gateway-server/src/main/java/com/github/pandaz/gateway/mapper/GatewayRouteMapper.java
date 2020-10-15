@@ -1,7 +1,7 @@
 package com.github.pandaz.gateway.mapper;
 
-import com.github.pandaz.gateway.entity.GatewayRouteEntity;
 import com.github.pandaz.commons.mapper.BasisMapper;
+import com.github.pandaz.gateway.entity.GatewayRouteEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

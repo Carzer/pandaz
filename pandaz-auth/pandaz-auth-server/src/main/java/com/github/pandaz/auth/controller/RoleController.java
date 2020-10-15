@@ -6,6 +6,7 @@ import com.github.pandaz.auth.entity.RolePermissionEntity;
 import com.github.pandaz.auth.service.RolePermissionService;
 import com.github.pandaz.auth.service.RoleService;
 import com.github.pandaz.auth.util.ControllerUtil;
+import com.github.pandaz.commons.annotations.security.PreAuth;
 import com.github.pandaz.commons.constants.UrlConstants;
 import com.github.pandaz.commons.controller.BaseController;
 import com.github.pandaz.commons.service.BaseService;
@@ -16,6 +17,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +39,7 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Api(value = "Role", tags = "角色信息")
+@PreAuth("role")
 public class RoleController extends BaseController<RoleDTO, RoleEntity> {
 
     /**
@@ -86,6 +89,7 @@ public class RoleController extends BaseController<RoleDTO, RoleEntity> {
      */
     @ApiOperation(value = "绑定权限", notes = "绑定权限")
     @PutMapping("/bindPermissions")
+    @PreAuthorize("hasAuth('{}/update')")
     public R<String> bindPermissions(@RequestBody RolePermissionDTO rolePermissionDTO, @ApiIgnore Principal principal) {
         if (!CollectionUtils.isEmpty(rolePermissionDTO.getPermissionCodes())) {
             RolePermissionEntity rolePermissionEntity = BeanCopyUtil.copy(rolePermissionDTO, RolePermissionEntity.class);
@@ -101,6 +105,7 @@ public class RoleController extends BaseController<RoleDTO, RoleEntity> {
      */
     @ApiOperation(value = "获取全部系统信息", notes = "获取全部系统信息")
     @GetMapping("/listAllOs")
+    @PreAuthorize("hasAuth('{}/get')")
     public R<List<OsInfoDTO>> listAllOs() {
         return new R<>(controllerUtil.listAllOs());
     }
@@ -112,6 +117,7 @@ public class RoleController extends BaseController<RoleDTO, RoleEntity> {
      */
     @ApiOperation(value = "获取所有菜单", notes = "获取所有菜单")
     @GetMapping("/getAllMenu")
+    @PreAuthorize("hasAuth('{}/get')")
     public R<MenuDTO> getAllMenu(MenuDTO menuDTO) {
         return new R<>(controllerUtil.getAllMenu(menuDTO));
     }
@@ -124,6 +130,7 @@ public class RoleController extends BaseController<RoleDTO, RoleEntity> {
      */
     @ApiOperation(value = "权限分页方法", notes = "权限分页方法")
     @GetMapping("/getPermissionPage")
+    @PreAuthorize("hasAuth('{}/get')")
     public R<Map<String, Object>> getPermissionPage(PermissionDTO permissionDTO) {
         return new R<>(controllerUtil.getPermissionPage(permissionDTO));
     }
@@ -136,6 +143,7 @@ public class RoleController extends BaseController<RoleDTO, RoleEntity> {
      */
     @ApiOperation(value = "获取所有菜单信息", notes = "根据系统编码获取所有菜单信息")
     @GetMapping("/listMenuByOsCode")
+    @PreAuthorize("hasAuth('{}/get')")
     public R<List<MenuDTO>> listByOsCode(String osCode) {
         return new R<>(controllerUtil.listMenuByOsCode(osCode));
     }
@@ -150,6 +158,7 @@ public class RoleController extends BaseController<RoleDTO, RoleEntity> {
      */
     @ApiOperation(value = "获取所有权限", notes = "根据系统编码、角色编码、菜单编码获取所有权限")
     @GetMapping("/getPermissionCodes")
+    @PreAuthorize("hasAuth('{}/get')")
     public R<List<String>> getPermissionCodes(String roleCode, String osCode, String menuCode) {
         return new R<>(controllerUtil.getPermissionCodes(roleCode, osCode, menuCode));
     }

@@ -32,7 +32,7 @@ import static org.junit.Assert.assertThat;
 @Slf4j
 public class InitTest {
 
-    private OauthClientService oauthClientService;
+    private ClientService clientService;
 
     private UserService userService;
 
@@ -53,8 +53,8 @@ public class InitTest {
     }
 
     @Autowired
-    public void setOauthClientService(OauthClientService oauthClientService) {
-        this.oauthClientService = oauthClientService;
+    public void setOauthClientService(ClientService clientService) {
+        this.clientService = clientService;
     }
 
     @Autowired
@@ -102,7 +102,7 @@ public class InitTest {
         clientEntity.setAuthorizedGrantTypes("password,refresh");
         clientEntity.setAccessTokenValidity(1800);
         clientEntity.setRefreshTokenValidity(1800);
-        oauthClientService.insert(clientEntity);
+        clientService.insert(clientEntity);
     }
 
     private void insertRole() {

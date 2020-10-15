@@ -11,6 +11,6 @@ import com.github.pandaz.commons.mapper.BasisMapper;
  * @author Carzer
  * @since 2020-01-02
  */
-public interface OauthClientMapper extends BasisMapper<ClientEntity> {
+public interface ClientMapper extends BasisMapper<ClientEntity> {
 
 }

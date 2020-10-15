@@ -20,6 +20,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -62,7 +63,11 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         if (!StringUtils.hasText(permissionEntity.getId())) {
             permissionEntity.setId(UuidUtil.getId());
         }
-        setBitResult(permissionEntity);
+        if (permissionEntity.getBitDigit() != null) {
+            permissionEntity.setBitResult(1 << permissionEntity.getBitDigit());
+        } else {
+            setBitResult(permissionEntity);
+        }
         return permissionMapper.insertSelective(permissionEntity);
     }
 
@@ -169,21 +174,27 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
      */
     private void setBitResult(PermissionEntity permissionEntity) {
         List<Byte> list = permissionMapper.selectBitDigits(permissionEntity);
-        byte bitDigit = SysConstants.MIN_DIGIT;
-        int bitResult = 1 << SysConstants.MIN_DIGIT;
-        if (!CollectionUtils.isEmpty(list)) {
-            Byte i = 0;
+        if (list == null) {
+            list = Collections.emptyList();
+        }
+        Byte bitDigit = permissionEntity.getBitDigit();
+        if (bitDigit != null) {
+            if (bitDigit > SysConstants.MAX_DIGIT || bitDigit < SysConstants.MIN_DIGIT) {
+                throw new IllegalArgumentException("超出权限范围(0-25)");
+            } else if (list.contains(bitDigit)) {
+                throw new IllegalArgumentException("位移值重复");
+            }
+        } else {
+            Byte i = SysConstants.MIN_DIGIT;
             while (i <= SysConstants.MAX_DIGIT && list.contains(i)) {
                 i++;
             }
             if (i > SysConstants.MAX_DIGIT) {
                 throw new IllegalArgumentException("超出最大权限数量，请联系管理员");
-            } else {
-                bitDigit = i;
-                bitResult = 1 << i;
             }
+            bitDigit = i;
+            permissionEntity.setBitDigit(bitDigit);
         }
-        permissionEntity.setBitDigit(bitDigit);
-        permissionEntity.setBitResult(bitResult);
+        permissionEntity.setBitResult(1 << bitDigit);
     }
 }

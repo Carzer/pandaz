@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pandaz.auth.custom.constants.SysConstants;
 import com.github.pandaz.auth.entity.ClientEntity;
-import com.github.pandaz.auth.mapper.OauthClientMapper;
-import com.github.pandaz.auth.service.OauthClientService;
+import com.github.pandaz.auth.mapper.ClientMapper;
+import com.github.pandaz.auth.service.ClientService;
 import com.github.pandaz.commons.util.CustomPasswordEncoder;
 import com.github.pandaz.commons.util.UuidUtil;
 import lombok.RequiredArgsConstructor;
@@ -43,12 +43,12 @@ import java.util.Map;
 @Slf4j
 @SuppressWarnings("unchecked")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, ClientEntity> implements OauthClientService {
+public class ClientServiceImpl extends ServiceImpl<ClientMapper, ClientEntity> implements ClientService {
 
     /**
      * oauth2客户端信息 mapper
      */
-    private final OauthClientMapper oauthClientMapper;
+    private final ClientMapper clientMapper;
 
     /**
      * 根据客户端ID查询客户端
@@ -66,7 +66,7 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Clien
         }
         QueryWrapper<ClientEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(ClientEntity::getClientId, clientId);
-        ClientEntity clientEntity = oauthClientMapper.selectOne(queryWrapper);
+        ClientEntity clientEntity = clientMapper.selectOne(queryWrapper);
         if (clientEntity == null) {
             throw new NoSuchClientException(String.format("No client with requested id: %s", clientId));
         }
@@ -82,7 +82,7 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Clien
     @CacheInvalidate(name = "client:", key = "#oauthClientEntity.clientId")
     @Override
     public int deleteByClientId(ClientEntity clientEntity) {
-        return oauthClientMapper.logicDeleteByCode(clientEntity);
+        return clientMapper.logicDeleteByCode(clientEntity);
     }
 
     /**
@@ -106,7 +106,7 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Clien
     public ClientEntity findByClientId(ClientEntity clientEntity) {
         QueryWrapper<ClientEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(ClientEntity::getClientId, clientEntity.getClientId());
-        return oauthClientMapper.selectOne(queryWrapper);
+        return clientMapper.selectOne(queryWrapper);
     }
 
     /**
@@ -131,7 +131,7 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Clien
     public int updateByClientId(ClientEntity clientEntity) {
         UpdateWrapper<ClientEntity> updateWrapper = new UpdateWrapper<>();
         updateWrapper.lambda().eq(ClientEntity::getClientId, clientEntity.getClientId());
-        return oauthClientMapper.update(clientEntity, updateWrapper);
+        return clientMapper.update(clientEntity, updateWrapper);
     }
 
     /**
@@ -169,7 +169,7 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Clien
         }
         clientEntity.setClientSecret(encodedPass);
         clientEntity.setId(UuidUtil.getId());
-        return oauthClientMapper.insertSelective(clientEntity);
+        return clientMapper.insertSelective(clientEntity);
     }
 
     /**
@@ -243,6 +243,6 @@ public class OauthClientServiceImpl extends ServiceImpl<OauthClientMapper, Clien
         map.put("deletedBy", deletedBy);
         map.put("deletedDate", deletedDate);
         map.put("list", codes);
-        return oauthClientMapper.logicDeleteByCodes(map);
+        return clientMapper.logicDeleteByCodes(map);
     }
 }

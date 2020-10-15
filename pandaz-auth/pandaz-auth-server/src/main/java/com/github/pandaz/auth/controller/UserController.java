@@ -9,6 +9,7 @@ import com.github.pandaz.auth.service.UserOrgService;
 import com.github.pandaz.auth.service.UserService;
 import com.github.pandaz.auth.util.ControllerUtil;
 import com.github.pandaz.commons.annotations.log.OpLog;
+import com.github.pandaz.commons.annotations.security.PreAuth;
 import com.github.pandaz.commons.constants.UrlConstants;
 import com.github.pandaz.commons.controller.BaseController;
 import com.github.pandaz.commons.service.BaseService;
@@ -19,6 +20,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
@@ -40,6 +42,7 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Api(value = "User", tags = "用户信息")
+@PreAuth("user")
 public class UserController extends BaseController<UserDTO, UserEntity> {
 
     /**
@@ -89,6 +92,7 @@ public class UserController extends BaseController<UserDTO, UserEntity> {
      */
     @ApiOperation(value = "获取所有组织", notes = "获取所有组织")
     @GetMapping("/getAllOrg")
+    @PreAuthorize("hasAuth('{}/get')")
     public R<OrganizationDTO> getAllOrg(@ApiIgnore Principal principal) {
         return new R<>(controllerUtil.getAllOrg());
     }
@@ -102,6 +106,7 @@ public class UserController extends BaseController<UserDTO, UserEntity> {
      */
     @ApiOperation(value = "绑定组织", notes = "绑定组织方法")
     @PostMapping("/joinOrg")
+    @PreAuthorize("hasAuth('{}/update')")
     public R<String> joinOrg(@Valid @RequestBody UserOrgDTO userOrgDTO, @ApiIgnore Principal principal) {
         userOrgService.bindUserOrg(principal.getName(), LocalDateTime.now(), BeanCopyUtil.copy(userOrgDTO, UserOrgEntity.class));
         return R.success();
@@ -116,6 +121,7 @@ public class UserController extends BaseController<UserDTO, UserEntity> {
      */
     @ApiOperation(value = "获取已绑定组织组织", notes = "获取已绑定组织组织")
     @GetMapping("/getUserOrg")
+    @PreAuthorize("hasAuth('{}/get')")
     public R<List<String>> getUserOrg(UserOrgDTO userOrgDTO, @ApiIgnore Principal principal) {
         List<String> userOrg = userOrgService.listBindUserOrg(BeanCopyUtil.copy(userOrgDTO, UserOrgEntity.class));
         return new R<>(userOrg);

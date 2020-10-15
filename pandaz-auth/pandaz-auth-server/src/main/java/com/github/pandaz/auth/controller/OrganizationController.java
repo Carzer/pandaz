@@ -5,6 +5,7 @@ import com.github.pandaz.auth.entity.OrganizationEntity;
 import com.github.pandaz.auth.service.OrganizationService;
 import com.github.pandaz.auth.service.UserOrgService;
 import com.github.pandaz.auth.util.ControllerUtil;
+import com.github.pandaz.commons.annotations.security.PreAuth;
 import com.github.pandaz.commons.controller.BaseController;
 import com.github.pandaz.commons.service.BaseService;
 import com.github.pandaz.commons.util.R;
@@ -12,6 +13,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +32,7 @@ import java.security.Principal;
 @RequestMapping("/organization")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Api(value = "Organization", tags = "组织信息")
+@PreAuth("organization")
 public class OrganizationController extends BaseController<OrganizationDTO, OrganizationEntity> {
 
     /**
@@ -64,6 +67,7 @@ public class OrganizationController extends BaseController<OrganizationDTO, Orga
      */
     @ApiOperation(value = "获取所有组织", notes = "获取所有组织")
     @GetMapping("/getAll")
+    @PreAuthorize("hasAuth('{}/get')")
     public R<OrganizationDTO> getAll(@ApiIgnore Principal principal) {
         return new R<>(controllerUtil.getAllOrg());
     }

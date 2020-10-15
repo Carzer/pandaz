@@ -4,7 +4,7 @@ import com.github.pandaz.auth.custom.CustomDaoAuthenticationProvider;
 import com.github.pandaz.auth.custom.CustomProperties;
 import com.github.pandaz.auth.custom.CustomTokenEnhancer;
 import com.github.pandaz.auth.dto.SecurityUser;
-import com.github.pandaz.auth.service.OauthClientService;
+import com.github.pandaz.auth.service.ClientService;
 import com.github.pandaz.auth.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -54,7 +54,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     /**
      * 客户端服务
      */
-    private final OauthClientService oauthClientService;
+    private final ClientService clientService;
 
     /**
      * 密码加密
@@ -152,7 +152,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Bean
     public ClientDetailsService clientDetailsService() {
-        return oauthClientService::loadClientByClientId;
+        return clientService::loadClientByClientId;
     }
 
     /**

@@ -30,9 +30,9 @@ import static org.junit.Assert.assertThat;
 @Rollback
 @Transactional
 @Slf4j
-public class OauthClientServiceTest {
+public class ClientServiceTest {
 
-    private OauthClientService oauthClientService;
+    private ClientService clientService;
 
     @BeforeClass
     public static void setUp() {
@@ -42,8 +42,8 @@ public class OauthClientServiceTest {
     }
 
     @Autowired
-    public void setOauthClientService(OauthClientService oauthClientService) {
-        this.oauthClientService = oauthClientService;
+    public void setOauthClientService(ClientService clientService) {
+        this.clientService = clientService;
     }
 
     @Test
@@ -52,7 +52,7 @@ public class OauthClientServiceTest {
         clientEntity.setClientId("test");
         clientEntity.setDeletedBy("admin");
         clientEntity.setDeletedDate(LocalDateTime.now());
-        int result = oauthClientService.deleteByClientId(clientEntity);
+        int result = clientService.deleteByClientId(clientEntity);
         assertThat(result, anything());
     }
 
@@ -60,7 +60,7 @@ public class OauthClientServiceTest {
     public void findByClientId() {
         ClientEntity clientEntity = new ClientEntity();
         clientEntity.setClientId("test");
-        ClientEntity test = oauthClientService.findByClientId(clientEntity);
+        ClientEntity test = clientService.findByClientId(clientEntity);
         assertThat(test, anything());
     }
 
@@ -68,7 +68,7 @@ public class OauthClientServiceTest {
     public void updateByClientId() {
         ClientEntity clientEntity = new ClientEntity();
         clientEntity.setClientId("client_test");
-        int result = oauthClientService.updateByClientId(clientEntity);
+        int result = clientService.updateByClientId(clientEntity);
         assertThat(result, anything());
     }
 
@@ -79,7 +79,7 @@ public class OauthClientServiceTest {
         clientEntity.setClientName("client_test");
         int result = 0;
         try {
-            result = oauthClientService.insert(clientEntity);
+            result = clientService.insert(clientEntity);
         } catch (Exception e) {
             log.error("插入客户端信息出错", e);
         }
@@ -90,7 +90,7 @@ public class OauthClientServiceTest {
     public void getPage() {
         ClientEntity clientEntity = new ClientEntity();
         clientEntity.setClientId("client_test");
-        IPage<ClientEntity> page = oauthClientService.getPage(clientEntity);
+        IPage<ClientEntity> page = clientService.getPage(clientEntity);
         assertNotNull(page);
     }
 }

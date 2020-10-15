@@ -151,7 +151,7 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
         rolePermissionEntity.setRoleCode(roleCode);
         List<RolePermissionEntity> permissionList = rolePermissionMapper.listByOsCodeAndRoleCode(rolePermissionEntity);
         List<String> codeList = new ArrayList<>();
-        permissionList.forEach(permission -> codeList.add("/" + permission.getPermissionCode()));
+        permissionList.forEach(permission -> codeList.add(permission.getPermissionCode()));
         return codeList;
     }
 
