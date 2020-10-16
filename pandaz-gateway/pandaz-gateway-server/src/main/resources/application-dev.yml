@@ -100,6 +100,23 @@ jetcache:
 custom:
   # 项目基础包
   projectPackage: com.github.pandaz
+  excluded-paths:
+    - "/auth/login"
+    - "/auth/logout"
+    - "/auth/common/**"
+    - "/auth/oauth/**"
+    - "/auth/token/**"
+    - "/ws/**"
+    - "/health"
+    - "/wakeUp"
+    - "/api/socket/**"
+    - "/doc.html"
+    - "/swagger-ui.html"
+    - "/webjars/**"
+    - "/service-worker.js"
+    - "/resources/**"
+    - "/swagger-resources/**"
+    - "/**/v2/api-docs"
   publicKey: |
     -----BEGIN PUBLIC KEY-----
     MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCAzDxTx+zRtvJHX3a7MU1xBBBQ
@@ -107,4 +124,3 @@ custom:
     y/gGBd4jAZEHjMZo4GCnXGEu8Bkib4fSukm8m+63zWCpwL7tHjLpqqFzsMY0tRTC
     JV/LxZIdvUDAZZk18QIDAQAB
     -----END PUBLIC KEY-----
-
