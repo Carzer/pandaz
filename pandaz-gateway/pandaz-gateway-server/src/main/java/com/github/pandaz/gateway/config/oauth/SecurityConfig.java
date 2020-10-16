@@ -1,6 +1,7 @@
 package com.github.pandaz.gateway.config.oauth;
 
 import com.github.pandaz.gateway.custom.handler.JsonErrorWebExceptionHandler;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemReader;
@@ -41,22 +42,13 @@ import java.util.stream.Collectors;
 @Configuration
 @EnableWebFluxSecurity
 @Slf4j
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SecurityConfig {
 
     /**
      * 通用配置
      */
-    private CustomProperties customProperties;
-
-    /**
-     * 设置通用配置
-     *
-     * @param customProperties 通用配置
-     */
-    @Autowired
-    public void setCustomProperties(CustomProperties customProperties) {
-        this.customProperties = customProperties;
-    }
+    private final CustomProperties customProperties;
 
     /**
      * 配置请求

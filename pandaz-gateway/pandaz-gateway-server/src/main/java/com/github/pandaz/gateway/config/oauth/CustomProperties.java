@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 /**
  * 自定义属性
  *
- * @author wanghongqun@jbinfo.cn
+ * @author Carzer
  * @since 2019-11-04
  */
 @Getter
