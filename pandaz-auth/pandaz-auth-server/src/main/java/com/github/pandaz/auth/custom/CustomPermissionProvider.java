@@ -1,9 +1,14 @@
 package com.github.pandaz.auth.custom;
 
+import com.alicp.jetcache.anno.CacheType;
+import com.alicp.jetcache.anno.Cached;
+import com.github.pandaz.auth.service.RolePermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 权限信息Provider
@@ -17,12 +22,12 @@ public class CustomPermissionProvider implements PermissionProvider {
     /**
      * 通用配置
      */
-    private CustomProperties.SuperAdmin superAdmin;
+    private CustomProperties customProperties;
 
     /**
-     * 资源获取Provider
+     * 角色权限服务
      */
-    private MetadataResourceProvider metadataResourceProvider;
+    private RolePermissionService rolePermissionService;
 
     /**
      * 设置通用配置
@@ -31,17 +36,17 @@ public class CustomPermissionProvider implements PermissionProvider {
      */
     @Autowired
     public void setSuperAdmin(CustomProperties customProperties) {
-        this.superAdmin = customProperties.getSuperAdmin();
+        this.customProperties = customProperties;
     }
 
     /**
-     * 设置资源获取Provider
+     * 设置角色权限服务
      *
-     * @param metadataResourceProvider 资源获取Provider
+     * @param rolePermissionService 角色权限服务
      */
     @Autowired
-    public void setMetadataResourceProvider(MetadataResourceProvider metadataResourceProvider) {
-        this.metadataResourceProvider = metadataResourceProvider;
+    public void setRolePermissionService(RolePermissionService rolePermissionService) {
+        this.rolePermissionService = rolePermissionService;
     }
 
     /**
@@ -54,11 +59,36 @@ public class CustomPermissionProvider implements PermissionProvider {
     @Override
     public boolean hasAuth(String resource, Set<String> roleSet) {
         // 如果开启超级管理员，并拥有符合的角色，则通过所有请求
-        if (superAdmin.isEnable()) {
-            return roleSet.contains(superAdmin.getName());
+        if (customProperties.getSuperAdmin().isEnable()) {
+            return roleSet.contains(customProperties.getSuperAdmin().getName());
         }
-        Set<String> resources = metadataResourceProvider.getResourceDefineValue(roleSet);
+        Set<String> resources = getResourceDefineValue(roleSet);
 
         return resources.contains(resource);
+    }
+
+    /**
+     * 根据角色获取相关权限信息
+     *
+     * @param roleSet 角色集合
+     * @return 权限信息
+     */
+    private Set<String> getResourceDefineValue(Set<String> roleSet) {
+        String osCode = customProperties.getOsCode();
+        Set<String> allResources = new HashSet<>();
+        roleSet.forEach(roleCode -> allResources.addAll(getConfigAttributes(osCode, roleCode)));
+        return allResources;
+    }
+
+    /**
+     * 获取权限信息
+     *
+     * @param osCode   系统编码
+     * @param roleCode 角色编码
+     * @return 权限信息
+     */
+    @Cached(name = "permissions:", key = "#osCode+':'+#roleCode", cacheType = CacheType.LOCAL, expire = 10, timeUnit = TimeUnit.MINUTES)
+    private Set<String> getConfigAttributes(String osCode, String roleCode) {
+        return new HashSet<>(rolePermissionService.getByOsCodeAndRoleCode(osCode, roleCode));
     }
 }
